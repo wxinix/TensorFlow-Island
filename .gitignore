@@ -1,0 +1,5 @@
+*.exe
+Bin/
+*.user
+*.cache
+.vs/
