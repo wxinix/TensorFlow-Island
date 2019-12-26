@@ -246,15 +246,19 @@ uses
     const aInputTensors: List<^TF_Tensor>; const aOutputs: List<TF_Output>; 
     aOutputTensors: List<^TF_Tensor>; aStatus: ^TF_Status := nil): TF_Code;
   begin
+    var outputTensors := aOutputTensors.ToArray;
     result := RunSession(
                 aSession,
                 aInputs.ToArray,
                 aInputTensors.ToArray,
                 aInputTensors.Count,
                 aOutputs.ToArray,
-                aOutputTensors.ToArray,
+                outputTensors,
                 aOutputTensors.Count,
-                aStatus);     
+                aStatus);
+  
+    aOutputTensors.Clear;
+    aOutputTensors.AddRange(outputTensors);
   end;
 
   method CreateTensor(aDataType: TF_DataType; const aDims: array of int64_t;
