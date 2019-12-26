@@ -42,13 +42,13 @@ type
 
         PrintTensorInfo(graph, 'input_4', status);
         writeLn('');
-        PrintTensorInfo(graph, 'output_node0', status);            
+        PrintTensorInfo(graph, 'output_node0', status);
         readLn;
       finally
         TF_DeleteStatus(status);
-        DeleteGraph(graph);        
+        DeleteGraph(graph);
       end;
-    end;      
+    end;
   end;
 
 end.

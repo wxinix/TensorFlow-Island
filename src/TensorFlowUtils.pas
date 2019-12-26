@@ -390,7 +390,7 @@ uses
 
     try
       result := TF_NewSessionOptions();
-      // The following is an equivalent of setting this in Python:
+      // Equivalent in Python:
       // config = tf.ConfigProto( allow_soft_placement = True )
       // config.gpu_options.allow_growth = True
       // config.gpu_options.per_process_gpu_memory_fraction = percentage
@@ -608,14 +608,14 @@ uses
     var op: ^TF_Operation := TF_GraphNextOperation(aGraph, @pos);
 
     while (assigned(op)) do begin
-      var name := TF_OperationName(op);
-      var _type := TF_OperationOpType(op);
+      var opName := TF_OperationName(op);
+      var opType := TF_OperationOpType(op);
       var device := TF_OperationDevice(op);
       var numOutputs := TF_OperationNumOutputs(op);
       var numInputs := TF_OperationNumInputs(op);
 
-      writeLn($"{pos}:{String.FromPAnsiChars(name)} "    +
-              $"type:{String.FromPAnsiChars(_type)} "    +
+      writeLn($"{pos}:{String.FromPAnsiChars(opName)} "  +
+              $"type:{String.FromPAnsiChars(opType)} "   +
               $"device:{String.FromPAnsiChars(device)} " +
               $"numberInputs:{numInputs} "               +
               $"numberOutputs:{numOutputs} ");
