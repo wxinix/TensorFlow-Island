@@ -1,0 +1,57 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>3.5</ProductVersion>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <ProjectGuid>{6c7599d2-f0e5-41e2-a684-d6732fc0e7ac}</ProjectGuid>
+    <OutputType>Executable</OutputType>
+    <AssemblyName>SessionRun</AssemblyName>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Name>Samples.SessionRun</Name>
+    <Architecture>x86_64</Architecture>
+    <OutputPath>..\Bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <OutputPath>..\..\exe\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <GenerateDebugInfo>True</GenerateDebugInfo>
+    <CpuType>x86</CpuType>
+    <Architecture>x86_64</Architecture>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <EnableAsserts>True</EnableAsserts>
+    <AssemblyName>SessionRun</AssemblyName>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\..\exe\</OutputPath>
+    <CpuType>x86</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <Architecture>x86_64</Architecture>
+    <AssemblyName>SessionRun</AssemblyName>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gc" />
+    <Reference Include="Island" />
+    <Reference Include="rtl" />
+    <Reference Include="TensorFlow">
+      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TensorFlow.Island.Utils">
+      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.Island.Utils.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\src\SessionRun.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\SessionRun.pas</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
+</Project>

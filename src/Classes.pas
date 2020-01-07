@@ -19,36 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
-namespace TensorFlow.Island.Samples.TensorInfo;
+namespace TensorFlow.Island.Classes;
 
 uses
-  TensorFlow,
-  TensorFlow.Island.Utils;
-
-type 
-  Program = class
-  public
-    class method Main(args: array of String): Int32;
-    begin
-      var graph := LoadGraph('C:\DEVLIBS\TensorFlow-Island\exe\Windows\x86_64\graph.pb');
-      var status := TF_NewStatus();
-
-      try
-        if not assigned(graph) then begin
-          writeLn('Cannot load graph');
-          exit 1;
-        end;
-
-        PrintTensorInfo(graph, 'input_4', status);
-        writeLn('');
-        PrintTensorInfo(graph, 'output_node0', status);
-        readLn;
-      finally
-        TF_DeleteStatus(status);
-        DeleteGraph(graph);
-      end;
-    end;
-  end;
+  TensorFlow;
 
 end.

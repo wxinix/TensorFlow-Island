@@ -20,7 +20,7 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Samples.CreateTensor;
+namespace TensorFlow.Island.Samples.CreateTensor;
 
 uses
   TensorFlow;

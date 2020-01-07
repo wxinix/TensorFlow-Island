@@ -20,11 +20,11 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Samples.GraphInfo;
+namespace TensorFlow.Island.Samples.GraphInfo;
 
 uses
   TensorFlow,
-  TensorFlow.Utils;
+  TensorFlow.Island.Utils;
 
 type 
   Program = class

@@ -20,7 +20,7 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Samples.AllocateTensor;
+namespace TensorFlow.Island.Samples.AllocateTensor;
 
 uses
   TensorFlow;
