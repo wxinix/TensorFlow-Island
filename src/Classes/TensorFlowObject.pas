@@ -43,8 +43,7 @@ type
 
     finalizer;
     begin
-      if not fDisposed then 
-        Dispose(false);
+      if not fDisposed then Dispose(false);
     end;
   protected
     constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: ObjectDisposeAction<T>);
@@ -55,9 +54,7 @@ type
 
     method Dispose(aDisposing: Boolean); virtual;
     begin
-      if fDisposed then 
-        exit;
-     
+      if fDisposed then exit;     
       fDisposeAction(fObjectPtr);
       fDisposed := true;
     end;
