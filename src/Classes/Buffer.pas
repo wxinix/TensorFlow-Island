@@ -27,12 +27,7 @@ uses
 type
   Buffer = public class(TensorFlowObject<TF_Buffer>)
   private
-    fDisposeAction: ObjectDisposeAction<TF_Buffer> := 
-      method (aObjectPtr: ^TF_Buffer)
-      begin
-        TF_DeleteBuffer(aObjectPtr);
-      end;
-
+    fDisposeAction: ObjectDisposeAction<TF_Buffer> := aObjectPtr->TF_DeleteBuffer(aObjectPtr);  
   public
     constructor;
     begin

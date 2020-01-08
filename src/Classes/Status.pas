@@ -26,18 +26,11 @@ uses
 
 type
   Status = public class(TensorFlowObject<TF_Status>)
-  private
-    fDisposeAction: ObjectDisposeAction<TF_Status> := 
-      method (aObjectPtr: ^TF_Status)
-      begin
-        TF_DeleteStatus(aObjectPtr);
-      end;
-
   public
     constructor;
     begin
       inherited constructor withObjectPtr(TF_NewStatus()) 
-        DisposeAction(fDisposeAction);
+        DisposeAction(aObjectPtr->TF_DeleteStatus(aObjectPtr));
     end;
 
     method SetStatus(aCode: TF_Code) StatusMessage(const aMsg: String);
