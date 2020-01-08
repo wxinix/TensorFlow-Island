@@ -22,6 +22,79 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  TensorFlow;
+  TensorFlow,
+  RemObjects.Elements.System;
+
+type
+  TFObjectDisposedException = public class(Exception)
+  public
+    constructor (aObject: TFObject);
+    begin
+      inherited constructor($'{aObject.ToString} instance was already disposed.');
+    end;
+  end;
+
+  TFObjectDisposeAction = public block(aObjectPtr: ^Void);
+
+  TFObject = public abstract class(IDisposable)
+  private
+    fDisposed: Boolean := false;
+    fObjectPtr: ^Void := nil;
+    fDisposeAction: TFObjectDisposeAction;
+
+    finalizer;
+    begin
+      if not fDisposed then 
+        Dispose(false);
+    end;
+
+    method get_ObjectPtr: ^Void;
+    begin
+      if fDisposed then 
+        raise new TFObjectDisposedException(self);
+      exit fObjectPtr;
+    end;
+  protected
+    constructor withObjectPtr(aPtr: ^Void) DisposeAction(aAction: TFObjectDisposeAction);
+    begin
+      fObjectPtr := aPtr;
+      fDisposeAction := aAction;
+    end;
+
+    method Dispose(aDisposing: Boolean); virtual;
+    begin
+      if fDisposed then 
+        exit;
+     
+      fDisposeAction(fObjectPtr);
+      fDisposed := true;
+    end;
+  public
+    method Dispose;
+    begin
+      Dispose(true);
+    end;
+
+    property ObjectPtr: ^Void read get_ObjectPtr;
+  end;
+
+  TFBuffer = class(TFObject)
+  private
+    fDisposeAction: TFObjectDisposeAction := method (aObjectPtr: ^Void) begin
+      TF_DeleteBuffer(^TF_Buffer(aObjectPtr));
+    end;
+
+  public
+    constructor;
+    begin
+      inherited constructor withObjectPtr(TF_NewBuffer()) DisposeAction(fDisposeAction);
+    end;
+
+    constructor(const aProtoBuf: array of Byte);
+    begin
+      inherited constructor withObjectPtr(TF_NewBufferFromString(aProtoBuf, aProtoBuf.Length))
+        DisposeAction(fDisposeAction);
+    end;
+  end;
 
 end.
