@@ -44,12 +44,47 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src" />
+    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src\Classes" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\Classes.pas">
+    <Compile Include="..\..\src\Classes\TensorFlowObject.pas">
       <SubType>Code</SubType>
-      <Link>..\..\src\Classes.pas</Link>
+      <Link>..\..\src\Classes\TensorFlowObject.pas</Link>
+    </Compile>
+    <Compile Include="..\..\src\Classes\Buffer.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\Buffer.pas</Link>
+    </Compile>
+    <Compile Include="..\..\src\Classes\Status.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\Status.pas</Link>
+    </Compile>
+
+    <Compile Include="..\..\src\Classes\Graph.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\Graph.pas</Link>
+    </Compile>
+
+    <Compile Include="..\..\src\Classes\Session.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\Session.pas</Link>
+    </Compile>
+
+    <Compile Include="..\..\src\Classes\SessionOptions.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\SessionOptions.pas</Link>
+    </Compile>
+    <Compile Include="..\..\src\Classes\Tensor.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\Tensor.pas</Link>
+    </Compile>
+    <Compile Include="..\..\src\Classes\Operation.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\Operation.pas</Link>
+    </Compile>
+    <Compile Include="..\..\src\Classes\OperationDescription.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\OperationDescription.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />

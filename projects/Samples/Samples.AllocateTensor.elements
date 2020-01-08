@@ -2,32 +2,30 @@
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
     <RootNamespace>TensorFlow.Island</RootNamespace>
-    <ProjectGuid>{dad6093c-a565-4b36-8e41-8905c862c787}</ProjectGuid>
+    <ProjectGuid>{5b7d78d3-94f9-44e2-9bf0-074ec850f258}</ProjectGuid>
     <OutputType>Executable</OutputType>
-    <AssemblyName>CreateTensor</AssemblyName>
+    <AssemblyName>AllocateTensor</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>Samples.CreateTensor</Name>
+    <Name>Samples.AllocateTensor</Name>
     <Architecture>x86_64</Architecture>
     <OutputPath>..\Bin\$(Configuration)</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>..\..\exe\</OutputPath>
+    <OutputPath>..\..\Exe\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <GenerateDebugInfo>True</GenerateDebugInfo>
     <CpuType>x86</CpuType>
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <AssemblyName>CreateTensor</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\exe\</OutputPath>
+    <OutputPath>..\..\Exe\</OutputPath>
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <AssemblyName>CreateTensor</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
@@ -40,12 +38,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src" />
+    <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Samples" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\CreateTensor.pas">
+    <Compile Include="..\..\Src\Samples\AllocateTensor.pas">
       <SubType>Code</SubType>
-      <Link>..\..\src\CreateTensor.pas</Link>
+      <Link>..\..\Src\Samples\AllocateTensor.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />

@@ -44,12 +44,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src" />
+    <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Utils" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\Utils.pas">
+    <Compile Include="..\..\Src\Utils\Utils.pas">
       <SubType>Code</SubType>
-      <Link>..\..\src\Utils.pas</Link>
+      <Link>..\..\Src\Utils\Utils.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />

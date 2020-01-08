@@ -2,33 +2,33 @@
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
     <RootNamespace>TensorFlow.Island</RootNamespace>
-    <ProjectGuid>{01b95d4d-16b1-4b0f-8505-5b8dc4eda978}</ProjectGuid>
+    <ProjectGuid>{b9bf9360-d4f1-49d6-9304-fc7c83dba37a}</ProjectGuid>
     <OutputType>Executable</OutputType>
-    <AssemblyName>GraphInfo</AssemblyName>
+    <AssemblyName>TensorInfo</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>Samples.GraphInfo</Name>
+    <Name>Samples.TensorInfo</Name>
     <Architecture>x86_64</Architecture>
     <OutputPath>..\Bin\$(Configuration)</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>..\..\exe\</OutputPath>
+    <OutputPath>..\..\Exe\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <GenerateDebugInfo>True</GenerateDebugInfo>
     <CpuType>x86</CpuType>
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <AssemblyName>GraphInfo</AssemblyName>
+    <AssemblyName>TensorInfo</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\exe\</OutputPath>
+    <OutputPath>..\..\Exe\</OutputPath>
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <AssemblyName>GraphInfo</AssemblyName>
+    <AssemblyName>TensorInfo</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
@@ -45,12 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src" />
+    <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Samples" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\GraphInfo.pas">
+    <Compile Include="..\..\Src\Samples\TensorInfo.pas">
       <SubType>Code</SubType>
-      <Link>..\..\src\GraphInfo.pas</Link>
+      <Link>..\..\Src\Samples\TensorInfo.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />

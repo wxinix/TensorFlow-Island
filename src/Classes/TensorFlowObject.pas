@@ -22,25 +22,24 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  TensorFlow,
   RemObjects.Elements.System;
 
 type
-  TFObjectDisposedException = public class(Exception)
+  TensorFlowObjectDisposedException<T> = public class(Exception)
   public
-    constructor (aObject: TFObject);
+    constructor (aObject: TensorFlowObject<T>);
     begin
       inherited constructor($'{aObject.ToString} instance was already disposed.');
     end;
   end;
 
-  TFObjectDisposeAction = public block(aObjectPtr: ^Void);
+  ObjectDisposeAction<T> = public block(aObjectPtr: ^T);
 
-  TFObject = public abstract class(IDisposable)
+  TensorFlowObject<T> = public abstract class(IDisposable)
   private
+    fDisposeAction: ObjectDisposeAction<T>;
     fDisposed: Boolean := false;
-    fObjectPtr: ^Void := nil;
-    fDisposeAction: TFObjectDisposeAction;
+    fObjectPtr: ^T := nil;
 
     finalizer;
     begin
@@ -48,16 +47,16 @@ type
         Dispose(false);
     end;
 
-    method get_ObjectPtr: ^Void;
+    method get_ObjectPtr: ^T;
     begin
       if fDisposed then 
-        raise new TFObjectDisposedException(self);
+        raise new TensorFlowObjectDisposedException<T>(self);
       exit fObjectPtr;
     end;
   protected
-    constructor withObjectPtr(aPtr: ^Void) DisposeAction(aAction: TFObjectDisposeAction);
+    constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: ObjectDisposeAction<T>);
     begin
-      fObjectPtr := aPtr;
+      fObjectPtr := aObjectPtr;
       fDisposeAction := aAction;
     end;
 
@@ -75,26 +74,6 @@ type
       Dispose(true);
     end;
 
-    property ObjectPtr: ^Void read get_ObjectPtr;
+    property ObjectPtr: ^T read get_ObjectPtr;
   end;
-
-  TFBuffer = class(TFObject)
-  private
-    fDisposeAction: TFObjectDisposeAction := method (aObjectPtr: ^Void) begin
-      TF_DeleteBuffer(^TF_Buffer(aObjectPtr));
-    end;
-
-  public
-    constructor;
-    begin
-      inherited constructor withObjectPtr(TF_NewBuffer()) DisposeAction(fDisposeAction);
-    end;
-
-    constructor(const aProtoBuf: array of Byte);
-    begin
-      inherited constructor withObjectPtr(TF_NewBufferFromString(aProtoBuf, aProtoBuf.Length))
-        DisposeAction(fDisposeAction);
-    end;
-  end;
-
 end.
