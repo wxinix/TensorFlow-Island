@@ -46,13 +46,6 @@ type
       if not fDisposed then 
         Dispose(false);
     end;
-
-    method get_ObjectPtr: ^T;
-    begin
-      if fDisposed then 
-        raise new TensorFlowObjectDisposedException<T>(self);
-      exit fObjectPtr;
-    end;
   protected
     constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: ObjectDisposeAction<T>);
     begin
@@ -74,6 +67,12 @@ type
       Dispose(true);
     end;
 
-    property ObjectPtr: ^T read get_ObjectPtr;
+    property ObjectPtr: ^T 
+      read begin
+        if fDisposed then 
+          raise new TensorFlowObjectDisposedException<T>(self)
+        else
+          exit fObjectPtr;
+      end;
   end;
 end.
