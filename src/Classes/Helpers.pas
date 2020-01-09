@@ -24,34 +24,5 @@ namespace TensorFlow.Island.Classes;
 uses
   TensorFlow;
 
-type
-  Status = public class(TensorFlowObject<TF_Status>)
-  public
-    constructor;
-    begin
-      inherited constructor withObjectPtr(TF_NewStatus()) 
-        DisposeAction(aObjectPtr->TF_DeleteStatus(aObjectPtr));
-    end;
-
-    method SetStatus(aCode: TF_Code) StatusMessage(const aMsg: String);
-    begin
-      TF_SetStatus(self.ObjectPtr, aCode, aMsg.ToAnsiChars(true));
-    end;
-
-    class method ForwardOrCreate(aIncoming: Status): Status;
-    begin
-      result := if assigned(aIncoming) then aIncoming else new Status;
-    end;
-
-    property StatusCode: TF_Code 
-      read begin
-        result := TF_GetCode(ObjectPtr);
-      end;
-
-    property StatusMessage: String
-      read begin
-        result.FromPAnsiChars(TF_Message(ObjectPtr));
-      end;
-  end;
 
 end.
