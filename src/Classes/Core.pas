@@ -34,11 +34,11 @@ type
     end;
   end;
 
-  ObjectDisposeAction<T> = public block(aObjectPtr: ^T);
+  TensorFlowObjectDisposeAction<T> = public block(aObjectPtr: ^T);
 
   TensorFlowObject<T> = public abstract class(IDisposable)
   private
-    fDisposeAction: ObjectDisposeAction<T>;
+    fDisposeAction: TensorFlowObjectDisposeAction<T>;
     fDisposed: Boolean := false;
     fObjectPtr: ^T := nil;
 
@@ -47,7 +47,7 @@ type
       if not fDisposed then Dispose(false);
     end;
   protected
-    constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: ObjectDisposeAction<T>);
+    constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
     begin
       fObjectPtr := aObjectPtr;
       fDisposeAction := aAction;
@@ -76,7 +76,7 @@ type
 
   Buffer = public class(TensorFlowObject<TF_Buffer>)
   private
-    fDisposeAction: ObjectDisposeAction<TF_Buffer> := aObjectPtr->TF_DeleteBuffer(aObjectPtr);  
+    fDisposeAction: TensorFlowObjectDisposeAction<TF_Buffer> := aObjectPtr->TF_DeleteBuffer(aObjectPtr);  
   public
     constructor;
     begin
