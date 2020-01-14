@@ -16,7 +16,7 @@ The difference between TensorFlow-Island and other wellknown TensorFlow bindings
  - Provides a foundational Computational Graph framework, with an additional set of customized TensorFlow Ops for Traffic and Transportation applications, including Traffic Signal Optimizations, Smart Driver APIs for Connected Vehicle Application Simulation, and Innovative Traffic Simulation Calibration.
 
 # Compilers Toolchain Requirements
-TensorFlow Island requires RemObjects Elements Compilers. For commmercial, open-source, or academic applications, please contance RemObjects (mh@remobjects.com) for different licensing options.
+TensorFlow Island requires RemObjects Elements Compilers. For commmercial, open-source, or academic applications, please contact RemObjects (mh@remobjects.com) for different licensing options.
 
 # License
 MIT License (c) 2019-2020. Copywright Wuping Xin and KLD Engineering, P. C. 
