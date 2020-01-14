@@ -13,7 +13,8 @@ The difference between TensorFlow-Island and other wellknown TensorFlow bindings
  - A higher level abstraction of TensorFlow C-API,  cross-platform (Windows, Linux and MacOS), and CPU/GPU native machine code;
  - Multiple language support for Oxygene, Swift, Java, Go and C#, and multiple platform support for Windows, Linux and MacOS;
  - Support performance-critical machine-learning and Artifical Intelligence algorithms;
- - Provides a foundational Computational Graph framework, with an additional set of customized TensorFlow Ops for Traffic and Transportation applications, including Traffic Signal Optimizations, Smart Driver APIs for Connected Vehicle Application Simulation, and Innovative Traffic Simulation Calibration.
+ - Provides a foundational Computational Graph framework, with an additional set of customized TensorFlow Ops for Traffic and Transportation applications, including Traffic Signal Optimizations, Smart Driver APIs for Connected Vehicle Application Simulation, and Innovative Traffic Simulation Calibration;
+ - Provides a foundational Computational Graph framework to be integrated in PTV Vissim Microscopic Traffic Simulator, enabling GPU computing for External Driver Model, and Signal Control API modules.
 
 # Compilers Toolchain Requirements
 TensorFlow Island requires RemObjects Elements Compilers. For commmercial, open-source, or academic applications, please contact RemObjects (mh@remobjects.com) for different licensing options.
