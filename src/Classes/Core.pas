@@ -22,6 +22,7 @@
 namespace TensorFlow.Island.Classes;
 
 uses
+  rtl,
   TensorFlow,
   RemObjects.Elements.System;
 
@@ -32,13 +33,13 @@ type
     
     method CheckAndRaiseOnDisposed(aDisposed: Boolean);
     begin
-      if aDisposed then
-        raise new ObjectDisposedException(self);
+      if aDisposed then raise new ObjectDisposedException(self);
     end;
   public
     method Dispose;
     begin
-      Dispose(true);
+      Dispose(true); 
+      GC.SupressFinalize(self); 
     end;
   end;
 
@@ -50,14 +51,6 @@ type
     end;
   end;
 
-  TensorFlowObjectDisposedException<T> = public class(ObjectDisposedException)
-  public
-    constructor (aObject: TensorFlowObject<T>);
-    begin
-      inherited constructor(aObject);
-    end;
-  end;
-
   TensorFlowObjectDisposeAction<T> = public block(aObjectPtr: ^T);
 
   TensorFlowObject<T> = public abstract class(DisposableObject)
@@ -65,9 +58,10 @@ type
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
     fDisposed: Boolean := false;
     fObjectPtr: ^T := nil;
+    
     finalizer;
     begin
-      Dispose(false);
+      if not fDisposed then Dispose(false);
     end;
   protected
     constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
@@ -78,16 +72,13 @@ type
 
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then 
-        exit;
+      if fDisposed then exit;
       
       if aDisposing then begin
-        // Call object's Dispose().
+        // Derived class should call managed object's Dispose().
       end;
 
-      if assigned(fDisposeAction) then 
-        fDisposeAction(fObjectPtr);
-      
+      if assigned(fDisposeAction) then fDisposeAction(fObjectPtr);      
       fDisposed := true;
       inherited Dispose(aDisposing);
     end;
@@ -102,6 +93,7 @@ type
   Buffer = public class(TensorFlowObject<TF_Buffer>)
   private
     fDisposeAction: TensorFlowObjectDisposeAction<TF_Buffer> := aObjectPtr->TF_DeleteBuffer(aObjectPtr); 
+    
     finalizer;
     begin
       Dispose(false);
@@ -123,6 +115,7 @@ type
   Operation = public class(TensorFlowObject<TF_Operation>)
   private
     fName: not nullable String;
+    
     finalizer;
     begin
       Dispose(false);
@@ -209,6 +202,7 @@ type
     fDims: ^Int64;
     fNumDims: Int32;
     fDisposed: Boolean:= false;
+    
     finalizer;
     begin
       if not fDisposed then Dispose(false);
@@ -216,7 +210,7 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then exit;
+      if fDisposed then exit;      
       free(fDims);
       fDisposed:= true;
       inherited Dispose(aDisposing);
@@ -267,7 +261,7 @@ type
       end;
   end;
 
-  Output = public class
+  Output = public class(DisposableObject)
   private
     fOper: Operation;
     fIndex: Integer;
@@ -308,6 +302,7 @@ type
   Graph = public class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: String;
+    
     finalizer;
     begin
       Dispose(false);
@@ -331,7 +326,7 @@ type
     end;
 
     method GetOperationByName(const aName: not nullable String): Tuple of (Boolean, Operation);
-    begin      
+    begin
       var opPtr := TF_GraphOperationByName(ObjectPtr, aName.ToAnsiChars(true));
       if assigned(opPtr) then 
         result := (true, new Operation withObjectPtr(opPtr) Name(aName))
@@ -373,6 +368,7 @@ type
       fDataType: TF_DataType;
       fDisposed: Boolean := false;
       fShape: TensorShape;
+      
       finalizer;
       begin
         if not fDisposed then Dispose(false);
@@ -380,12 +376,8 @@ type
     protected
       method Dispose(aDisposing: Boolean); override;
       begin
-        if fDisposed then 
-          exit;
-
-        if aDisposing then
-          fShape.Dispose;
-
+        if fDisposed then exit;
+        if aDisposing then fShape.Dispose;
         free(fData);
         fDisposed := true;
         inherited Dispose(aDisposing);
@@ -426,8 +418,9 @@ type
           fData := malloc(fNumBytes);
           var curPos: Integer := 0;
           for I: Integer := 0 to aValue.Length - 1 do begin
-            memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), String(aValue[I]).Length + 1);
-            curPos := curPos + String(aValue[I]).Length + 1;
+            var num := String(aValue[I]).Length + 1; // One extra byte for null terminator. 
+            memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), num);
+            curPos := curPos + num;
           end;
         end;
       end;
@@ -464,12 +457,8 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then 
-        exit;
-
-      if aDisposing then
-        fData.Dispose;
-
+      if fDisposed then exit;
+      if aDisposing then fData.Dispose;
       fDisposed := true;
       inherited Dispose(aDisposing);
     end;
@@ -479,12 +468,13 @@ type
       var lTensor := TF_NewTensor(aData.DataType, aData.Shape.Dims, 
         aData.Shape.NumDims, aData.Data, aData.NumBytes, nil, nil);
 
-      if not assigned(lTensor) then
+      if not assigned(lTensor) then 
         raise new Exception('Cannot create new Tensor.');
 
       fData := aData;
 
-      inherited constructor withObjectPtr(lTensor) DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
+      inherited constructor withObjectPtr(lTensor) 
+        DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
     end;
 
     property Data: ITensorData
