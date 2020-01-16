@@ -265,6 +265,11 @@ type
   private
     fOper: Operation;
     fIndex: Integer;
+
+    finalizer;
+    begin
+      Dispose(false);
+    end;
   public
     constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer);
     begin
@@ -319,10 +324,10 @@ type
       result := new Scope withScopeToSave(fCurrentScope) 
         RestoreAction(aScopeToRestore->begin fCurrentScope := aScopeToRestore end);
       
-      fCurrentScope := if String.IsNullOrEmpty(CurrentScope) then 
-                         aNewScope 
-                       else 
-                         fCurrentScope + '/' + aNewScope;
+      if String.IsNullOrEmpty(CurrentScope) then 
+        fCurrentScope := aNewScope 
+      else 
+        fCurrentScope := fCurrentScope + '/' + aNewScope;
     end;
 
     method GetOperationByName(const aName: not nullable String): Tuple of (Boolean, Operation);
