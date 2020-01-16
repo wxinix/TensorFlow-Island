@@ -366,7 +366,7 @@ type
     property Shape: TensorShape read;
   end; 
 
-  TensorData<T> = unit class(DisposableObject, ITensorData)
+  TensorData<T> = public class(DisposableObject, ITensorData)
     private
       fNumBytes: UInt64 := 0;
       fData: ^Void;
