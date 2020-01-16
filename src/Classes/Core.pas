@@ -298,7 +298,7 @@ type
       read begin
         result := fIndex;
       end;
-    
+
     property OutputType: TF_DataType
       read begin
         result := TF_OperationOutputType(self.ToTensorFlowNativeOutput);
@@ -385,7 +385,7 @@ type
 
         if aDisposing then
           fShape.Dispose;
-    
+
         free(fData);
         fDisposed := true;
         inherited Dispose(aDisposing);
@@ -394,7 +394,7 @@ type
       constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable TensorShape);
       begin
         var valueType := aValue[0].GetType;
-      
+
         case valueType.Code of
           TypeCodes.Boolean: fDataType := TF_DataType.TF_BOOL;
           TypeCodes.Byte   : fDataType := TF_DataType.TF_UINT8;
@@ -429,24 +429,24 @@ type
             memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), String(aValue[I]).Length + 1);
             curPos := curPos + String(aValue[I]).Length + 1;
           end;
-        end;        
+        end;
       end;
 
       property NumBytes: UInt64 
         read begin 
           result := fNumBytes 
         end;
-      
+
       property Data: ^Void 
         read begin 
           result := fData
         end;
-      
+
       property DataType: TF_DataType 
         read begin 
           result := fDataType 
         end;
-      
+
       property Shape: TensorShape 
         read begin 
           result := fShape 
@@ -466,10 +466,10 @@ type
     begin
       if fDisposed then 
         exit;
-      
+
       if aDisposing then
         fData.Dispose;
-      
+
       fDisposed := true;
       inherited Dispose(aDisposing);
     end;
@@ -483,7 +483,7 @@ type
         raise new Exception('Cannot create new Tensor.');
 
       fData := aData;
-      
+
       inherited constructor withObjectPtr(lTensor) DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
     end;
 
@@ -493,6 +493,5 @@ type
         result := fData;
       end;
   end; 
-
 
 end.
