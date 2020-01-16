@@ -92,6 +92,7 @@ type
 
         writeLn('Congradulations. Success allocating tensor!');
         writeLn($'TF_BOOL size is {TF_DataTypeSize(TF_DataType.TF_BOOL)}');
+        writeLn($'TF_STRING size is {TF_DataTypeSize(TF_DataType.TF_STRING)}');
         readLn;
       finally
         TF_DeleteTensor(tensor);
