@@ -427,7 +427,7 @@ type
           var curPos: Integer := 0;
           for I: Integer := 0 to aValue.Length - 1 do begin
             memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), String(aValue[I]).Length + 1);
-            curPos := curos + String(aValue[I]).Length + 1;
+            curPos := curPos + String(aValue[I]).Length + 1;
           end;
         end;        
       end;
