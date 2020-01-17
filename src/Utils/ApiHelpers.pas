@@ -29,22 +29,16 @@ uses
     free(aData);
   end;
 
-  method ReadBufferFromFile(const aFile: String): ^TF_Buffer;
+  method ReadBufferFromFile(const aFile: not nullable String): ^TF_Buffer;
   begin
-    var fs := new FileStream(aFile, FileMode.Open, FileAccess.Read);
-    var fsize := fs.Length;
-
-    try
-      if fsize < 1 then exit nil;
-      
-      var data := (^AnsiChar) (malloc(fsize)); 
-      fs.Read(data, fsize);      
+    using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
+      if fs.Length < 1 then exit nil;      
+      var data := malloc(fs.Length); 
+      fs.Read(data, fs.Length);      
       result := TF_NewBuffer();
       result^.data := data;
-      result^.length := fsize;
+      result^.length := fs.Length;
       result^.data_deallocator := @DeallocateBuffer;
-    finally
-      fs.Close;
     end;
   end;
 
