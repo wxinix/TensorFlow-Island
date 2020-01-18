@@ -149,8 +149,9 @@ type
       if fNumBytes > 0 then begin
         result := new Byte[fNumBytes];
         memcpy(result, fData, fNumBytes);
-      end else
+      end else begin
         result := nil;
+      end;
     end;
 
     property NumBytes: UInt64 
@@ -505,6 +506,7 @@ type
   private
     fData: ITensorData;
     fDisposed: Boolean := false;
+    
     finalizer;
     begin
       if not fDisposed then Dispose(false);
@@ -520,16 +522,18 @@ type
   public
     constructor withData(aData: ITensorData);
     begin
-      var lTensor := TF_NewTensor(aData.DataType, aData.Shape.ToArray, 
-        aData.Shape.NumDims, aData.ToArray, aData.NumBytes, nil, nil);
+      var lTensor := TF_NewTensor(
+        aData.DataType, 
+        aData.Shape.ToArray, 
+        aData.Shape.NumDims, 
+        aData.ToArray, 
+        aData.NumBytes, 
+        nil, 
+        nil);
 
-      if not assigned(lTensor) then 
-        raise new Exception('Cannot create new Tensor.');
-
+      if not assigned(lTensor) then raise new Exception('Cannot create new Tensor.');      
       fData := aData;
-
-      inherited constructor withObjectPtr(lTensor) 
-        DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
+      inherited constructor withObjectPtr(lTensor) DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
     end;
 
     property Data: ITensorData
