@@ -419,6 +419,26 @@ type
     fDataType: TF_DataType;
     fDisposed: Boolean := false;
     fShape: TensorShape;
+
+    method ToTensorFlowType(aType: &Type): TF_DataType;
+    begin
+      case aType.Code of
+        TypeCodes.Boolean: result := TF_DataType.TF_BOOL;
+        TypeCodes.Byte   : result := TF_DataType.TF_UINT8;
+        TypeCodes.UInt16 : result := TF_DataType.TF_UINT16;
+        TypeCodes.UInt32 : result := TF_DataType.TF_UINT32;
+        TypeCodes.UInt64 : result := TF_DataType.TF_UINT64;
+        TypeCodes.SByte  : result := TF_DataType.TF_INT8;
+        TypeCodes.Int16  : result := TF_DataType.TF_INT16;
+        TypeCodes.Int32  : result := TF_DataType.TF_INT32;
+        TypeCodes.Int64  : result := TF_DataType.TF_INT64; 
+        TypeCodes.Single : result := TF_DataType.TF_FLOAT;
+        TypeCodes.Double : result := TF_DataType.TF_DOUBLE; 
+        TypeCodes.String : result := TF_DataType.TF_STRING;
+      else
+        raise new Exception($'Cannot convert {valueType.ToString} to TensorFlow data type.');
+      end;
+    end;
       
     finalizer;
     begin
@@ -436,25 +456,7 @@ type
   public
     constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable TensorShape);
     begin
-      var valueType := aValue[0].GetType;
-
-      case valueType.Code of
-        TypeCodes.Boolean: fDataType := TF_DataType.TF_BOOL;
-        TypeCodes.Byte   : fDataType := TF_DataType.TF_UINT8;
-        TypeCodes.UInt16 : fDataType := TF_DataType.TF_UINT16;
-        TypeCodes.UInt32 : fDataType := TF_DataType.TF_UINT32;
-        TypeCodes.UInt64 : fDataType := TF_DataType.TF_UINT64;
-        TypeCodes.SByte  : fDataType := TF_DataType.TF_INT8;
-        TypeCodes.Int16  : fDataType := TF_DataType.TF_INT16;
-        TypeCodes.Int32  : fDataType := TF_DataType.TF_INT32;
-        TypeCodes.Int64  : fDataType := TF_DataType.TF_INT64; 
-        TypeCodes.Single : fDataType := TF_DataType.TF_FLOAT;
-        TypeCodes.Double : fDataType := TF_DataType.TF_DOUBLE; 
-        TypeCodes.String : fDataType := TF_DataType.TF_STRING;
-      else
-        raise new Exception($'Invalid tensor data type {valueType.ToString}');
-      end;
-
+      fDataType := ToTensorFlowType(aValue[0].GetType);
       fShape := aShape;
 
       if fDataType <> TF_DataType.TF_STRING then begin
