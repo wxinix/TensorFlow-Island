@@ -25,7 +25,7 @@ uses
   TensorFlow;
 
 type
-  TensorFlowDataType = unit enum (
+  TensorFlowDataType nested in Helper = private enum (
     Float = TF_DataType.FLOAT, 
     Double = TF_DataType.DOUBLE, 
     Int32 = TF_DataType.INT32,
@@ -51,7 +51,7 @@ type
     UInt64 = TF_DataType.UINT64
   );
 
-  TensorFlowCode = unit enum (
+  TensorFlowCode nested in Helper = private enum (
     Ok = TF_Code.TF_OK,
     Cancelled = TF_Code.TF_CANCELLED,
     Unknown = TF_Code.TF_UNKNOWN,
@@ -88,7 +88,7 @@ type
     end;
   end;
 
-  TensorFlowClassHelper = public class
+  Helper = public class
   public
     class method TFDataTypeToString(aDataType: TF_DataType): String;
     begin
@@ -102,7 +102,7 @@ type
       result := tfCode.ToString;
     end;
 
-    class method ConvertLocalToTFDataType(aLocalType: &Type): TF_DataType;
+    class method ConvertLocalTypeToTFDataType(aLocalType: &Type): TF_DataType;
     begin
       case aLocalType.Code of
         TypeCodes.Boolean: 
@@ -134,7 +134,7 @@ type
       end;
     end;
 
-    class method ReadBufferFromFile(aFile: not nullable String): array of Byte;
+    class method ReadBufferDataFromFile(aFile: not nullable String): array of Byte;
     begin
       if not File.Exists(aFile) then begin
         raise new BufferFileNotExistException(aFile);

@@ -129,7 +129,7 @@ type
   public
     constructor withFile(aFile: not nullable String);
     begin
-      var bufData := TensorFlowClassHelper.ReadBufferFromFile(aFile);     
+      var bufData := Helper.ReadBufferDataFromFile(aFile);     
       
       if assigned(bufData) then begin
         fNumBytes := bufData.Length;
@@ -488,7 +488,7 @@ type
     constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable TensorShape);
     begin
       var localType := aValue[0].GetType;
-      fDataType := TensorFlowClassHelper.ConvertLocalToTFDataType(localType);
+      fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
       fShape := aShape;
 
       if fDataType <> TF_DataType.TF_STRING then begin
@@ -541,7 +541,7 @@ type
   public
     constructor(aType: TF_DataType); 
     begin
-      var typeStr := TensorFlowClassHelper.TFDataTypeToString(aType); 
+      var typeStr := Helper.TFDataTypeToString(aType); 
       var msg := $'Cannot create tensor for type {typeStr}';
       inherited constructor(msg);
     end;
