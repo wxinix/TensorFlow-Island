@@ -25,7 +25,8 @@ uses
   TensorFlow;
 
 type
-  TensorFlowDataType nested in Helper = private enum (
+  TensorFlowDataType nested in Helper = private enum 
+  (
     Float = TF_DataType.FLOAT, 
     Double = TF_DataType.DOUBLE, 
     Int32 = TF_DataType.INT32,
@@ -51,7 +52,8 @@ type
     UInt64 = TF_DataType.UINT64
   );
 
-  TensorFlowCode nested in Helper = private enum (
+  TensorFlowCode nested in Helper = private enum 
+  (
     Ok = TF_Code.TF_OK,
     Cancelled = TF_Code.TF_CANCELLED,
     Unknown = TF_Code.TF_UNKNOWN,
