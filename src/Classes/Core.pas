@@ -32,7 +32,9 @@ type
     
     method CheckAndRaiseOnDisposed(aDisposed: Boolean);
     begin
-      if aDisposed then raise new ObjectDisposedException(self);
+      if aDisposed then begin
+        raise new ObjectDisposedException(self);
+      end
     end;
   public
     method Dispose;
@@ -46,7 +48,7 @@ type
   public
     constructor (aObject: DisposableObject);
     begin
-      inherited constructor($'{aObject.ToString} instance was already disposed.');
+      inherited constructor($'{aObject.ToString} instance already disposed.');
     end;
   end;
 
@@ -60,7 +62,9 @@ type
     
     finalizer;
     begin
-      if not fDisposed then Dispose(false);
+      if not fDisposed then begin
+        Dispose(false);
+      end
     end;
   protected
     constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
@@ -71,15 +75,17 @@ type
 
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then
+      if fDisposed then begin
         exit;
+      end;
       
       if aDisposing then begin
         // Derived class should call managed object's Dispose().
       end;
 
-      if assigned(fDisposeAction) then 
-        fDisposeAction(fObjectPtr);      
+      if assigned(fDisposeAction) then begin
+        fDisposeAction(fObjectPtr);
+      end;
       
       fDisposed := true;
       inherited Dispose(aDisposing);
@@ -102,16 +108,20 @@ type
 
     finalizer;
     begin
-      if not fDisposed then Dispose(false);
+      if not fDisposed then begin
+        Dispose(false);
+      end
     end;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then 
+      if fDisposed then begin
         exit;
+      end;
       
-      if (assigned(fData) and fManaged) then 
+      if (assigned(fData) and fManaged) then begin 
         free(fData);
+      end;
       
       fDisposed := true;
       inherited Dispose(aDisposing);
@@ -119,20 +129,18 @@ type
   public
     constructor withFile(aFile: not nullable String);
     begin
-      if not File.Exists(aFile) then 
-        raise new Exception($'{aFile} not existing.');      
+      var bufData := TensorFlowClassHelper.ReadBufferFromFile(aFile);     
       
-      var fs := new FileStream(aFile, FileMode.Open, FileAccess.Read);
-      fNumBytes := fs.Length;      
-      var buf: ^TF_Buffer := TF_NewBuffer();
-      
-      if fNumBytes  > 0 then begin
-        fData := malloc(fNumBytes);       
-        fs.Read(fData, fNumBytes);
-      end; 
+      if assigned(bufData) then begin
+        fNumBytes := bufData.Length;
+        fData := malloc(fNumBytes);
+        memcpy(fData, bufData, fNumBytes);
+      end else begin
+        fNumBytes := 0;
+        fData := nil;
+      end;
 
-      fs.Close;
-      
+      var buf := TF_NewBuffer();
       buf^.data := fData;
       buf^.length := fNumBytes;
       buf^.data_deallocator := nil;
@@ -242,8 +250,9 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then 
+      if fDisposed then begin
         exit;
+      end;
       
       fRestoreAction(fSavedScope);
       fDisposed := true;
@@ -257,6 +266,15 @@ type
     end;
   end;
 
+  InvalidShapeDimensionIndexException = public class(Exception)
+  public
+    constructor (aIndex: Int32; aNumDims: Int32);
+    begin
+      var msg := $'Invalid dim index {aIndex}, NumDims = {aNumDims}.';
+      inherited constructor(msg);
+    end;
+  end;
+
   TensorShape = public class(DisposableObject)
   private
     fDims: ^Int64;
@@ -265,13 +283,16 @@ type
     
     finalizer;
     begin
-      if not fDisposed then Dispose(false);
+      if not fDisposed then begin
+        Dispose(false);
+      end
     end;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then 
-        exit;      
+      if fDisposed then begin
+        exit;
+      end;
       
       free(fDims);
       fDisposed:= true;
@@ -280,9 +301,9 @@ type
   public
     constructor withDimentions(aDims: array of Int64);
     begin
-      fNumDims := if assigned(aDims) then aDims.Length else 0;
-      
+      fNumDims := if assigned(aDims) then aDims.Length else 0;      
       var numBytes := sizeOf(int64_t) * fNumDims;      
+      
       if numBytes >0 then begin
         fDims := ^Int64(malloc(numBytes));
         memcpy(fDims, aDims, numBytes);
@@ -298,7 +319,7 @@ type
         result := new Int64[NumDims];
         memcpy(result, fDims, sizeOf(Int64) * NumDims);
       end else begin
-        raise new Exception('Zero dimension cannot be converted to array.');
+        result := nil;
       end;
     end;
     
@@ -311,10 +332,12 @@ type
     property Dim[aIndex: Int32]: Int64
       read begin
         CheckAndRaiseOnDisposed(fDisposed);
-        if (NumDims > 0) and (0 <= aIndex < NumDims) then 
-          result := fDims[aIndex] 
-        else
-          raise new Exception($'Shape.Dims[{aIndex}]: invalid index. Shape.NumDims is {NumDims}');
+        
+        if (NumDims > 0) and (0 <= aIndex < NumDims) then begin 
+          result := fDims[aIndex]
+        end else begin
+          raise new InvalidShapeDimensionIndexException(aIndex, NumDims);
+        end;
       end;
   end;
 
@@ -381,38 +404,44 @@ type
       result := new Scope withScopeToSave(fCurrentScope) 
         RestoreAction(aScopeToRestore->begin fCurrentScope := aScopeToRestore end);
       
-      if String.IsNullOrEmpty(CurrentScope) then 
-        fCurrentScope := aNewScope 
-      else 
+      if String.IsNullOrEmpty(CurrentScope) then begin
+        fCurrentScope := aNewScope
+      end else begin
         fCurrentScope := fCurrentScope + '/' + aNewScope;
+      end
     end;
 
     method GetOperationByName(const aName: not nullable String): Tuple of (Boolean, Operation);
     begin
       var opPtr := TF_GraphOperationByName(ObjectPtr, aName.ToAnsiChars(true));
-      if assigned(opPtr) then 
+      
+      if assigned(opPtr) then begin
         result := (true, new Operation withObjectPtr(opPtr) Name(aName))
-      else
+      end else begin
         result := (false, nil);
+      end;
     end;
 
     method GetTensorShape(aOutput: Output; aStatus: Status := nil): Tuple of (Boolean, TensorShape);
-    begin
-      result := (false, nil);
- 
+    begin 
       using disposableStatus := Status.ForwardOrCreate(aStatus) do begin
-        var nativeOut := aOutput.ToTensorFlowNativeOutput;
-        
+        var nativeOut := aOutput.ToTensorFlowNativeOutput;        
         var numDims := TF_GraphGetTensorNumDims(ObjectPtr, nativeOut, 
           disposableStatus.ObjectPtr);         
-        if (not disposableStatus.OK) or (numDims = 0) then
-          exit;
         
-        var dims := new Int64[numDims];        
-        TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims, 
-          disposableStatus.ObjectPtr);        
-        if disposableStatus.OK then 
-          result := (true, new TensorShape withDimentions(dims));
+        if (not disposableStatus.OK) or (numDims = 0) then begin
+          result := (false, nil);
+        end else begin        
+          var dims := new Int64[numDims];        
+          TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims, 
+            disposableStatus.ObjectPtr);        
+        
+          if disposableStatus.OK then begin
+            result := (true, new TensorShape withDimentions(dims));
+          end else begin
+            result := (false, nil);
+          end;
+        end;
       end;
     end;
 
@@ -433,51 +462,23 @@ type
     fDisposed: Boolean := false;
     fNumBytes: UInt64 := 0;
     fShape: TensorShape;
-
-    method ToTensorFlowType(aType: &Type): TF_DataType;
-    begin
-      case aType.Code of
-        TypeCodes.Boolean: 
-          result := TF_DataType.TF_BOOL;
-        TypeCodes.Byte: 
-          result := TF_DataType.TF_UINT8;
-        TypeCodes.UInt16: 
-          result := TF_DataType.TF_UINT16;
-        TypeCodes.UInt32: 
-          result := TF_DataType.TF_UINT32;
-        TypeCodes.UInt64: 
-          result := TF_DataType.TF_UINT64;
-        TypeCodes.SByte: 
-          result := TF_DataType.TF_INT8;
-        TypeCodes.Int16: 
-          result := TF_DataType.TF_INT16;
-        TypeCodes.Int32: 
-          result := TF_DataType.TF_INT32;
-        TypeCodes.Int64: 
-          result := TF_DataType.TF_INT64; 
-        TypeCodes.Single: 
-          result := TF_DataType.TF_FLOAT;
-        TypeCodes.Double: 
-          result := TF_DataType.TF_DOUBLE; 
-        TypeCodes.String: 
-          result := TF_DataType.TF_STRING;
-      else
-        raise new Exception($'Cannot convert {aType.ToString} to TensorFlow data type.');
-      end;
-    end;
-      
+     
     finalizer;
     begin
-      if not fDisposed then Dispose(false);
+      if not fDisposed then begin
+        Dispose(false);
+      end
     end;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then 
+      if fDisposed then begin
         exit;
+      end;
       
-      if aDisposing then 
+      if aDisposing then begin
         fShape.Dispose;
+      end;
       
       free(fData);
       fDisposed := true;
@@ -486,7 +487,8 @@ type
   public
     constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable TensorShape);
     begin
-      fDataType := ToTensorFlowType(aValue[0].GetType);
+      var localType := aValue[0].GetType;
+      fDataType := TensorFlowClassHelper.ConvertLocalToTFDataType(localType);
       fShape := aShape;
 
       if fDataType <> TF_DataType.TF_STRING then begin
@@ -500,6 +502,7 @@ type
 
         fData := malloc(fNumBytes);
         var curPos: Integer := 0;
+
         for I: Integer := 0 to aValue.Length - 1 do begin
           var num := String(aValue[I]).Length + 1; // One extra byte for null terminator.
           memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), num);
@@ -534,6 +537,16 @@ type
       end;
   end;
 
+  TensorCreateException = class(Exception)
+  public
+    constructor(aType: TF_DataType); 
+    begin
+      var typeStr := TensorFlowClassHelper.TFDataTypeToString(aType); 
+      var msg := $'Cannot create tensor for type {typeStr}';
+      inherited constructor(msg);
+    end;
+  end;
+
   Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
     fData: ITensorData;
@@ -541,16 +554,20 @@ type
     
     finalizer;
     begin
-      if not fDisposed then Dispose(false);
+      if not fDisposed then begin
+        Dispose(false);
+      end
     end;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then 
+      if fDisposed then begin
         exit;
+      end;
       
-      if aDisposing then 
+      if aDisposing then begin
         fData.Dispose;
+      end;
       
       fDisposed := true;
       inherited Dispose(aDisposing);
@@ -567,9 +584,10 @@ type
         nil, 
         nil);
 
-      if not assigned(lTensor) then 
-        raise new Exception('Cannot create new Tensor.');      
-      
+      if not assigned(lTensor) then begin
+        raise new TensorCreateException(aData.DataType); 
+      end;
+
       fData := aData;
       inherited constructor withObjectPtr(lTensor) 
         DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
