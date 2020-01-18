@@ -38,7 +38,7 @@ type
     method Dispose;
     begin
       Dispose(true);
-      BoehmGC.SuppressFinalize(self);
+      // BoehmGC.SuppressFinalize(self);
     end;
   end;
 
@@ -71,13 +71,16 @@ type
 
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then exit;
+      if fDisposed then
+        exit;
       
       if aDisposing then begin
         // Derived class should call managed object's Dispose().
       end;
 
-      if assigned(fDisposeAction) then fDisposeAction(fObjectPtr);      
+      if assigned(fDisposeAction) then 
+        fDisposeAction(fObjectPtr);      
+      
       fDisposed := true;
       inherited Dispose(aDisposing);
     end;
@@ -104,15 +107,21 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then exit;
-      if (assigned(fData) and fManaged) then free(fData);
+      if fDisposed then 
+        exit;
+      
+      if (assigned(fData) and fManaged) then 
+        free(fData);
+      
       fDisposed := true;
       inherited Dispose(aDisposing);
     end;
   public
     constructor withFile(aFile: not nullable String);
     begin
-      if not File.Exists(aFile) then raise new Exception($'{aFile} not existing.');      
+      if not File.Exists(aFile) then 
+        raise new Exception($'{aFile} not existing.');      
+      
       var fs := new FileStream(aFile, FileMode.Open, FileAccess.Read);
       fNumBytes := fs.Length;      
       var buf: ^TF_Buffer := TF_NewBuffer();
@@ -233,7 +242,9 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then exit;
+      if fDisposed then 
+        exit;
+      
       fRestoreAction(fSavedScope);
       fDisposed := true;
       inherited Dispose(aDisposing);
@@ -259,7 +270,9 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then exit;      
+      if fDisposed then 
+        exit;      
+      
       free(fDims);
       fDisposed:= true;
       inherited Dispose(aDisposing);
@@ -268,7 +281,8 @@ type
     constructor withDimentions(aDims: array of Int64);
     begin
       fNumDims := if assigned(aDims) then aDims.Length else 0;
-      var numBytes := sizeOf(int64_t) * fNumDims;
+      
+      var numBytes := sizeOf(int64_t) * fNumDims;      
       if numBytes >0 then begin
         fDims := ^Int64(malloc(numBytes));
         memcpy(fDims, aDims, numBytes);
@@ -279,7 +293,7 @@ type
 
     method ToArray: array of Int64;
     begin
-      CheckAndRaiseOnDisposed(fDisposed);
+      CheckAndRaiseOnDisposed(fDisposed);      
       if assigned(fDims) then begin
         result := new Int64[NumDims];
         memcpy(result, fDims, sizeOf(Int64) * NumDims);
@@ -423,20 +437,32 @@ type
     method ToTensorFlowType(aType: &Type): TF_DataType;
     begin
       case aType.Code of
-        TypeCodes.Boolean: result := TF_DataType.TF_BOOL;
-        TypeCodes.Byte   : result := TF_DataType.TF_UINT8;
-        TypeCodes.UInt16 : result := TF_DataType.TF_UINT16;
-        TypeCodes.UInt32 : result := TF_DataType.TF_UINT32;
-        TypeCodes.UInt64 : result := TF_DataType.TF_UINT64;
-        TypeCodes.SByte  : result := TF_DataType.TF_INT8;
-        TypeCodes.Int16  : result := TF_DataType.TF_INT16;
-        TypeCodes.Int32  : result := TF_DataType.TF_INT32;
-        TypeCodes.Int64  : result := TF_DataType.TF_INT64; 
-        TypeCodes.Single : result := TF_DataType.TF_FLOAT;
-        TypeCodes.Double : result := TF_DataType.TF_DOUBLE; 
-        TypeCodes.String : result := TF_DataType.TF_STRING;
+        TypeCodes.Boolean: 
+          result := TF_DataType.TF_BOOL;
+        TypeCodes.Byte: 
+          result := TF_DataType.TF_UINT8;
+        TypeCodes.UInt16: 
+          result := TF_DataType.TF_UINT16;
+        TypeCodes.UInt32: 
+          result := TF_DataType.TF_UINT32;
+        TypeCodes.UInt64: 
+          result := TF_DataType.TF_UINT64;
+        TypeCodes.SByte: 
+          result := TF_DataType.TF_INT8;
+        TypeCodes.Int16: 
+          result := TF_DataType.TF_INT16;
+        TypeCodes.Int32: 
+          result := TF_DataType.TF_INT32;
+        TypeCodes.Int64: 
+          result := TF_DataType.TF_INT64; 
+        TypeCodes.Single: 
+          result := TF_DataType.TF_FLOAT;
+        TypeCodes.Double: 
+          result := TF_DataType.TF_DOUBLE; 
+        TypeCodes.String: 
+          result := TF_DataType.TF_STRING;
       else
-        raise new Exception($'Cannot convert {valueType.ToString} to TensorFlow data type.');
+        raise new Exception($'Cannot convert {aType.ToString} to TensorFlow data type.');
       end;
     end;
       
@@ -447,8 +473,12 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then exit;
-      if aDisposing then fShape.Dispose;
+      if fDisposed then 
+        exit;
+      
+      if aDisposing then 
+        fShape.Dispose;
+      
       free(fData);
       fDisposed := true;
       inherited Dispose(aDisposing);
@@ -471,7 +501,7 @@ type
         fData := malloc(fNumBytes);
         var curPos: Integer := 0;
         for I: Integer := 0 to aValue.Length - 1 do begin
-          var num := String(aValue[I]).Length + 1; // One extra byte for null terminator. 
+          var num := String(aValue[I]).Length + 1; // One extra byte for null terminator.
           memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), num);
           curPos := curPos + num;
         end;
@@ -516,8 +546,12 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then exit;
-      if aDisposing then fData.Dispose;
+      if fDisposed then 
+        exit;
+      
+      if aDisposing then 
+        fData.Dispose;
+      
       fDisposed := true;
       inherited Dispose(aDisposing);
     end;
@@ -533,9 +567,12 @@ type
         nil, 
         nil);
 
-      if not assigned(lTensor) then raise new Exception('Cannot create new Tensor.');      
+      if not assigned(lTensor) then 
+        raise new Exception('Cannot create new Tensor.');      
+      
       fData := aData;
-      inherited constructor withObjectPtr(lTensor) DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
+      inherited constructor withObjectPtr(lTensor) 
+        DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
     end;
 
     property Data: ITensorData
