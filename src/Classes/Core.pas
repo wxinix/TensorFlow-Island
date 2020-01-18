@@ -236,9 +236,9 @@ type
 
   Scope = public class(DisposableObject)
   private
-    fSavedScope: String;
-    fRestoreAction: ScopeRestoreAction;
     fDisposed: Boolean := false;
+    fRestoreAction: ScopeRestoreAction;
+    fSavedScope: String;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -260,8 +260,8 @@ type
   TensorShape = public class(DisposableObject)
   private
     fDims: ^Int64;
-    fNumDims: Int32;
     fDisposed: Boolean:= false;
+    fNumDims: Int32;
     
     finalizer;
     begin
@@ -320,8 +320,8 @@ type
 
   Output = public class(DisposableObject)
   private
-    fOper: Operation;
     fIndex: Integer;
+    fOper: Operation;
 
     finalizer;
     begin
@@ -330,8 +330,8 @@ type
   public
     constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer);
     begin
-      fOper := aOper;
       fIndex := aIndex;
+      fOper := aOper;
     end;
 
     method ToTensorFlowNativeOutput: TF_Output;
@@ -428,10 +428,10 @@ type
 
   TensorData<T> = public class(DisposableObject, ITensorData)
   private
-    fNumBytes: UInt64 := 0;
     fData: ^Void;
     fDataType: TF_DataType;
     fDisposed: Boolean := false;
+    fNumBytes: UInt64 := 0;
     fShape: TensorShape;
 
     method ToTensorFlowType(aType: &Type): TF_DataType;
