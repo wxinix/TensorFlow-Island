@@ -22,7 +22,7 @@
 namespace TensorFlow.Island.Classes;
 
 uses  
-  RemObjects.Elements.System, 
+  RemObjects.Elements.System,
   TensorFlow;
 
 type
@@ -301,8 +301,8 @@ type
   public
     constructor withDimentions(aDims: array of Int64);
     begin
-      fNumDims := if assigned(aDims) then aDims.Length else 0;      
-      var numBytes := sizeOf(int64_t) * fNumDims;      
+      fNumDims := if assigned(aDims) then aDims.Length else 0;
+      var numBytes := sizeOf(int64_t) * fNumDims;
       
       if numBytes >0 then begin
         fDims := ^Int64(malloc(numBytes));
@@ -314,7 +314,7 @@ type
 
     method ToArray: array of Int64;
     begin
-      CheckAndRaiseOnDisposed(fDisposed);      
+      CheckAndRaiseOnDisposed(fDisposed); 
       if assigned(fDims) then begin
         result := new Int64[NumDims];
         memcpy(result, fDims, sizeOf(Int64) * NumDims);
@@ -395,13 +395,13 @@ type
   public
     constructor;
     begin
-      inherited constructor withObjectPtr(TF_NewGraph()) 
+      inherited constructor withObjectPtr(TF_NewGraph())
         DisposeAction(aObjectPtr->TF_DeleteGraph(aObjectPtr));
     end;
 
     method WithScope(aNewScope: not nullable String): Scope;
     begin
-      result := new Scope withScopeToSave(fCurrentScope) 
+      result := new Scope withScopeToSave(fCurrentScope)
         RestoreAction(aScopeToRestore->begin fCurrentScope := aScopeToRestore end);
       
       if String.IsNullOrEmpty(CurrentScope) then begin
@@ -425,16 +425,16 @@ type
     method GetTensorShape(aOutput: Output; aStatus: Status := nil): Tuple of (Boolean, TensorShape);
     begin 
       using disposableStatus := Status.ForwardOrCreate(aStatus) do begin
-        var nativeOut := aOutput.ToTensorFlowNativeOutput;        
-        var numDims := TF_GraphGetTensorNumDims(ObjectPtr, nativeOut, 
-          disposableStatus.ObjectPtr);         
+        var nativeOut := aOutput.ToTensorFlowNativeOutput;
+        var numDims := TF_GraphGetTensorNumDims(ObjectPtr, nativeOut,
+          disposableStatus.ObjectPtr);
         
         if (not disposableStatus.OK) or (numDims = 0) then begin
           result := (false, nil);
-        end else begin        
-          var dims := new Int64[numDims];        
-          TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims, 
-            disposableStatus.ObjectPtr);        
+        end else begin
+          var dims := new Int64[numDims];
+          TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims,
+            disposableStatus.ObjectPtr);
         
           if disposableStatus.OK then begin
             result := (true, new TensorShape withDimentions(dims));
@@ -518,30 +518,30 @@ type
       memcpy(result, fData, fNumBytes);
     end;
 
-    property NumBytes: UInt64 
+    property NumBytes: UInt64
       read begin
         CheckAndRaiseOnDisposed(fDisposed);
-        result := fNumBytes 
+        result := fNumBytes
       end;
     
-    property DataType: TF_DataType 
+    property DataType: TF_DataType
       read begin
         CheckAndRaiseOnDisposed(fDisposed);
-        result := fDataType 
+        result := fDataType
       end;
     
-    property Shape: TensorShape 
+    property Shape: TensorShape
       read begin
         CheckAndRaiseOnDisposed(fDisposed);
-        result := fShape 
+        result := fShape
       end;
   end;
 
   TensorCreateException = class(Exception)
   public
-    constructor(aType: TF_DataType); 
+    constructor(aType: TF_DataType);
     begin
-      var typeStr := Helper.TFDataTypeToString(aType); 
+      var typeStr := Helper.TFDataTypeToString(aType);
       var msg := $'Cannot create tensor for type {typeStr}';
       inherited constructor(msg);
     end;
@@ -576,20 +576,20 @@ type
     constructor withData(aData: ITensorData);
     begin
       var lTensor := TF_NewTensor(
-        aData.DataType, 
-        aData.Shape.ToArray, 
-        aData.Shape.NumDims, 
-        aData.ToArray, 
-        aData.NumBytes, 
-        nil, 
+        aData.DataType,
+        aData.Shape.ToArray,
+        aData.Shape.NumDims,
+        aData.ToArray,
+        aData.NumBytes,
+        nil,
         nil);
 
       if not assigned(lTensor) then begin
-        raise new TensorCreateException(aData.DataType); 
+        raise new TensorCreateException(aData.DataType);
       end;
 
       fData := aData;
-      inherited constructor withObjectPtr(lTensor) 
+      inherited constructor withObjectPtr(lTensor)
         DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
     end;
 

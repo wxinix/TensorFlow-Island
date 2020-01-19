@@ -25,30 +25,30 @@ uses
   TensorFlow;
 
 type
-  TensorFlowDataType nested in Helper = private enum 
+  TensorFlowDataType nested in Helper = private enum
   (
-    Float              = TF_DataType.FLOAT, 
-    Double             = TF_DataType.DOUBLE, 
+    Float              = TF_DataType.FLOAT,
+    Double             = TF_DataType.DOUBLE,
     Int32              = TF_DataType.INT32,
     UInt8              = TF_DataType.UINT8,
-    Int16              = TF_DataType.INT16, 
-    Int8               = TF_DataType.INT8, 
-    String             = TF_DataType.STRING, 
-    Complex64          = TF_DataType.COMPLEX64, 
+    Int16              = TF_DataType.INT16,
+    Int8               = TF_DataType.INT8,
+    String             = TF_DataType.STRING,
+    Complex64          = TF_DataType.COMPLEX64,
     Int64              = TF_DataType.INT64,
-    Bool               = TF_DataType.BOOL , 
-    QInt8              = TF_DataType.QINT8, 
-    QUInt8             = TF_DataType.QUINT8,  
+    Bool               = TF_DataType.BOOL,
+    QInt8              = TF_DataType.QINT8,
+    QUInt8             = TF_DataType.QUINT8,
     QInt32             = TF_DataType.QINT32,
-    BFloat16           = TF_DataType.BFLOAT16, 
+    BFloat16           = TF_DataType.BFLOAT16,
     QInt16             = TF_DataType.QINT16,
     QUInt16            = TF_DataType.QUINT16,
     UInt16             = TF_DataType.UINT16,
-    Complex128         = TF_DataType.COMPLEX128, 
+    Complex128         = TF_DataType.COMPLEX128,
     Half               = TF_DataType.HALF,
     Resource           = TF_DataType.RESOURCE,
     Variant            = TF_DataType.VARIANT,
-    UInt32             = TF_DataType.UINT32, 
+    UInt32             = TF_DataType.UINT32,
     UInt64             = TF_DataType.UINT64
   );
 
@@ -58,17 +58,17 @@ type
     Cancelled          = TF_Code.TF_CANCELLED,
     Unknown            = TF_Code.TF_UNKNOWN,
     InvalidArgument    = TF_Code.TF_INVALID_ARGUMENT,
-    DeadlineExceed     = TF_Code.TF_DEADLINE_EXCEEDED, 
+    DeadlineExceed     = TF_Code.TF_DEADLINE_EXCEEDED,
     NotFound           = TF_Code.TF_NOT_FOUND,
     AlreadyExists      = TF_Code.TF_ALREADY_EXISTS,
-    PermissionDenied   = TF_Code.TF_PERMISSION_DENIED,   
-    ResourceExhausted  = TF_Code.TF_RESOURCE_EXHAUSTED,  
-    FailedPrecondition = TF_Code.TF_FAILED_PRECONDITION, 
-    Aborted            = TF_Code.TF_ABORTED, 
-    OutOfRange         = TF_Code.TF_OUT_OF_RANGE,   
-    Unimplemented      = TF_Code.TF_UNIMPLEMENTED, 
-    Internal           = TF_Code.TF_INTERNAL, 
-    Unavailable        = TF_Code.TF_UNAVAILABLE,  
+    PermissionDenied   = TF_Code.TF_PERMISSION_DENIED,
+    ResourceExhausted  = TF_Code.TF_RESOURCE_EXHAUSTED,
+    FailedPrecondition = TF_Code.TF_FAILED_PRECONDITION,
+    Aborted            = TF_Code.TF_ABORTED,
+    OutOfRange         = TF_Code.TF_OUT_OF_RANGE,
+    Unimplemented      = TF_Code.TF_UNIMPLEMENTED,
+    Internal           = TF_Code.TF_INTERNAL,
+    Unavailable        = TF_Code.TF_UNAVAILABLE,
     DataLoss           = TF_Code.TF_DATA_LOSS, 
     Unauthenticated    = TF_Code.TF_UNAUTHENTICATED
   );
@@ -95,7 +95,7 @@ type
     class method TFDataTypeToString(aDataType: TF_DataType): String;
     begin
       var tfDataType := TensorFlowDataType(ord(aDataType));
-      result := tfDataType.ToString; 
+      result := tfDataType.ToString;
     end;
 
     class method TFCodeToString(aCode: TF_Code): String;
@@ -117,7 +117,7 @@ type
         TypeCodes.Int32  : result := TF_DataType.TF_INT32;
         TypeCodes.Int64  : result := TF_DataType.TF_INT64; 
         TypeCodes.Single : result := TF_DataType.TF_FLOAT;
-        TypeCodes.Double : result := TF_DataType.TF_DOUBLE; 
+        TypeCodes.Double : result := TF_DataType.TF_DOUBLE;
         TypeCodes.String : result := TF_DataType.TF_STRING;
       else
         raise new LocalToTFDataTypeConvertException(aLocalType);
@@ -132,12 +132,12 @@ type
       
       using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
         if fs.Length > 0 then begin
-          result := new Byte[fs.Length];  
+          result := new Byte[fs.Length];
           fs.Read(result, fs.Length);
         end else begin
           result := nil;
         end;
-      end;      
+      end; 
     end;
   end;
 
