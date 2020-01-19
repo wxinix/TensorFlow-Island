@@ -103,7 +103,7 @@ type
     fData: ^Void := nil;
     fDisposeAction: TensorFlowObjectDisposeAction<TF_Buffer> := aObjectPtr->TF_DeleteBuffer(aObjectPtr); 
     fDisposed: Boolean := false;
-    fManaged: Boolean := true; // Wheter buffer managed by this class.
+    fManaged: Boolean := true; // Whether buffer managed by this class.
     fNumBytes: UInt64 := 0;
 
     finalizer;
@@ -129,7 +129,7 @@ type
   public
     constructor withFile(aFile: not nullable String);
     begin
-      var bufData := Helper.ReadBufferDataFromFile(aFile);     
+      var bufData := Helper.ReadBufferDataFromFile(aFile);
       
       if assigned(bufData) then begin
         fNumBytes := bufData.Length;
