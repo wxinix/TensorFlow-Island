@@ -40,7 +40,7 @@ type
     method Dispose;
     begin
       Dispose(true);
-      // BoehmGC.SuppressFinalize(self);
+      BoehmGC.SuppressFinalize(self);
     end;
   end;
 
@@ -80,7 +80,7 @@ type
       end;
       
       if aDisposing then begin
-        // Derived class should call managed object's Dispose().
+        // Derived class should call its managed object's Dispose().
       end;
 
       if assigned(fDisposeAction) then begin
