@@ -27,20 +27,34 @@ uses
 
 type
   DisposableObject = public abstract class(IDisposable)
-  protected
-    method Dispose(aDisposing: Boolean); virtual; empty;
-    
-    method CheckAndRaiseOnDisposed(aDisposed: Boolean);
+  private
+    fDisposed: Boolean := false;
+
+    finalizer;
     begin
-      if aDisposed then begin
+      if not fDisposed then begin
+        Dispose(false);
+      end;
+    end;
+  protected
+    method Dispose(aDisposing: Boolean); virtual;
+    begin
+      fDisposed := true;
+    end;
+    
+    method CheckAndRaiseOnDisposed;
+    begin
+      if fDisposed then begin
         raise new ObjectDisposedException(self);
       end
     end;
   public
     method Dispose;
     begin
-      Dispose(true);
-      BoehmGC.SuppressFinalize(self);
+      if not fDisposed then begin
+        Dispose(true);
+        BoehmGC.SuppressFinalize(self);
+      end;
     end;
   end;
 
@@ -57,15 +71,7 @@ type
   TensorFlowObject<T> = public abstract class(DisposableObject)
   private
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
-    fDisposed: Boolean := false;
-    fObjectPtr: ^T := nil;
-    
-    finalizer;
-    begin
-      if not fDisposed then begin
-        Dispose(false);
-      end
-    end;
+    fObjectPtr: ^T := nil;    
   protected
     constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
     begin
@@ -75,10 +81,6 @@ type
 
     method Dispose(aDisposing: Boolean); override;
     begin
-      if fDisposed then begin
-        exit;
-      end;
-      
       if aDisposing then begin
         // Derived class should call its managed object's Dispose().
       end;
@@ -87,13 +89,12 @@ type
         fDisposeAction(fObjectPtr);
       end;
       
-      fDisposed := true;
       inherited Dispose(aDisposing);
     end;
   public
     property ObjectPtr: ^T 
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         exit fObjectPtr;
       end;
   end;
@@ -102,28 +103,15 @@ type
   private
     fData: ^Void := nil;
     fDisposeAction: TensorFlowObjectDisposeAction<TF_Buffer> := aObjectPtr->TF_DeleteBuffer(aObjectPtr); 
-    fDisposed: Boolean := false;
     fManaged: Boolean := true; // Whether buffer managed by this class.
     fNumBytes: UInt64 := 0;
-
-    finalizer;
-    begin
-      if not fDisposed then begin
-        Dispose(false);
-      end
-    end;
   protected
     method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end;
-      
+    begin   
       if (assigned(fData) and fManaged) then begin 
         free(fData);
       end;
-      
-      fDisposed := true;
+
       inherited Dispose(aDisposing);
     end;
   public
@@ -152,7 +140,7 @@ type
     constructor withString(const aProtoBuf: not nullable String);
     begin
       var buf: ^TF_Buffer := TF_NewBufferFromString(
-        aProtoBuf.ToAnsiChars(true), lstrlenA(aProtoBuf.ToAnsiChars(true)));
+        aProtoBuf.ToAnsiChars, lstrlenA(aProtoBuf.ToAnsiChars(true)));
 
       fManaged := false;
       fData := buf^.data;
@@ -162,7 +150,7 @@ type
 
     method ToArray: array of Byte;
     begin
-      CheckAndRaiseOnDisposed(fDisposed);
+      CheckAndRaiseOnDisposed;
       if fNumBytes > 0 then begin
         result := new Byte[fNumBytes];
         memcpy(result, fData, fNumBytes);
@@ -173,7 +161,7 @@ type
 
     property NumBytes: UInt64 
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         result:= fNumBytes;
       end;
   end;
@@ -181,14 +169,12 @@ type
   Operation = public class(TensorFlowObject<TF_Operation>)
   private
     fName: not nullable String;
-    
-    finalizer;
-    begin
-      Dispose(false);
-    end;
+    fGraph: not nullable Graph;
   public
-    constructor withObjectPtr(aPtr: ^TF_Operation) Name(aName: not nullable String);
+    constructor withObjectPtr(aPtr: ^TF_Operation) Name(aName: not nullable String) 
+      Graph(aGraph: not nullable Graph);
     begin
+      fGraph := aGraph;
       fName := aName;
       inherited constructor withObjectPtr(aPtr) DisposeAction(nil);
     end;
@@ -198,15 +184,207 @@ type
       result := $'Operation: {Convert.UInt64ToHexString(NativeInt(ObjectPtr), 16)}';
     end;
 
+    property ContainerGraph: not nullable Graph read fGraph;
     property Name: not nullable String read fName;
   end;
 
-  Status = public class(TensorFlowObject<TF_Status>)
+  OperationDescription = public class(TensorFlowObject<TF_OperationDescription>)
   private
-    finalizer;
+    fGraph: not nullable Graph;
+    fOpType: not nullable String;
+    fOperName: not nullable String;      
+  public
+    constructor withGraph(aGraph: not nullable Graph) OpType(aOpType: not nullable String) 
+      OperName(aOperName: not nullable String);
     begin
-      Dispose(false);
+      fOpType := aOpType;
+      fOperName := aOperName;
+      fGraph := aGraph;
+
+      var opDesc := TF_NewOperation(aGraph.ObjectPtr, aOpType.ToAnsiChars(true), 
+        aOperName.ToAnsiChars(true));
+      inherited constructor withObjectPtr(opDesc) DisposeAction(nil);
     end;
+
+    method SetDevice(aDevice: not nullable String);
+    begin
+      TF_SetDevice(ObjectPtr, aDevice.ToAnsiChars(true));
+    end;
+
+    method AddInput(aInput: not nullable Output);
+    begin
+      TF_AddInput(ObjectPtr, aInput.ToTensorFlowNativeOutput);
+    end;
+
+    method AddInputList(aInputList: not nullable array of Output);
+    begin
+      var tfOutput := new TF_Output[aInputList.Length];
+      for I: Integer := 0 to aInputList.Length - 1 do begin
+        tfOutput[I] := aInputList[I].ToTensorFlowNativeOutput;
+      end;
+
+      TF_AddInputList(ObjectPtr, tfOutput, tfOutput.Length);
+    end;
+
+    method FinishOperation(aStatus: Status := nil): Tuple of (Boolean, Operation);
+    begin
+      var lstatus := Status.ForwardOrCreate(aStatus);
+      // TensorFlow manages/deletes the desc ptr inside TF_FinishOperation.
+      var op := TF_FinishOperation(ObjectPtr, lstatus.ObjectPtr);
+      
+      if lstatus.OK then begin
+        result := (true, new Operation withObjectPtr(op) Name(fOperName) Graph(fGraph))
+      end else begin
+        result := (false, nil);
+      end;
+    end;
+
+    method SetAttrBool(const aName: not nullable String; aValue: Byte);
+    begin
+      TF_SetAttrBool(ObjectPtr, aName.ToAnsiChars(true), aValue);
+    end;
+
+    method SetAttrBoolList(const aName: not nullable String; 
+      aValueList: not nullable array of Byte);
+    begin
+      TF_SetAttrBoolList(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aValueList, 
+        aValueList.Length);
+    end;
+
+    method SetAttrFloat(const aName: not nullable String; aValue: Single);
+    begin
+      TF_SetAttrFloat(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aValue);
+    end;
+
+    method SetAttrFloatList(const aName: not nullable String; 
+      aValueList: not nullable array of Single);
+    begin
+      TF_SetAttrFloatList(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aValueList, 
+        aValueList.Length);
+    end;
+
+    method SetAttrInt(const aName: not nullable String; aValue: Int64);
+    begin
+      TF_SetAttrInt(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aValue);
+    end;
+
+    method SetAttrIntList(const aName: not nullable String; 
+      aValueList: not nullable array of Int64);
+    begin
+      TF_SetAttrIntList(ObjectPtr, aName.ToAnsiChars(true), aValueList, aValueList.Length);
+    end;
+
+    method SetAttrString(const aName: not nullable String; aValue: not nullable String);
+    begin
+      TF_SetAttrString(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aValue.ToAnsiChars, 
+        lstrlenA(aValue.ToAnsiChars(true)));
+    end;
+
+    method SetAttrStringList(const aName: not nullable String; 
+      aValueList: not nullable array of String);
+    begin
+      var num_values := aValueList.Length;
+      var values: array of array of AnsiChar := new array of AnsiChar[num_values];
+      var lengths: array of UInt64 := new UInt64[num_values];
+
+      for I: Integer := 0 to num_values - 1 do begin
+        // No null terminator, because length is explicitly given.
+        values[I] := aValueList[I].ToAnsiChars; 
+        lengths[I] := aValueList[I].Length; 
+      end;
+
+      TF_SetAttrStringList(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        ^^Void(values), 
+        lengths, 
+        num_values);
+    end;
+
+    method SetAttrType(const aName: not nullable String; aType: TF_DataType);
+    begin
+      TF_SetAttrType(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aType);
+    end;
+
+    method SetAttrTypeList(const aName: not nullable String; 
+      aTypeList: not nullable array of TF_DataType);
+    begin
+      TF_SetAttrTypeList(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aTypeList, 
+        aTypeList.Length);
+    end;
+
+    method SetAttrTensor(const aName: not nullable String; aTensor: not nullable Tensor; 
+      aStatus: not nullable Status);
+    begin
+      TF_SetAttrTensor(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aTensor.ObjectPtr, 
+        aStatus.ObjectPtr);
+    end;
+
+    method SetAttrShape(const aName: not nullable String; aShape: not nullable Shape);
+    begin
+      TF_SetAttrShape(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aShape.ToArray, 
+        aShape.NumDims);
+    end;
+
+    method SetAttrShapeList(const aName: not nullable String; 
+      aShapeList: not nullable array of Shape);
+    begin
+      var num_shapes: Int32 := aShapeList.Length;
+      var dims: array of array of Int64 := new array of Int64[num_shapes];
+      var num_dims: array of Int32 := new Int32[num_shapes];
+
+      for I: Integer := 0 to num_shapes - 1 do begin
+        dims[I] := aShapeList[I].ToArray;
+        num_dims[I] := aShapeList[I].NumDims;
+      end;
+      
+      TF_SetAttrShapeList(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        ^^Int64(dims), 
+        num_dims, 
+        num_shapes);
+    end;
+
+    property OpType: String 
+      read begin 
+        result := fOpType;
+      end;
+
+    property OperName: String
+      read begin
+        result := fOperName;
+      end;
+  end;
+
+  Status = public class(TensorFlowObject<TF_Status>)
   public
     constructor;
     begin
@@ -244,18 +422,12 @@ type
 
   Scope = public class(DisposableObject)
   private
-    fDisposed: Boolean := false;
     fRestoreAction: ScopeRestoreAction;
     fSavedScope: String;
   protected
     method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end;
-      
+    begin    
       fRestoreAction(fSavedScope);
-      fDisposed := true;
       inherited Dispose(aDisposing);
     end;
   public
@@ -275,27 +447,14 @@ type
     end;
   end;
 
-  TensorShape = public class(DisposableObject)
+  Shape = public class(DisposableObject)
   private
     fDims: ^Int64;
-    fDisposed: Boolean:= false;
     fNumDims: Int32;
-    
-    finalizer;
-    begin
-      if not fDisposed then begin
-        Dispose(false);
-      end
-    end;
   protected
     method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end;
-      
+    begin    
       free(fDims);
-      fDisposed:= true;
       inherited Dispose(aDisposing);
     end;
   public
@@ -314,7 +473,7 @@ type
 
     method ToArray: array of Int64;
     begin
-      CheckAndRaiseOnDisposed(fDisposed); 
+      CheckAndRaiseOnDisposed; 
       if assigned(fDims) then begin
         result := new Int64[NumDims];
         memcpy(result, fDims, sizeOf(Int64) * NumDims);
@@ -325,13 +484,13 @@ type
     
     property NumDims: Int32
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         result := fNumDims;
       end;
    
     property Dim[aIndex: Int32]: Int64
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         
         if (NumDims > 0) and (0 <= aIndex < NumDims) then begin 
           result := fDims[aIndex]
@@ -345,11 +504,6 @@ type
   private
     fIndex: Integer;
     fOper: Operation;
-
-    finalizer;
-    begin
-      Dispose(false);
-    end;
   public
     constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer);
     begin
@@ -387,11 +541,6 @@ type
   Graph = public class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: String;
-    
-    finalizer;
-    begin
-      Dispose(false);
-    end;
   public
     constructor;
     begin
@@ -416,31 +565,28 @@ type
       var opPtr := TF_GraphOperationByName(ObjectPtr, aName.ToAnsiChars(true));
       
       if assigned(opPtr) then begin
-        result := (true, new Operation withObjectPtr(opPtr) Name(aName))
+        result := (true, new Operation withObjectPtr(opPtr) Name(aName) Graph(self));
       end else begin
         result := (false, nil);
       end;
     end;
 
-    method GetTensorShape(aOutput: Output; aStatus: Status := nil): Tuple of (Boolean, TensorShape);
+    method GetTensorShape(aOutput: Output; aStatus: Status := nil): Tuple of (Boolean, Shape);
     begin 
-      using disposableStatus := Status.ForwardOrCreate(aStatus) do begin
-        var nativeOut := aOutput.ToTensorFlowNativeOutput;
-        var numDims := TF_GraphGetTensorNumDims(ObjectPtr, nativeOut,
-          disposableStatus.ObjectPtr);
+      var lstatus := Status.ForwardOrCreate(aStatus);
+      var nativeOut := aOutput.ToTensorFlowNativeOutput;
+      var numDims := TF_GraphGetTensorNumDims(ObjectPtr, nativeOut, lstatus.ObjectPtr);
         
-        if (not disposableStatus.OK) or (numDims = 0) then begin
-          result := (false, nil);
+      if (not lstatus.OK) or (numDims = 0) then begin
+        result := (false, nil);
+      end else begin
+        var dims := new Int64[numDims];
+        TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims, lstatus.ObjectPtr);
+        
+        if lstatus.OK then begin
+          result := (true, new Shape withDimentions(dims));
         end else begin
-          var dims := new Int64[numDims];
-          TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims,
-            disposableStatus.ObjectPtr);
-        
-          if disposableStatus.OK then begin
-            result := (true, new TensorShape withDimentions(dims));
-          end else begin
-            result := (false, nil);
-          end;
+          result := (false, nil);
         end;
       end;
     end;
@@ -452,40 +598,27 @@ type
     method ToArray: array of Byte;
     property DataType: TF_DataType read;
     property NumBytes: UInt64 read;
-    property Shape: TensorShape read;
+    property &Shape: Shape read;
   end; 
 
   TensorData<T> = public class(DisposableObject, ITensorData)
   private
     fData: ^Void;
     fDataType: TF_DataType;
-    fDisposed: Boolean := false;
     fNumBytes: UInt64 := 0;
-    fShape: TensorShape;
-     
-    finalizer;
-    begin
-      if not fDisposed then begin
-        Dispose(false);
-      end
-    end;
+    fShape: Shape;
   protected
     method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end;
-      
+    begin      
       if aDisposing then begin
         fShape.Dispose;
       end;
       
       free(fData);
-      fDisposed := true;
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable TensorShape);
+    constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable Shape);
     begin
       var localType := aValue[0].GetType;
       fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
@@ -513,26 +646,26 @@ type
 
     method ToArray: array of Byte;
     begin
-      CheckAndRaiseOnDisposed(fDisposed);
+      CheckAndRaiseOnDisposed;
       result := new Byte[fNumBytes];
       memcpy(result, fData, fNumBytes);
     end;
 
     property NumBytes: UInt64
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         result := fNumBytes
       end;
     
     property DataType: TF_DataType
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         result := fDataType
       end;
     
-    property Shape: TensorShape
+    property Shape: Shape
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         result := fShape
       end;
   end;
@@ -550,26 +683,13 @@ type
   Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
     fData: ITensorData;
-    fDisposed: Boolean := false;
-    
-    finalizer;
-    begin
-      if not fDisposed then begin
-        Dispose(false);
-      end
-    end;
   protected
     method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end;
-      
+    begin    
       if aDisposing then begin
         fData.Dispose;
       end;
-      
-      fDisposed := true;
+
       inherited Dispose(aDisposing);
     end;
   public
@@ -595,7 +715,7 @@ type
 
     property Data: ITensorData
       read begin
-        CheckAndRaiseOnDisposed(fDisposed);
+        CheckAndRaiseOnDisposed;
         result := fData;
       end;
   end; 
