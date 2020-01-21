@@ -73,7 +73,8 @@ type
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
     fObjectPtr: ^T := nil;    
   protected
-    constructor withObjectPtr(aObjectPtr: ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
+    constructor withObjectPtr(aObjectPtr: ^T) 
+      DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
     begin
       fObjectPtr := aObjectPtr;
       fDisposeAction := aAction;
@@ -102,7 +103,8 @@ type
   Buffer = public class(TensorFlowObject<TF_Buffer>)
   private
     fData: ^Void := nil;
-    fDisposeAction: TensorFlowObjectDisposeAction<TF_Buffer> := aObjectPtr->TF_DeleteBuffer(aObjectPtr); 
+    fDisposeAction: TensorFlowObjectDisposeAction<TF_Buffer> 
+      := aObjectPtr->TF_DeleteBuffer(aObjectPtr); 
     fManaged: Boolean := true; // Whether buffer managed by this class.
     fNumBytes: UInt64 := 0;
   protected
@@ -168,8 +170,8 @@ type
 
   Operation = public class(TensorFlowObject<TF_Operation>)
   private
-    fName: not nullable String;
-    fGraph: not nullable Graph;
+    fName: String;
+    fGraph: Graph;
   public
     constructor withObjectPtr(aPtr: ^TF_Operation) Name(aName: not nullable String) 
       Graph(aGraph: not nullable Graph);
@@ -184,15 +186,21 @@ type
       result := $'Operation: {Convert.UInt64ToHexString(NativeInt(ObjectPtr), 16)}';
     end;
 
-    property ContainerGraph: not nullable Graph read fGraph;
-    property Name: not nullable String read fName;
+    property &Graph: Graph
+      read begin
+        result := fGraph;
+      end;
+    property Name: String
+      read begin
+        result := fName;
+      end;
   end;
 
   OperationDescription = public class(TensorFlowObject<TF_OperationDescription>)
   private
-    fGraph: not nullable Graph;
-    fOpType: not nullable String;
-    fOperName: not nullable String;      
+    fGraph: Graph;
+    fOpType: String;
+    fOperName: String;      
   public
     constructor withGraph(aGraph: not nullable Graph) OpType(aOpType: not nullable String) 
       OperName(aOperName: not nullable String);
@@ -201,8 +209,11 @@ type
       fOperName := aOperName;
       fGraph := aGraph;
 
-      var opDesc := TF_NewOperation(aGraph.ObjectPtr, aOpType.ToAnsiChars(true), 
-        aOperName.ToAnsiChars(true));
+      var opDesc := TF_NewOperation(
+        aGraph.ObjectPtr, 
+        aOpType.ToAnsiChars(true), 
+        aOperName.ToAnsiChars(true)
+        );
       inherited constructor withObjectPtr(opDesc) DisposeAction(nil);
     end;
 
@@ -241,7 +252,10 @@ type
 
     method SetAttrBool(const aName: not nullable String; aValue: Byte);
     begin
-      TF_SetAttrBool(ObjectPtr, aName.ToAnsiChars(true), aValue);
+      TF_SetAttrBool(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aValue);
     end;
 
     method SetAttrBoolList(const aName: not nullable String; 
@@ -283,7 +297,11 @@ type
     method SetAttrIntList(const aName: not nullable String; 
       aValueList: not nullable array of Int64);
     begin
-      TF_SetAttrIntList(ObjectPtr, aName.ToAnsiChars(true), aValueList, aValueList.Length);
+      TF_SetAttrIntList(
+        ObjectPtr, 
+        aName.ToAnsiChars(true), 
+        aValueList, 
+        aValueList.Length);
     end;
 
     method SetAttrString(const aName: not nullable String; aValue: not nullable String);
@@ -303,7 +321,7 @@ type
       var lengths: array of UInt64 := new UInt64[num_values];
 
       for I: Integer := 0 to num_values - 1 do begin
-        // No null terminator, because length is explicitly given.
+        // No null terminator, because length is explicitly given below.
         values[I] := aValueList[I].ToAnsiChars; 
         lengths[I] := aValueList[I].Length; 
       end;
@@ -335,13 +353,14 @@ type
     end;
 
     method SetAttrTensor(const aName: not nullable String; aTensor: not nullable Tensor; 
-      aStatus: not nullable Status);
+      aStatus: Status := nil);
     begin
+      var lstatus := Status.ForwardOrCreate(aStatus);
       TF_SetAttrTensor(
         ObjectPtr, 
         aName.ToAnsiChars(true), 
         aTensor.ObjectPtr, 
-        aStatus.ObjectPtr);
+        lstatus.ObjectPtr);
     end;
 
     method SetAttrShape(const aName: not nullable String; aShape: not nullable Shape);
@@ -418,7 +437,7 @@ type
       end;
   end;
 
-  ScopeRestoreAction = public block(const aScopeToRestore: String);
+  ScopeRestoreAction = public block(const aScopeToRestore: not nullable String);
 
   Scope = public class(DisposableObject)
   private
@@ -431,7 +450,8 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withScopeToSave(const aScope: String) RestoreAction(aAction: ScopeRestoreAction);
+    constructor withScopeToSave(const aScope: not nullable String) 
+      RestoreAction(aAction: ScopeRestoreAction);
     begin
       fSavedScope := aScope;
       fRestoreAction := aAction;
@@ -505,7 +525,8 @@ type
     fIndex: Integer;
     fOper: Operation;
   public
-    constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer);
+    constructor withOperation(aOper: not nullable Operation) 
+      OutputIndex(aIndex: Integer);
     begin
       fIndex := aIndex;
       fOper := aOper;
@@ -540,7 +561,7 @@ type
 
   Graph = public class(TensorFlowObject<TF_Graph>)
   private
-    fCurrentScope: String;
+    fCurrentScope: not nullable String := '';
   public
     constructor;
     begin
@@ -560,7 +581,8 @@ type
       end
     end;
 
-    method GetOperationByName(const aName: not nullable String): Tuple of (Boolean, Operation);
+    method GetOperationByName(const aName: not nullable String)
+      : Tuple of (Boolean, Operation);
     begin
       var opPtr := TF_GraphOperationByName(ObjectPtr, aName.ToAnsiChars(true));
       
@@ -571,18 +593,28 @@ type
       end;
     end;
 
-    method GetTensorShape(aOutput: Output; aStatus: Status := nil): Tuple of (Boolean, Shape);
+    method GetTensorShape(aOutput: not nullable Output; aStatus: Status := nil)
+      : Tuple of (Boolean, Shape);
     begin 
       var lstatus := Status.ForwardOrCreate(aStatus);
       var nativeOut := aOutput.ToTensorFlowNativeOutput;
-      var numDims := TF_GraphGetTensorNumDims(ObjectPtr, nativeOut, lstatus.ObjectPtr);
+
+      var numDims := TF_GraphGetTensorNumDims(
+        ObjectPtr, 
+        nativeOut, 
+        lstatus.ObjectPtr);
         
       if (not lstatus.OK) or (numDims = 0) then begin
         result := (false, nil);
       end else begin
         var dims := new Int64[numDims];
-        TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims, lstatus.ObjectPtr);
-        
+        TF_GraphGetTensorShape(
+          ObjectPtr, 
+          nativeOut, 
+          dims, 
+          numDims, 
+          lstatus.ObjectPtr);
+       
         if lstatus.OK then begin
           result := (true, new Shape withDimentions(dims));
         end else begin
@@ -618,7 +650,8 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable Shape);
+    constructor withValue(aValue: not nullable array of T) 
+      Shape(aShape: not nullable Shape);
     begin
       var localType := aValue[0].GetType;
       fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
@@ -637,7 +670,7 @@ type
         var curPos: Integer := 0;
 
         for I: Integer := 0 to aValue.Length - 1 do begin
-          var num := String(aValue[I]).Length + 1; // One extra byte for null terminator.
+          var num := String(aValue[I]).Length + 1; // A byte for null terminator.
           memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), num);
           curPos := curPos + num;
         end;

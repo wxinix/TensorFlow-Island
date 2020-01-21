@@ -49,7 +49,7 @@ uses
   method ScalarStringTensor(const aStr: ^AnsiChar; aStatus: ^TF_Status): ^TF_Tensor;
   begin
     var strlen := lstrlenA(aStr);
-    var nbytes := 8 + TF_StringEncodedSize(strlen); // 8 extra bytes: start_offset.
+    var nbytes := 8 + TF_StringEncodedSize(strlen); // 8 bytes: start_offset.
     result := TF_AllocateTensor(TF_DataType.TF_STRING, nil, 0, nbytes);
     var data := ^AnsiChar(TF_TensorData(result));
     memset(data, 0, 8);
@@ -94,7 +94,8 @@ uses
         exit;
       end;
 
-      checkpointTensor := ScalarStringTensor(aCheckPointPrefix.ToAnsiChars(true), aStatus);
+      checkpointTensor := ScalarStringTensor(
+        aCheckPointPrefix.ToAnsiChars(true), aStatus);
       code := TF_GetCode(aStatus);
       if  code <> TF_Code.TF_OK then begin
         TF_DeleteGraph(result);
@@ -102,9 +103,14 @@ uses
       end;
 
       var input: TF_Output := new TF_Output(
-        oper  := TF_GraphOperationByName(result, String('save/Const').ToAnsiChars(true)),
-        index := 0);
-      var restoreOp := TF_GraphOperationByName(result, String('save/restore_all').ToAnsiChars(true));
+        oper  := TF_GraphOperationByName(
+                  result, 
+                  String('save/Const').ToAnsiChars(true)
+                  ),
+        index := 0
+        );
+      var restoreOp := TF_GraphOperationByName(
+         result, String('save/restore_all').ToAnsiChars(true));
 
       session := CreateSession(result);
       if not assigned(session) then begin
@@ -260,15 +266,16 @@ uses
     aOutputTensors: List<^TF_Tensor>; aStatus: ^TF_Status := nil): TF_Code;
   begin
     var outputTensors := aOutputTensors.ToArray;
+    
     result := RunSession(
-                aSession,
-                aInputs.ToArray,
-                aInputTensors.ToArray,
-                aInputTensors.Count,
-                aOutputs.ToArray,
-                outputTensors,
-                aOutputTensors.Count,
-                aStatus);
+      aSession,
+      aInputs.ToArray,
+      aInputTensors.ToArray,
+      aInputTensors.Count,
+      aOutputs.ToArray,
+      outputTensors,
+      aOutputTensors.Count,
+      aStatus);
   
     aOutputTensors.Clear;
     aOutputTensors.AddRange(outputTensors);
@@ -299,11 +306,11 @@ uses
     const aData: List<T>): ^TF_Tensor;
   begin
     result := CreateTensor(
-                aDataType, 
-                aDims.ToArray,
-                aDims.Count,
-                aData.ToArray,
-                aData.Count * sizeOf(T));
+      aDataType, 
+      aDims.ToArray,
+      aDims.Count,
+      aData.ToArray,
+      aData.Count * sizeOf(T));
   end;
 
   method CreateEmptyTensor(aDataType: TF_DataType; aDims: array of int64_t;
@@ -340,7 +347,10 @@ uses
     var tensorData := TF_TensorData(aTensor);
     aDataByteSize := Math.Min(aDataByteSize, TF_TensorByteSize(aTensor));
     
-	  if assigned(tensorData) and assigned(aData) and (aDataByteSize > 0) then begin
+	  if assigned(tensorData) and 
+       assigned(aData) and 
+       (aDataByteSize > 0) 
+    then begin
       memcpy(tensorData, aData, aDataByteSize);
       exit true;
     end else begin
@@ -357,7 +367,9 @@ uses
   begin
     var tensorDataTypeSize := TF_DataTypeSize(TF_TensorType(aTensor));
     
-    if (sizeOf(T) <> tensorDataTypeSize) or not assigned(TF_TensorData(aTensor)) then begin
+    if (sizeOf(T) <> tensorDataTypeSize) or 
+       not assigned(TF_TensorData(aTensor)) 
+    then begin
       exit nil;
     end;
     
@@ -375,7 +387,8 @@ uses
     end
   end;
 
-  method GetTensorShape(aGraph: ^TF_Graph; const var aOutput: TF_Output): List<int64_t>;
+  method GetTensorShape(aGraph: ^TF_Graph; const var aOutput: TF_Output)
+    : List<int64_t>;
   begin
     result := new List<int64_t>;
     var status := TF_NewStatus();
@@ -407,7 +420,8 @@ uses
     end;
   end;
 
-  method CreateSessionOptions(aGpuMemoryFraction: Double; aStatus: ^TF_Status := nil): ^TF_SessionOptions;
+  method CreateSessionOptions(aGpuMemoryFraction: Double; 
+    aStatus: ^TF_Status := nil): ^TF_SessionOptions;
   begin
     var deleteStatus := false;
     if not assigned(aStatus) then begin
@@ -441,7 +455,8 @@ uses
   end;
 
   method CreateSessionOptions(aIntraOpParallelismThreads: uint8_t; 
-    aInterOpParallelismThreads: uint8_t; aStatus: ^TF_Status := nil): ^TF_SessionOptions;
+    aInterOpParallelismThreads: uint8_t; aStatus: ^TF_Status := nil)
+    : ^TF_SessionOptions;
   begin
     var deleteStatus := false;
     if not assigned(aStatus) then begin
@@ -607,7 +622,8 @@ uses
     end;
   end;
 
-  method PrintTensorInfo(aGraph: ^TF_Graph; const aLayerName: String; aStatus: ^TF_Status);
+  method PrintTensorInfo(aGraph: ^TF_Graph; const aLayerName: String; 
+    aStatus: ^TF_Status);
   begin
     write($'Tensor:{aLayerName}');
 
