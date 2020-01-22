@@ -209,11 +209,9 @@ type
       fOperName := aOperName;
       fGraph := aGraph;
 
-      var opDesc := TF_NewOperation(
-        aGraph.ObjectPtr, 
-        aOpType.ToAnsiChars(true), 
-        aOperName.ToAnsiChars(true)
-        );
+      var opDesc := TF_NewOperation(aGraph.ObjectPtr, aOpType.ToAnsiChars(true), 
+        aOperName.ToAnsiChars(true));
+      // DisposeAction nil because TF_FinishOption will delete OperationDescription.
       inherited constructor withObjectPtr(opDesc) DisposeAction(nil);
     end;
 
@@ -239,77 +237,61 @@ type
 
     method FinishOperation(aStatus: Status := nil): Tuple of (Boolean, Operation);
     begin
-      var l_status := Status.ForwardOrCreate(aStatus);
-      // TensorFlow manages/deletes the desc ptr inside TF_FinishOperation.
-      var op := TF_FinishOperation(ObjectPtr, l_status.ObjectPtr);
+      using lstatus := new Status do begin
+        // Desc ptr gets deleted inside TF_FinishOperation.
+        var op := TF_FinishOperation(ObjectPtr, lstatus.ObjectPtr);
       
-      if l_status.OK then begin
-        result := (true, new Operation withObjectPtr(op) Name(fOperName) Graph(fGraph))
-      end else begin
-        result := (false, nil);
+        if lstatus.OK then begin
+          result := (true, new Operation withObjectPtr(op) Name(fOperName) Graph(fGraph))
+        end else begin
+          result := (false, nil);
+        end;
+
+        if assigned(aStatus) then begin
+          aStatus.SetStatus(lstatus.StatusCode) StatusMessage(lstatus.StatusMessage);
+        end;
       end;
     end;
 
     method SetAttrBool(const aName: not nullable String; aValue: Byte);
     begin
-      TF_SetAttrBool(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aValue);
+      TF_SetAttrBool(ObjectPtr, aName.ToAnsiChars(true), aValue);
     end;
 
     method SetAttrBoolList(const aName: not nullable String; 
       aValueList: not nullable array of Byte);
     begin
-      TF_SetAttrBoolList(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aValueList, 
+      TF_SetAttrBoolList(ObjectPtr, aName.ToAnsiChars(true), aValueList, 
         aValueList.Length);
     end;
 
     method SetAttrFloat(const aName: not nullable String; aValue: Single);
     begin
-      TF_SetAttrFloat(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aValue);
+      TF_SetAttrFloat(ObjectPtr, aName.ToAnsiChars(true), aValue);
     end;
 
     method SetAttrFloatList(const aName: not nullable String; 
       aValueList: not nullable array of Single);
     begin
-      TF_SetAttrFloatList(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aValueList, 
+      TF_SetAttrFloatList(ObjectPtr, aName.ToAnsiChars(true), aValueList, 
         aValueList.Length);
     end;
 
     method SetAttrInt(const aName: not nullable String; aValue: Int64);
     begin
-      TF_SetAttrInt(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aValue);
+      TF_SetAttrInt(ObjectPtr, aName.ToAnsiChars(true), aValue);
     end;
 
     method SetAttrIntList(const aName: not nullable String; 
       aValueList: not nullable array of Int64);
     begin
-      TF_SetAttrIntList(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aValueList, 
+      TF_SetAttrIntList(ObjectPtr, aName.ToAnsiChars(true), aValueList, 
         aValueList.Length);
     end;
 
     method SetAttrString(const aName: not nullable String; aValue: not nullable String);
     begin
-      TF_SetAttrString(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aValue.ToAnsiChars, 
+      TF_SetAttrString(ObjectPtr, aName.ToAnsiChars(true), aValue.ToAnsiChars, 
         lstrlenA(aValue.ToAnsiChars(true)));
     end;
 
@@ -326,49 +308,37 @@ type
         lengths[I] := aValueList[I].Length; 
       end;
 
-      TF_SetAttrStringList(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        ^^Void(values), 
-        lengths, 
-        num_values);
+      TF_SetAttrStringList(ObjectPtr, aName.ToAnsiChars(true), ^^Void(values), 
+        lengths, num_values);
     end;
 
     method SetAttrType(const aName: not nullable String; aType: TF_DataType);
     begin
-      TF_SetAttrType(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aType);
+      TF_SetAttrType(ObjectPtr, aName.ToAnsiChars(true), aType);
     end;
 
     method SetAttrTypeList(const aName: not nullable String; 
       aTypeList: not nullable array of TF_DataType);
     begin
-      TF_SetAttrTypeList(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aTypeList, 
+      TF_SetAttrTypeList(ObjectPtr, aName.ToAnsiChars(true), aTypeList, 
         aTypeList.Length);
     end;
 
     method SetAttrTensor(const aName: not nullable String; aTensor: not nullable Tensor; 
       aStatus: Status := nil);
     begin
-      var l_status := Status.ForwardOrCreate(aStatus);
-      TF_SetAttrTensor(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aTensor.ObjectPtr, 
-        l_status.ObjectPtr);
+      using lstatus := new Status do begin
+        TF_SetAttrTensor(ObjectPtr, aName.ToAnsiChars(true), aTensor.ObjectPtr, 
+          lstatus.ObjectPtr);
+        if assigned(aStatus) then begin
+          aStatus.SetStatus(lstatus.StatusCode) StatusMessage(lstatus.StatusMessage);
+        end;
+      end;
     end;
 
     method SetAttrShape(const aName: not nullable String; aShape: not nullable Shape);
     begin
-      TF_SetAttrShape(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        aShape.ToArray, 
+      TF_SetAttrShape(ObjectPtr, aName.ToAnsiChars(true), aShape.ToArray, 
         aShape.NumDims);
     end;
 
@@ -384,12 +354,8 @@ type
         num_dims[I] := aShapeList[I].NumDims;
       end;
       
-      TF_SetAttrShapeList(
-        ObjectPtr, 
-        aName.ToAnsiChars(true), 
-        ^^Int64(dims), 
-        num_dims, 
-        num_shapes);
+      TF_SetAttrShapeList(ObjectPtr, aName.ToAnsiChars(true), ^^Int64(dims), 
+        num_dims, num_shapes);
     end;
 
     property OpType: String 
@@ -596,29 +562,24 @@ type
     method GetTensorShape(aOutput: not nullable Output; aStatus: Status := nil)
       : Tuple of (Boolean, Shape);
     begin 
-      var l_status := Status.ForwardOrCreate(aStatus);
-      var nativeOut := aOutput.ToTensorFlowNativeOutput;
-
-      var numDims := TF_GraphGetTensorNumDims(
-        ObjectPtr, 
-        nativeOut, 
-        l_status.ObjectPtr);
+      using lstatus := new Status do begin
+        var nativeOut := aOutput.ToTensorFlowNativeOutput;
+        var numDims := TF_GraphGetTensorNumDims(ObjectPtr, nativeOut, lstatus.ObjectPtr);        
         
-      if (not l_status.OK) or (numDims = 0) then begin
-        result := (false, nil);
-      end else begin
-        var dims := new Int64[numDims];
-        TF_GraphGetTensorShape(
-          ObjectPtr, 
-          nativeOut, 
-          dims, 
-          numDims, 
-          l_status.ObjectPtr);
-       
-        if l_status.OK then begin
-          result := (true, new Shape withDimentions(dims));
-        end else begin
+        if (not lstatus.OK) or (numDims = 0) then begin
           result := (false, nil);
+        end else begin
+          var dims := new Int64[numDims];
+          TF_GraphGetTensorShape(ObjectPtr, nativeOut, dims, numDims, lstatus.ObjectPtr);       
+          if lstatus.OK then begin
+            result := (true, new Shape withDimentions(dims));
+          end else begin
+            result := (false, nil);
+          end;
+        end;
+        
+        if assigned(aStatus) then begin
+          aStatus.SetStatus(lstatus.StatusCode) StatusMessage(lstatus.StatusMessage);
         end;
       end;
     end;
@@ -728,14 +689,8 @@ type
   public
     constructor withData(aData: ITensorData);
     begin
-      var lTensor := TF_NewTensor(
-        aData.DataType,
-        aData.Shape.ToArray,
-        aData.Shape.NumDims,
-        aData.ToArray,
-        aData.NumBytes,
-        nil,
-        nil);
+      var lTensor := TF_NewTensor(aData.DataType, aData.Shape.ToArray,
+        aData.Shape.NumDims, aData.ToArray, aData.NumBytes, nil, nil);
 
       if not assigned(lTensor) then begin
         raise new TensorCreateException(aData.DataType);
@@ -779,25 +734,24 @@ type
     constructor;
     begin
       fGraph := new Graph;
-      var l_status := new Status;
-      var sessionOpts := new SessionOptions;
+      var createSessionResult := (// Anonymous method to use Dispose pattern.
+        method: tuple of (Success: Boolean, Msg: String, SessionPtr: ^TF_Session);
+        begin
+          using lstatus := new Status  do begin
+            using opts := new SessionOptions do begin // Nested Using statement.
+              var lsession := TF_NewSession(fGraph.ObjectPtr, opts.ObjectPtr, 
+                lstatus.ObjectPtr);               
+              result := (lstatus.OK, lstatus.StatusMessage, lsession);
+            end;
+          end;
+        end
+       )();
 
-      var tfSession := TF_NewSession(
-        fGraph.ObjectPtr, 
-        sessionOpts.ObjectPtr,
-        l_status.ObjectPtr);
-
-      if not l_status.OK then begin
-        var msg := l_status.StatusMessage;
-        l_status.Dispose;
-        sessionOpts.Dispose;
-        raise new SessionCreateException withMessage(msg);
+      if not createSessionResult.Success then begin
+        raise new SessionCreateException withMessage(createSessionResult.Msg);
       end;
      
-      l_status.Dispose;
-      sessionOpts.Dispose;
-
-      inherited constructor withObjectPtr(tfSession)
+      inherited constructor withObjectPtr(createSessionResult.SessionPtr)
         DisposeAction(aObjectPtr->begin
           using disposableStatus := new Status do begin
             TF_DeleteSession(aObjectPtr, disposableStatus.ObjectPtr); 
@@ -830,8 +784,12 @@ type
 
     method SetConfig(aProtoData: not nullable array of Byte; aStatus: Status := nil);
     begin
-      var l_status := Status.ForwardOrCreate(aStatus);
-      TF_SetConfig(ObjectPtr, aProtoData, aProtoData.Length, l_status.ObjectPtr);
+      using lstatus := new Status do begin
+        TF_SetConfig(ObjectPtr, aProtoData, aProtoData.Length, lstatus.ObjectPtr);
+        if assigned(aStatus) then begin
+          aStatus.SetStatus(lstatus.StatusCode) StatusMessage(lstatus.StatusMessage);
+        end;
+      end;
     end;
 
     method SetTarget(aTarget: not nullable String);
