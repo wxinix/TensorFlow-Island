@@ -73,7 +73,7 @@ type
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
     fObjectPtr: ^T := nil;    
   protected
-    constructor withObjectPtr(aObjectPtr: ^T) 
+    constructor withObjectPtr(aObjectPtr: not nullable ^T) 
       DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
     begin
       fObjectPtr := aObjectPtr;
@@ -239,11 +239,11 @@ type
 
     method FinishOperation(aStatus: Status := nil): Tuple of (Boolean, Operation);
     begin
-      var lstatus := Status.ForwardOrCreate(aStatus);
+      var l_status := Status.ForwardOrCreate(aStatus);
       // TensorFlow manages/deletes the desc ptr inside TF_FinishOperation.
-      var op := TF_FinishOperation(ObjectPtr, lstatus.ObjectPtr);
+      var op := TF_FinishOperation(ObjectPtr, l_status.ObjectPtr);
       
-      if lstatus.OK then begin
+      if l_status.OK then begin
         result := (true, new Operation withObjectPtr(op) Name(fOperName) Graph(fGraph))
       end else begin
         result := (false, nil);
@@ -355,12 +355,12 @@ type
     method SetAttrTensor(const aName: not nullable String; aTensor: not nullable Tensor; 
       aStatus: Status := nil);
     begin
-      var lstatus := Status.ForwardOrCreate(aStatus);
+      var l_status := Status.ForwardOrCreate(aStatus);
       TF_SetAttrTensor(
         ObjectPtr, 
         aName.ToAnsiChars(true), 
         aTensor.ObjectPtr, 
-        lstatus.ObjectPtr);
+        l_status.ObjectPtr);
     end;
 
     method SetAttrShape(const aName: not nullable String; aShape: not nullable Shape);
@@ -478,7 +478,7 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withDimentions(aDims: array of Int64);
+    constructor withDimentions(aDims: array of Int64); // aDims can be nil.
     begin
       fNumDims := if assigned(aDims) then aDims.Length else 0;
       var numBytes := sizeOf(int64_t) * fNumDims;
@@ -596,15 +596,15 @@ type
     method GetTensorShape(aOutput: not nullable Output; aStatus: Status := nil)
       : Tuple of (Boolean, Shape);
     begin 
-      var lstatus := Status.ForwardOrCreate(aStatus);
+      var l_status := Status.ForwardOrCreate(aStatus);
       var nativeOut := aOutput.ToTensorFlowNativeOutput;
 
       var numDims := TF_GraphGetTensorNumDims(
         ObjectPtr, 
         nativeOut, 
-        lstatus.ObjectPtr);
+        l_status.ObjectPtr);
         
-      if (not lstatus.OK) or (numDims = 0) then begin
+      if (not l_status.OK) or (numDims = 0) then begin
         result := (false, nil);
       end else begin
         var dims := new Int64[numDims];
@@ -613,9 +613,9 @@ type
           nativeOut, 
           dims, 
           numDims, 
-          lstatus.ObjectPtr);
+          l_status.ObjectPtr);
        
-        if lstatus.OK then begin
+        if l_status.OK then begin
           result := (true, new Shape withDimentions(dims));
         end else begin
           result := (false, nil);
@@ -751,6 +751,109 @@ type
         CheckAndRaiseOnDisposed;
         result := fData;
       end;
-  end; 
+  end;
+
+  SessionCreateException = public class(Exception)
+  public
+    constructor withMessage(aMsg: not nullable String);
+    begin
+      inherited constructor(aMsg);
+    end;
+  end;
+
+  Session = public class(TensorFlowObject<TF_Session>)
+  private
+    fGraph: Graph;
+    fRunner: SessionRunner;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if aDisposing then begin
+        fGraph:Dispose;
+        fRunner:Dispose;
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
+  public
+    constructor;
+    begin
+      fGraph := new Graph;
+      var l_status := new Status;
+      var sessionOpts := new SessionOptions;
+
+      var tfSession := TF_NewSession(
+        fGraph.ObjectPtr, 
+        sessionOpts.ObjectPtr,
+        l_status.ObjectPtr);
+
+      if not l_status.OK then begin
+        var msg := l_status.StatusMessage;
+        l_status.Dispose;
+        sessionOpts.Dispose;
+        raise new SessionCreateException withMessage(msg);
+      end;
+     
+      l_status.Dispose;
+      sessionOpts.Dispose;
+
+      inherited constructor withObjectPtr(tfSession)
+        DisposeAction(aObjectPtr->begin
+          using disposableStatus := new Status do begin
+            TF_DeleteSession(aObjectPtr, disposableStatus.ObjectPtr); 
+          end;
+        end);
+    end;
+  
+    property &Graph: Graph
+      read begin
+        result := fGraph;
+      end;
+
+    property Runner: SessionRunner
+      read begin
+        if not assigned(fRunner) then begin
+          fRunner := new SessionRunner withSession(self);
+        end;
+        fRunner.Reset;
+        result := fRunner;
+      end;
+  end;
+
+  SessionOptions = public class(TensorFlowObject<TF_SessionOptions>)
+  public
+    constructor;
+    begin
+      inherited constructor withObjectPtr(TF_NewSessionOptions()) 
+        DisposeAction(aObjectPtr->TF_DeleteSessionOptions(aObjectPtr));
+    end;
+
+    method SetConfig(aProtoData: not nullable array of Byte; aStatus: Status := nil);
+    begin
+      var l_status := Status.ForwardOrCreate(aStatus);
+      TF_SetConfig(ObjectPtr, aProtoData, aProtoData.Length, l_status.ObjectPtr);
+    end;
+
+    method SetTarget(aTarget: not nullable String);
+    begin
+      TF_SetTarget(ObjectPtr, aTarget.ToAnsiChars(true));
+    end;
+  
+  end;
+
+  SessionRunner = public class(DisposableObject)
+  private
+    fSession: Session;
+  public
+    constructor withSession(aSession: not nullable Session);
+    begin
+      fSession := aSession;
+    end;
+
+    method Reset; unit;
+    begin
+
+    end;
+  end;
 
 end.
