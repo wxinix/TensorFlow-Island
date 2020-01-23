@@ -797,8 +797,7 @@ type
     method SetTarget(aTarget: not nullable String);
     begin
       TF_SetTarget(ObjectPtr, aTarget.ToAnsiChars(true));
-    end;
-  
+    end;  
   end;
 
   SessionRunner = public class(DisposableObject)
