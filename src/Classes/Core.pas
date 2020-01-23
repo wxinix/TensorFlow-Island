@@ -689,15 +689,15 @@ type
   public
     constructor withData(aData: ITensorData);
     begin
-      var lTensor := TF_NewTensor(aData.DataType, aData.Shape.ToArray,
+      var ltensor := TF_NewTensor(aData.DataType, aData.Shape.ToArray,
         aData.Shape.NumDims, aData.ToArray, aData.NumBytes, nil, nil);
 
-      if not assigned(lTensor) then begin
+      if not assigned(ltensor) then begin
         raise new TensorCreateException(aData.DataType);
       end;
 
       fData := aData;
-      inherited constructor withObjectPtr(lTensor)
+      inherited constructor withObjectPtr(ltensor)
         DisposeAction(aObjectPtr->TF_DeleteTensor(aObjectPtr));
     end;
 
@@ -738,8 +738,10 @@ type
         method: tuple of (Success: Boolean, Msg: String, SessionPtr: ^TF_Session);
         begin
           using lstatus := new Status  do begin
-            using opts := new SessionOptions do begin // Nested Using statement.
-              var lsession := TF_NewSession(fGraph.ObjectPtr, opts.ObjectPtr, 
+            using opts := new SessionOptions do begin // Nested using statement.
+              var lsession := TF_NewSession(
+                fGraph.ObjectPtr, 
+                opts.ObjectPtr, 
                 lstatus.ObjectPtr);               
               result := (lstatus.OK, lstatus.StatusMessage, lsession);
             end;
@@ -753,8 +755,8 @@ type
      
       inherited constructor withObjectPtr(createSessionResult.SessionPtr)
         DisposeAction(aObjectPtr->begin
-          using disposableStatus := new Status do begin
-            TF_DeleteSession(aObjectPtr, disposableStatus.ObjectPtr); 
+          using lstatus := new Status do begin
+            TF_DeleteSession(aObjectPtr, lstatus.ObjectPtr); 
           end;
         end);
     end;
