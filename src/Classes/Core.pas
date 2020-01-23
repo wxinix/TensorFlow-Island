@@ -211,7 +211,7 @@ type
 
       var opDesc := TF_NewOperation(aGraph.ObjectPtr, aOpType.ToAnsiChars(true), 
         aOperName.ToAnsiChars(true));
-      // DisposeAction nil because TF_FinishOption will delete OperationDescription.
+      // DisposeAction nil, TF_FinishOption will delete OperationDescription.
       inherited constructor withObjectPtr(opDesc) DisposeAction(nil);
     end;
 
@@ -491,8 +491,7 @@ type
     fIndex: Integer;
     fOper: Operation;
   public
-    constructor withOperation(aOper: not nullable Operation) 
-      OutputIndex(aIndex: Integer);
+    constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer);
     begin
       fIndex := aIndex;
       fOper := aOper;
@@ -611,8 +610,7 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withValue(aValue: not nullable array of T) 
-      Shape(aShape: not nullable Shape);
+    constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable Shape);
     begin
       var localType := aValue[0].GetType;
       fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
@@ -739,9 +737,7 @@ type
         begin
           using lstatus := new Status  do begin
             using opts := new SessionOptions do begin // Nested using statement.
-              var lsession := TF_NewSession(
-                fGraph.ObjectPtr, 
-                opts.ObjectPtr, 
+              var lsession := TF_NewSession(fGraph.ObjectPtr, opts.ObjectPtr, 
                 lstatus.ObjectPtr);               
               result := (lstatus.OK, lstatus.StatusMessage, lsession);
             end;
