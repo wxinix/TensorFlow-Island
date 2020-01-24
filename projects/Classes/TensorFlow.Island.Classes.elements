@@ -56,5 +56,14 @@
       <Link>..\..\src\Classes\Helpers.pas</Link>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aspects\TensorFlow.Island.Aspects.elements">
+      <Name>TensorFlow.Island.Aspects</Name>
+      <Project>{50d60a44-30e4-42b2-9c89-9fb13797c1ae}</Project>
+      <Private>True</Private>
+      <HintPath>..\..\..\..\Users\WXIN\AppData\Local\RemObjects Software\EBuild\Obj\TensorFlow.Island.Aspects-7B14B5FB30E55BC1274C8B5DC7BA541AF9E6DBBF\Release\Echoes\TensorFlow.Island.Aspects.dll</HintPath>
+      <IsCirrusRef>True</IsCirrusRef>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>

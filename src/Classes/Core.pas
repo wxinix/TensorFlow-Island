@@ -21,7 +21,8 @@
 
 namespace TensorFlow.Island.Classes;
 
-uses  
+uses
+  TensorFlow.Island.Aspects,
   RemObjects.Elements.System,
   TensorFlow;
 
@@ -73,6 +74,7 @@ type
     property RawPtr: ^Void read;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorFlowObject<T> = public abstract class(DisposableObject, ITensorFlowObject)
   private
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
@@ -103,8 +105,7 @@ type
       end;
 
     property NativePtr: ^T 
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         exit fNativePtr;
       end;
     
@@ -114,6 +115,7 @@ type
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Buffer = public class(TensorFlowObject<TF_Buffer>)
   private
     fData: ^Void := nil;
@@ -164,8 +166,7 @@ type
     end;
 
     method ToArray: array of Byte;
-    begin
-      CheckAndRaiseOnDisposed;
+    begin      
       if fNumBytes > 0 then begin
         result := new Byte[fNumBytes];
         memcpy(result, fData, fNumBytes);
@@ -175,12 +176,12 @@ type
     end;
 
     property NumBytes: UInt64 
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result:= fNumBytes;
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Operation = public class(TensorFlowObject<TF_Operation>)
   private
     fName: String;
@@ -209,6 +210,7 @@ type
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   OperationDescription = public class(TensorFlowObject<TF_OperationDescription>)
   private
     fGraph: Graph;
@@ -382,6 +384,7 @@ type
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Status = public class(TensorFlowObject<TF_Status>)
   public
     constructor;
@@ -417,6 +420,7 @@ type
 
   ScopeRestoreAction = public block(const aScopeToRestore: not nullable String);
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Scope = public class(DisposableObject)
   private
     fRestoreAction: ScopeRestoreAction;
@@ -445,6 +449,7 @@ type
     end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Shape = public class(DisposableObject)
   private
     fDims: ^Int64;
@@ -470,8 +475,7 @@ type
     end;
 
     method ToArray: array of Int64;
-    begin
-      CheckAndRaiseOnDisposed; 
+    begin      
       if assigned(fDims) then begin
         result := new Int64[NumDims];
         memcpy(result, fDims, sizeOf(Int64) * NumDims);
@@ -481,15 +485,12 @@ type
     end;
     
     property NumDims: Int32
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fNumDims;
       end;
    
     property Dim[aIndex: Int32]: Int64
-      read begin
-        CheckAndRaiseOnDisposed;
-        
+      read begin        
         if (NumDims > 0) and (0 <= aIndex < NumDims) then begin 
           result := fDims[aIndex]
         end else begin
@@ -498,6 +499,7 @@ type
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Output = public class(DisposableObject)
   private
     fIndex: Integer;
@@ -541,6 +543,7 @@ type
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Graph = public class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: not nullable String := '';
@@ -610,6 +613,7 @@ type
     property &Shape: Shape read;
   end; 
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorData = public class(DisposableObject, ITensorData)
   protected
     fData: ^Void;
@@ -650,31 +654,28 @@ type
     end;
 
     method ToArray: array of Byte;
-    begin
-      CheckAndRaiseOnDisposed;
+    begin     
       result := new Byte[fNumBytes];
       memcpy(result, fData, fNumBytes);
     end;
 
     property NumBytes: UInt64
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin       
         result := fNumBytes
       end;
     
     property DataType: TF_DataType
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fDataType
       end;
     
     property Shape: Shape
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fShape
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorData<T> = public class(TensorData)
   protected
     method Dispose(aDisposing: Boolean); override;
@@ -721,6 +722,7 @@ type
     end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
     fData: ITensorData;
@@ -754,8 +756,7 @@ type
     end;
 
     property Data: ITensorData
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fData;
       end;
   end;
@@ -768,6 +769,7 @@ type
     end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Session = public class(TensorFlowObject<TF_Session>)
   private
     fGraph: Graph;
@@ -779,7 +781,6 @@ type
         fGraph:Dispose;
         fRunner:Dispose;
       end;
-
       inherited Dispose(aDisposing);
     end;
   public
@@ -825,6 +826,7 @@ type
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   SessionOptions = public class(TensorFlowObject<TF_SessionOptions>)
   public
     constructor;
@@ -849,6 +851,7 @@ type
     end;  
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   DisposableObjectList<T> = public abstract class(DisposableObject)
     where T is DisposableObject;
   protected
@@ -875,30 +878,27 @@ type
     end;
 
     method &Add(aItem: T);
-    begin
-      CheckAndRaiseOnDisposed;
+    begin      
       fList.Add(aItem);
     end;
 
     property Count: Integer
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fList.Count;
       end;
 
     property Item[i: Integer]: T
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin       
         result := fList[i];
       end; default;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorFlowObjectList<T> = public class(DisposableObjectList<T>)
     where T is ITensorFlowObject;
   public
     method ToRawPtrArray: array of ^Void;
-    begin
-      CheckAndRaiseOnDisposed;
+    begin     
       result := new ^Void[fList.Count];
       for I: Integer := 0 to fList.Count - 1 do begin
         result[I] := fList[I].RawPtr;
@@ -906,6 +906,7 @@ type
     end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   OutputList = public class(DisposableObjectList<Output>)
   public
     method ToArray: array of TF_Output;
@@ -920,6 +921,7 @@ type
   TensorList = public TensorFlowObjectList<Tensor>;
   OperationList = public TensorFlowObjectList<Operation>;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   SessionRunnerContext nested in SessionRunner = private class(DisposableObject)
   private
     fInputs: OutputList := new OutputList;
@@ -940,30 +942,27 @@ type
     end;
   public
     property Inputs: OutputList
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fInputs;
       end;
 
     property Outputs: OutputList
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fOutputs;
       end;
 
     property InputValues: TensorList
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fInputValues;
       end;
 
     property Targets: OperationList
-      read begin
-        CheckAndRaiseOnDisposed;
+      read begin        
         result := fTargets;
       end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   SessionRunner = public class(DisposableObject)
   private
     fSession: Session := nil;
@@ -1004,17 +1003,14 @@ type
     end;
 
     method Reset;
-    begin
-      CheckAndRaiseOnDisposed;
+    begin      
       fContext.Dispose;
       fContext := new SessionRunnerContext;
     end;
 
     method Run(aStatus: Status := nil) withMetaData(aMetaData: Buffer := nil) withOptions(aOpts: Buffer := nil): TensorList;
-    begin
-      CheckAndRaiseOnDisposed;
+    begin    
       var outputValues: array of ^TF_Tensor := new ^TF_Tensor[fContext.Outputs.Count];
-
       using lstatus := new Status do begin 
         TF_SessionRun(
           fSession.NativePtr,
@@ -1028,8 +1024,7 @@ type
           fContext.Targets.ToRawPtrArray,
           fContext.Targets.Count,
           aMetaData:NativePtr,
-          lstatus.NativePtr); 
-        
+          lstatus.NativePtr);         
         result := new TensorList withCapacity(outputValues.Length);
         for I: Integer := 0 to outputValues.Length - 1 do begin
           result.Add(new Tensor withTFTensor(outputValues[I]));
