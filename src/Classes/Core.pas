@@ -68,7 +68,12 @@ type
 
   TensorFlowObjectDisposeAction<T> = public block(aPtr: ^T);
 
-  TensorFlowObject<T> = public abstract class(DisposableObject)
+  ITensorFlowObject = unit interface(IDisposable) // unit visibility.
+    property ID: NativeUInt read;
+    property RawPtr: ^Void read;
+  end;
+
+  TensorFlowObject<T> = public abstract class(DisposableObject, ITensorFlowObject)
   private
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
     fNativePtr: ^T := nil;    
@@ -92,10 +97,20 @@ type
       inherited Dispose(aDisposing);
     end;
   public
+    property ID: NativeUInt
+      read begin
+        result := NativeInt(NativePtr);
+      end;
+
     property NativePtr: ^T 
       read begin
         CheckAndRaiseOnDisposed;
         exit fNativePtr;
+      end;
+    
+    property RawPtr: ^Void
+      read begin
+        result := NativePtr;
       end;
   end;
 
@@ -181,7 +196,7 @@ type
 
     method ToString: String; override;
     begin
-      result := $'Operation: {Convert.UInt64ToHexString(NativeInt(NativePtr), 16)}';
+      result := $'Operation: {Convert.UInt64ToHexString(ID, 16)}';
     end;
 
     property &Graph: Graph
@@ -595,8 +610,8 @@ type
     property &Shape: Shape read;
   end; 
 
-  TensorData<T> = public class(DisposableObject, ITensorData)
-  private
+  TensorData = public class(DisposableObject, ITensorData)
+  protected
     fData: ^Void;
     fDataType: TF_DataType;
     fNumBytes: UInt64 := 0;
@@ -607,7 +622,57 @@ type
       if aDisposing then begin
         fShape.Dispose;
       end;
+      inherited Dispose(aDisposing);
+    end;
+
+    constructor; empty;
+  public
+    constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
+    begin
+      fData := TF_TensorData(aTensor);
+      fDataType := TF_TensorType(aTensor);
+      fNumBytes := TF_TensorByteSize(aTensor);
       
+      var lNumDims := TF_NumDims(aTensor);
+      var lDims := new Int64[lNumDims];
+      
+      for I: Integer := 0 to lNumDims - 1 do begin
+        lDims[I] := TF_Dim(aTensor, I);
+      end;
+
+      fShape := new Shape withDimentions(lDims); 
+    end;
+
+    method ToArray: array of Byte;
+    begin
+      CheckAndRaiseOnDisposed;
+      result := new Byte[fNumBytes];
+      memcpy(result, fData, fNumBytes);
+    end;
+
+    property NumBytes: UInt64
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fNumBytes
+      end;
+    
+    property DataType: TF_DataType
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fDataType
+      end;
+    
+    property Shape: Shape
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fShape
+      end;
+  end;
+
+  TensorData<T> = public class(TensorData)
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin 
       free(fData);
       inherited Dispose(aDisposing);
     end;
@@ -637,31 +702,6 @@ type
         end;
       end;
     end;
-
-    method ToArray: array of Byte;
-    begin
-      CheckAndRaiseOnDisposed;
-      result := new Byte[fNumBytes];
-      memcpy(result, fData, fNumBytes);
-    end;
-
-    property NumBytes: UInt64
-      read begin
-        CheckAndRaiseOnDisposed;
-        result := fNumBytes
-      end;
-    
-    property DataType: TF_DataType
-      read begin
-        CheckAndRaiseOnDisposed;
-        result := fDataType
-      end;
-    
-    property Shape: Shape
-      read begin
-        CheckAndRaiseOnDisposed;
-        result := fShape
-      end;
   end;
 
   TensorCreateException = class(Exception)
@@ -698,6 +738,12 @@ type
 
       fData := aData;
       inherited constructor withNativePtr(ltensor) DisposeAction(aPtr->TF_DeleteTensor(aPtr));
+    end;
+
+    constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
+    begin
+      var lData: ITensorData := new TensorData withTFTensor(aTensor);
+      constructor withData(lData);
     end;
 
     property Data: ITensorData
@@ -796,18 +842,196 @@ type
     end;  
   end;
 
+  DisposableObjectList<T> = public abstract class(DisposableObject)
+    where T is DisposableObject;
+  protected
+    fList: List<T>;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if aDisposing then begin
+        for el in fList do el.Dispose();
+      end;
+
+      fList.Clear;
+      inherited Dispose(aDisposing);
+    end;
+  public
+    constructor withCapacity(aCapacity: Integer);
+    begin
+      fList := new List<T>(aCapacity);
+    end;
+
+    constructor;
+    begin
+      fList := new List<T>;
+    end;
+
+    method &Add(aItem: T);
+    begin
+      CheckAndRaiseOnDisposed;
+      fList.Add(aItem);
+    end;
+
+    property Count: Integer
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fList.Count;
+      end;
+
+    property Item[i: Integer]: T
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fList[i];
+      end; default;
+  end;
+
+  TensorFlowObjectList<T> = public class(DisposableObjectList<T>)
+    where T is ITensorFlowObject;
+  public
+    method ToRawPtrArray: array of ^Void;
+    begin
+      CheckAndRaiseOnDisposed;
+      result := new ^Void[fList.Count];
+      for I: Integer := 0 to fList.Count - 1 do begin
+        result[I] := fList[I].RawPtr;
+      end;
+    end;
+  end;
+
+  OutputList = public class(DisposableObjectList<Output>)
+  public
+    method ToArray: array of TF_Output;
+    begin
+      result := new TF_Output[fList.Count];
+      for I: Integer := 0 to fList.Count - 1 do begin
+        result[I] := fList[I].ToTFOutput;
+      end;
+    end;
+  end;
+
+  TensorList = public TensorFlowObjectList<Tensor>;
+  OperationList = public TensorFlowObjectList<Operation>;
+
+  SessionRunnerContext nested in SessionRunner = private class(DisposableObject)
+  private
+    fInputs: OutputList := new OutputList;
+    fInputValues: TensorList := new TensorList;
+    fOutputs: OutputList := new OutputList;
+    fTargets: OperationList := new OperationList;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if aDisposing then begin
+        fInputs.Dispose;
+        fInputValues.Dispose;
+        fOutputs.Dispose;
+        fTargets.Dispose;
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
+  public
+    property Inputs: OutputList
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fInputs;
+      end;
+
+    property Outputs: OutputList
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fOutputs;
+      end;
+
+    property InputValues: TensorList
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fInputValues;
+      end;
+
+    property Targets: OperationList
+      read begin
+        CheckAndRaiseOnDisposed;
+        result := fTargets;
+      end;
+  end;
+
   SessionRunner = public class(DisposableObject)
   private
-    fSession: Session;
+    fSession: Session := nil;
+    fContext: SessionRunnerContext;
+  protected 
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if aDisposing then begin
+        fSession.Dispose;
+        fContext.Dispose;
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
     constructor withSession(aSession: not nullable Session);
     begin
       fSession := aSession;
     end;
 
-    method Reset; unit;
+    method AddInput(aInput: not nullable Output; aValue: Tensor): SessionRunner;
     begin
+      fContext.Inputs.Add(aInput);
+      fContext.InputValues.Add(aValue);
+      result := self;
+    end;
 
+    method Fetch(aOutput: not nullable Output): SessionRunner;
+    begin
+      fContext.Outputs.Add(aOutput);
+      result := self;
+    end;
+
+    method AddTarget(aTarget: not nullable Operation): SessionRunner;
+    begin
+      fContext.Targets.Add(aTarget);
+      result := self;
+    end;
+
+    method Reset;
+    begin
+      CheckAndRaiseOnDisposed;
+      fContext.Dispose;
+      fContext := new SessionRunnerContext;
+    end;
+
+    method Run(aStatus: Status := nil) withMetaData(aMetaData: Buffer := nil) withOptions(aOpts: Buffer := nil): TensorList;
+    begin
+      CheckAndRaiseOnDisposed;
+      var outputValues: array of ^TF_Tensor := new ^TF_Tensor[fContext.Outputs.Count];
+
+      using lstatus := new Status do begin 
+        TF_SessionRun(
+          fSession.NativePtr,
+          aOpts:NativePtr,
+          fContext.Inputs.ToArray,
+          fContext.InputValues.ToRawPtrArray,
+          fContext.Inputs.Count,
+          fContext.Outputs.ToArray,
+          outputValues,
+          fContext.Outputs.Count,
+          fContext.Targets.ToRawPtrArray,
+          fContext.Targets.Count,
+          aMetaData:NativePtr,
+          lstatus.NativePtr); 
+        
+        result := new TensorList withCapacity(outputValues.Length);
+        for I: Integer := 0 to outputValues.Length - 1 do begin
+          result.Add(new Tensor withTFTensor(outputValues[I]));
+        end;
+
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lstatus.Code) withMessage(lstatus.Message);
+        end;
+      end;
     end;
   end;
 
