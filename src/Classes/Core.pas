@@ -614,13 +614,18 @@ type
   protected
     fData: ^Void;
     fDataType: TF_DataType;
-    fNumBytes: UInt64 := 0;
+    fManaged: Boolean;
+    fNumBytes: UInt64;
     fShape: Shape;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin      
       if aDisposing then begin
         fShape.Dispose;
+      end;
+
+      if fManaged then begin
+        free(fData);
       end;
       inherited Dispose(aDisposing);
     end;
@@ -641,6 +646,7 @@ type
       end;
 
       fShape := new Shape withDimentions(lDims); 
+      fManaged := false;
     end;
 
     method ToArray: array of Byte;
@@ -682,6 +688,7 @@ type
       var localType := aValue[0].GetType;
       fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
       fShape := aShape;
+      fManaged := true;
 
       if fDataType <> TF_DataType.TF_STRING then begin
         fNumBytes := TF_DataTypeSize(fDataType) * aValue.Length;
