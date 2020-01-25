@@ -42,6 +42,10 @@
       <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TensorFlow.Island.Aspects">
+      <IsCirrusRef>True</IsCirrusRef>
+      <HintPath>C:\DEVLIBS\TensorFlow-Island\Cirrus\TensorFlow.Island.Aspects.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="C:\DEVLIBS\TensorFlow-Island\src\Classes" />
@@ -59,15 +63,6 @@
       <SubType>Code</SubType>
       <Link>..\..\src\Classes\Helpers.pas</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Aspects\TensorFlow.Island.Aspects.elements">
-      <Name>TensorFlow.Island.Aspects</Name>
-      <Project>{50d60a44-30e4-42b2-9c89-9fb13797c1ae}</Project>
-      <Private>True</Private>
-      <HintPath>..\..\..\..\Users\WXIN\AppData\Local\RemObjects Software\EBuild\Obj\TensorFlow.Island.Aspects-7B14B5FB30E55BC1274C8B5DC7BA541AF9E6DBBF\Release\Echoes\TensorFlow.Island.Aspects.dll</HintPath>
-      <IsCirrusRef>True</IsCirrusRef>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>
