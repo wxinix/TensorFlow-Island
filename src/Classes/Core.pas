@@ -567,10 +567,10 @@ type
     fIndex: Integer;
     fOper: Operation;
   public
-    constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer = 0);
+    constructor withOp(aOp: not nullable Operation) Index(aIndex: Integer = 0);
     begin
       fIndex := aIndex;
-      fOper := aOper;
+      fOper := aOp;
     end;
 
     method ToTFOutput: TF_Output;
@@ -640,7 +640,8 @@ type
     constructor;
     begin
       var lgraph := TF_NewGraph(); 
-      inherited constructor withNativePtr(lgraph) DisposeAction(aPtr->TF_DeleteGraph(aPtr));
+      inherited constructor withNativePtr(lgraph) 
+        DisposeAction(aPtr->TF_DeleteGraph(aPtr));
     end;
 
     method WithScope(aNewScope: not nullable String): Scope;
@@ -692,7 +693,8 @@ type
       end;
     end;
 
-    method MakeName(const aOpType: not nullable String; aOpName: not nullable String): String;
+    method MakeName(const aOpType: not nullable String; 
+      aOpName: not nullable String): String;
     begin  
       if String.IsNullOrEmpty(aOpName) then begin
         aOpName := aOpType;
@@ -787,7 +789,8 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withValue(aValue: not nullable array of T) Shape(aShape: not nullable Shape);
+    constructor withValue(aValue: not nullable array of T) 
+      Shape(aShape: not nullable Shape);
     begin
       var localType := aValue[0].GetType;
       fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
@@ -849,7 +852,8 @@ type
       end;
 
       fData := aData;
-      inherited constructor withNativePtr(ltensor) DisposeAction(aPtr->TF_DeleteTensor(aPtr));
+      inherited constructor withNativePtr(ltensor) 
+        DisposeAction(aPtr->TF_DeleteTensor(aPtr));
     end;
 
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
@@ -897,7 +901,8 @@ type
         begin
           using lstatus := new Status do begin
             using opts := new SessionOptions do begin // Nested
-              var lsession := TF_NewSession(fGraph.NativePtr, opts.NativePtr, lstatus.NativePtr);               
+              var lsession := TF_NewSession(fGraph.NativePtr, opts.NativePtr, 
+                lstatus.NativePtr);               
               result := (lstatus.OK, lstatus.Message, lsession);
             end;
           end;
@@ -1043,7 +1048,8 @@ type
       fContext := new SessionRunnerContext;
     end;
 
-    method Run(aStatus: Status := nil) withMetaData(aMetaData: Buffer := nil) withOptions(aOpts: Buffer := nil): TensorList;
+    method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) 
+      Options(aOpts: Buffer := nil): TensorList;
     begin    
       var outputValues: array of ^TF_Tensor := new ^TF_Tensor[fContext.Outputs.Count];
       using lstatus := new Status do begin 
