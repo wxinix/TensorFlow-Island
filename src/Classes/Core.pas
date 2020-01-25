@@ -787,12 +787,6 @@ type
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorData<T> = public class(TensorData)
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin 
-      free(fData);
-      inherited Dispose(aDisposing);
-    end;
   public
     constructor withValue(aValue: not nullable array of T) 
       Shape(aShape: not nullable Shape);
