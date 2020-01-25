@@ -51,6 +51,10 @@
       <SubType>Code</SubType>
       <Link>..\..\src\Classes\Core.pas</Link>
     </Compile>
+    <Compile Include="..\..\src\Classes\GraphOps.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\GraphOps.pas</Link>
+    </Compile>
     <Compile Include="..\..\src\Classes\Helpers.pas">
       <SubType>Code</SubType>
       <Link>..\..\src\Classes\Helpers.pas</Link>

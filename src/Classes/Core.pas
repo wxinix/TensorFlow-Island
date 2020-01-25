@@ -59,6 +59,48 @@ type
     end;
   end;
 
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
+  DisposableObjectList<T> = public abstract class(DisposableObject)
+    where T is IDisposable;
+  protected
+    fList: List<T>;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if aDisposing then begin
+        for el in fList do el.Dispose();
+      end;
+
+      fList.Clear;
+      inherited Dispose(aDisposing);
+    end;
+  public
+    constructor withCapacity(aCapacity: Integer);
+    begin
+      fList := new List<T>(aCapacity);
+    end;
+
+    constructor;
+    begin
+      fList := new List<T>;
+    end;
+
+    method &Add(aItem: T);
+    begin      
+      fList.Add(aItem);
+    end;
+
+    property Count: Integer
+      read begin        
+        result := fList.Count;
+      end;
+
+    property Item[i: Integer]: T
+      read begin       
+        result := fList[i];
+      end; default;
+  end;
+
   ObjectDisposedException = public class(Exception)
   public
     constructor (aObject: DisposableObject);
@@ -113,6 +155,19 @@ type
       read begin
         result := NativePtr;
       end;
+  end;
+
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
+  TensorFlowObjectList<T> = public class(DisposableObjectList<T>)
+    where T is ITensorFlowObject;
+  public
+    method ToRawPtrArray: array of ^Void;
+    begin     
+      result := new ^Void[fList.Count];
+      for I: Integer := 0 to fList.Count - 1 do begin
+        result[I] := fList[I].RawPtr;
+      end;
+    end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -210,22 +265,28 @@ type
       end;
   end;
 
+  OperationList = public TensorFlowObjectList<Operation>;
+
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   OperationDescription = public class(TensorFlowObject<TF_OperationDescription>)
   private
     fGraph: Graph;
     fOpType: String;
-    fOperName: String;      
+    fOpName: String;
   public
     constructor withGraph(aGraph: not nullable Graph) OpType(aOpType: not nullable String) 
-      OperName(aOperName: not nullable String);
+      OpName(aOpName: not nullable String);
     begin
       fOpType := aOpType;
-      fOperName := aOperName;
+      fOpName := aOpName;
       fGraph := aGraph;
 
-      var opDesc := TF_NewOperation(aGraph.NativePtr, aOpType.ToAnsiChars(true), 
-        aOperName.ToAnsiChars(true));
+      var opDesc := TF_NewOperation(
+        aGraph.NativePtr, 
+        aOpType.ToAnsiChars(true), 
+        aOpName.ToAnsiChars(true)
+        );
+
       // DisposeAction nil, TF_FinishOption will delete OperationDescription.
       inherited constructor withNativePtr(opDesc) DisposeAction(nil);
     end;
@@ -240,7 +301,7 @@ type
       TF_AddInput(NativePtr, aInput.ToTFOutput);
     end;
 
-    method AddInputList(aInputList: not nullable array of Output);
+    method AddInputs(aInputList: not nullable array of Output);
     begin
       var tfOutput := new TF_Output[aInputList.Length];
       for I: Integer := 0 to aInputList.Length - 1 do begin
@@ -257,7 +318,7 @@ type
         var op := TF_FinishOperation(NativePtr, lstatus.NativePtr);
       
         if lstatus.OK then begin
-          result := (true, new Operation withNativePtr(op) Name(fOperName) Graph(fGraph))
+          result := (true, new Operation withNativePtr(op) Name(fOpName) Graph(fGraph))
         end else begin
           result := (false, nil);
         end;
@@ -268,9 +329,10 @@ type
       end;
     end;
 
-    method SetAttrBool(const aName: not nullable String; aValue: Byte);
+    method SetAttrBool(const aName: not nullable String; aValue: Boolean);
     begin
-      TF_SetAttrBool(NativePtr, aName.ToAnsiChars(true), aValue);
+      var value: Byte := if aValue then 1 else 0;
+      TF_SetAttrBool(NativePtr, aName.ToAnsiChars(true), value);
     end;
 
     method SetAttrBoolList(const aName: not nullable String; 
@@ -378,9 +440,9 @@ type
         result := fOpType;
       end;
 
-    property OperName: String
+    property OpName: String
       read begin
-        result := fOperName;
+        result := fOpName;
       end;
   end;
 
@@ -505,7 +567,7 @@ type
     fIndex: Integer;
     fOper: Operation;
   public
-    constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer);
+    constructor withOperation(aOper: not nullable Operation) OutputIndex(aIndex: Integer = 0);
     begin
       fIndex := aIndex;
       fOper := aOper;
@@ -544,9 +606,36 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
+  OutputList = public class(DisposableObjectList<Output>)
+  public
+    method ToArray: array of TF_Output;
+    begin
+      result := new TF_Output[fList.Count];
+      for I: Integer := 0 to fList.Count - 1 do begin
+        result[I] := fList[I].ToTFOutput;
+      end;
+    end;
+  end;
+
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Graph = public class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: not nullable String := '';
+    fNames: Dictionary<String, Integer> := new Dictionary<String, Integer>;
+
+    method MakeUniqueName(const aName: not nullable String): String;
+    begin
+      var seqid := 0;
+      if fNames.ContainsKey(aName) then begin
+        seqid := fNames[aName];
+        inc(seqid);
+        fNames[aName] := seqid;
+      end else begin
+        fNames.Add(aName, seqid);
+      end;
+
+      result := $'{aName}_{seqid}';
+    end;
   public
     constructor;
     begin
@@ -603,7 +692,21 @@ type
       end;
     end;
 
-    property CurrentScope: String read fCurrentScope;
+    method MakeName(const aOpType: not nullable String; aOpName: not nullable String): String;
+    begin  
+      if String.IsNullOrEmpty(aOpName) then begin
+        aOpName := aOpType;
+      end;
+
+      var name := if String.IsNullOrEmpty(CurrentScope) then 
+          $'{aOpType}:{aOpName}' else $'{CurrentScope}/{aOpType}:{aOpName}';
+      result := MakeUniqueName(name);
+    end;
+
+    property CurrentScope: String 
+      read begin
+        result := fCurrentScope;
+      end;
   end;
 
   ITensorData = public interface(IDisposable)
@@ -761,6 +864,8 @@ type
       end;
   end;
 
+  TensorList = public TensorFlowObjectList<Tensor>;
+
   SessionCreateException = public class(Exception)
   public
     constructor withMessage(aMsg: not nullable String);
@@ -850,76 +955,6 @@ type
       TF_SetTarget(NativePtr, aTarget.ToAnsiChars(true));
     end;  
   end;
-
-  [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  DisposableObjectList<T> = public abstract class(DisposableObject)
-    where T is DisposableObject;
-  protected
-    fList: List<T>;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if aDisposing then begin
-        for el in fList do el.Dispose();
-      end;
-
-      fList.Clear;
-      inherited Dispose(aDisposing);
-    end;
-  public
-    constructor withCapacity(aCapacity: Integer);
-    begin
-      fList := new List<T>(aCapacity);
-    end;
-
-    constructor;
-    begin
-      fList := new List<T>;
-    end;
-
-    method &Add(aItem: T);
-    begin      
-      fList.Add(aItem);
-    end;
-
-    property Count: Integer
-      read begin        
-        result := fList.Count;
-      end;
-
-    property Item[i: Integer]: T
-      read begin       
-        result := fList[i];
-      end; default;
-  end;
-
-  [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  TensorFlowObjectList<T> = public class(DisposableObjectList<T>)
-    where T is ITensorFlowObject;
-  public
-    method ToRawPtrArray: array of ^Void;
-    begin     
-      result := new ^Void[fList.Count];
-      for I: Integer := 0 to fList.Count - 1 do begin
-        result[I] := fList[I].RawPtr;
-      end;
-    end;
-  end;
-
-  [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  OutputList = public class(DisposableObjectList<Output>)
-  public
-    method ToArray: array of TF_Output;
-    begin
-      result := new TF_Output[fList.Count];
-      for I: Integer := 0 to fList.Count - 1 do begin
-        result[I] := fList[I].ToTFOutput;
-      end;
-    end;
-  end;
-
-  TensorList = public TensorFlowObjectList<Tensor>;
-  OperationList = public TensorFlowObjectList<Operation>;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   SessionRunnerContext nested in SessionRunner = private class(DisposableObject)
@@ -1024,7 +1059,7 @@ type
           fContext.Targets.ToRawPtrArray,
           fContext.Targets.Count,
           aMetaData:NativePtr,
-          lstatus.NativePtr);         
+          lstatus.NativePtr);
         result := new TensorList withCapacity(outputValues.Length);
         for I: Integer := 0 to outputValues.Length - 1 do begin
           result.Add(new Tensor withTFTensor(outputValues[I]));

@@ -16,10 +16,9 @@ implementation
 
 method RaiseOnDIsposedAttribute.HandleImplementation(Services: IServices; aMethod: IMethodDefinition);
 begin
-  if 
-    String.Equals(aMethod.Name, '.', StringComparison.OrdinalIgnoreCase) or
-    String.Equals(aMethod.Name, '~', StringComparison.OrdinalIgnoreCase) or
-    (aMethod.Visibility <> Visibility.Public)
+  if String.Equals(aMethod.Name, '.', StringComparison.OrdinalIgnoreCase) or
+     String.Equals(aMethod.Name, '~', StringComparison.OrdinalIgnoreCase) or
+     (aMethod.Visibility <> Visibility.Public) or aMethod.Static
   then begin
     exit;
   end;
