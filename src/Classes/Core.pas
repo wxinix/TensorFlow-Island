@@ -122,7 +122,8 @@ type
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
     fNativePtr: ^T := nil;    
   protected
-    constructor withNativePtr(aPtr: not nullable ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
+    constructor withNativePtr(aPtr: not nullable ^T) 
+      DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
     begin
       fNativePtr := aPtr;
       fDisposeAction := aAction;
@@ -242,8 +243,8 @@ type
     fName: String;
     fGraph: Graph;
   public
-    constructor withNativePtr(aPtr: ^TF_Operation) Name(aName: not nullable String) 
-      Graph(aGraph: not nullable Graph);
+    constructor withNativePtr(aPtr: ^TF_Operation) 
+      Name(aName: not nullable String) Graph(aGraph: not nullable Graph);
     begin
       fGraph := aGraph;
       fName := aName;
@@ -274,8 +275,8 @@ type
     fOpType: String;
     fOpName: String;
   public
-    constructor withGraph(aGraph: not nullable Graph) OpType(aOpType: not nullable String) 
-      OpName(aOpName: not nullable String);
+    constructor withGraph(aGraph: not nullable Graph) 
+      OpType(aOpType: not nullable String) OpName(aOpName: not nullable String);
     begin
       fOpType := aOpType;
       fOpName := aOpName;
@@ -451,7 +452,8 @@ type
   public
     constructor;
     begin
-      inherited constructor withNativePtr(TF_NewStatus()) DisposeAction(aPtr->TF_DeleteStatus(aPtr));
+      inherited constructor withNativePtr(TF_NewStatus()) 
+        DisposeAction(aPtr->TF_DeleteStatus(aPtr));
     end;
 
     method SetCode(aCode: TF_Code) withMessage(const aMsg: String);
@@ -656,13 +658,14 @@ type
       end
     end;
 
-    method GetOperationByName(const aName: not nullable String)
+    method GetOperationByName(const aOpName: not nullable String)
       : Tuple of (Boolean, Operation);
     begin
-      var opPtr := TF_GraphOperationByName(NativePtr, aName.ToAnsiChars(true));
+      var opPtr := TF_GraphOperationByName(NativePtr, aOpName.ToAnsiChars(true));
       
       if assigned(opPtr) then begin
-        result := (true, new Operation withNativePtr(opPtr) Name(aName) Graph(self));
+        result := (true, 
+          new Operation withNativePtr(opPtr) Name(aOpName) Graph(self));
       end else begin
         result := (false, nil);
       end;
@@ -673,13 +676,15 @@ type
     begin 
       using lstatus := new Status do begin
         var nativeOut := aOutput.ToTFOutput;
-        var numDims := TF_GraphGetTensorNumDims(NativePtr, nativeOut, lstatus.NativePtr);        
+        var numDims := TF_GraphGetTensorNumDims(NativePtr, nativeOut, 
+          lstatus.NativePtr);        
         
         if (not lstatus.OK) or (numDims = 0) then begin
           result := (false, nil);
         end else begin
           var dims := new Int64[numDims];
-          TF_GraphGetTensorShape(NativePtr, nativeOut, dims, numDims, lstatus.NativePtr);       
+          TF_GraphGetTensorShape(NativePtr, nativeOut, dims, numDims, 
+            lstatus.NativePtr);       
           if lstatus.OK then begin
             result := (true, new Shape withDimentions(dims));
           end else begin
@@ -696,12 +701,12 @@ type
     method MakeName(const aOpType: not nullable String; 
       aOpName: not nullable String): String;
     begin  
-      if String.IsNullOrEmpty(aOpName) then begin
-        aOpName := aOpType;
-      end;
-
-      var name := if String.IsNullOrEmpty(CurrentScope) then 
-          $'{aOpType}:{aOpName}' else $'{CurrentScope}/{aOpType}:{aOpName}';
+      if String.IsNullOrEmpty(aOpName) then aOpName := aOpType;
+      var name := 
+        if String.IsNullOrEmpty(CurrentScope) then 
+          $'{aOpType}:{aOpName}' 
+        else 
+          $'{CurrentScope}/{aOpType}:{aOpName}';
       result := MakeUniqueName(name);
     end;
 
