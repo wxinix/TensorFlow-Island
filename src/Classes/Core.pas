@@ -788,29 +788,29 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorData<T> = public class(TensorData)
   public
-    constructor withValue(aValue: not nullable array of T) 
+    constructor withValues(aValues: not nullable array of T) 
       Shape(aShape: not nullable Shape);
     begin 
-      var localType: &Type := T(aValue[0]).GetType;
+      var localType: &Type := T(aValues[0]).GetType;
       fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
       fShape := aShape;
       fManaged := true;
 
       if fDataType <> TF_DataType.TF_STRING then begin 
-        fNumBytes := TF_DataTypeSize(fDataType) * aValue.Length;
+        fNumBytes := TF_DataTypeSize(fDataType) * aValues.Length;
         fData := malloc(fNumBytes); 
-        memcpy(fData, aValue, fNumBytes);}
+        memcpy(fData, aValues, fNumBytes);}
       end else begin 
-        for I: Integer := 0 to aValue.Length -1 do begin
-          fNumBytes := fNumBytes + String(aValue[I]).Length + 1;
+        for I: Integer := 0 to aValues.Length -1 do begin
+          fNumBytes := fNumBytes + String(aValues[I]).Length + 1;
         end;
 
         fData := malloc(fNumBytes);
         var curPos: Integer := 0;
 
-        for I: Integer := 0 to aValue.Length - 1 do begin
-          var num := String(aValue[I]).Length + 1; // A byte for null terminator.
-          memcpy(fData + curPos, String(aValue[I]).ToAnsiChars(true), num);
+        for I: Integer := 0 to aValues.Length - 1 do begin
+          var num := String(aValues[I]).Length + 1; //1 byte for null terminator.
+          memcpy(fData + curPos, String(aValues[I]).ToAnsiChars(true), num);
           curPos := curPos + num;
         end;
       end;
@@ -861,101 +861,114 @@ type
       constructor withData(lData);
     end;
 
+    operator Implicit(aValue: Boolean): Tensor;
+    begin
+      var data := new TensorData<Boolean> withValues([aValue]) 
+        Shape(new Shape withDimentions(nil));
+      result := new Tensor withData(data);
+    end;
+
     operator Implicit(aValue: Byte): Tensor;
     begin
-      var data := new TensorData<Byte> withValue([aValue]) 
+      var data := new TensorData<Byte> withValues([aValue]) 
         Shape(new Shape withDimentions(nil));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValue: Int16): Tensor;
     begin
-      var data := new TensorData<Int16> withValue([aValue]) 
+      var data := new TensorData<Int16> withValues([aValue]) 
         Shape(new Shape withDimentions(nil));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValue: Integer): Tensor;
     begin
-      var data := new TensorData<Integer> withValue([aValue]) 
+      var data := new TensorData<Integer> withValues([aValue]) 
         Shape(new Shape withDimentions(nil));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValue: Int64): Tensor;
     begin
-      var data := new TensorData<Int64> withValue([aValue]) 
+      var data := new TensorData<Int64> withValues([aValue]) 
         Shape(new Shape withDimentions(nil));
-      result := new Tensor withData(data);
-    end;
-
-    operator Implicit(aValue: array of Byte): Tensor;
-    begin
-      var data := new TensorData<Byte> withValue(aValue) 
-        Shape(new Shape withDimentions([aValue.Length]));
-      result := new Tensor withData(data);
-    end;
-
-    operator Implicit(aValue: array of Int16): Tensor;
-    begin
-      var data := new TensorData<Int16> withValue(aValue) 
-        Shape(new Shape withDimentions([aValue.Length]));
-      result := new Tensor withData(data);
-    end;
-
-    operator Implicit(aValue: array of Integer): Tensor;
-    begin
-      var data := new TensorData<Integer> withValue(aValue) 
-        Shape(new Shape withDimentions([aValue.Length]));
-      result := new Tensor withData(data);
-    end;
-    operator Implicit(aValue: array of Int64): Tensor;
-    begin
-      var data := new TensorData<Int64> withValue(aValue) 
-        Shape(new Shape withDimentions([aValue.Length]));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValue: Single): Tensor;
     begin
-      var data := new TensorData<Single> withValue([aValue]) 
+      var data := new TensorData<Single> withValues([aValue]) 
         Shape(new Shape withDimentions(nil));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValue: Double): Tensor;
     begin
-      var data := new TensorData<Double> withValue([aValue]) 
+      var data := new TensorData<Double> withValues([aValue]) 
         Shape(new Shape withDimentions(nil));
       result := new Tensor withData(data);
     end;
 
-    operator Implicit(aValue: Boolean): Tensor;
+    operator Implicit(aValue: not nullable String): Tensor;
     begin
-      var data := new TensorData<Boolean> withValue([aValue]) 
+      var data := new TensorData<String> withValues([aValue]) 
         Shape(new Shape withDimentions(nil));
       result := new Tensor withData(data);
     end;
 
-    operator Implicit(aValue: array of Boolean): Tensor;
+    operator Implicit(aValues: not nullable array of Boolean): Tensor;
     begin
-      var data := new TensorData<Boolean> withValue(aValue) 
-        Shape(new Shape withDimentions([aValue.Length]));
+      var data := new TensorData<Boolean> withValues(aValues) 
+        Shape(new Shape withDimentions([aValues.Length]));
       result := new Tensor withData(data);
     end;
 
-    operator Implicit(aValue: array of Single): Tensor;
+    operator Implicit(aValues: not nullable array of Byte): Tensor;
     begin
-      var data := new TensorData<Single> withValue(aValue) 
-        Shape(new Shape withDimentions([aValue.Length]));
+      var data := new TensorData<Byte> withValues(aValues) 
+        Shape(new Shape withDimentions([aValues.Length]));
       result := new Tensor withData(data);
     end;
 
-    operator Implicit(aValue: array of Double): Tensor;
+    operator Implicit(aValues: not nullable array of Int16): Tensor;
     begin
-      var data := new TensorData<Double> withValue(aValue) 
-        Shape(new Shape withDimentions([aValue.Length]));
+      var data := new TensorData<Int16> withValues(aValues) 
+        Shape(new Shape withDimentions([aValues.Length]));
       result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of Integer): Tensor;
+    begin
+      var data := new TensorData<Integer> withValues(aValues) 
+        Shape(new Shape withDimentions([aValues.Length]));
+      result := new Tensor withData(data);
+    end;
+    operator Implicit(aValues: not nullable array of Int64): Tensor;
+    begin
+      var data := new TensorData<Int64> withValues(aValues) 
+        Shape(new Shape withDimentions([aValues.Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of Single): Tensor;
+    begin
+      var data := new TensorData<Single> withValues(aValues) 
+        Shape(new Shape withDimentions([aValues.Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of Double): Tensor;
+    begin
+      var data := new TensorData<Double> withValues(aValues) 
+        Shape(new Shape withDimentions([aValues.Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of String): Tensor;
+    begin
+      var data := new TensorData<String> withValues(aValues)
+        Shape(new Shape withDimentions([aValues.Length]));
     end;
 
     property Data: ITensorData
