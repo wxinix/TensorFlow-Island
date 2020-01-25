@@ -367,7 +367,7 @@ type
         aValueList.Length);
     end;
 
-    method SetAttrString(const aName: not nullable String; aValue: not nullable String);
+    method SetAttrStr(const aName: not nullable String; aValue: not nullable String);
     begin
       TF_SetAttrString(NativePtr, aName.ToAnsiChars(true), aValue.ToAnsiChars, 
         lstrlenA(aValue.ToAnsiChars(true)));
@@ -504,7 +504,7 @@ type
     end;
   end;
 
-  InvalidShapeDimensionIndexException = public class(Exception)
+  InvalidShapeDimIndexException = public class(Exception)
   public
     constructor (aIndex: Int32; aNumDims: Int32);
     begin
@@ -558,7 +558,7 @@ type
         if (NumDims > 0) and (0 <= aIndex < NumDims) then begin 
           result := fDims[aIndex]
         end else begin
-          raise new InvalidShapeDimensionIndexException(aIndex, NumDims);
+          raise new InvalidShapeDimIndexException(aIndex, NumDims);
         end;
       end;
   end;
@@ -610,7 +610,7 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   OutputList = public class(DisposableObjectList<Output>)
   public
-    method ToArray: array of TF_Output;
+    method ToTFOutputArray: array of TF_Output;
     begin
       result := new TF_Output[fList.Count];
       for I: Integer := 0 to fList.Count - 1 do begin
@@ -671,7 +671,7 @@ type
       end;
     end;
 
-    method GetTensorShape(aOutput: not nullable Output; aStatus: Status := nil)
+    method GetShape(aOutput: not nullable Output; aStatus: Status := nil)
       : Tuple of (Boolean, Shape);
     begin 
       using lstatus := new Status do begin
@@ -792,7 +792,7 @@ type
       Shape(aShape: not nullable Shape);
     begin 
       var localType: &Type := T(aValues[0]).GetType;
-      fDataType := Helper.ConvertLocalTypeToTFDataType(localType);
+      fDataType := Helper.ToTFDataType(localType);
       fShape := aShape;
       fManaged := true;
 
@@ -969,6 +969,7 @@ type
     begin
       var data := new TensorData<String> withValues(aValues)
         Shape(new Shape withDimentions([aValues.Length]));
+      result := new Tensor withData(data);
     end;
 
     property Data: ITensorData
@@ -1165,13 +1166,13 @@ type
         TF_SessionRun(
           fSession.NativePtr,
           aOpts:NativePtr,
-          fContext.Inputs.ToArray,
-          fContext.InputValues.ToRawPtrArray,
+          fContext.Inputs.ToTFOutputArray,
+          fContext.InputValues.ToRawPtrArray, // tensor ptrs.
           fContext.Inputs.Count,
-          fContext.Outputs.ToArray,
-          outputValues,
+          fContext.Outputs.ToTFOutputArray,
+          outputValues, // tensor ptrs.
           fContext.Outputs.Count,
-          fContext.Targets.ToRawPtrArray,
+          fContext.Targets.ToRawPtrArray, // op ptrs.
           fContext.Targets.Count,
           aMetaData:NativePtr,
           lstatus.NativePtr);

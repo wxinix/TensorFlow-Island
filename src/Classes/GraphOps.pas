@@ -25,6 +25,15 @@ uses
   TensorFlow;
 
 type
+  OpCreateException = public class(Exception)
+  public
+    constructor withOpType(aOpType: not nullable String) 
+      Message(aMsg: not nullable String := '');
+    begin
+      inherited constructor($'Fail creating {aOpType}. {aMsg}');
+    end;
+  end;
+
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Graph_Operations = public extension class(Graph)
   private
@@ -34,14 +43,40 @@ type
       result := new OperationDescription withGraph(self) OpType(aOpType) 
         OpName(MakeName(aOpType, aOpName));
     end;
+
+    method FinishOpDescription_Output(aOpDesc: not nullable OperationDescription)
+      : Output; 
+    begin
+      using lStatus := new Status do begin
+        var (success, op) := aOpDesc.FinishOperation(lStatus);
+        if success then 
+          result:= new Output withOp(op) 
+        else 
+          raise new OpCreateException withOpType(aOpDesc.OpType) 
+            Message(lStatus.Message);
+      end;
+    end;
+
+    method FinishOpDescription_Op(aOpDesc: not nullable OperationDescription)
+      : Operation;
+    begin
+      using lStatus := new Status do begin
+        var (success, op) := aOpDesc.FinishOperation(lStatus);
+        if success then begin
+          result := op;
+        end else begin
+          raise new OpCreateException withOpType(aOpDesc.OpType)
+            Message(lStatus.Message);
+        end;
+      end;
+    end;
     
     method CreateOpOutput(const aOpType: not nullable String; 
       x: not nullable Output; aOpName: not nullable String): Output; overload;
     begin
       var lOpDesc := CreateOpDescription(aOpType, aOpName);
       lOpDesc.AddInput(x);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;
+      result := FinishOpDescription_Output(lOpDesc);
     end;
 
     method CreateOpOutput(const aOpType: not nullable String; 
@@ -50,20 +85,18 @@ type
       var lOpDesc := CreateOpDescription(aOpType, aOpName);
       lOpDesc.AddInput(x);
       lOpDesc.AddInput(y);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;
+      result := FinishOpDescription_Output(lOpDesc);
     end;
 
     method CreateOpOutput(const aOpType: not nullable String;
-      x, y, z: not nullable Output; aOpName: not nullable String)
+      x, y, z: not nullable Output; aOpName: not nullable String := '')
       : Output; overload;
     begin
       var lOpDesc := CreateOpDescription(aOpType, aOpName);
       lOpDesc.AddInput(x);
       lOpDesc.AddInput(y);
       lOpDesc.AddInput(z);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;
+      result := FinishOpDescription_Output(lOpDesc);
     end;
 
     method CreateOpOutput(const aOpType: not nullable String; 
@@ -72,8 +105,7 @@ type
     begin
       var lOpDesc := CreateOpDescription(aOpType, aOpName);
       lOpDesc.AddInputs(aInputs);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;
+      result := FinishOpDescription_Output(lOpDesc);
     end;
   public
     method OpAbort(const aErrMsg: not nullable String := ''; 
@@ -83,12 +115,10 @@ type
       const lOpType: String = 'Abort';
       var lOpDesc := CreateOpDescription(lOpType, aOpName);
   
-      if aErrMsg.Length > 0 then begin
-        lOpDesc.SetAttrString('error_msg', aErrMsg);
-      end;
-  
+      if aErrMsg.Length > 0 then lOpDesc.SetAttrStr('error_msg', aErrMsg);
       lOpDesc.SetAttrBool('exit_without_error', aNoErrOnExit);
-      (nil, result) := lOpDesc.FinishOperation;
+      
+      result := FinishOpDescription_Op(lOpDesc);
     end;
 
     method OpAbs(x: not nullable Output; aOpName: not nullable String := '')
@@ -120,24 +150,27 @@ type
     end;
 
     method OpArgMax(aInput, aDimension: not nullable Output; 
-      aOpName: not nullable String): Output;
+      aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ArgMax';
       result := CreateOpOutput(lOpType, aInput, aDimension, aOpName);
     end;
 
     method OpArgMin(aInput, aDimension: not nullable Output; 
-      aOpName: not nullable String): Output;
+      aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ArgMin';
       result := CreateOpOutput(lOpType, aInput, aDimension, aOpName);
     end;
 
     method OpAssignVariable(aResource, aValue: not nullable Output; 
-      aOpName: not nullable String): Output;
+      aOpName: not nullable String := ''): Operation;
     begin
       const lOpType: String = 'AssignVariableOp';
-      result := CreateOpOutput(lOpType, aResource, aValue, aOpName);
+      var lOpDesc := CreateOpDescription(lOpType, aOpName);
+      lOpDesc.AddInput(aResource);
+      lOpDesc.AddInput(aValue);
+      result := FinishOpDescription_Op(lOpDesc);
     end;
 
     method OpAsin(x: not nullable Output; aOpName: not nullable String := '')
@@ -167,8 +200,7 @@ type
       var lOpDesc := CreateOpDescription(lOpType, aOpName);
       lOpDesc.SetAttrTensor('value', aValue);
       lOpDesc.SetAttrType('dtype', aDataType);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;
+      result := FinishOpDescription_Output(lOpDesc);
     end;
 
     method OpCos(x: not nullable Output; aOpName: not nullable String := '')
@@ -194,8 +226,7 @@ type
       lOpDesc.AddInput(b);
       lOpDesc.SetAttrBool('transpose_a', transpose_a);
       lOpDesc.SetAttrBool('transpose_b', transpose_b);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;
+      result := FinishOpDescription_Output(lOpDesc);
     end;
 
     method OpMul(x, y: not nullable Output; aOpName: not nullable String := '')
@@ -211,11 +242,10 @@ type
       const lOpType: String = 'Placeholder';
       var lOpDesc := CreateOpDescription(lOpType, aOpName);
       if assigned(aShape) then lOpDesc.SetAttrShape('shape', aShape);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;    
+      result := FinishOpDescription_Output(lOpDesc);
     end;
 
-    method OnRange(aStart, aLimit, aDelta: not nullable Output; 
+    method OpRange(aStart, aLimit, aDelta: not nullable Output; 
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'Range';
@@ -228,8 +258,37 @@ type
       const lOpType: String = 'ReadVariableOp';
       var lOpDesc := CreateOpDescription(lOpType, aOpName);
       lOpDesc.SetAttrType('dtype', aDataType);
-      var (success, op) := lOpDesc.FinishOperation;
-      result := if success then new Output withOp(op) else nil;
+      result := FinishOpDescription_Output(lOpDesc);
+    end;
+
+    method OpReduceDims(aInput: not nullable Output; aAxis: Output := nil): Output;
+    begin
+      if assigned(aAxis) then begin
+        result := aAxis;
+      end else begin
+        using lStatus := new Status do begin
+          var (success, shp) := self.GetShape (aInput, lStatus);
+          if success then begin
+            if shp.NumDims > 0 then begin
+              var arr := new Int32[shp.NumDims];
+              for I: Integer := 0 to shp.NumDims - 1 do arr[I] := I;
+              result := OpConst(arr, TF_DataType.TF_INT32);
+            end else begin
+              result := OpRange(OpConst(0), OpConst(0), OpConst(1));
+            end;
+          end else begin
+            raise new OpCreateException withOpType('OpReduceDims') 
+              Message(lStatus.Message)
+          end;
+        end;
+      end;
+    end;
+
+    method OpReduceSum(aInput, aAxis: not nullable Output; 
+      aKeepDims: Boolean := false; aOpName: not nullable String := ''): Output;
+    begin
+      var reductionIndices := OpReduceDims(aInput, aAxis);
+      result := OpSum(aInput, reductionIndices, aKeepDims, aOpName);
     end;
 
     method OpSin(x: not nullable Output; aOpName: not nullable String := '')
@@ -246,12 +305,68 @@ type
       result := CreateOpOutput(lOpType, x, y, aOpName);
     end;
 
+    method OpSum(aInput, aReductionIndices: not nullable Output; 
+      aKeepDims: Boolean := false; aOpName: not nullable String := ''): Output;
+    begin
+        const lOpType: String = 'Sum';
+        var lOpDesc := CreateOpDescription(lOpType, aOpName);
+        lOpDesc.AddInput(aInput);
+        lOpDesc.AddInput(aReductionIndices);
+        lOpDesc.SetAttrBool('keep_dims', aKeepDims);
+      result := FinishOpDescription_Output(lOpDesc);
+    end;
+
     method OpTan(x: not nullable Output; aOpName: not nullable String := '')
       : Output;
     begin
       const lOpType: String = 'Tan';
       result := CreateOpOutput(lOpType, x, aOpName);
     end;
-  end;
 
+    method OpVarHandle(aDataType: TF_DataType; aShape: not nullable Shape;
+      aContainer: not nullable String := ''; aSharedName: not nullable String := '';
+      aOpName: not nullable String := ''): Output;
+    begin
+      const lOpType: String = 'VarHandleOp';
+      var lOpDesc := CreateOpDescription(lOpType, aOpName);
+      lOpDesc.SetAttrType('dtype', aDataType);
+      lOpDesc.SetAttrShape('shape', aShape);
+      
+      if aContainer.Length  > 0 then lOpDesc.SetAttrStr('container', aContainer);
+      if aSharedName.Length > 0 then lOpDesc.SetAttrStr('shared_name', aSharedName);
+      
+      result := FinishOpDescription_Output(lOpDesc);
+    end;
+
+    method Variable(aInitialValue: not nullable Output; aOpName: not nullable String := '')
+      : Tuple of (Operation, Output, Output); //(OpAssignVar, OpReadVar, OpVarHandle)
+    begin
+      var opAssignVar: Operation;
+      var opReadVar, opVarHnd: Output;
+
+      using variableScope := WithScope(MakeName('Variable', aOpName)) do begin
+        using lStatus := new Status do begin
+          var (success, shp) := GetShape(aInitialValue, lStatus);          
+          
+          if not success then begin
+            raise new OpCreateException withOpType('Variable') 
+              Message(lStatus.Message);
+          end;
+          
+          using shp do begin 
+            opVarHnd := OpVarHandle(aInitialValue.Type, shp);
+          end;
+
+          using assignScope := WithScope('Assign') do begin
+            opAssignVar := OpAssignVariable(opVarHnd, aInitialValue);
+            using readScope := WithScope('Read') do begin
+              opReadVar := OpReadVariable(opVarHnd, aInitialValue.Type);
+            end;
+          end;
+        end;
+      end;
+
+      result := (opAssignVar, opReadVar, opVarHnd);
+    end;
+  end;
 end.
