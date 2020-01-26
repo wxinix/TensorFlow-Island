@@ -24,7 +24,7 @@ namespace TensorFlow.Island.Samples.TensorInfo;
 
 uses
   TensorFlow,
-  TensorFlow.Island.Utils;
+  TensorFlow.Island.ApiUtils;
 
 type 
   Program = class

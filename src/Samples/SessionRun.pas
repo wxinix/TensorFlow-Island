@@ -23,7 +23,7 @@ namespace TensorFlow.Island.Samples.SessionRun;
 
 uses
   TensorFlow,
-  TensorFlow.Island.Utils;
+  TensorFlow.Island.ApiUtils;
 
 type
   Program = class

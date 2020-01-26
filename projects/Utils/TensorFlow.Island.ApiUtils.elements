@@ -4,9 +4,9 @@
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <ProjectGuid>{7d05ce55-4854-4bb2-82bc-c796ca35088e}</ProjectGuid>
     <OutputType>StaticLibrary</OutputType>
-    <AssemblyName>TensorFlow.Island.Utils</AssemblyName>
+    <AssemblyName>TensorFlow.Island.ApiUtils</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>TensorFlow.Island.Utils</Name>
+    <Name>TensorFlow.Island.ApiUtils</Name>
     <Architecture>x86_64</Architecture>
     <CreateFXFile>True</CreateFXFile>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
     <OutputType>StaticLibrary</OutputType>
-    <AssemblyName>TensorFlow.Island.Utils</AssemblyName>
+    <AssemblyName>TensorFlow.Island.ApiUtils</AssemblyName>
     <CreateFXFile>True</CreateFXFile>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
@@ -30,7 +30,7 @@
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
     <OutputType>StaticLibrary</OutputType>
-    <AssemblyName>TensorFlow.Island.Utils</AssemblyName>
+    <AssemblyName>TensorFlow.Island.ApiUtils</AssemblyName>
     <CreateFXFile>True</CreateFXFile>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
@@ -47,9 +47,9 @@
     <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Utils" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Src\Utils\ApiHelpers.pas">
+    <Compile Include="..\..\Src\Utils\ApiUtils.pas">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Utils\ApiHelpers.pas</Link>
+      <Link>..\..\Src\Utils\ApiUtils.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />

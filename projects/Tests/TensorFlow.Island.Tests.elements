@@ -4,7 +4,7 @@
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <ProjectGuid>{49dbead5-5983-42d8-b7e2-2fe215653756}</ProjectGuid>
     <OutputType>Executable</OutputType>
-    <AssemblyName>OpAdd</AssemblyName>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Name>TensorFlow.Island.Tests</Name>
     <Architecture>x86_64</Architecture>
@@ -19,7 +19,7 @@
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <AssemblyName>OpAdd</AssemblyName>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
     <EnableInlining>False</EnableInlining>
@@ -30,7 +30,7 @@
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <AssemblyName>OpAdd</AssemblyName>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>

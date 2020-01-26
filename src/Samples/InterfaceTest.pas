@@ -23,7 +23,7 @@ namespace TensorFlow.Island.Samples.InterfaceTest;
 
 uses
   TensorFlow,
-  TensorFlow.Island.Utils;
+  TensorFlow.Island.ApiUtils;
 
 type
   Program = class
