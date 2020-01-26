@@ -461,7 +461,10 @@ type
 
     method SetCode(aCode: TF_Code) withMessage(const aMsg: String);
     begin
-      TF_SetStatus(NativePtr, aCode, aMsg:ToAnsiChars(true));
+      if not String.IsNullOrEmpty(aMsg) then
+        TF_SetStatus(NativePtr, aCode, aMsg.ToAnsiChars(true))
+      else
+        TF_SetStatus(NativePtr, aCode, nil);
     end;
 
     class method ForwardOrCreate(aIncoming: Status): Status;
@@ -481,7 +484,7 @@ type
     
     property Message: String
       read begin
-        result.FromPAnsiChars(TF_Message(NativePtr));
+        result := String.FromPAnsiChars(TF_Message(NativePtr));
       end;
   end;
 
@@ -708,9 +711,9 @@ type
       if String.IsNullOrEmpty(aOpName) then aOpName := aOpType;
       var name := 
         if String.IsNullOrEmpty(CurrentScope) then 
-          $'{aOpType}:{aOpName}' 
+          $'{aOpType}.{aOpName}' 
         else 
-          $'{CurrentScope}/{aOpType}:{aOpName}';
+          $'{CurrentScope}/{aOpType}_{aOpName}';
       result := MakeUniqueName(name);
     end;
 
@@ -754,7 +757,7 @@ type
   public
     class method DeallocateTensorData(aData: ^Void; aLen: UInt64; aArgs: ^Void);
     begin
-      {$IF DEBUG}writeLn('Deallocating tensor data.');{$ENDIF}
+      // {$IF DEBUG}writeLn('Deallocating tensor data.');{$ENDIF}
     end;
 
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
@@ -764,11 +767,16 @@ type
       fNumBytes := TF_TensorByteSize(aTensor);
       
       var lNumDims := TF_NumDims(aTensor);
-      var lDims := new Int64[lNumDims];
-      
-      for I: Integer := 0 to lNumDims - 1 do begin
-        lDims[I] := TF_Dim(aTensor, I);
+      var lDims: array of Int64;
+      if lNumDims > 0 then begin
+        lDims := new Int64[lNumDims];      
+        for I: Integer := 0 to lNumDims - 1 do begin
+          lDims[I] := TF_Dim(aTensor, I);
+        end;
+      end else begin
+        lDims := nil;
       end;
+
       fManaged := false;
       fShape := new Shape withDimentions(lDims); 
     end;
@@ -1009,7 +1017,8 @@ type
       then begin
         result := (false, nil);
       end else begin
-        result := (true, (^T(fData))^);
+        var value: T := (^T(fData.RawBytes))^;
+        result := (true, value);
       end;
     end;
 
@@ -1238,7 +1247,7 @@ type
           end;
         end else begin
           {$IF DEBUG} 
-          writeLn($'SessionRunner.Run failed. Code {ord(lStatus.Code)}.');
+          writeLn($'SessionRunner.Run failed. Code {ord(lStatus.Code)}. {lStatus.Message}');
           {$ENDIF}
           result := nil;
         end;
