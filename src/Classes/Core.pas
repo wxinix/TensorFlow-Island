@@ -798,8 +798,7 @@ type
     constructor withValues(aValues: not nullable array of T) 
       Shape(aShape: not nullable Shape);
     begin 
-      var localType: &Type := T(aValues[0]).GetType;
-      fDataType := Helper.ToTFDataType(localType);
+      fDataType := Helper.ToTFDataType(typeOf(T));
       fShape := aShape;
       fManaged := true;
 
@@ -985,9 +984,26 @@ type
       result := new Tensor withData(data);
     end;
 
+    method ScalarValueAs<T>: Tuple of (Boolean, nullable T);
+    begin
+      if (not IsScalar) or
+         (fData.DataType <> Helper.ToTFDataType(typeOf(T), false)) or
+         (typeOf(T) = typeOf(String))
+      then begin
+        result := (false, nil);
+      end else begin
+        result := (true, (^T(fData))^);
+      end;
+    end;
+
     property Data: ITensorData
       read begin        
         result := fData;
+      end;
+
+    property IsScalar: Boolean
+      read begin
+        result := fData.Shape.NumDims = 0;
       end;
   end;
 
@@ -1020,7 +1036,7 @@ type
     begin
       fGraph := new Graph;
       var createSessionResult := (// Anonymous method to use Dispose pattern.
-        method: tuple of (Success: Boolean, Msg: String, SessionPtr: ^TF_Session);
+        method: Tuple of (Success: Boolean, Msg: String, SessionPtr: ^TF_Session);
         begin
           using lStatus := new Status do begin
             using opts := new SessionOptions do begin // Nested
