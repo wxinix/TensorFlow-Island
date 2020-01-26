@@ -41,7 +41,6 @@ type
     method Dispose(aDisposing: Boolean); virtual;
     begin
       fDisposed := true;
-      {$IF DEBUG}writeLn($'{self.ToString} disposed.');{$ENDIF}
     end;
     
     method CheckAndRaiseOnDisposed;
@@ -880,7 +879,7 @@ type
         aData.DataType, 
         aData.Shape.ToArray,
         aData.Shape.NumDims, 
-        aData.RawBytes, // Must be raw bytes; cannot be managed arrayl.
+        aData.RawBytes, // Must be raw bytes; cannot be managed array.
         aData.NumBytes, 
         @TensorData.DeallocateTensorData, // does nothing.
         nil);
@@ -891,12 +890,7 @@ type
 
       fData := aData;
       inherited constructor withNativePtr(ltensor) 
-        DisposeAction(aPtr-> begin
-          {$IF DEBUG} writeLn($'Disposing tensor {NativeUInt(ltensor)}');{$ENDIF}
-          TF_DeleteTensor(aPtr);
-        end
-        );
-        {$IF DEBUG} writeLn($'Tensor {NativeUInt(ltensor)} created.');{$ENDIF}
+        DisposeAction(aPtr->TF_DeleteTensor(aPtr));
     end;
 
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
@@ -1059,8 +1053,8 @@ type
     method Dispose(aDisposing: Boolean); override;
     begin
       if aDisposing then begin
-        fGraph:Dispose;
-        fRunner:Dispose;
+        fGraph :Dispose; // Colon operator
+        fRunner:Dispose; // Colon operator
       end;
       inherited Dispose(aDisposing);
     end;
@@ -1183,7 +1177,8 @@ type
     method Dispose(aDisposing: Boolean); override;
     begin
       if aDisposing then begin
-        fSession.Dispose;
+        // fSession is NOT created by Runner, so Runner cannot dispose.
+        // fSession.Dispose; 
         fContext.Dispose;
       end;
 
@@ -1253,9 +1248,7 @@ type
             result.Add(new Tensor withTFTensor(output_values[I]));
           end;
         end else begin
-          {$IF DEBUG} 
           writeLn($'SessionRunner.Run failed. Code {ord(lStatus.Code)}. {lStatus.Message}');
-          {$ENDIF}
           result := nil;
         end;
 
