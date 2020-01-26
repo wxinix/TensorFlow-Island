@@ -1,0 +1,68 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "AllocateTensor", "Projects\Samples\AllocateTensor.elements", "{5B7D78D3-94F9-44E2-9BF0-074EC850F258}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "CreateTensor", "Projects\Samples\CreateTensor.elements", "{DAD6093C-A565-4B36-8E41-8905C862C787}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "GraphInfo", "Projects\Samples\GraphInfo.elements", "{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "HelloTensorFlow", "Projects\Samples\HelloTensorFlow.elements", "{1D29FC68-E99E-4E20-B927-B0BE84731FB2}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "InterfaceTest", "Projects\Samples\InterfaceTest.elements", "{367F3264-1650-46C5-A0DB-E13F39DDCDFC}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "SessionRun", "Projects\Samples\SessionRun.elements", "{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorInfo", "Projects\Samples\TensorInfo.elements", "{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Debug|Default.ActiveCfg = Debug
+		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Debug|Default.Build.0 = Debug
+		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Debug|Default.Deploy.0 = Debug
+		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Release|Default.ActiveCfg = Release
+		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Release|Default.Build.0 = Release
+		{DAD6093C-A565-4B36-8E41-8905C862C787}.Debug|Default.ActiveCfg = Debug
+		{DAD6093C-A565-4B36-8E41-8905C862C787}.Debug|Default.Build.0 = Debug
+		{DAD6093C-A565-4B36-8E41-8905C862C787}.Debug|Default.Deploy.0 = Debug
+		{DAD6093C-A565-4B36-8E41-8905C862C787}.Release|Default.ActiveCfg = Release
+		{DAD6093C-A565-4B36-8E41-8905C862C787}.Release|Default.Build.0 = Release
+		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Debug|Default.ActiveCfg = Debug
+		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Debug|Default.Build.0 = Debug
+		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Debug|Default.Deploy.0 = Debug
+		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Release|Default.ActiveCfg = Release
+		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Release|Default.Build.0 = Release
+		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Debug|Default.ActiveCfg = Debug
+		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Debug|Default.Build.0 = Debug
+		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Debug|Default.Deploy.0 = Debug
+		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Release|Default.ActiveCfg = Release
+		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Release|Default.Build.0 = Release
+		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Debug|Default.ActiveCfg = Debug
+		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Debug|Default.Build.0 = Debug
+		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Debug|Default.Deploy.0 = Debug
+		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Release|Default.ActiveCfg = Release
+		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Release|Default.Build.0 = Release
+		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Debug|Default.ActiveCfg = Debug
+		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Debug|Default.Build.0 = Debug
+		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Debug|Default.Deploy.0 = Debug
+		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Release|Default.ActiveCfg = Release
+		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Release|Default.Build.0 = Release
+		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Debug|Default.ActiveCfg = Debug
+		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Debug|Default.Build.0 = Debug
+		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Debug|Default.Deploy.0 = Debug
+		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Release|Default.ActiveCfg = Release
+		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E990A9E-3555-41B2-B1F2-62726D8AD626}
+	EndGlobalSection
+EndGlobal

@@ -22,7 +22,7 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  TensorFlow.Island.Aspects,
+  //TensorFlow.Island.Aspects,
   RemObjects.Elements.System,
   TensorFlow;
 
@@ -137,6 +137,7 @@ type
 
       if assigned(fDisposeAction) then begin
         fDisposeAction(fNativePtr);
+        {$IF DEBUG}writeLn($'{self.ToString} disposed.');{$ENDIF}
       end;
       
       inherited Dispose(aDisposing);
@@ -273,19 +274,19 @@ type
   private
     fGraph: Graph;
     fOpType: String;
-    fOpName: String;
+    fOperName: String;
   public
     constructor withGraph(aGraph: not nullable Graph) 
-      OpType(aOpType: not nullable String) OpName(aOpName: not nullable String);
+      OpType(aOpType: not nullable String) OpName(aOperName: not nullable String);
     begin
       fOpType := aOpType;
-      fOpName := aOpName;
+      fOperName := aOperName;
       fGraph := aGraph;
 
       var opDesc := TF_NewOperation(
         aGraph.NativePtr, 
         aOpType.ToAnsiChars(true), 
-        aOpName.ToAnsiChars(true)
+        aOperName.ToAnsiChars(true)
         );
 
       // DisposeAction nil, TF_FinishOption will delete OperationDescription.
@@ -313,13 +314,14 @@ type
     end;
 
     method FinishOperation(aStatus: Status := nil): Tuple of (Boolean, Operation);
-    begin
+    begin     
       using lstatus := new Status do begin
         // Desc ptr gets deleted inside TF_FinishOperation.
         var op := TF_FinishOperation(NativePtr, lstatus.NativePtr);
       
         if lstatus.OK then begin
-          result := (true, new Operation withNativePtr(op) Name(fOpName) Graph(fGraph))
+          result := (true, new Operation withNativePtr(op) Name(fOperName) 
+            Graph(fGraph))
         end else begin
           result := (false, nil);
         end;
@@ -441,9 +443,9 @@ type
         result := fOpType;
       end;
 
-    property OpName: String
+    property OperName: String
       read begin
-        result := fOpName;
+        result := fOperName;
       end;
   end;
 
@@ -458,7 +460,7 @@ type
 
     method SetCode(aCode: TF_Code) withMessage(const aMsg: String);
     begin
-      TF_SetStatus(NativePtr, aCode, aMsg.ToAnsiChars(true));
+      TF_SetStatus(NativePtr, aCode, aMsg:ToAnsiChars(true));
     end;
 
     class method ForwardOrCreate(aIncoming: Status): Status;
@@ -728,7 +730,7 @@ type
   protected
     fData: ^Void;
     fDataType: TF_DataType;
-    fManaged: Boolean;
+    fManaged: Boolean; 
     fNumBytes: UInt64;
     fShape: Shape;
   protected
@@ -741,11 +743,17 @@ type
       if fManaged then begin
         free(fData);
       end;
+
       inherited Dispose(aDisposing);
     end;
 
     constructor; empty;
   public
+    class method DeallocateTensorData(aData: ^Void; aLen: UInt64; aArgs: ^Void);
+    begin
+      //
+    end;
+
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
     begin
       fData := TF_TensorData(aTensor);
@@ -758,9 +766,8 @@ type
       for I: Integer := 0 to lNumDims - 1 do begin
         lDims[I] := TF_Dim(aTensor, I);
       end;
-
-      fShape := new Shape withDimentions(lDims); 
       fManaged := false;
+      fShape := new Shape withDimentions(lDims); 
     end;
 
     method ToArray: array of Byte;
@@ -782,7 +789,7 @@ type
     property Shape: Shape
       read begin        
         result := fShape
-      end;
+      end;    
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -843,8 +850,14 @@ type
   public
     constructor withData(aData: ITensorData);
     begin
-      var ltensor := TF_NewTensor(aData.DataType, aData.Shape.ToArray,
-        aData.Shape.NumDims, aData.ToArray, aData.NumBytes, nil, nil);
+      var ltensor := TF_NewTensor(
+        aData.DataType, 
+        aData.Shape.ToArray,
+        aData.Shape.NumDims, 
+        aData.ToArray, 
+        aData.NumBytes, 
+        @TensorData.DeallocateTensorData, // does nothing.
+        nil);
 
       if not assigned(ltensor) then begin
         raise new TensorCreateException(aData.DataType);
@@ -1009,11 +1022,11 @@ type
       var createSessionResult := (// Anonymous method to use Dispose pattern.
         method: tuple of (Success: Boolean, Msg: String, SessionPtr: ^TF_Session);
         begin
-          using lstatus := new Status do begin
+          using lStatus := new Status do begin
             using opts := new SessionOptions do begin // Nested
-              var lsession := TF_NewSession(fGraph.NativePtr, opts.NativePtr, 
-                lstatus.NativePtr);               
-              result := (lstatus.OK, lstatus.Message, lsession);
+              var lSession := TF_NewSession(fGraph.NativePtr, opts.NativePtr, 
+                lStatus.NativePtr);               
+              result := (lStatus.OK, lStatus.Message, lSession);
             end;
           end;
         end
@@ -1025,8 +1038,8 @@ type
      
       inherited constructor withNativePtr(createSessionResult.SessionPtr)
         DisposeAction(aPtr->begin
-          using lstatus := new Status do begin
-            TF_DeleteSession(aPtr, lstatus.NativePtr); 
+          using lStatus := new Status do begin
+            TF_DeleteSession(aPtr, lStatus.NativePtr); 
           end;
         end);
     end;
@@ -1156,6 +1169,13 @@ type
     begin      
       fContext.Dispose;
       fContext := new SessionRunnerContext;
+    end;
+
+    method Run(aOp: not nullable Output; aStatus: Status := nil): Tensor;
+    begin
+      Reset;
+      Fetch(aOp);
+      result := Run(aStatus).Item[0];
     end;
 
     method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) 

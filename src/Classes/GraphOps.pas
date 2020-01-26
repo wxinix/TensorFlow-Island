@@ -49,6 +49,7 @@ type
     begin
       using lStatus := new Status do begin
         var (success, op) := aOpDesc.FinishOperation(lStatus);
+
         if success then 
           result:= new Output withOp(op) 
         else 
@@ -198,8 +199,10 @@ type
     begin
       const lOpType: String = 'Const';
       var lOpDesc := CreateOpDescription(lOpType, aOpName);
+
       lOpDesc.SetAttrTensor('value', aValue);
       lOpDesc.SetAttrType('dtype', aDataType);
+
       result := FinishOpDescription_Output(lOpDesc);
     end;
 
@@ -341,8 +344,8 @@ type
     method Variable(aInitialValue: not nullable Output; aOpName: not nullable String := '')
       : Tuple of (Operation, Output, Output); //(OpAssignVar, OpReadVar, OpVarHandle)
     begin
-      var opAssignVar: Operation;
-      var opReadVar, opVarHnd: Output;
+      var lOpAssignVar: Operation;
+      var lOpReadVar, lOpVarHnd: Output;
 
       using variableScope := WithScope(MakeName('Variable', aOpName)) do begin
         using lStatus := new Status do begin
@@ -354,19 +357,19 @@ type
           end;
           
           using shp do begin 
-            opVarHnd := OpVarHandle(aInitialValue.Type, shp);
+            lOpVarHnd := OpVarHandle(aInitialValue.Type, shp);
           end;
 
           using assignScope := WithScope('Assign') do begin
-            opAssignVar := OpAssignVariable(opVarHnd, aInitialValue);
+            lOpAssignVar := OpAssignVariable(lOpVarHnd, aInitialValue);
             using readScope := WithScope('Read') do begin
-              opReadVar := OpReadVariable(opVarHnd, aInitialValue.Type);
+              lOpReadVar := OpReadVariable(lOpVarHnd, aInitialValue.Type);
             end;
           end;
         end;
       end;
 
-      result := (opAssignVar, opReadVar, opVarHnd);
+      result := (lOpAssignVar, lOpReadVar, lOpVarHnd);
     end;
   end;
 end.

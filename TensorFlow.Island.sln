@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Classes", "Projects\Classes\TensorFlow.Island.Classes.elements", "{93B81566-E004-4BD8-9525-336A904B0F64}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Aspects", "Projects\Aspects\TensorFlow.Island.Aspects.elements", "{50D60A44-30E4-42B2-9C89-9FB13797C1AE}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Tests.OpAdd", "Projects\Tests\TensorFlow.Island.Tests.OpAdd.elements", "{49DBEAD5-5983-42D8-B7E2-2FE215653756}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Utils", "Projects\Utils\TensorFlow.Island.Utils.elements", "{7D05CE55-4854-4BB2-82BC-C796CA35088E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.ActiveCfg = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.Build.0 = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.Deploy.0 = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.ActiveCfg = Release
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.Build.0 = Release
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.Deploy.0 = Release
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|Default.ActiveCfg = Debug
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|Default.Build.0 = Debug
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|Default.Deploy.0 = Debug
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|Default.ActiveCfg = Release
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|Default.Build.0 = Release
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|Default.Deploy.0 = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.ActiveCfg = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.Build.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.Deploy.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.ActiveCfg = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Build.0 = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Deploy.0 = Release
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.ActiveCfg = Debug
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.Build.0 = Debug
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.Deploy.0 = Debug
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.ActiveCfg = Release
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.Build.0 = Release
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E990A9E-3555-41B2-B1F2-62726D8AD626}
+	EndGlobalSection
+EndGlobal

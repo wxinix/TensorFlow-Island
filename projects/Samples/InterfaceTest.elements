@@ -1,12 +1,12 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
-    <ProjectGuid>{b9bf9360-d4f1-49d6-9304-fc7c83dba37a}</ProjectGuid>
+    <RootNamespace>InterfaceTest</RootNamespace>
+    <ProjectGuid>{367f3264-1650-46c5-a0db-e13f39ddcdfc}</ProjectGuid>
     <OutputType>Executable</OutputType>
-    <AssemblyName>TensorInfo</AssemblyName>
+    <AssemblyName>InterfaceTest</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>Samples.TensorInfo</Name>
+    <Name>InterfaceTest</Name>
     <Architecture>x86_64</Architecture>
     <OutputPath>..\Bin\$(Configuration)</OutputPath>
   </PropertyGroup>
@@ -19,7 +19,7 @@
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <AssemblyName>TensorInfo</AssemblyName>
+    <AssemblyName>InterfaceTest</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
   </PropertyGroup>
@@ -28,7 +28,7 @@
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <AssemblyName>TensorInfo</AssemblyName>
+    <AssemblyName>InterfaceTest</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
@@ -48,9 +48,9 @@
     <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Samples" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Src\Samples\TensorInfo.pas">
+    <Compile Include="..\..\Src\Samples\InterfaceTest.pas">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Samples\TensorInfo.pas</Link>
+      <Link>..\..\Src\Samples\InterfaceTest.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
