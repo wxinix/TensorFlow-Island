@@ -73,7 +73,7 @@ type
     Unauthenticated    = TF_Code.TF_UNAUTHENTICATED
   );
 
-  TFDataTypeConvertException = public class(Exception)
+  DataTypeNotSupportedException = public class(Exception)
   public
     constructor(aLocalType: &Type);
     begin
@@ -104,7 +104,8 @@ type
       result := tfCode.ToString;
     end;
 
-    class method ToTFDataType(aLocalType: &Type): TF_DataType;
+    class method ToTFDataType(aLocalType: &Type; 
+      aRaiseOnUnSupported: Boolean := true): TF_DataType;
     begin
       case aLocalType.Code of
         TypeCodes.Boolean: result := TF_DataType.TF_BOOL;
@@ -120,7 +121,11 @@ type
         TypeCodes.Double : result := TF_DataType.TF_DOUBLE;
         TypeCodes.String : result := TF_DataType.TF_STRING;
       else
-        raise new TFDataTypeConvertException(aLocalType);
+        if aRaiseOnUnSupported then begin
+          raise new DataTypeNotSupportedException(aLocalType);
+        end else begin
+          result := -1;
+        end;
       end;
     end;
 
