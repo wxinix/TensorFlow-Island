@@ -757,7 +757,14 @@ type
   public
     class method DeallocateTensorData(aData: ^Void; aLen: UInt64; aArgs: ^Void);
     begin
-      // {$IF DEBUG}writeLn('Deallocating tensor data.');{$ENDIF}
+      // This does nothing since we use Dispose patter to manage the data.
+      // Also be aware - this user defined deallocator may be IMMEDIATELY called 
+      // inside TF_NewTensor, as see fit by TensorFlow. This means, later by
+      // calling TF_DeleteTensor, this user defined deallocator will not be called. 
+      // In any case, this class will manage the user-allocated memory if it is
+      // constructed using constructor withData. If this class is constructed 
+      // using constructor withTensor, then the associated data will be managed
+      // by whoever creates that raw Tensor pointer.
     end;
 
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
@@ -805,7 +812,7 @@ type
     property Shape: Shape
       read begin        
         result := fShape
-      end;    
+      end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
