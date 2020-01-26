@@ -41,6 +41,7 @@ type
     method Dispose(aDisposing: Boolean); virtual;
     begin
       fDisposed := true;
+      {$IF DEBUG}writeLn($'{self.ToString} disposed.');{$ENDIF}
     end;
     
     method CheckAndRaiseOnDisposed;
@@ -137,7 +138,6 @@ type
 
       if assigned(fDisposeAction) then begin
         fDisposeAction(fNativePtr);
-        {$IF DEBUG}writeLn($'{self.ToString} disposed.');{$ENDIF}
       end;
       
       inherited Dispose(aDisposing);
@@ -164,7 +164,8 @@ type
     where T is ITensorFlowObject;
   public
     method ToRawPtrArray: array of ^Void;
-    begin     
+    begin  
+      if fList.Count = 0 then exit nil;
       result := new ^Void[fList.Count];
       for I: Integer := 0 to fList.Count - 1 do begin
         result[I] := fList[I].RawPtr;
@@ -614,6 +615,7 @@ type
   public
     method ToTFOutputArray: array of TF_Output;
     begin
+      if fList.Count = 0 then exit nil;
       result := new TF_Output[fList.Count];
       for I: Integer := 0 to fList.Count - 1 do begin
         result[I] := fList[I].ToTFOutput;
@@ -719,7 +721,8 @@ type
   end;
 
   ITensorData = public interface(IDisposable)
-    method ToArray: array of Byte;
+    method CopyToArray: array of Byte;
+    method RawBytes: ^Void;
     property DataType: TF_DataType read;
     property NumBytes: UInt64 read;
     property &Shape: Shape read;
@@ -751,7 +754,7 @@ type
   public
     class method DeallocateTensorData(aData: ^Void; aLen: UInt64; aArgs: ^Void);
     begin
-      //
+      {$IF DEBUG}writeLn('Deallocating tensor data.');{$ENDIF}
     end;
 
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
@@ -770,10 +773,15 @@ type
       fShape := new Shape withDimentions(lDims); 
     end;
 
-    method ToArray: array of Byte;
+    method CopyToArray: array of Byte;
     begin     
       result := new Byte[fNumBytes];
       memcpy(result, fData, fNumBytes);
+    end;
+
+    method RawBytes: ^Void;
+    begin
+      result := fData;
     end;
     
     property NumBytes: UInt64
@@ -804,8 +812,12 @@ type
 
       if fDataType <> TF_DataType.TF_STRING then begin 
         fNumBytes := TF_DataTypeSize(fDataType) * aValues.Length;
-        fData := malloc(fNumBytes); 
-        memcpy(fData, aValues, fNumBytes);}
+        fData := malloc(fNumBytes);
+        if aValues.Length = 1 then begin
+          (^T(fData))^ := aValues[0];
+        end else begin
+          memcpy(fData, aValues, fNumBytes);
+        end;
       end else begin 
         for I: Integer := 0 to aValues.Length -1 do begin
           fNumBytes := fNumBytes + String(aValues[I]).Length + 1;
@@ -848,23 +860,28 @@ type
     end;
   public
     constructor withData(aData: ITensorData);
-    begin
+    begin 
       var ltensor := TF_NewTensor(
         aData.DataType, 
         aData.Shape.ToArray,
         aData.Shape.NumDims, 
-        aData.ToArray, 
+        aData.RawBytes, // Must be raw bytes; cannot be managed arrayl.
         aData.NumBytes, 
         @TensorData.DeallocateTensorData, // does nothing.
         nil);
-
+     
       if not assigned(ltensor) then begin
         raise new TensorCreateException(aData.DataType);
       end;
 
       fData := aData;
       inherited constructor withNativePtr(ltensor) 
-        DisposeAction(aPtr->TF_DeleteTensor(aPtr));
+        DisposeAction(aPtr-> begin
+          {$IF DEBUG} writeLn($'Disposing tensor {NativeUInt(ltensor)}');{$ENDIF}
+          TF_DeleteTensor(aPtr);
+        end
+        );
+        {$IF DEBUG} writeLn($'Tensor {NativeUInt(ltensor)} created.');{$ENDIF}
     end;
 
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
@@ -1145,7 +1162,7 @@ type
   SessionRunner = public class(DisposableObject)
   private
     fSession: Session := nil;
-    fContext: SessionRunnerContext;
+    fContext: SessionRunnerContext := new SessionRunnerContext;
   protected 
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -1191,35 +1208,43 @@ type
     begin
       Reset;
       Fetch(aOp);
-      result := Run(aStatus).Item[0];
+      result := Run(aStatus):Item[0]; // May return nil.
     end;
 
     method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) 
       Options(aOpts: Buffer := nil): TensorList;
     begin    
-      var outputValues: array of ^TF_Tensor := new ^TF_Tensor[fContext.Outputs.Count];
-      using lstatus := new Status do begin 
-        TF_SessionRun(
-          fSession.NativePtr,
-          aOpts:NativePtr,
-          fContext.Inputs.ToTFOutputArray,
-          fContext.InputValues.ToRawPtrArray, // tensor ptrs.
-          fContext.Inputs.Count,
-          fContext.Outputs.ToTFOutputArray,
-          outputValues, // tensor ptrs.
-          fContext.Outputs.Count,
-          fContext.Targets.ToRawPtrArray, // op ptrs.
-          fContext.Targets.Count,
-          aMetaData:NativePtr,
-          lstatus.NativePtr);
-        result := new TensorList withCapacity(outputValues.Length);
+      
+      using lStatus := new Status do begin
+        var run_options := aOpts: NativePtr;
+        var inputs := fContext.Inputs.ToTFOutputArray;
+        var input_values := fContext.InputValues.ToRawPtrArray;
+        var ninputs := fContext.Inputs.Count;
+        var outputs := fContext.Outputs.ToTFOutputArray;
+        var noutputs := fContext.Outputs.Count;
+        var output_values: array of ^TF_Tensor := new ^TF_Tensor[noutputs];        
+        var target_opers := fContext.Targets.ToRawPtrArray;
+        var ntargets := fContext.Targets.Count;
+        var run_metadata := aMetaData:NativePtr;
+
+        TF_SessionRun(fSession.NativePtr, run_options, inputs, input_values, 
+          ninputs, outputs, output_values, noutputs, target_opers, 
+          ntargets, run_metadata, lStatus.NativePtr);                
         
-        for I: Integer := 0 to outputValues.Length - 1 do begin
-          result.Add(new Tensor withTFTensor(outputValues[I]));
+        if lStatus.OK then begin
+          result := new TensorList withCapacity(noutputs);
+          for I: Integer := 0 to noutputs - 1 do begin
+            result.Add(new Tensor withTFTensor(output_values[I]));
+          end;
+        end else begin
+          {$IF DEBUG} 
+          writeLn($'SessionRunner.Run failed. Code {ord(lStatus.Code)}.');
+          {$ENDIF}
+          result := nil;
         end;
 
         if assigned(aStatus) then begin
-          aStatus.SetCode(lstatus.Code) withMessage(lstatus.Message);
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
         end;
       end;
     end;
