@@ -19,7 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace TensorFlow.Island.Tests.OpAdd;
+namespace TensorFlow.Island.Tests;
 
 uses
   TensorFlow,
@@ -30,18 +30,7 @@ type
   public
     class method Main(args: array of String): Int32;
     begin
-      try
-        var lSession := new Session;
-        var a := lSession.Graph.OpConst(1);
-        var b := lSession.Graph.OpConst(3);
-        var c := lSession.Graph.OpAdd(a, b); 
-        var d := lSession.Runner.Run(c);
-        writeLn(d.Data.NumBytes);
-        readLn;
-      except
-        on E: Exception do
-          writeLn(E.Message);
-      end;
+
     end;
   end;
 

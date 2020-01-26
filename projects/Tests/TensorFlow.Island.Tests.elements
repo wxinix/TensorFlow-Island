@@ -6,7 +6,7 @@
     <OutputType>Executable</OutputType>
     <AssemblyName>OpAdd</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>TensorFlow.Island.Tests.OpAdd</Name>
+    <Name>TensorFlow.Island.Tests</Name>
     <Architecture>x86_64</Architecture>
     <OutputPath>..\Bin\$(Configuration)</OutputPath>
   </PropertyGroup>
@@ -22,6 +22,8 @@
     <AssemblyName>OpAdd</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
+    <EnableInlining>False</EnableInlining>
+    <ExportAllTypes>True</ExportAllTypes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>..\..\Exe\</OutputPath>
@@ -35,6 +37,10 @@
     <Reference Include="gc" />
     <Reference Include="Island" />
     <Reference Include="rtl" />
+    <Reference Include="TensorFlow">
+      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="TensorFlow.Island.Classes">
       <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
       <Private>True</Private>
@@ -44,9 +50,9 @@
     <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Tests\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Src\Tests\OpAdd.pas">
+    <Compile Include="..\..\Src\Tests\TestFixture.pas">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Tests\OpAdd.pas</Link>
+      <Link>..\..\Src\Tests\TestFixture.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
