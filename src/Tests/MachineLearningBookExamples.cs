@@ -25,7 +25,11 @@ using TensorFlow.Island.Classes;
 
 namespace TensorFlow.Island.Tests
 {
-    public class TensorFlowObjectsTest: Test
+    /// <summary>
+    /// Test with cases inspired by the book "Machine Learning with TensorFlow"
+    /// by Nishant Shukla. 
+    /// </summary>
+    public class MachineLearningBookExamples: Test
     {
         // Called before each test method.
         public override void Setup() 
@@ -49,25 +53,6 @@ namespace TensorFlow.Island.Tests
         public override void TeardownTest() 
         {
         	
-        }
-
-        public void When_CallingMethodOfDisposedObj_Expect_ObjectDisposedException()
-        {
-            Int64[] dims = {1, 5, 10};
-            var shp = new Shape withDimensions(dims);
-            shp.Dispose(); 
-       	    Assert.Throws(()=>shp.NumDims, typeof(ObjectDisposedException));
-        }
-        
-        public void When_UsingInvalidShapeDimIndex_Expect_InvalidShapeDimIndexExpection()
-        {
-            Int64[] dims = {1, 5, 10};
-            var shp = new Shape withDimensions(dims);
-            Assert.AreEqual(shp.NumDims, 3);
-            Assert.AreEqual(shp.Dim[0], 1);
-            Assert.AreEqual(shp.Dim[1], 5);
-            Assert.AreEqual(shp.Dim[2], 10);
-            Assert.Throws(()=>shp.Dim[5], typeof(InvalidShapeDimIndexException));
         }
     }
 }

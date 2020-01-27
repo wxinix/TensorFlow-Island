@@ -53,7 +53,7 @@ namespace TensorFlow.Island.Tests
 
         }
 
-        public void ScalarOpAddTest() 
+        public void When_CallingOpAddWithScalars12And9_Expect_31() 
         {
             var lGraph = m_session.Graph;
             var a = lGraph.OpConst(12);
