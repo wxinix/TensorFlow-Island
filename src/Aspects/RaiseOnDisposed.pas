@@ -3,13 +3,15 @@
 interface
 
 uses
-  RemObjects.Elements.Cirrus;
+  RemObjects.Elements.Cirrus,
+  RemObjects.Elements.Cirrus.Statements,
+  RemObjects.Elements.Cirrus.Values;
 
 type
   [AttributeUsage(AttributeTargets.Class)]
   RaiseOnDisposedAttribute = public class(Attribute, IMethodImplementationDecorator)
   public
-    method HandleImplementation(Services: IServices; aMethod: IMethodDefinition);
+    method HandleImplementation(Services: IServices; aMethod: IMethodDefinition);    
   end;
 
 implementation
@@ -23,11 +25,11 @@ begin
     exit;
   end;
 
-  aMethod.SetBody(Services,
-    method begin
-      // Call DisposableObject.CheckAndRaiseOnDisposed
-      Aspects.OriginalBody;
-    end);  
+  aMethod.ReplaceMethodBody(
+    new BeginStatement(   
+      new StandaloneStatement(new ProcValue(new SelfValue, 'CheckAndRaiseOnDisposed')),
+      new PlaceHolderStatement)
+    ); 
 end;
 
 end.
