@@ -25,7 +25,6 @@ using TensorFlow.Island.Classes;
 
 namespace TensorFlow.Island.Tests
 {
-
     public class GraphOperationsTest: Test
     {
         private Session m_session;
@@ -56,10 +55,10 @@ namespace TensorFlow.Island.Tests
 
         public void ScalarOpAddTest() 
         {
-            var lgraph = m_session.Graph;
-            var a = lgraph.OpConst(12);
-            var b = lgraph.OpConst(19);
-            var c = lgraph.OpAdd(a, b);
+            var lGraph = m_session.Graph;
+            var a = lGraph.OpConst(12);
+            var b = lGraph.OpConst(19);
+            var c = lGraph.OpAdd(a, b);
             Tensor result = m_session.Runner.Run(c);
             var (success, sum) = result.ScalarValueAs<Integer>();
             Assert.IsTrue(success);
