@@ -26,7 +26,7 @@ using TensorFlow.Island.Classes;
 namespace TensorFlow.Island.Tests
 {
     /// <summary>
-    /// Test with cases inspired by the book "Machine Learning with TensorFlow"
+    /// Test cases inspired by the book "Machine Learning with TensorFlow"
     /// by Nishant Shukla. 
     /// </summary>
     public class MachineLearningBookExamples: Test
