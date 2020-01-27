@@ -53,15 +53,15 @@ namespace TensorFlow.Island.Tests
 
         public void RaiseOnDisposeTest()
         {
-        	Int64[] dims = {1, 5, 10};
+            Int64[] dims = {1, 5, 10};
             var shp = new Shape withDimensions(dims);
-        	shp.Dispose(); 
+            shp.Dispose(); 
        	    Assert.Throws(()=>shp.NumDims, typeof(ObjectDisposedException));
         }
         
         public void ShapeTest()
         {
-        	Int64[] dims = {1, 5, 10};
+            Int64[] dims = {1, 5, 10};
             var shp = new Shape withDimensions(dims);
             Assert.AreEqual(shp.NumDims, 3);
             Assert.AreEqual(shp.Dim[0], 1);
