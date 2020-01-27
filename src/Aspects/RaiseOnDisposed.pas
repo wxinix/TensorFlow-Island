@@ -11,7 +11,7 @@ type
   [AttributeUsage(AttributeTargets.Class)]
   RaiseOnDisposedAttribute = public class(Attribute, IMethodImplementationDecorator)
   public
-    method HandleImplementation(Services: IServices; aMethod: IMethodDefinition);    
+    method HandleImplementation(Services: IServices; aMethod: IMethodDefinition);
   end;
 
 implementation
@@ -26,7 +26,7 @@ begin
   end;
 
   aMethod.ReplaceMethodBody(
-    new BeginStatement(   
+    new BeginStatement(
       new StandaloneStatement(new ProcValue(new SelfValue, 'CheckAndRaiseOnDisposed')),
       new PlaceHolderStatement)
     ); 
