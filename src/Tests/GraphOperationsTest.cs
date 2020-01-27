@@ -19,19 +19,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace TensorFlow.Island.Tests;
+using RemObjects.Elements.EUnit;
+using TensorFlow;
+using TensorFlow.Island.Classes;
 
-uses
-  TensorFlow,
-  TensorFlow.Island.Classes;
+namespace TensorFlow.Island.Tests
+{
 
-type
-  Program = class
-  public
-    class method Main(args: array of String): Int32;
-    begin
+    public class GraphOperationsTest: Test
+    {
+        private Session m_session;
+        
+        // Called before each test method.
+        public override void Setup() 
+        {
+            m_session = new Session();
+        }
 
-    end;
-  end;
+        // Called after each test method.
+        public override void Teardown() 
+        {
+            m_session.Dispose();
+        }
 
-end.
+        // Called before first test method.
+        public override void SetupTest() 
+        {
+
+        }
+
+        // Called after last test method.
+        public override void TeardownTest() 
+        {
+
+        }
+
+        public void ScalarOpAddTest() 
+        {
+            var lgraph = m_session.Graph;
+            var a = lgraph.OpConst(12);
+            var b = lgraph.OpConst(19);
+            var c = lgraph.OpAdd(a, b);
+            Tensor result = m_session.Runner.Run(c);
+            var (success, sum) = result.ScalarValueAs<Integer>();
+            Assert.IsTrue(success);
+            Assert.AreEqual(sum, 12 + 19);
+        }
+    }
+}

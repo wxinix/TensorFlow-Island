@@ -34,6 +34,14 @@
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elements">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Windows\x86_64\Elements.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EUnit">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Windows\x86_64\EUnit.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="gc" />
     <Reference Include="Island" />
     <Reference Include="rtl" />
@@ -42,17 +50,21 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="TensorFlow.Island.Classes">
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
+      <HintPath>..\..\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Tests\" />
+    <Folder Include="..\..\Src\Tests\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Src\Tests\TestFixture.pas">
+    <Compile Include="..\..\Src\Tests\GraphOperationsTest.cs">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Tests\TestFixture.pas</Link>
+      <Link>..\..\Src\Tests\GraphOperationsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Src\Tests\Program.cs">
+      <SubType>Code</SubType>
+      <Link>..\..\Src\Tests\Program.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
