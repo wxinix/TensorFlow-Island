@@ -51,7 +51,7 @@ namespace TensorFlow.Island.Tests
         	
         }
 
-        public void When_CallingMethodOfDisposedObj_Expect_ObjectDisposedException()
+        public void When_ReferencingDisposedObject_Expect_ObjectDisposedException()
         {
             Int64[] dims = {1, 5, 10};
             var shp = new Shape withDimensions(dims);
