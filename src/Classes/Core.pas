@@ -86,17 +86,17 @@ type
     end;
 
     method &Add(aItem: T);
-    begin      
+    begin
       fList.Add(aItem);
     end;
 
     property Count: Integer
-      read begin        
+      read begin
         result := fList.Count;
       end;
 
     property Item[i: Integer]: T
-      read begin       
+      read begin
         result := fList[i];
       end; default;
   end;
@@ -120,7 +120,7 @@ type
   TensorFlowObject<T> = public abstract class(DisposableObject, ITensorFlowObject)
   private
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
-    fNativePtr: ^T := nil;    
+    fNativePtr: ^T := nil;
   protected
     constructor withNativePtr(aPtr: not nullable ^T) 
       DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
@@ -775,7 +775,7 @@ type
       var lNumDims := TF_NumDims(aTensor);
       var lDims: array of Int64;
       if lNumDims > 0 then begin
-        lDims := new Int64[lNumDims];      
+        lDims := new Int64[lNumDims];
         for I: Integer := 0 to lNumDims - 1 do begin
           lDims[I] := TF_Dim(aTensor, I);
         end;
@@ -788,7 +788,7 @@ type
     end;
 
     method CopyToArray: array of Byte;
-    begin     
+    begin
       result := new Byte[fNumBytes];
       memcpy(result, fData, fNumBytes);
     end;
@@ -799,17 +799,17 @@ type
     end;
     
     property NumBytes: UInt64
-      read begin       
+      read begin
         result := fNumBytes
       end;
     
     property DataType: TF_DataType
-      read begin        
+      read begin
         result := fDataType
       end;
     
     property Shape: Shape
-      read begin        
+      read begin
         result := fShape
       end;
   end;
@@ -1024,7 +1024,7 @@ type
     end;
 
     property Data: ITensorData
-      read begin        
+      read begin
         result := fData;
       end;
 
@@ -1068,7 +1068,7 @@ type
           using lStatus := new Status do begin
             using opts := new SessionOptions do begin // Nested
               var lSession := TF_NewSession(fGraph.NativePtr, opts.NativePtr, 
-                lStatus.NativePtr);               
+                lStatus.NativePtr);
               result := (lStatus.OK, lStatus.Message, lSession);
             end;
           end;
@@ -1124,7 +1124,7 @@ type
     method SetTarget(aTarget: not nullable String);
     begin
       TF_SetTarget(NativePtr, aTarget.ToAnsiChars(true));
-    end;  
+    end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -1148,22 +1148,22 @@ type
     end;
   public
     property Inputs: OutputList
-      read begin        
+      read begin
         result := fInputs;
       end;
 
     property Outputs: OutputList
-      read begin        
+      read begin
         result := fOutputs;
       end;
 
     property InputValues: TensorList
-      read begin        
+      read begin
         result := fInputValues;
       end;
 
     property Targets: OperationList
-      read begin        
+      read begin
         result := fTargets;
       end;
   end;
@@ -1224,7 +1224,7 @@ type
 
     method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) 
       Options(aOpts: Buffer := nil): TensorList;
-    begin    
+    begin
       
       using lStatus := new Status do begin
         var run_options := aOpts: NativePtr;
@@ -1233,15 +1233,15 @@ type
         var ninputs := fContext.Inputs.Count;
         var outputs := fContext.Outputs.ToTFOutputArray;
         var noutputs := fContext.Outputs.Count;
-        var output_values: array of ^TF_Tensor := new ^TF_Tensor[noutputs];        
+        var output_values: array of ^TF_Tensor := new ^TF_Tensor[noutputs];
         var target_opers := fContext.Targets.ToRawPtrArray;
         var ntargets := fContext.Targets.Count;
         var run_metadata := aMetaData:NativePtr;
 
         TF_SessionRun(fSession.NativePtr, run_options, inputs, input_values, 
           ninputs, outputs, output_values, noutputs, target_opers, 
-          ntargets, run_metadata, lStatus.NativePtr);                
-        
+          ntargets, run_metadata, lStatus.NativePtr);
+
         if lStatus.OK then begin
           result := new TensorList withCapacity(noutputs);
           for I: Integer := 0 to noutputs - 1 do begin
