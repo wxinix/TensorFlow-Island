@@ -34,19 +34,32 @@ type
     end;
   end;
 
+  InputArray nested in Graph_Operations = private 
+    not nullable array of not nullable Output;
+
+  Attribute nested in Graph_Operations = private
+    Tuple of (Name: not nullable String, Value: not nullable Object);
+  
+  AttributeArray  nested in Graph_Operations = private 
+    not nullable array of Attribute;
+
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Graph_Operations = public extension class(Graph)
   private
-    method InternalCreateOp(const aOpType: not nullable String; aOpName: not nullable String;
-      aInputs: array of not nullable Output = [];
-      aAttrs: array of Tuple of (not nullable String, not nullable Object) = [])
+    method InternalCreateOp(const aOpType, aOpName: not nullable String;
+      const aInputs: InputArray = []; const aAttrs: AttributeArray = [])
       : Tuple of (Operation, Output);
     begin
       var lOpDesc := new OperationDescription withGraph(self) OpType(aOpType)
         OpName(MakeName(aOpType, aOpName));
 
-      for each x in aInputs do lOpDesc.AddInput(x);
-      for each a in aAttrs  do lOpDesc.SetAttr(a[0], a[1]);
+      for each x in aInputs do begin
+        lOpDesc.AddInput(x);
+      end;
+
+      for each a in aAttrs do begin
+        lOpDesc.SetAttr(a.Name, a.Value);
+      end;
 
       using lStatus := new Status do begin
         var (success, result_op) := lOpDesc.FinishOperation(lStatus);
@@ -59,9 +72,8 @@ type
       end;
     end;
   public
-    method OpAbort(const aErrMsg: not nullable String := '';
-      aNoErrOnExit: Boolean := true; aOpName: not nullable String := '')
-      : Operation;
+    method OpAbort(const aErrMsg: not nullable String := ''; aNoErrOnExit: Boolean := true; 
+      aOpName: not nullable String := ''): Operation;
     begin
       const lOpType: String = 'Abort';
 
@@ -76,7 +88,7 @@ type
     end;
 
    method OpAbs(x: not nullable Output; aOpName: not nullable String := '')
-      : Output;
+    : Output;
     begin
       const lOpType: String = 'Abs';
       (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
@@ -96,14 +108,14 @@ type
       (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
     end;
 
-    method OpAddN(aInputs: not nullable array of Output;
+    method OpAddN(aInputs: not nullable array of Output; 
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'AddN';
       (nil, result) := InternalCreateOp(lOpType, aOpName, aInputs);
     end;
 
-    method OpArgMax(aInput, aDimension: not nullable Output;
+    method OpArgMax(aInput, aDimension: not nullable Output; 
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ArgMax';
@@ -111,14 +123,14 @@ type
     end;
 
 
-    method OpArgMin(aInput, aDimension: not nullable Output;
+    method OpArgMin(aInput, aDimension: not nullable Output; 
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ArgMin';
       (nil, result) := InternalCreateOp(lOpType, aOpName, [aInput, aDimension]);
     end;
 
-    method OpAssignVariable(aResource, aValue: not nullable Output;
+    method OpAssignVariable(aResource, aValue: not nullable Output; 
       aOpName: not nullable String := ''): Operation;
     begin
       const lOpType: String = 'AssignVariableOp';
@@ -175,7 +187,8 @@ type
     end;
 
     method OpMatMul(a, b: not nullable Output; transpose_a: Boolean := false;
-      transpose_b: Boolean := false; aOpName: not nullable String := ''): Output;
+      transpose_b: Boolean := false; aOpName: not nullable String := '')
+      : Output;
     begin
       const lOpType: String = 'MatMul';
       (nil, result) := InternalCreateOp(
@@ -208,7 +221,7 @@ type
         ]);
     end;
 
-    method OpPlaceholder(aDataType: TF_DataType; aShape: not nullable Shape;
+    method OpPlaceholder(aDataType: TF_DataType; aShape: not nullable Shape; 
       aOpName: not nullable String := ''): Output; overload;
     begin
       const lOpType: String = 'Placeholder';
@@ -222,7 +235,7 @@ type
         ]);
     end;
 
-    method OpRange(aStart, aLimit, aDelta: not nullable Output;
+    method OpRange(aStart, aLimit, aDelta: not nullable Output; 
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'Range';
@@ -230,7 +243,7 @@ type
         [aStart, aLimit, aDelta]);
     end;
 
-    method OpReadVariable(aResource: not nullable Output; aDataType: TF_DataType;
+    method OpReadVariable(aResource: not nullable Output; aDataType: TF_DataType; 
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ReadVariableOp';
@@ -243,7 +256,8 @@ type
         ]);
     end;
 
-    method OpReduceDims(aInput: not nullable Output; aAxis: Output := nil): Output;
+    method OpReduceDims(aInput: not nullable Output; aAxis: Output := nil)
+      : Output;
     begin
       if assigned(aAxis) then begin
         result := aAxis;
@@ -266,8 +280,8 @@ type
       end;
     end;
 
-    method OpReduceSum(aInput, aAxis: not nullable Output;
-      aKeepDims: Boolean := false; aOpName: not nullable String := ''): Output;
+    method OpReduceSum(aInput, aAxis: not nullable Output; aKeepDims: Boolean := false; 
+      aOpName: not nullable String := ''): Output;
     begin
       var reductionIndices := OpReduceDims(aInput, aAxis);
       result := OpSum(aInput, reductionIndices, aKeepDims, aOpName);
@@ -287,8 +301,8 @@ type
       (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
     end;
 
-    method OpSum(aInput, aReductionIndices: not nullable Output;
-      aKeepDims: Boolean := false; aOpName: not nullable String := ''): Output;
+    method OpSum(aInput, aReductionIndices: not nullable Output; aKeepDims: Boolean := false;
+      aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'Sum';
       (nil, result) := InternalCreateOp(
