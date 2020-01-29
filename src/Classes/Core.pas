@@ -355,7 +355,7 @@ type
         typeOf(array of Shape).GetHashCode:
           SetAttrShapeList(aName,  aValue as array of Shape);
         typeOf(TensorFlowDataType).GetHashCode:
-          SetAttrType(aName, TF_DataType(aValue as Integer));
+          SetAttrType(aName, TF_DataType(ord(aValue as TensorFlowDataType)));
         typeOf(String).GetHashCode:
           SetAttrStr(aName, aValue as String);
         typeOf(array of String).GetHashCode:
@@ -740,15 +740,14 @@ type
       end;
     end;
 
-    method MakeName(const aOpType: not nullable String;
-      aOpName: not nullable String): String;
+    method MakeName(const aOpType, aOpName: not nullable String): String;
     begin
-      if String.IsNullOrEmpty(aOpName) then aOpName := aOpType;
+      var lOpName := if String.IsNullOrEmpty(aOpName) then aOpType else aOpName;
       var name :=
         if String.IsNullOrEmpty(CurrentScope) then
-          $'{aOpType}.{aOpName}'
+          $'{aOpType}.{lOpName}'
         else
-          $'{CurrentScope}/{aOpType}_{aOpName}';
+          $'{CurrentScope}/{aOpType}_{lOpName}';
       result := MakeUniqueName(name);
     end;
 
