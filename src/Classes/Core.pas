@@ -443,7 +443,7 @@ type
     method SetAttrTensor(const aName: not nullable String; aTensor: not nullable Tensor;
       aStatus: Status := nil);
     begin
-      using lstatus := new Status do begin
+      using lStatus := new Status do begin
         TF_SetAttrTensor(NativePtr, aName.ToAnsiChars(true), aTensor.NativePtr,
           lStatus.NativePtr);
         if assigned(aStatus) then begin

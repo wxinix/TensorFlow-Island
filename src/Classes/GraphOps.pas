@@ -316,7 +316,8 @@ type
         lOpType,
         aOpName,
         [],
-        [ ('container', aContainer),
+        [ 
+          ('container', aContainer),
           ('shared_name', aSharedName),
           ('dtype', TensorFlowDataType(ord(aDataType))),
           ('shape', aShape)
