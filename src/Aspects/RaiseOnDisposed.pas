@@ -28,8 +28,9 @@ begin
   aMethod.ReplaceMethodBody(
     new BeginStatement(
       new StandaloneStatement(new ProcValue(new SelfValue, 'CheckAndRaiseOnDisposed')),
-      new PlaceHolderStatement)
-    ); 
+      new PlaceHolderStatement
+    )
+  );
 end;
 
 end.

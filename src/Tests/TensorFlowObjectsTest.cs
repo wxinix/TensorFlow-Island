@@ -28,25 +28,25 @@ namespace TensorFlow.Island.Tests
     public class TensorFlowObjectsTest: Test
     {
         // Called before each test method.
-        public override void Setup() 
+        public override void Setup()
         {
         	
         }
 
         // Called after each test method.
-        public override void Teardown() 
+        public override void Teardown()
         {
         	
         }
 
         // Called before first test method.
-        public override void SetupTest() 
+        public override void SetupTest()
         {
         	
         }
 
         // Called after last test method.
-        public override void TeardownTest() 
+        public override void TeardownTest()
         {
         	
         }
@@ -55,10 +55,10 @@ namespace TensorFlow.Island.Tests
         {
             Int64[] dims = {1, 5, 10};
             var shp = new Shape withDimensions(dims);
-            shp.Dispose(); 
+            shp.Dispose();
        	    Assert.Throws(()=>shp.NumDims, typeof(ObjectDisposedException));
         }
-        
+      
         public void When_UsingInvalidShapeDimIndex_Expect_InvalidShapeDimIndexExpection()
         {
             Int64[] dims = {1, 5, 10};

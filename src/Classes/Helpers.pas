@@ -25,7 +25,7 @@ uses
   TensorFlow;
 
 type
-  TensorFlowDataType nested in Helper = private enum
+  TensorFlowDataType = assembly enum
   (
     Float              = TF_DataType.FLOAT,
     Double             = TF_DataType.DOUBLE,
@@ -52,7 +52,7 @@ type
     UInt64             = TF_DataType.UINT64
   );
 
-  TensorFlowCode nested in Helper = private enum 
+  TensorFlowCode = assembly enum
   (
     Ok                 = TF_Code.TF_OK,
     Cancelled          = TF_Code.TF_CANCELLED,
@@ -69,7 +69,7 @@ type
     Unimplemented      = TF_Code.TF_UNIMPLEMENTED,
     Internal           = TF_Code.TF_INTERNAL,
     Unavailable        = TF_Code.TF_UNAVAILABLE,
-    DataLoss           = TF_Code.TF_DATA_LOSS, 
+    DataLoss           = TF_Code.TF_DATA_LOSS,
     Unauthenticated    = TF_Code.TF_UNAUTHENTICATED
   );
 
@@ -104,7 +104,7 @@ type
       result := tfCode.ToString;
     end;
 
-    class method ToTFDataType(aLocalType: &Type; 
+    class method ToTFDataType(aLocalType: &Type;
       aRaiseOnUnSupported: Boolean := true): TF_DataType;
     begin
       case aLocalType.Code of
@@ -116,7 +116,7 @@ type
         TypeCodes.SByte  : result := TF_DataType.TF_INT8;
         TypeCodes.Int16  : result := TF_DataType.TF_INT16;
         TypeCodes.Int32  : result := TF_DataType.TF_INT32;
-        TypeCodes.Int64  : result := TF_DataType.TF_INT64; 
+        TypeCodes.Int64  : result := TF_DataType.TF_INT64;
         TypeCodes.Single : result := TF_DataType.TF_FLOAT;
         TypeCodes.Double : result := TF_DataType.TF_DOUBLE;
         TypeCodes.String : result := TF_DataType.TF_STRING;
@@ -134,7 +134,7 @@ type
       if not File.Exists(aFile) then begin
         raise new BufferFileNotExistException(aFile);
       end;
-      
+
       using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
         if fs.Length > 0 then begin
           result := new Byte[fs.Length];
@@ -142,7 +142,7 @@ type
         end else begin
           result := nil;
         end;
-      end; 
+      end;
     end;
   end;
 

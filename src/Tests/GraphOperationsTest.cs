@@ -28,32 +28,32 @@ namespace TensorFlow.Island.Tests
     public class GraphOperationsTest: Test
     {
         private Session m_session;
-        
+    
         // Called before each test method.
-        public override void Setup() 
+        public override void Setup()
         {
             m_session = new Session();
         }
 
         // Called after each test method.
-        public override void Teardown() 
+        public override void Teardown()
         {
             m_session.Dispose();
         }
 
         // Called before first test method.
-        public override void SetupTest() 
+        public override void SetupTest()
         {
 
         }
 
         // Called after last test method.
-        public override void TeardownTest() 
+        public override void TeardownTest()
         {
 
         }
 
-        public void When_CallingOpAddWithScalars_12_19_Expect_31() 
+        public void When_CallingOpAddWithScalars_12_19_Expect_31()
         {
             var lGraph = m_session.Graph;
             var a = lGraph.OpConst(12);
