@@ -60,10 +60,10 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  DisposableObjectList<T> = public abstract class(DisposableObject)
+  DisposableObjectList<T> = public abstract class(DisposableObject, IEnumerable<T>)
     where T is IDisposable;
   protected
-    fList: List<T>;
+    fList: List<T>; implements IEnumerable<T>;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -665,20 +665,30 @@ type
   Graph = public class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: not nullable String := '';
-    fNames: Dictionary<String, Integer> := new Dictionary<String, Integer>;
+    fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
+    fPendingInitVars: OperationList := new OperationList;
 
     method MakeUniqueName(const aName: not nullable String): String;
     begin
       var seqid := 0;
-      if fNames.ContainsKey(aName) then begin
-        seqid := fNames[aName];
+      if fNamesCache.ContainsKey(aName) then begin
+        seqid := fNamesCache[aName];
         inc(seqid);
-        fNames[aName] := seqid;
+        fNamesCache[aName] := seqid;
       end else begin
-        fNames.Add(aName, seqid);
+        fNamesCache.Add(aName, seqid);
       end;
 
       result := $'{aName}_{seqid}';
+    end;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if aDisposing then begin
+        fPendingInitVars.Dispose;
+      end;
+
+      inherited Dispose(aDisposing);
     end;
   public
     constructor;
@@ -751,9 +761,23 @@ type
       result := MakeUniqueName(name);
     end;
 
+    method AddInitVariable(aOp: not nullable Operation);
+    begin
+      for each el in fPendingInitVars do begin
+        if el.Equals(aOp) then exit;
+      end;
+
+      fPendingInitVars.Add(aOp);
+    end;
+
     property CurrentScope: String
       read begin
         result := fCurrentScope;
+      end;
+
+    property GlobalVariableInitializer: array of ^TF_Operation
+      read begin
+        result := fPendingInitVars.ToRawPtrArray;
       end;
   end;
 
