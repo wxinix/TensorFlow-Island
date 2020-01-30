@@ -918,6 +918,14 @@ type
     end;
   end;
 
+  Invalide2DTensorData = public class(Exception)
+  public
+    constructor(aDim1, aDim2: Integer);
+    begin
+      inherited constructor($'Invalid 2D tensor data D1={aDim1}, D2={aDim2}.');
+    end;
+  end;
+
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
@@ -1066,6 +1074,96 @@ type
     begin
       var data := new TensorData<String> withValues(aValues)
         Shape(new Shape withDimensions([aValues.Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of not nullable array of Byte)
+      : Tensor;
+    begin
+      if aValues[0].Length <> aValues[1].Length then begin
+        raise new Invalide2DTensorData(aValues[0].Length, aValues[1].Length);
+      end;
+
+      var lValues := new Byte[aValues.Length * aValues[0].Length];
+      memcpy(lValues, aValues, lValues.Length * sizeOf(Byte));
+
+      var data := new TensorData<Byte> withValues(lValues)
+        Shape(new Shape withDimensions([2, aValues[0].Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of not nullable array of Int16)
+      : Tensor;
+    begin
+      if aValues[0].Length <> aValues[1].Length then begin
+        raise new Invalide2DTensorData(aValues[0].Length, aValues[1].Length);
+      end;
+
+      var lValues := new Int16[aValues.Length * aValues[0].Length];
+      memcpy(lValues, aValues, lValues.Length * sizeOf(Int16));
+
+      var data := new TensorData<Int16> withValues(lValues)
+        Shape(new Shape withDimensions([2, aValues[0].Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of not nullable array of Integer)
+      : Tensor;
+    begin
+      if aValues[0].Length <> aValues[1].Length then begin
+        raise new Invalide2DTensorData(aValues[0].Length, aValues[1].Length);
+      end;
+
+      var lValues := new Integer[aValues.Length * aValues[0].Length];
+      memcpy(lValues, aValues, lValues.Length * sizeOf(Integer));
+
+      var data := new TensorData<Integer> withValues(lValues)
+        Shape(new Shape withDimensions([2, aValues[0].Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of not nullable array of Int64)
+      : Tensor;
+    begin
+      if aValues[0].Length <> aValues[1].Length then begin
+        raise new Invalide2DTensorData(aValues[0].Length, aValues[1].Length);
+      end;
+
+      var lValues := new Int64[aValues.Length * aValues[0].Length];
+      memcpy(lValues, aValues, lValues.Length * sizeOf(Int64));
+
+      var data := new TensorData<Int64> withValues(lValues)
+        Shape(new Shape withDimensions([2, aValues[0].Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of not nullable array of Single)
+      : Tensor;
+    begin
+      if aValues[0].Length <> aValues[1].Length then begin
+        raise new Invalide2DTensorData(aValues[0].Length, aValues[1].Length);
+      end;
+
+      var lValues := new Single[aValues.Length * aValues[0].Length];
+      memcpy(lValues, aValues, lValues.Length * sizeOf(Single));
+      
+      var data := new TensorData<Single> withValues(lValues)
+        Shape(new Shape withDimensions([2, aValues[0].Length]));
+      result := new Tensor withData(data);
+    end;
+
+    operator Implicit(aValues: not nullable array of not nullable array of Double)
+      : Tensor;
+    begin
+      if aValues[0].Length <> aValues[1].Length then begin
+        raise new Invalide2DTensorData(aValues[0].Length, aValues[1].Length);
+      end;
+
+      var lValues := new Double[aValues.Length * aValues[0].Length];
+      memcpy(lValues, aValues, lValues.Length * sizeOf(Double));
+      
+      var data := new TensorData<Double> withValues(lValues)
+        Shape(new Shape withDimensions([2, aValues[0].Length]));
       result := new Tensor withData(data);
     end;
 
