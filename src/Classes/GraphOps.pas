@@ -122,7 +122,6 @@ type
       (nil, result) := InternalCreateOp(lOpType, aOpName, [aInput, aDimension]);
     end;
 
-
     method OpArgMin(aInput, aDimension: not nullable Output; 
       aOpName: not nullable String := ''): Output;
     begin
