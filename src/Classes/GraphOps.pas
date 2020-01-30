@@ -186,6 +186,20 @@ type
       (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
     end;
 
+    method OpFill(aDims, aValue: not nullable Tensor; aOpName: 
+      not nullable String := ''): Output;
+    begin      
+      const lOpType: String = 'Fill';
+      (nil, result) := InternalCreateOp(
+        lOpType,
+        aOpName,
+        [],
+        [
+          ('dims', aDims),
+          ('value', aValue)
+        ]);
+    end;
+
     method OpMatMul(a, b: not nullable Output; transpose_a: Boolean := false;
       transpose_b: Boolean := false; aOpName: not nullable String := '')
       : Output;
