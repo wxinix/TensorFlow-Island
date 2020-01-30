@@ -190,14 +190,13 @@ type
       not nullable String := ''): Output;
     begin      
       const lOpType: String = 'Fill';
+      var dims := OpConst(aDims) as not nullable Output;
+      var val := OpConst(aValue) as not nullable Output;
+     
       (nil, result) := InternalCreateOp(
         lOpType,
         aOpName,
-        [],
-        [
-          ('dims', aDims),
-          ('value', aValue)
-        ]);
+        [dims, val]);
     end;
 
     method OpMatMul(a, b: not nullable Output; transpose_a: Boolean := false;
