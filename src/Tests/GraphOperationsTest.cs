@@ -64,5 +64,20 @@ namespace TensorFlow.Island.Tests
             Assert.IsTrue(success);
             Assert.AreEqual(sum, 12 + 19);
         }
+
+        public void When_CallingOpFillWithDim_2_3_Value_9_Expect_Tensor_2_3_9()
+        {
+            var lGraph = m_session.Graph;
+            var dims = {2, 3};
+            var fill = lGraph.OpFill(dims, 9);
+            Tensor result = m_session.Runner.Run(fill);
+            Assert.AreEqual(result.Data.Shape.NumDims, 2);
+            Assert.AreEqual(result.Data.Shape.Dim[0], 2);
+            Assert.AreEqual(result.Data.Shape.Dim[1], 3);
+            Assert.AreEqual(result.Data.NumBytes, 2 * 3 * sizeOf(Integer));
+            int[] data = new int[6];
+            memcpy(data, result.Data.RawBytes(), result.Data.NumBytes);
+            Assert.AreEqual(data[1], 9);
+        }
     }
 }
