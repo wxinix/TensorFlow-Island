@@ -53,21 +53,31 @@ namespace TensorFlow.Island.Tests
 
         public void When_ReferencingDisposedObject_Expect_ObjectDisposedException()
         {
-            Int64[] dims = {1, 5, 10};
-            var shp = new Shape withDimensions(dims);
+            Shape shp = {1, 5, 10};
             shp.Dispose();
        	    Assert.Throws(()=>shp.NumDims, typeof(ObjectDisposedException));
         }
       
         public void When_UsingInvalidShapeDimIndex_Expect_InvalidShapeDimIndexExpection()
         {
-            Int64[] dims = {1, 5, 10};
-            var shp = new Shape withDimensions(dims);
+            Shape shp = {1, 5, 10};
             Assert.AreEqual(shp.NumDims, 3);
             Assert.AreEqual(shp.Dim[0], 1);
             Assert.AreEqual(shp.Dim[1], 5);
             Assert.AreEqual(shp.Dim[2], 10);
             Assert.Throws(()=>shp.Dim[5], typeof(InvalidShapeDimIndexException));
+        }
+
+        public void When_CreatingTensorWith2DArray_Expect_Success()
+        {
+            Tensor tensor = {{1,2,3},{4,5,6}};
+            Assert.AreEqual(tensor.Data.DataType, TF_DataType.TF_INT32);
+            Assert.AreEqual(tensor.Data.Shape.NumDims, 2);
+            Assert.AreEqual(tensor.Data.Shape.Dim[0], 2);
+            Assert.AreEqual(tensor.Data.Shape.Dim[1], 3);
+            var data = new int[2,3] {{0,0,0},{0,0,0}}; 
+            memcpy(&data[0,0], tensor.Data.Bytes(), tensor.Data.NumBytes);
+            Assert.AreEqual(data[0,2], 3);
         }
     }
 }
