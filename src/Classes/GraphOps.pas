@@ -34,13 +34,13 @@ type
     end;
   end;
 
-  InputArray nested in Graph_Operations = private 
+  InputArray nested in Graph_Operations = private
     not nullable array of not nullable Output;
 
   Attribute nested in Graph_Operations = private
     Tuple of (Name: not nullable String, Value: not nullable Object);
-  
-  AttributeArray  nested in Graph_Operations = private 
+
+  AttributeArray  nested in Graph_Operations = private
     not nullable array of Attribute;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -72,7 +72,7 @@ type
       end;
     end;
   public
-    method OpAbort(const aErrMsg: not nullable String := ''; aNoErrOnExit: Boolean := true; 
+    method OpAbort(const aErrMsg: not nullable String := ''; aNoErrOnExit: Boolean := true;
       aOpName: not nullable String := ''): Operation;
     begin
       const lOpType: String = 'Abort';
@@ -108,28 +108,28 @@ type
       (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
     end;
 
-    method OpAddN(aInputs: not nullable array of Output; 
+    method OpAddN(aInputs: not nullable array of Output;
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'AddN';
       (nil, result) := InternalCreateOp(lOpType, aOpName, aInputs);
     end;
 
-    method OpArgMax(aInput, aDimension: not nullable Output; 
+    method OpArgMax(aInput, aDimension: not nullable Output;
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ArgMax';
       (nil, result) := InternalCreateOp(lOpType, aOpName, [aInput, aDimension]);
     end;
 
-    method OpArgMin(aInput, aDimension: not nullable Output; 
+    method OpArgMin(aInput, aDimension: not nullable Output;
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ArgMin';
       (nil, result) := InternalCreateOp(lOpType, aOpName, [aInput, aDimension]);
     end;
 
-    method OpAssignVariable(aResource, aValue: not nullable Output; 
+    method OpAssignVariable(aResource, aValue: not nullable Output;
       aOpName: not nullable String := ''): Operation;
     begin
       const lOpType: String = 'AssignVariableOp';
@@ -185,13 +185,13 @@ type
       (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
     end;
 
-    method OpFill(aDims, aValue: not nullable Tensor; aOpName: 
+    method OpFill(aDims, aValue: not nullable Tensor; aOpName:
       not nullable String := ''): Output;
-    begin      
+    begin
       const lOpType: String = 'Fill';
       var dims := OpConst(aDims) as not nullable Output;
       var val := OpConst(aValue) as not nullable Output;
-     
+
       (nil, result) := InternalCreateOp(
         lOpType,
         aOpName,
@@ -233,7 +233,7 @@ type
         ]);
     end;
 
-    method OpPlaceholder(aDataType: TF_DataType; aShape: not nullable Shape; 
+    method OpPlaceholder(aDataType: TF_DataType; aShape: not nullable Shape;
       aOpName: not nullable String := ''): Output; overload;
     begin
       const lOpType: String = 'Placeholder';
@@ -247,7 +247,7 @@ type
         ]);
     end;
 
-    method OpRange(aStart, aLimit, aDelta: not nullable Output; 
+    method OpRange(aStart, aLimit, aDelta: not nullable Output;
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'Range';
@@ -255,7 +255,7 @@ type
         [aStart, aLimit, aDelta]);
     end;
 
-    method OpReadVariable(aResource: not nullable Output; aDataType: TF_DataType; 
+    method OpReadVariable(aResource: not nullable Output; aDataType: TF_DataType;
       aOpName: not nullable String := ''): Output;
     begin
       const lOpType: String = 'ReadVariableOp';
@@ -292,7 +292,7 @@ type
       end;
     end;
 
-    method OpReduceSum(aInput, aAxis: not nullable Output; aKeepDims: Boolean := false; 
+    method OpReduceSum(aInput, aAxis: not nullable Output; aKeepDims: Boolean := false;
       aOpName: not nullable String := ''): Output;
     begin
       var reductionIndices := OpReduceDims(aInput, aAxis);
@@ -342,7 +342,7 @@ type
         lOpType,
         aOpName,
         [],
-        [ 
+        [
           ('container', aContainer),
           ('shared_name', aSharedName),
           ('dtype', TensorFlowDataType(ord(aDataType))),

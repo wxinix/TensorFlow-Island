@@ -377,8 +377,7 @@ type
         values[I] := if aValueList[I] then 1 else 0;
       end;
 
-      TF_SetAttrBoolList(NativePtr, aName.ToAnsiChars(true), values,
-        values.Length);
+      TF_SetAttrBoolList(NativePtr, aName.ToAnsiChars(true), values, values.Length);
     end;
 
     method SetAttrFloat(const aName: not nullable String; aValue: Single);
@@ -865,7 +864,7 @@ type
   end;
 
   TensorData<T> = public class(TensorData)
-  public    
+  public
     constructor withValues(aVals: not nullable array of T) Shape(aShp: not nullable Shape);
     begin
       fDataType := Helper.ToTFDataType(typeOf(T));
@@ -919,7 +918,7 @@ type
   Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
     fData: TensorData;
-    
+
     method Convert2DTo1D<T>(aArray_2D: not nullable array of not nullable array of T)
       : Tuple of (not nullable array of T, Integer); static;
     begin
@@ -932,10 +931,10 @@ type
         var d1 := aArray_2D[1].Length;
         raise new Invalid2DTensorData($'Array [{d0},{d1}] not a rectangular 2-D array.');
       end;
-      
+
       var d := aArray_2D[0].Length;
       var arr := new T[d * 2];
-      
+
       memcpy(@arr[0], @aArray_2D[0][0], d * sizeOf(T));
       memcpy(@arr[d], @aArray_2D[1][0], d * sizeOf(T));
       result := (arr, d);
@@ -1091,7 +1090,7 @@ type
       : Tensor;
     begin
       var (lValues, d) := Convert2DTo1D(aValues);
-      var data := new TensorData<Byte> withValues(lValues) 
+      var data := new TensorData<Byte> withValues(lValues)
         Shape(new Shape withDims([2, d]));
       result := new Tensor withData(data);
     end;
@@ -1100,7 +1099,7 @@ type
       : Tensor;
     begin
       var (lValues, d) := Convert2DTo1D(aValues);
-      var data := new TensorData<Int16> withValues(lValues) 
+      var data := new TensorData<Int16> withValues(lValues)
         Shape(new Shape withDims([2, d]));
       result := new Tensor withData(data);
     end;
@@ -1109,7 +1108,7 @@ type
       : Tensor;
     begin
       var (lValues, d) := Convert2DTo1D(aValues);
-      var data := new TensorData<Integer> withValues(lValues) 
+      var data := new TensorData<Integer> withValues(lValues)
         Shape(new Shape withDims([2, d]));
       result := new Tensor withData(data);
     end;
@@ -1118,7 +1117,7 @@ type
       : Tensor;
     begin
       var (lValues, d) := Convert2DTo1D(aValues);
-      var data := new TensorData<Int64> withValues(lValues) 
+      var data := new TensorData<Int64> withValues(lValues)
         Shape(new Shape withDims([2, d]));
       result := new Tensor withData(data);
     end;
@@ -1127,7 +1126,7 @@ type
       : Tensor;
     begin
       var (lValues, d) := Convert2DTo1D(aValues);
-      var data := new TensorData<Single> withValues(lValues) 
+      var data := new TensorData<Single> withValues(lValues)
         Shape(new Shape withDims([2, d]));
       result := new Tensor withData(data);
     end;
@@ -1136,7 +1135,7 @@ type
       : Tensor;
     begin
       var (lValues, d) := Convert2DTo1D(aValues);
-      var data := new TensorData<Double> withValues(lValues) 
+      var data := new TensorData<Double> withValues(lValues)
         Shape(new Shape withDims([2, d]));
       result := new Tensor withData(data);
     end;

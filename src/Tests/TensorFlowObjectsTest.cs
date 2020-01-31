@@ -30,25 +30,25 @@ namespace TensorFlow.Island.Tests
         // Called before each test method.
         public override void Setup()
         {
-        	
+
         }
 
         // Called after each test method.
         public override void Teardown()
         {
-        	
+
         }
 
         // Called before first test method.
         public override void SetupTest()
         {
-        	
+
         }
 
         // Called after last test method.
         public override void TeardownTest()
         {
-        	
+
         }
 
         public void When_ReferencingDisposedObject_Expect_ObjectDisposedException()
@@ -57,7 +57,7 @@ namespace TensorFlow.Island.Tests
             shp.Dispose();
        	    Assert.Throws(()=>shp.NumDims, typeof(ObjectDisposedException));
         }
-      
+
         public void When_UsingInvalidShapeDimIndex_Expect_InvalidShapeDimIndexExpection()
         {
             Shape shp = {1, 5, 10};
@@ -75,7 +75,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(tensor.Data.Shape.NumDims, 2);
             Assert.AreEqual(tensor.Data.Shape.Dim[0], 2);
             Assert.AreEqual(tensor.Data.Shape.Dim[1], 3);
-            var data = new int[2,3] {{0,0,0},{0,0,0}}; 
+            int[..2, ..3] data;
             memcpy(&data[0,0], tensor.Data.Bytes(), tensor.Data.NumBytes);
             Assert.AreEqual(data[0,2], 3);
         }
