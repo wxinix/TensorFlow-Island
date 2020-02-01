@@ -79,5 +79,22 @@ namespace TensorFlow.Island.Tests
             memcpy(&data[0,0], tensor.Data.Bytes(), tensor.Data.NumBytes);
             Assert.AreEqual(data[0,2], 3);
         }
+
+        public void When_CallingPrintTensorInfo_Expect_Success()
+        {
+            var lSession = new Session(); 
+            var lOutput = lSession.Graph.OpConst(1);
+            var str = lSession.Graph.PrintTensorInfo(lOutput);
+            Assert.AreEqual(str, "Tensor (\"Const_0: 0\", shape=TensorShape([]), dtype=Int32 )");
+             
+            lOutput = lSession.Graph.OpConst({1, 2});
+            str = lSession.Graph.PrintTensorInfo(lOutput);
+            Assert.AreEqual(str, "Tensor (\"Const_1: 0\", shape=TensorShape([Dimension(2)]), dtype=Int32 )");   
+        
+            lOutput = lSession.Graph.OpConst({{1, 2}});
+            str = lSession.Graph.PrintTensorInfo(lOutput);
+            Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32 )"); 
+        }
+
     }
 }
