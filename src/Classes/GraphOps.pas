@@ -25,15 +25,6 @@ uses
   TensorFlow;
 
 type
-  OpCreateException = public class(Exception)
-  public
-    constructor withOpType(aOpType: not nullable String)
-      Message(aMsg: not nullable String := '');
-    begin
-      inherited constructor($'Fail creating {aOpType}. {aMsg}');
-    end;
-  end;
-
   InputArray nested in Graph_Operations = private
     not nullable array of not nullable Output;
 

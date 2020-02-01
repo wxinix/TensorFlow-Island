@@ -63,6 +63,10 @@
       <SubType>Code</SubType>
       <Link>..\..\src\Classes\Helpers.pas</Link>
     </Compile>
+    <Compile Include="..\..\src\Classes\Exceptions.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\src\Classes\Exceptions.pas</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>

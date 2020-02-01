@@ -22,7 +22,7 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  //TensorFlow.Island.Aspects,
+  TensorFlow.Island.Aspects,
   RemObjects.Elements.System,
   TensorFlow;
 
@@ -99,14 +99,6 @@ type
       read begin
         result := fList[i];
       end; default;
-  end;
-
-  ObjectDisposedException = public class(Exception)
-  public
-    constructor (aObject: DisposableObject);
-    begin
-      inherited constructor($'{aObject.GetType.Name} instance already disposed.');
-    end;
   end;
 
   TensorFlowObjectDisposeAction<T> = public block(aPtr: ^T);
@@ -550,15 +542,6 @@ type
     end;
   end;
 
-  InvalidShapeDimIndexException = public class(Exception)
-  public
-    constructor (aIndex: Int32; aNumDims: Int32);
-    begin
-      var msg := $'Invalid dim index {aIndex}, NumDims = {aNumDims}.';
-      inherited constructor(msg);
-    end;
-  end;
-
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Shape = public class(DisposableObject)
   private
@@ -947,24 +930,6 @@ type
     end;
   end;
 
-  TensorCreateException = class(Exception)
-  public
-    constructor(aType: TF_DataType);
-    begin
-      var typeStr := Helper.TFDataTypeToString(aType);
-      var msg := $'Cannot create tensor for type {typeStr}';
-      inherited constructor(msg);
-    end;
-  end;
-
-  InvalidRectangularTensorData = public class(Exception)
-  public
-    constructor(aMsg: not nullable String);
-    begin
-      inherited constructor(aMsg);
-    end;
-  end;
-
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
@@ -1186,14 +1151,6 @@ type
   end;
 
   TensorList = public TensorFlowObjectList<Tensor>;
-
-  SessionCreateException = public class(Exception)
-  public
-    constructor withMessage(aMsg: not nullable String);
-    begin
-      inherited constructor(aMsg);
-    end;
-  end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Session = public class(TensorFlowObject<TF_Session>)

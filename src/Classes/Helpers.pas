@@ -73,23 +73,6 @@ type
     Unauthenticated    = TF_Code.TF_UNAUTHENTICATED
   );
 
-  DataTypeNotSupportedException = public class(Exception)
-  public
-    constructor(aLocalType: &Type);
-    begin
-      var msg := $'Cannot convert {aLocalType.ToString} to TF_DataType.';
-      inherited constructor(msg);
-    end;
-  end;
-
-  BufferFileNotExistException = public class(Exception)
-  public
-    constructor (aFile: not nullable String);
-    begin
-      inherited constructor($'Buffer file {aFile} not existing.');
-    end;
-  end;
-
   Helper = public class
   public
     class method TFDataTypeToString(aDataType: TF_DataType): String;
