@@ -105,7 +105,7 @@ type
   public
     constructor (aObject: DisposableObject);
     begin
-      inherited constructor($'{aObject.ToString} instance already disposed.');
+      inherited constructor($'{aObject.GetType.Name} instance already disposed.');
     end;
   end;
 
@@ -121,6 +121,7 @@ type
   private
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
     fNativePtr: ^T := nil;
+    fDisposed: Boolean := false;
   protected
     constructor withNativePtr(aPtr: not nullable ^T)
       DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
@@ -131,6 +132,10 @@ type
 
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end;
+
       if aDisposing then begin
         // Derived class should call its managed object's Dispose().
       end;
@@ -138,7 +143,8 @@ type
       if assigned(fDisposeAction) then begin
         fDisposeAction(fNativePtr);
       end;
-
+      
+      fDisposed := true;
       inherited Dispose(aDisposing);
     end;
   public
@@ -588,6 +594,19 @@ type
       end;
     end;
 
+    method ToString: String; override;
+    begin
+      var dims_str: String := '';
+      for I: Integer := 0 to NumDims - 1 do begin
+        dims_str := 
+          if (I < NumDims - 1) then 
+            dims_str + $'Dimension({Dim[I]}), ' 
+          else 
+            dims_str + $'Dimension({Dim[I]})';
+      end;
+      result := $'TensorShape([{dims_str}])';
+    end;
+
     operator Implicit(aDims: array of Int64): Shape;
     begin
       result := new Shape withDims(aDims);
@@ -735,16 +754,20 @@ type
         var numDims := TF_GraphGetTensorNumDims(NativePtr, nativeOut,
           lStatus.NativePtr);
 
-        if (not lStatus.OK) or (numDims = 0) then begin
+        if (not lStatus.OK) then begin
           result := (false, nil);
         end else begin
-          var dims := new Int64[numDims];
-          TF_GraphGetTensorShape(NativePtr, nativeOut, dims, numDims,
-            lStatus.NativePtr);
-          if lStatus.OK then begin
-            result := (true, new Shape withDims(dims));
+          if numDims > 0 then begin
+            var dims := new Int64[numDims];
+            TF_GraphGetTensorShape(NativePtr, nativeOut, dims, numDims,
+              lStatus.NativePtr);
+            if lStatus.OK then begin
+              result := (true, new Shape withDims(dims));
+            end else begin
+              result := (false, nil);
+            end;
           end else begin
-            result := (false, nil);
+            result := (true, new Shape withDims(nil));
           end;
         end;
 
@@ -756,12 +779,18 @@ type
 
     method MakeName(const aOpType, aOpName: not nullable String): String;
     begin
-      var lOpName := if String.IsNullOrEmpty(aOpName) then aOpType else aOpName;
+      var lOpName := 
+        if String.IsNullOrEmpty(aOpName) then 
+          aOpType 
+        else 
+          aOpName;
+
       var name :=
         if String.IsNullOrEmpty(CurrentScope) then
-          $'{aOpType}.{lOpName}'
+          $'{lOpName}'
         else
-          $'{CurrentScope}/{aOpType}_{lOpName}';
+          $'{CurrentScope}/{lOpName}';
+
       result := MakeUniqueName(name);
     end;
 
@@ -772,6 +801,26 @@ type
       end;
 
       fPendingInitVars.Add(aOp);
+    end;
+
+    method PrintTensorInfo(aOutput: not nullable Output; aStatus: Status := nil): String;
+    begin
+      using lStatus := new Status do begin
+        var success: Boolean;
+        var shp: Shape;
+        (success, shp) := GetShape(aOutput, lStatus);
+        
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+
+        if success then begin
+          var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.NativePtr));
+          result := $'Tensor ("{name}: {aOutput.Index}", shape={shp.ToString}, dtype={Helper.TFDataTypeToString(aOutput.Type)} )';
+        end else begin
+          result := '';
+        end;
+      end;
     end;
 
     property CurrentScope: String
@@ -906,7 +955,7 @@ type
     end;
   end;
 
-  Invalid2DTensorData = public class(Exception)
+  InvalidRectangularTensorData = public class(Exception)
   public
     constructor(aMsg: not nullable String);
     begin
@@ -920,24 +969,23 @@ type
     fData: TensorData;
 
     method Convert2DTo1D<T>(aArray_2D: not nullable array of not nullable array of T)
-      : Tuple of (not nullable array of T, Integer); static;
+      : Tuple of (data: not nullable array of T, height: Integer, width: Integer); static;
     begin
-      if aArray_2D.Length <> 2 then begin
-        raise new Invalid2DTensorData($'Wrong dimenstion {aArray_2D.Length}. 2 expected.');
+      var height := aArray_2D.Length;
+      var width  := aArray_2D[0].Length;
+      
+      for I: Integer := 0 to aArray_2D.Length - 1 do begin
+        if aArray_2D[I].Length <> width then begin
+          raise new InvalidRectangularTensorData($'Array [Rectangular array height={height} width={width}]. Invalid row {I} width={aArray_2D[I].Length}.');
+        end;
       end;
 
-      if aArray_2D[0].Length <>aArray_2D[1].Length then begin
-        var d0 := aArray_2D[0].Length;
-        var d1 := aArray_2D[1].Length;
-        raise new Invalid2DTensorData($'Array [{d0},{d1}] not a rectangular 2-D array.');
+      var arr: array of T := new T[height * width];
+      for height_pos: Integer := 0 to height - 1 do begin
+        memcpy(@arr[height_pos + height_pos * width], @aArray_2D[height_pos][0], width * sizeOf(T));        
       end;
-
-      var d := aArray_2D[0].Length;
-      var arr := new T[d * 2];
-
-      memcpy(@arr[0], @aArray_2D[0][0], d * sizeOf(T));
-      memcpy(@arr[d], @aArray_2D[1][0], d * sizeOf(T));
-      result := (arr, d);
+      
+      result := (arr, height, width);
     end;
   protected
     method Dispose(aDisposing: Boolean); override;
@@ -1089,54 +1137,54 @@ type
     operator Implicit(aValues: not nullable array of not nullable array of Byte)
       : Tensor;
     begin
-      var (lValues, d) := Convert2DTo1D(aValues);
+      var (lValues, height, width) := Convert2DTo1D(aValues);
       var data := new TensorData<Byte> withValues(lValues)
-        Shape(new Shape withDims([2, d]));
+        Shape(new Shape withDims([height, width]));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Int16)
       : Tensor;
     begin
-      var (lValues, d) := Convert2DTo1D(aValues);
+      var (lValues, height, width) := Convert2DTo1D(aValues);
       var data := new TensorData<Int16> withValues(lValues)
-        Shape(new Shape withDims([2, d]));
+        Shape(new Shape withDims([height, width]));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Integer)
       : Tensor;
     begin
-      var (lValues, d) := Convert2DTo1D(aValues);
+      var (lValues, height, width) := Convert2DTo1D(aValues);
       var data := new TensorData<Integer> withValues(lValues)
-        Shape(new Shape withDims([2, d]));
+        Shape(new Shape withDims([height, width]));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Int64)
       : Tensor;
     begin
-      var (lValues, d) := Convert2DTo1D(aValues);
+      var (lValues, height, width) := Convert2DTo1D(aValues);
       var data := new TensorData<Int64> withValues(lValues)
-        Shape(new Shape withDims([2, d]));
+        Shape(new Shape withDims([height, width]));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Single)
       : Tensor;
     begin
-      var (lValues, d) := Convert2DTo1D(aValues);
+      var (lValues, height, width) := Convert2DTo1D(aValues);
       var data := new TensorData<Single> withValues(lValues)
-        Shape(new Shape withDims([2, d]));
+        Shape(new Shape withDims([height, width]));
       result := new Tensor withData(data);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Double)
       : Tensor;
     begin
-      var (lValues, d) := Convert2DTo1D(aValues);
+      var (lValues, height, width) := Convert2DTo1D(aValues);
       var data := new TensorData<Double> withValues(lValues)
-        Shape(new Shape withDims([2, d]));
+        Shape(new Shape withDims([height, width]));
       result := new Tensor withData(data);
     end;
 
