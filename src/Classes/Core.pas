@@ -143,7 +143,7 @@ type
       if assigned(fDisposeAction) then begin
         fDisposeAction(fNativePtr);
       end;
-      
+
       fDisposed := true;
       inherited Dispose(aDisposing);
     end;
@@ -598,10 +598,10 @@ type
     begin
       var dims_str: String := '';
       for I: Integer := 0 to NumDims - 1 do begin
-        dims_str := 
-          if (I < NumDims - 1) then 
-            dims_str + $'Dimension({Dim[I]}), ' 
-          else 
+        dims_str :=
+          if (I < NumDims - 1) then
+            dims_str + $'Dimension({Dim[I]}), '
+          else
             dims_str + $'Dimension({Dim[I]})';
       end;
       result := $'TensorShape([{dims_str}])';
@@ -779,10 +779,10 @@ type
 
     method MakeName(const aOpType, aOpName: not nullable String): String;
     begin
-      var lOpName := 
-        if String.IsNullOrEmpty(aOpName) then 
-          aOpType 
-        else 
+      var lOpName :=
+        if String.IsNullOrEmpty(aOpName) then
+          aOpType
+        else
           aOpName;
 
       var name :=
@@ -809,14 +809,16 @@ type
         var success: Boolean;
         var shp: Shape;
         (success, shp) := GetShape(aOutput, lStatus);
-        
+
         if assigned(aStatus) then begin
           aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
         end;
 
         if success then begin
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.NativePtr));
-          result := $'Tensor ("{name}: {aOutput.Index}", shape={shp.ToString}, dtype={Helper.TFDataTypeToString(aOutput.Type)} )';
+          result := $'Tensor ("{name}: {aOutput.Index}", ' +
+                    $'shape={shp.ToString}, '+
+                    $'dtype={Helper.TFDataTypeToString(aOutput.Type)} )';
         end else begin
           result := '';
         end;
@@ -968,25 +970,45 @@ type
   private
     fData: TensorData;
 
-    method Convert2DTo1D<T>(aArray_2D: not nullable array of not nullable array of T)
-      : Tuple of (data: not nullable array of T, height: Integer, width: Integer); static;
+    class method ConvertToTensor<T>(aValues: not nullable array of T): Tensor; overload;
     begin
-      var height := aArray_2D.Length;
-      var width  := aArray_2D[0].Length;
-      
-      for I: Integer := 0 to aArray_2D.Length - 1 do begin
-        if aArray_2D[I].Length <> width then begin
-          raise new InvalidRectangularTensorData($'Array [Rectangular array height={height} width={width}]. Invalid row {I} width={aArray_2D[I].Length}.');
+      var shp := new Shape withDims([aValues.Length]);
+      var data := new TensorData<T> withValues(aValues) Shape(shp);
+      result := new Tensor withData(data);
+    end;
+
+    class method ConvertToTensor<T>(aValues: not nullable array of not nullable array of T)
+      : Tensor; overload;
+    begin
+      var height := aValues.Length;
+      var width  := aValues[0].Length;
+
+      for I: Integer := 0 to height - 1 do begin
+        if aValues[I].Length <> width then begin
+          raise new InvalidRectangularTensorData(
+            $'Array [Rectangular array height={height} width={width}].' +
+            $'Invalid row {I} width={aValues[I].Length}.'
+          );
         end;
       end;
 
       var arr: array of T := new T[height * width];
-      for height_pos: Integer := 0 to height - 1 do begin
-        memcpy(@arr[height_pos + height_pos * width], @aArray_2D[height_pos][0], width * sizeOf(T));        
+      for I: Integer := 0 to height - 1 do begin
+        memcpy(@arr[I + I * width], @aValues[I][0], width * sizeOf(T));
       end;
-      
-      result := (arr, height, width);
+
+      var shp := new Shape withDims([height, width]);
+      var data := new TensorData<T> withValues(arr) Shape(shp);
+      result := new Tensor withData(data);
     end;
+
+    class method ConvertToTensor<T>(aValue: T): Tensor; overload;
+    begin
+      var shp := new Shape withDims(nil);
+      var data := new TensorData<T> withValues([aValue]) Shape(shp);
+      result := new Tensor withData(data);
+    end;
+
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -1025,167 +1047,118 @@ type
 
     operator Implicit(aValue: Boolean): Tensor;
     begin
-      var data := new TensorData<Boolean> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Boolean>(aValue);
     end;
 
     operator Implicit(aValue: Byte): Tensor;
     begin
-      var data := new TensorData<Byte> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Byte>(aValue);
     end;
 
     operator Implicit(aValue: Int16): Tensor;
     begin
-      var data := new TensorData<Int16> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Int16>(aValue);
     end;
 
     operator Implicit(aValue: Integer): Tensor;
     begin
-      var data := new TensorData<Integer> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Integer>(aValue);
     end;
 
     operator Implicit(aValue: Int64): Tensor;
     begin
-      var data := new TensorData<Int64> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Int64>(aValue);
     end;
 
     operator Implicit(aValue: Single): Tensor;
     begin
-      var data := new TensorData<Single> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Single>(aValue);
     end;
 
     operator Implicit(aValue: Double): Tensor;
     begin
-      var data := new TensorData<Double> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Double>(aValue);
     end;
 
     operator Implicit(aValue: not nullable String): Tensor;
     begin
-      var data := new TensorData<String> withValues([aValue])
-        Shape(new Shape withDims(nil));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<String>(aValue);
     end;
 
     operator Implicit(aValues: not nullable array of Boolean): Tensor;
     begin
-      var data := new TensorData<Boolean> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Boolean>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of Byte): Tensor;
     begin
-      var data := new TensorData<Byte> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Byte>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of Int16): Tensor;
     begin
-      var data := new TensorData<Int16> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Int16>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of Integer): Tensor;
     begin
-      var data := new TensorData<Integer> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Integer>(aValues);
     end;
+
     operator Implicit(aValues: not nullable array of Int64): Tensor;
     begin
-      var data := new TensorData<Int64> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Int64>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of Single): Tensor;
     begin
-      var data := new TensorData<Single> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Single>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of Double): Tensor;
     begin
-      var data := new TensorData<Double> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Double>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of String): Tensor;
     begin
-      var data := new TensorData<String> withValues(aValues)
-        Shape(new Shape withDims([aValues.Length]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<String>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Byte)
       : Tensor;
     begin
-      var (lValues, height, width) := Convert2DTo1D(aValues);
-      var data := new TensorData<Byte> withValues(lValues)
-        Shape(new Shape withDims([height, width]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Byte>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Int16)
       : Tensor;
     begin
-      var (lValues, height, width) := Convert2DTo1D(aValues);
-      var data := new TensorData<Int16> withValues(lValues)
-        Shape(new Shape withDims([height, width]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Int16>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Integer)
       : Tensor;
     begin
-      var (lValues, height, width) := Convert2DTo1D(aValues);
-      var data := new TensorData<Integer> withValues(lValues)
-        Shape(new Shape withDims([height, width]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Integer>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Int64)
       : Tensor;
     begin
-      var (lValues, height, width) := Convert2DTo1D(aValues);
-      var data := new TensorData<Int64> withValues(lValues)
-        Shape(new Shape withDims([height, width]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Int64>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Single)
       : Tensor;
     begin
-      var (lValues, height, width) := Convert2DTo1D(aValues);
-      var data := new TensorData<Single> withValues(lValues)
-        Shape(new Shape withDims([height, width]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Single>(aValues);
     end;
 
     operator Implicit(aValues: not nullable array of not nullable array of Double)
       : Tensor;
     begin
-      var (lValues, height, width) := Convert2DTo1D(aValues);
-      var data := new TensorData<Double> withValues(lValues)
-        Shape(new Shape withDims([height, width]));
-      result := new Tensor withData(data);
+      result := ConvertToTensor<Double>(aValues);
     end;
 
     method ScalarValueAs<T>: Tuple of (Boolean, nullable T);
