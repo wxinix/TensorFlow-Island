@@ -112,13 +112,12 @@ type
   TensorFlowObject<T> = public abstract class(DisposableObject, ITensorFlowObject)
   private
     fDisposeAction: TensorFlowObjectDisposeAction<T>;
-    fNativePtr: ^T := nil;
+    fPtr: ^T := nil;
     fDisposed: Boolean := false;
   protected
-    constructor withNativePtr(aPtr: not nullable ^T)
-      DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
+    constructor withPtr(aPtr: not nullable ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
     begin
-      fNativePtr := aPtr;
+      fPtr := aPtr;
       fDisposeAction := aAction;
     end;
 
@@ -133,7 +132,7 @@ type
       end;
 
       if assigned(fDisposeAction) then begin
-        fDisposeAction(fNativePtr);
+        fDisposeAction(fPtr);
       end;
 
       fDisposed := true;
@@ -142,17 +141,17 @@ type
   public
     property ID: NativeUInt
       read begin
-        result := NativeInt(NativePtr);
+        result := NativeInt(fPtr);
       end;
 
-    property NativePtr: ^T
+    property Ptr: ^T // Typed pointer.
       read begin
-        exit fNativePtr;
+        exit fPtr;
       end;
 
-    property RawPtr: ^Void
+    property RawPtr: ^Void // Untyped pointer.
       read begin
-        result := NativePtr;
+        result := fPtr;
       end;
   end;
 
@@ -206,18 +205,18 @@ type
       buf^.data_deallocator := nil;
 
       fManaged := true;
-      inherited constructor withNativePtr(buf) DisposeAction(fDisposeAction);
+      inherited constructor withPtr(buf) DisposeAction(fDisposeAction);
     end;
 
     constructor withString(const aProtoBuf: not nullable String);
     begin
-      var buf: ^TF_Buffer := TF_NewBufferFromString(aProtoBuf.ToAnsiChars,
-        lstrlenA(aProtoBuf.ToAnsiChars(true)));
+      var proto_len := lstrlenA(aProtoBuf.ToAnsiChars(true));
+      var buf: ^TF_Buffer := TF_NewBufferFromString(aProtoBuf.ToAnsiChars, proto_len);
 
       fManaged := false;
       fData := buf^.data;
       fNumBytes := buf^.length;
-      inherited constructor withNativePtr(buf) DisposeAction(fDisposeAction);
+      inherited constructor withPtr(buf) DisposeAction(fDisposeAction);
     end;
 
     method ToArray: array of Byte;
@@ -242,12 +241,11 @@ type
     fName: String;
     fGraph: Graph;
   public
-    constructor withNativePtr(aPtr: ^TF_Operation)
-      Name(aName: not nullable String) Graph(aGraph: not nullable Graph);
+    constructor withPtr(aPtr: ^TF_Operation) Name(aName: not nullable String) Graph(aGraph: not nullable Graph);
     begin
       fGraph := aGraph;
       fName := aName;
-      inherited constructor withNativePtr(aPtr) DisposeAction(nil);
+      inherited constructor withPtr(aPtr) DisposeAction(nil);
     end;
 
     method ToString: String; override;
@@ -274,31 +272,25 @@ type
     fOpType: String;
     fOperName: String;
   public
-    constructor withGraph(aGraph: not nullable Graph)
-      OpType(aOpType: not nullable String) OpName(aOperName: not nullable String);
+    constructor withGraph(aGraph: not nullable Graph) OpType(aType: not nullable String) OpName(aName: not nullable String);
     begin
-      fOpType := aOpType;
-      fOperName := aOperName;
+      fOpType := aType;
+      fOperName := aName;
       fGraph := aGraph;
 
-      var opDesc := TF_NewOperation(
-        aGraph.NativePtr,
-        aOpType.ToAnsiChars(true),
-        aOperName.ToAnsiChars(true)
-        );
-
+      var opDesc := TF_NewOperation(aGraph.Ptr, aOpType.ToAnsiChars(true), aOperName.ToAnsiChars(true));
       // DisposeAction nil, TF_FinishOption will delete OperationDescription.
-      inherited constructor withNativePtr(opDesc) DisposeAction(nil);
+      inherited constructor withPtr(opDesc) DisposeAction(nil);
     end;
 
     method SetDevice(aDevice: not nullable String);
     begin
-      TF_SetDevice(NativePtr, aDevice.ToAnsiChars(true));
+      TF_SetDevice(Ptr, aDevice.ToAnsiChars(true));
     end;
 
     method AddInput(aInput: not nullable Output);
     begin
-      TF_AddInput(NativePtr, aInput.ToTFOutput);
+      TF_AddInput(Ptr, aInput.ToTFOutput);
     end;
 
     method AddInputs(aInputList: not nullable array of Output);
@@ -308,24 +300,23 @@ type
         tfOutput[I] := aInputList[I].ToTFOutput;
       end;
 
-      TF_AddInputList(NativePtr, tfOutput, tfOutput.Length);
+      TF_AddInputList(Ptr, tfOutput, tfOutput.Length);
     end;
 
     method FinishOperation(aStatus: Status := nil): Tuple of (Boolean, Operation);
     begin
-      using lstatus := new Status do begin
+      using lStatus := new Status do begin
         // Desc ptr gets deleted inside TF_FinishOperation.
-        var op := TF_FinishOperation(NativePtr, lstatus.NativePtr);
+        var op := TF_FinishOperation(Ptr, lStatus.Ptr);
 
-        if lstatus.OK then begin
-          result := (true, new Operation withNativePtr(op) Name(fOperName)
-            Graph(fGraph))
+        if lStatus.OK then begin
+          result := (true, new Operation withPtr(op) Name(fOperName) Graph(fGraph))
         end else begin
           result := (false, nil);
         end;
 
         if assigned(aStatus) then begin
-          aStatus.SetCode(lstatus.Code) withMessage(lstatus.Message);
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
         end;
       end;
     end;
@@ -364,48 +355,43 @@ type
     method SetAttrBool(const aName: not nullable String; aValue: Boolean);
     begin
       var value: Byte := if aValue then 1 else 0;
-      TF_SetAttrBool(NativePtr, aName.ToAnsiChars(true), value);
+      TF_SetAttrBool(Ptr, aName.ToAnsiChars(true), value);
     end;
 
-    method SetAttrBoolList(const aName: not nullable String;
-      aValueList: not nullable array of Boolean);
+    method SetAttrBoolList(const aName: not nullable String; aValueList: not nullable array of Boolean);
     begin
       var values := new Byte[aValueList.Length];
       for I: Integer := 0 to aValueList.Length - 1 do begin
         values[I] := if aValueList[I] then 1 else 0;
       end;
 
-      TF_SetAttrBoolList(NativePtr, aName.ToAnsiChars(true), values, values.Length);
+      TF_SetAttrBoolList(Ptr, aName.ToAnsiChars(true), values, values.Length);
     end;
 
     method SetAttrFloat(const aName: not nullable String; aValue: Single);
     begin
-      TF_SetAttrFloat(NativePtr, aName.ToAnsiChars(true), aValue);
+      TF_SetAttrFloat(Ptr, aName.ToAnsiChars(true), aValue);
     end;
 
-    method SetAttrFloatList(const aName: not nullable String;
-      aValueList: not nullable array of Single);
+    method SetAttrFloatList(const aName: not nullable String; aValueList: not nullable array of Single);
     begin
-      TF_SetAttrFloatList(NativePtr, aName.ToAnsiChars(true), aValueList,
-        aValueList.Length);
+      TF_SetAttrFloatList(Ptr, aName.ToAnsiChars(true), aValueList, aValueList.Length);
     end;
 
     method SetAttrInt(const aName: not nullable String; aValue: Int64);
     begin
-      TF_SetAttrInt(NativePtr, aName.ToAnsiChars(true), aValue);
+      TF_SetAttrInt(Ptr, aName.ToAnsiChars(true), aValue);
     end;
 
-    method SetAttrIntList(const aName: not nullable String;
-      aValueList: not nullable array of Int64);
+    method SetAttrIntList(const aName: not nullable String; aValueList: not nullable array of Int64);
     begin
-      TF_SetAttrIntList(NativePtr, aName.ToAnsiChars(true), aValueList,
-        aValueList.Length);
+      TF_SetAttrIntList(Ptr, aName.ToAnsiChars(true), aValueList, aValueList.Length);
     end;
 
     method SetAttrStr(const aName: not nullable String; aValue: not nullable String);
     begin
-      TF_SetAttrString(NativePtr, aName.ToAnsiChars(true), aValue.ToAnsiChars,
-        lstrlenA(aValue.ToAnsiChars(true)));
+      var length := lstrlenA(aValue.ToAnsiChars(true));
+      TF_SetAttrString(Ptr, aName.ToAnsiChars(true), aValue.ToAnsiChars, length);
     end;
 
     method SetAttrStringList(const aName: not nullable String;
@@ -421,28 +407,25 @@ type
         lengths[I] := aValueList[I].Length;
       end;
 
-      TF_SetAttrStringList(NativePtr, aName.ToAnsiChars(true), ^^Void(values),
+      TF_SetAttrStringList(Ptr, aName.ToAnsiChars(true), ^^Void(values),
         lengths, num_values);
     end;
 
     method SetAttrType(const aName: not nullable String; aType: TF_DataType);
     begin
-      TF_SetAttrType(NativePtr, aName.ToAnsiChars(true), aType);
+      TF_SetAttrType(Ptr, aName.ToAnsiChars(true), aType);
     end;
 
-    method SetAttrTypeList(const aName: not nullable String;
-      aTypeList: not nullable array of TF_DataType);
+    method SetAttrTypeList(const aName: not nullable String; aTypeList: not nullable array of TF_DataType);
     begin
-      TF_SetAttrTypeList(NativePtr, aName.ToAnsiChars(true), aTypeList,
-        aTypeList.Length);
+      TF_SetAttrTypeList(Ptr, aName.ToAnsiChars(true), aTypeList, aTypeList.Length);
     end;
 
     method SetAttrTensor(const aName: not nullable String; aTensor: not nullable Tensor;
       aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
-        TF_SetAttrTensor(NativePtr, aName.ToAnsiChars(true), aTensor.NativePtr,
-          lStatus.NativePtr);
+        TF_SetAttrTensor(Ptr, aName.ToAnsiChars(true), aTensor.Ptr, lStatus.Ptr);
         if assigned(aStatus) then begin
           aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
         end;
@@ -451,12 +434,10 @@ type
 
     method SetAttrShape(const aName: not nullable String; aShape: not nullable Shape);
     begin
-      TF_SetAttrShape(NativePtr, aName.ToAnsiChars(true), aShape.ToArray,
-        aShape.NumDims);
+      TF_SetAttrShape(Ptr, aName.ToAnsiChars(true), aShape.ToArray, aShape.NumDims);
     end;
 
-    method SetAttrShapeList(const aName: not nullable String;
-      aShapeList: not nullable array of Shape);
+    method SetAttrShapeList(const aName: not nullable String; aShapeList: not nullable array of Shape);
     begin
       var num_shapes: Int32 := aShapeList.Length;
       var dims: array of array of Int64 := new array of Int64[num_shapes];
@@ -467,8 +448,7 @@ type
         num_dims[I] := aShapeList[I].NumDims;
       end;
 
-      TF_SetAttrShapeList(NativePtr, aName.ToAnsiChars(true), ^^Int64(dims),
-        num_dims, num_shapes);
+      TF_SetAttrShapeList(Ptr, aName.ToAnsiChars(true), ^^Int64(dims), num_dims, num_shapes);
     end;
 
     property OpType: String
@@ -487,16 +467,15 @@ type
   public
     constructor;
     begin
-      inherited constructor withNativePtr(TF_NewStatus())
-        DisposeAction(aPtr->TF_DeleteStatus(aPtr));
+      inherited constructor withPtr(TF_NewStatus()) DisposeAction(aPtr->TF_DeleteStatus(aPtr));
     end;
 
     method SetCode(aCode: TF_Code) withMessage(const aMsg: String);
     begin
       if not String.IsNullOrEmpty(aMsg) then
-        TF_SetStatus(NativePtr, aCode, aMsg.ToAnsiChars(true))
+        TF_SetStatus(Ptr, aCode, aMsg.ToAnsiChars(true))
       else
-        TF_SetStatus(NativePtr, aCode, nil);
+        TF_SetStatus(Ptr, aCode, nil);
     end;
 
     class method ForwardOrCreate(aIncoming: Status): Status;
@@ -511,12 +490,12 @@ type
 
     property Code: TF_Code
       read begin
-        result := TF_GetCode(NativePtr);
+        result := TF_GetCode(Ptr);
       end;
 
     property Message: String
       read begin
-        result := String.FromPAnsiChars(TF_Message(NativePtr));
+        result := String.FromPAnsiChars(TF_Message(Ptr));
       end;
   end;
 
@@ -534,8 +513,7 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withScopeToSave(const aScope: not nullable String)
-      RestoreAction(aAction: ScopeRestoreAction);
+    constructor withScopeToSave(const aScope: not nullable String) RestoreAction(aAction: ScopeRestoreAction);
     begin
       fSavedScope := aScope;
       fRestoreAction := aAction;
@@ -624,7 +602,7 @@ type
 
     method ToTFOutput: TF_Output;
     begin
-      result.oper  := self.Oper.NativePtr;
+      result.oper  := self.Oper.Ptr;
       result.index := self.Index;
     end;
 
@@ -700,8 +678,7 @@ type
     constructor;
     begin
       var lgraph := TF_NewGraph();
-      inherited constructor withNativePtr(lgraph)
-        DisposeAction(aPtr->TF_DeleteGraph(aPtr));
+      inherited constructor withPtr(lgraph) DisposeAction(aPtr->TF_DeleteGraph(aPtr));
     end;
 
     method WithScope(aNewScope: not nullable String): Scope;
@@ -716,34 +693,30 @@ type
       end
     end;
 
-    method GetOperationByName(const aOpName: not nullable String)
-      : Tuple of (Boolean, Operation);
+    method GetOperationByName(const aOpName: not nullable String): Tuple of (Boolean, Operation);
     begin
-      var opPtr := TF_GraphOperationByName(NativePtr, aOpName.ToAnsiChars(true));
+      var op := TF_GraphOperationByName(Ptr, aOpName.ToAnsiChars(true));
 
-      if assigned(opPtr) then begin
+      if assigned(op) then begin
         result := (true,
-          new Operation withNativePtr(opPtr) Name(aOpName) Graph(self));
+          new Operation withPtr(op) Name(aOpName) Graph(self));
       end else begin
         result := (false, nil);
       end;
     end;
 
-    method GetShape(aOutput: not nullable Output; aStatus: Status := nil)
-      : Tuple of (Boolean, Shape);
+    method GetShape(aOutput: not nullable Output; aStatus: Status := nil): Tuple of (Boolean, Shape);
     begin
       using lStatus := new Status do begin
         var nativeOut := aOutput.ToTFOutput;
-        var numDims := TF_GraphGetTensorNumDims(NativePtr, nativeOut,
-          lStatus.NativePtr);
+        var numDims := TF_GraphGetTensorNumDims(Ptr, nativeOut, lStatus.Ptr);
 
         if (not lStatus.OK) then begin
           result := (false, nil);
         end else begin
           if numDims > 0 then begin
             var dims := new Int64[numDims];
-            TF_GraphGetTensorShape(NativePtr, nativeOut, dims, numDims,
-              lStatus.NativePtr);
+            TF_GraphGetTensorShape(Ptr, nativeOut, dims, numDims, lStatus.Ptr);
             if lStatus.OK then begin
               result := (true, new Shape withDims(dims));
             end else begin
@@ -798,7 +771,7 @@ type
         end;
 
         if success then begin
-          var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.NativePtr));
+          var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Ptr));
           result := $'Tensor ("{name}: {aOutput.Index}", ' +
                     $'shape={shp.ToString}, '+
                     $'dtype={Helper.TFDataTypeToString(aOutput.Type)} )';
@@ -942,8 +915,7 @@ type
       result := new Tensor withData(data);
     end;
 
-    class method ConvertToTensor<T>(aValues: not nullable array of not nullable array of T)
-      : Tensor; overload;
+    class method ConvertToTensor<T>(aValues: not nullable array of not nullable array of T): Tensor; overload;
     begin
       var height := aValues.Length;
       var width  := aValues[0].Length;
@@ -1000,8 +972,7 @@ type
       end;
 
       fData := aData;
-      inherited constructor withNativePtr(lTensor)
-        DisposeAction(aPtr->TF_DeleteTensor(aPtr));
+      inherited constructor withPtr(lTensor) DisposeAction(aPtr->TF_DeleteTensor(aPtr));
     end;
 
     constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
@@ -1090,46 +1061,40 @@ type
       result := ConvertToTensor<String>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Byte)
-      : Tensor;
+    operator Implicit(aValues: not nullable array of not nullable array of Byte): Tensor;
     begin
       result := ConvertToTensor<Byte>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Int16)
-      : Tensor;
+    operator Implicit(aValues: not nullable array of not nullable array of Int16): Tensor;
     begin
       result := ConvertToTensor<Int16>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Integer)
-      : Tensor;
+    operator Implicit(aValues: not nullable array of not nullable array of Integer): Tensor;
     begin
       result := ConvertToTensor<Integer>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Int64)
-      : Tensor;
+    operator Implicit(aValues: not nullable array of not nullable array of Int64): Tensor;
     begin
       result := ConvertToTensor<Int64>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Single)
-      : Tensor;
+    operator Implicit(aValues: not nullable array of not nullable array of Single): Tensor;
     begin
       result := ConvertToTensor<Single>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Double)
-      : Tensor;
+    operator Implicit(aValues: not nullable array of not nullable array of Double): Tensor;
     begin
       result := ConvertToTensor<Double>(aValues);
     end;
 
-    method ScalarValueAs<T>: Tuple of (Boolean, nullable T);
+    method AsScalar<T>: Tuple of (Boolean, nullable T);
     begin
       if (not IsScalar) or
-         (fData.DataType <> Helper.ToTFDataType(typeOf(T), false)) or
+         (fData.DataType <> Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false)) or
          (typeOf(T) = typeOf(String))
       then begin
         result := (false, nil);
@@ -1175,8 +1140,7 @@ type
         begin
           using lStatus := new Status do begin
             using opts := new SessionOptions do begin // Nested
-              var lSession := TF_NewSession(fGraph.NativePtr, opts.NativePtr,
-                lStatus.NativePtr);
+              var lSession := TF_NewSession(fGraph.Ptr, opts.Ptr, lStatus.Ptr);
               result := (lStatus.OK, lStatus.Message, lSession);
             end;
           end;
@@ -1187,10 +1151,10 @@ type
         raise new SessionCreateException withMessage(createSessionResult.Msg);
       end;
 
-      inherited constructor withNativePtr(createSessionResult.SessionPtr)
+      inherited constructor withPtr(createSessionResult.SessionPtr)
         DisposeAction(aPtr->begin
           using lStatus := new Status do begin
-            TF_DeleteSession(aPtr, lStatus.NativePtr);
+            TF_DeleteSession(aPtr, lStatus.Ptr);
           end;
         end);
     end;
@@ -1215,14 +1179,14 @@ type
   public
     constructor;
     begin
-      inherited constructor withNativePtr(TF_NewSessionOptions())
-        DisposeAction(aPtr->TF_DeleteSessionOptions(aPtr));
+      var session_opts := TF_NewSessionOptions();
+      inherited constructor withPtr(session_opts) DisposeAction(aPtr->TF_DeleteSessionOptions(aPtr));
     end;
 
     method SetConfig(aProtoData: not nullable array of Byte; aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
-        TF_SetConfig(NativePtr, aProtoData, aProtoData.Length, lStatus.NativePtr);
+        TF_SetConfig(Ptr, aProtoData, aProtoData.Length, lStatus.Ptr);
         if assigned(aStatus) then begin
           aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
         end;
@@ -1231,7 +1195,7 @@ type
 
     method SetTarget(aTarget: not nullable String);
     begin
-      TF_SetTarget(NativePtr, aTarget.ToAnsiChars(true));
+      TF_SetTarget(Ptr, aTarget.ToAnsiChars(true));
     end;
   end;
 
@@ -1330,12 +1294,11 @@ type
       result := Run(aStatus):Item[0]; // May return nil.
     end;
 
-    method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil)
-      Options(aOpts: Buffer := nil): TensorList;
+    method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) Options(aOpts: Buffer := nil): TensorList;
     begin
 
       using lStatus := new Status do begin
-        var run_options := aOpts: NativePtr;
+        var run_options := aOpts: Ptr;
         var inputs := fContext.Inputs.ToTFOutputArray;
         var input_values := fContext.InputValues.ToRawPtrArray;
         var ninputs := fContext.Inputs.Count;
@@ -1344,11 +1307,11 @@ type
         var output_values: array of ^TF_Tensor := new ^TF_Tensor[noutputs];
         var target_opers := fContext.Targets.ToRawPtrArray;
         var ntargets := fContext.Targets.Count;
-        var run_metadata := aMetaData:NativePtr;
+        var run_metadata := aMetaData:Ptr;
 
-        TF_SessionRun(fSession.NativePtr, run_options, inputs, input_values,
+        TF_SessionRun(fSession.Ptr, run_options, inputs, input_values,
           ninputs, outputs, output_values, noutputs, target_opers,
-          ntargets, run_metadata, lStatus.NativePtr);
+          ntargets, run_metadata, lStatus.Ptr);
 
         if lStatus.OK then begin
           result := new TensorList withCapacity(noutputs);

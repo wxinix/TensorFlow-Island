@@ -60,7 +60,7 @@ namespace TensorFlow.Island.Tests
             var b = lGraph.OpConst(19);
             var c = lGraph.OpAdd(a, b);
             Tensor result = m_session.Runner.Run(c);
-            var (success, sum) = result.ScalarValueAs<Integer>();
+            var (success, sum) = result.AsScalar<Integer>();
             Assert.IsTrue(success);
             Assert.AreEqual(sum, 12 + 19);
         }

@@ -87,10 +87,10 @@ type
       result := tfCode.ToString;
     end;
 
-    class method ToTFDataType(aLocalType: &Type;
-      aRaiseOnUnSupported: Boolean := true): TF_DataType;
+    class method ToTFDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True)
+      : TF_DataType;
     begin
-      case aLocalType.Code of
+      case aType.Code of
         TypeCodes.Boolean: result := TF_DataType.TF_BOOL;
         TypeCodes.Byte   : result := TF_DataType.TF_UINT8;
         TypeCodes.UInt16 : result := TF_DataType.TF_UINT16;
@@ -104,8 +104,8 @@ type
         TypeCodes.Double : result := TF_DataType.TF_DOUBLE;
         TypeCodes.String : result := TF_DataType.TF_STRING;
       else
-        if aRaiseOnUnSupported then begin
-          raise new DataTypeNotSupportedException(aLocalType);
+        if aFlag then begin
+          raise new UnSupportedTypeException(aType);
         end else begin
           result := -1;
         end;

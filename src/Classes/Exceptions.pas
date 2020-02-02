@@ -34,15 +34,6 @@ type
     end;
   end;
 
-  DataTypeNotSupportedException = public class(Exception)
-  public
-    constructor(aLocalType: &Type);
-    begin
-      var msg := $'Cannot convert {aLocalType.ToString} to TF_DataType.';
-      inherited constructor(msg);
-    end;
-  end;
-
   InvalidRectangularTensorData = public class(Exception)
   public
     constructor(aMsg: not nullable String);
@@ -91,6 +82,15 @@ type
     begin
       var typeStr := Helper.TFDataTypeToString(aType);
       var msg := $'Cannot create tensor for type {typeStr}';
+      inherited constructor(msg);
+    end;
+  end;
+
+  UnSupportedTypeException = public class(Exception)
+  public
+    constructor(aType: &Type);
+    begin
+      var msg := $'Cannot convert {aType.ToString} to TensorFlow DataType.';
       inherited constructor(msg);
     end;
   end;
