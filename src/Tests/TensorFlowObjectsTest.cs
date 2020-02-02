@@ -76,7 +76,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(tensor.Data.Shape.Dim[0], 2);
             Assert.AreEqual(tensor.Data.Shape.Dim[1], 3);
             int[..2, ..3] data;
-            memcpy(&data[0,0], tensor.Data.Bytes(), tensor.Data.NumBytes);
+            memcpy(&data[0,0], tensor.Data.Bytes, tensor.Data.NumBytes);
             Assert.AreEqual(data[0,2], 3);
         }
 

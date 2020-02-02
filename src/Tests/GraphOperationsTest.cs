@@ -79,7 +79,7 @@ namespace TensorFlow.Island.Tests
             var data = new int[2,3] {{0,0,0},{0,0,0}};  
             // If data is static array, we can do a continuous mem copy below.
             // If dynamic array, we can NOT do continuous mem copy.
-            memcpy(&data[0,0], result.Data.Bytes(), result.Data.NumBytes);
+            memcpy(&data[0,0], result.Data.Bytes, result.Data.NumBytes);
             Assert.AreEqual(data[1, 2], 9);
         }
     }
