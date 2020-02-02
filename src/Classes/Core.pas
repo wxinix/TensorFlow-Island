@@ -64,11 +64,19 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   DisposableObjectList<T> = public abstract class(DisposableObject, IEnumerable<T>)
     where T is IDisposable;
+  private
+    fDisposed: Boolean := false;
   protected
     fList: List<T>; implements IEnumerable<T>;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
       if aDisposing then begin
         for el in fList do el.Dispose();
       end;
@@ -127,6 +135,8 @@ type
     begin
       if fDisposed then begin
         exit;
+      end else begin
+        fDisposed := true;
       end;
 
       if aDisposing then begin
@@ -135,9 +145,9 @@ type
 
       if assigned(fDisposeAction) then begin
         fDisposeAction(fPtr);
+        fPtr := nil;
       end;
 
-      fDisposed := true;
       inherited Dispose(aDisposing);
     end;
   public
@@ -178,9 +188,16 @@ type
     fDisposeAction: TensorFlowObjectDisposeAction<TF_Buffer> := aPtr->TF_DeleteBuffer(aPtr);
     fManaged: Boolean := true; // Whether buffer managed by this class.
     fNumBytes: UInt64 := 0;
+    fDisposed: Boolean := false;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
       if (assigned(fData) and fManaged) then begin
         free(fData);
       end;
@@ -242,6 +259,22 @@ type
   private
     fName: String;
     fGraph: Graph;
+    fDisposed: Boolean := false;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+        //
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
     constructor withPtr(aPtr: ^TF_Operation) Name(aName: NotNull<String>) Graph(aGraph: NotNull<Graph>);
     begin
@@ -273,6 +306,22 @@ type
     fGraph: Graph;
     fOpType: String;
     fOperName: String;
+    fDisposed: Boolean := false;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+        //
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
     constructor withGraph(aGraph: NotNull<Graph>) OpType(aType: NotNull<String>) 
       OpName(aName: NotNull<String>);
@@ -466,6 +515,23 @@ type
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Status = public class(TensorFlowObject<TF_Status>)
+  private
+    fDisposed: Boolean := false;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+        //
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
     constructor;
     begin
@@ -508,10 +574,24 @@ type
   private
     fRestoreAction: ScopeRestoreAction;
     fSavedScope: String;
+    fDisposed: Boolean := false;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      fRestoreAction(fSavedScope);
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+      end;
+
+      if assigned(fRestoreAction) then begin
+        fRestoreAction(fSavedScope);
+        fRestoreAction := nil;
+      end;
+
       inherited Dispose(aDisposing);
     end;
   public
@@ -528,9 +608,19 @@ type
   private
     fDims: ^Int64;
     fNumDims: Int32;
+    fDisposed: Boolean := false;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+      end;
+
       free(fDims);
       inherited Dispose(aDisposing);
     end;
@@ -596,6 +686,22 @@ type
   private
     fIndex: Integer;
     fOper: Operation;
+    fDisposed: Boolean := false;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+        //
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
     constructor withOp(aOp: NotNull<Operation>) Index(aIndex: Integer = 0);
     begin
@@ -637,6 +743,23 @@ type
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   OutputList = public class(DisposableObjectList<Output>)
+  private
+    fDisposed: Boolean := false;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+        //
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
     method ToTFOutputArray: array of TF_Output;
     begin
@@ -651,9 +774,10 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Graph = public class(TensorFlowObject<TF_Graph>)
   private
-    fCurrentScope: not nullable String := '';
+    fCurrentScope: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
     fPendingInitVars: OperationList := new OperationList;
+    fDisposed: Boolean := false;
 
     method MakeUniqueName(const aName: NotNull<String>): String;
     begin
@@ -671,10 +795,16 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
       if aDisposing then begin
         fPendingInitVars.Dispose;
       end;
-
+      
       inherited Dispose(aDisposing);
     end;
   public
@@ -797,6 +927,8 @@ type
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorData = public class(DisposableObject)
+  private
+    fDisposed: Boolean := false;
   protected
     fBytes: ^Void;
     fDataType: TF_DataType;
@@ -806,6 +938,12 @@ type
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
       if aDisposing then begin
         fShape.Dispose;
       end;
@@ -852,10 +990,31 @@ type
       fShape := new Shape withDims(lDims);
     end;
 
-    method Bytes: ^Void;
+    constructor (aBytes: ^Void; aDataType: TF_DataType; aNumBytes: Int64; 
+      aShp: NotNull<Shape>; aManaged: Boolean); private;
     begin
-      result := fBytes;
+      fBytes := aBytes;
+      fDataType := aDataType;
+      fNumBytes := aNumBytes;
+      fShape := aShp;
+      fManaged := aManaged;
     end;
+     
+    /// <summary>
+    /// Move the internal data to a new object, while flagging the old object 
+    /// as disposed. This emulates C++/14 move constructor.
+    /// </summary>
+    /// <returns></returns>
+    method Move: TensorData;
+    begin
+      fDisposed := true;
+      result := new TensorData(fBytes, fDataType, fNumBytes, fShape, fManaged);
+    end;
+     
+    property Bytes: ^Void
+      read begin
+        result := fBytes;
+      end;
 
     property NumBytes: UInt64
       read begin
@@ -874,11 +1033,28 @@ type
   end;
 
   TensorData<T> = public class(TensorData)
+  private
+    fDisposed: Boolean := false;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+        //
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
-    constructor withValues(aVals: NotNull<array of T>) Shape(aShp: NotNull<Shape>);
+    constructor withValues(aVals: NotNull<array of T>) Dims(aDims: array of Int64);
     begin
       fDataType := Helper.ToTFDataType(typeOf(T));
-      fShape := aShp;
+      fShape := new Shape withDims(aDims);
       fManaged := true;
 
       if fDataType <> TF_DataType.TF_STRING then begin
@@ -910,12 +1086,12 @@ type
   Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
     fData: TensorData;
+    fDisposed: Boolean := false;
 
     class method ConvertToTensor<T>(aVals: NotNull<array of T>): Tensor; overload;
     begin
-      var shp := new Shape withDims([aVals.Length]);
-      var data := new TensorData<T> withValues(aVals) Shape(shp);
-      result := new Tensor withData(data);
+      var data := new TensorData<T> withValues(aVals) Dims([aVals.Length]);
+      result := new Tensor withData(data.Move);
     end;
 
     class method ConvertToTensor<T>(aVals: NotNull<array of NotNull<array of T>>): Tensor; overload;
@@ -937,21 +1113,25 @@ type
         memcpy(@arr[I + I * width], @aVals[I][0], width * sizeOf(T));
       end;
 
-      var shp := new Shape withDims([height, width]);
-      var data := new TensorData<T> withValues(arr) Shape(shp);
-      result := new Tensor withData(data);
+      var data := new TensorData<T> withValues(arr) Dims([height, width]);
+      result := new Tensor withData(data.Move);
     end;
 
     class method ConvertToTensor<T>(aValue: T): Tensor; overload;
     begin
-      var shp := new Shape withDims(nil);
-      var data := new TensorData<T> withValues([aValue]) Shape(shp);
-      result := new Tensor withData(data);
+      var data := new TensorData<T> withValues([aValue]) Dims(nil);
+      result := new Tensor withData(data.Move);
     end;
 
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
       if aDisposing then begin
         fData.Dispose;
       end;
@@ -1123,15 +1303,23 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Session = public class(TensorFlowObject<TF_Session>)
   private
-    fGraph: Graph;
-    fRunner: SessionRunner;
+    fGraph: NotNull<Graph> := new Graph;
+    fRunner: SessionRunner := nil; // Delayed creation upon access.
+    fDisposed: Boolean := false;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
-      if aDisposing then begin
-        fGraph :Dispose; // Colon operator
-        fRunner:Dispose; // Colon operator
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
       end;
+
+      if aDisposing then begin
+        fGraph.Dispose;
+        fRunner:Dispose; // Colon operator; may have delayed creation.
+      end;
+
       inherited Dispose(aDisposing);
     end;
   public
@@ -1179,6 +1367,23 @@ type
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   SessionOptions = public class(TensorFlowObject<TF_SessionOptions>)
+  private
+    fDisposed: Boolean := false;
+  protected
+    method Dispose(aDisposing: Boolean); override;
+    begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
+      if aDisposing then begin
+        //
+      end;
+
+      inherited Dispose(aDisposing);
+    end;
   public
     constructor;
     begin
@@ -1209,9 +1414,16 @@ type
     fInputValues: TensorList := new TensorList;
     fOutputs: OutputList := new OutputList;
     fTargets: OperationList := new OperationList;
+    fDisposed: Boolean := false;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
       if aDisposing then begin
         fInputs.Dispose;
         fInputValues.Dispose;
@@ -1246,13 +1458,20 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   SessionRunner = public class(DisposableObject)
   private
-    fSession: Session := nil;
+    fSession: Session := nil; // Not created by SessionRunner.
     fContext: SessionRunnerContext := new SessionRunnerContext;
+    fDisposed: Boolean := false;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
+      if fDisposed then begin
+        exit;
+      end else begin
+        fDisposed := true;
+      end;
+
       if aDisposing then begin
-        // fSession is NOT created by Runner, so Runner cannot dispose.
+        // fSession is NOT created by Runner, so donnot dispose Runner.
         // fSession.Dispose;
         fContext.Dispose;
       end;
