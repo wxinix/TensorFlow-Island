@@ -27,6 +27,8 @@ uses
   TensorFlow;
 
 type
+  NotNull<T> = public not nullable T;
+
   DisposableObject = public abstract class(IDisposable)
   private
     fDisposed: Boolean := false;
@@ -115,7 +117,7 @@ type
     fPtr: ^T := nil;
     fDisposed: Boolean := false;
   protected
-    constructor withPtr(aPtr: not nullable ^T) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
+    constructor withPtr(aPtr: NotNull<^T>) DisposeAction(aAction: TensorFlowObjectDisposeAction<T>);
     begin
       fPtr := aPtr;
       fDisposeAction := aAction;
@@ -186,7 +188,7 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withFile(aFile: not nullable String);
+    constructor withFile(aFile: NotNull<String>);
     begin
       var bufData := Helper.ReadBufferDataFromFile(aFile);
 
@@ -208,7 +210,7 @@ type
       inherited constructor withPtr(buf) DisposeAction(fDisposeAction);
     end;
 
-    constructor withString(const aProtoBuf: not nullable String);
+    constructor withString(const aProtoBuf: NotNull<String>);
     begin
       var proto_len := lstrlenA(aProtoBuf.ToAnsiChars(true));
       var buf: ^TF_Buffer := TF_NewBufferFromString(aProtoBuf.ToAnsiChars, proto_len);
@@ -241,7 +243,7 @@ type
     fName: String;
     fGraph: Graph;
   public
-    constructor withPtr(aPtr: ^TF_Operation) Name(aName: not nullable String) Graph(aGraph: not nullable Graph);
+    constructor withPtr(aPtr: ^TF_Operation) Name(aName: NotNull<String>) Graph(aGraph: NotNull<Graph>);
     begin
       fGraph := aGraph;
       fName := aName;
@@ -272,13 +274,14 @@ type
     fOpType: String;
     fOperName: String;
   public
-    constructor withGraph(aGraph: not nullable Graph) OpType(aType: not nullable String) OpName(aName: not nullable String);
+    constructor withGraph(aGraph: NotNull<Graph>) OpType(aType: NotNull<String>) 
+      OpName(aName: NotNull<String>);
     begin
       fOpType := aType;
       fOperName := aName;
       fGraph := aGraph;
 
-      var opDesc := TF_NewOperation(aGraph.Ptr, aOpType.ToAnsiChars(true), aOperName.ToAnsiChars(true));
+      var opDesc := TF_NewOperation(aGraph.Ptr, aType.ToAnsiChars(true), aName.ToAnsiChars(true));
       // DisposeAction nil, TF_FinishOption will delete OperationDescription.
       inherited constructor withPtr(opDesc) DisposeAction(nil);
     end;
@@ -288,12 +291,12 @@ type
       TF_SetDevice(Ptr, aDevice.ToAnsiChars(true));
     end;
 
-    method AddInput(aInput: not nullable Output);
+    method AddInput(aInput: NotNull<Output>);
     begin
       TF_AddInput(Ptr, aInput.ToTFOutput);
     end;
 
-    method AddInputs(aInputList: not nullable array of Output);
+    method AddInputs(aInputList: NotNull<array of Output>);
     begin
       var tfOutput := new TF_Output[aInputList.Length];
       for I: Integer := 0 to aInputList.Length - 1 do begin
@@ -321,7 +324,7 @@ type
       end;
     end;
 
-    method SetAttr(const aName: not nullable String; aValue: not nullable Object);
+    method SetAttr(const aName: NotNull<String>; aValue: NotNull<Object>);
     begin
       var lHashCode:= aValue.GetType.GetHashCode;
       case lHashCode of
@@ -352,17 +355,17 @@ type
       end;
     end;
 
-    method SetAttrBool(const aName: not nullable String; aValue: Boolean);
+    method SetAttrBool(const aName: NotNull<String>; aValue: Boolean);
     begin
       var value: Byte := if aValue then 1 else 0;
       TF_SetAttrBool(Ptr, aName.ToAnsiChars(true), value);
     end;
 
-    method SetAttrBoolList(const aName: not nullable String; aValueList: not nullable array of Boolean);
+    method SetAttrBoolList(const aName: NotNull<String>; aList: NotNull<array of Boolean>);
     begin
-      var values := new Byte[aValueList.Length];
-      for I: Integer := 0 to aValueList.Length - 1 do begin
-        values[I] := if aValueList[I] then 1 else 0;
+      var values := new Byte[aList.Length];
+      for I: Integer := 0 to aList.Length - 1 do begin
+        values[I] := if aList[I] then 1 else 0;
       end;
 
       TF_SetAttrBoolList(Ptr, aName.ToAnsiChars(true), values, values.Length);
@@ -373,55 +376,54 @@ type
       TF_SetAttrFloat(Ptr, aName.ToAnsiChars(true), aValue);
     end;
 
-    method SetAttrFloatList(const aName: not nullable String; aValueList: not nullable array of Single);
+    method SetAttrFloatList(const aName: NotNull<String>; aList: NotNull<array of Single>);
     begin
-      TF_SetAttrFloatList(Ptr, aName.ToAnsiChars(true), aValueList, aValueList.Length);
+      TF_SetAttrFloatList(Ptr, aName.ToAnsiChars(true), aList, aList.Length);
     end;
 
-    method SetAttrInt(const aName: not nullable String; aValue: Int64);
+    method SetAttrInt(const aName: NotNull<String>; aValue: Int64);
     begin
       TF_SetAttrInt(Ptr, aName.ToAnsiChars(true), aValue);
     end;
 
-    method SetAttrIntList(const aName: not nullable String; aValueList: not nullable array of Int64);
+    method SetAttrIntList(const aName: NotNull<String>; aList: NotNull<array of Int64>);
     begin
-      TF_SetAttrIntList(Ptr, aName.ToAnsiChars(true), aValueList, aValueList.Length);
+      TF_SetAttrIntList(Ptr, aName.ToAnsiChars(true), aList, aList.Length);
     end;
 
-    method SetAttrStr(const aName: not nullable String; aValue: not nullable String);
+    method SetAttrStr(const aName: NotNull<String>; aValue: NotNull<String>);
     begin
       var length := lstrlenA(aValue.ToAnsiChars(true));
       TF_SetAttrString(Ptr, aName.ToAnsiChars(true), aValue.ToAnsiChars, length);
     end;
 
-    method SetAttrStringList(const aName: not nullable String;
-      aValueList: not nullable array of String);
+    method SetAttrStringList(const aName: NotNull<String>; aList: NotNull<array of String>);
     begin
-      var num_values := aValueList.Length;
+      var num_values := aList.Length;
       var values: array of array of AnsiChar := new array of AnsiChar[num_values];
       var lengths: array of UInt64 := new UInt64[num_values];
 
       for I: Integer := 0 to num_values - 1 do begin
         // No null terminator, because length is explicitly given below.
-        values[I] := aValueList[I].ToAnsiChars;
-        lengths[I] := aValueList[I].Length;
+        values[I] := aList[I].ToAnsiChars;
+        lengths[I] := aList[I].Length;
       end;
 
       TF_SetAttrStringList(Ptr, aName.ToAnsiChars(true), ^^Void(values),
         lengths, num_values);
     end;
 
-    method SetAttrType(const aName: not nullable String; aType: TF_DataType);
+    method SetAttrType(const aName: NotNull<String>; aType: TF_DataType);
     begin
       TF_SetAttrType(Ptr, aName.ToAnsiChars(true), aType);
     end;
 
-    method SetAttrTypeList(const aName: not nullable String; aTypeList: not nullable array of TF_DataType);
+    method SetAttrTypeList(const aName: NotNull<String>; aTypeList: NotNull<array of TF_DataType>);
     begin
       TF_SetAttrTypeList(Ptr, aName.ToAnsiChars(true), aTypeList, aTypeList.Length);
     end;
 
-    method SetAttrTensor(const aName: not nullable String; aTensor: not nullable Tensor;
+    method SetAttrTensor(const aName: NotNull<String>; aTensor: NotNull<Tensor>; 
       aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
@@ -432,20 +434,20 @@ type
       end;
     end;
 
-    method SetAttrShape(const aName: not nullable String; aShape: not nullable Shape);
+    method SetAttrShape(const aName: NotNull<String>; aShape: NotNull<Shape>);
     begin
       TF_SetAttrShape(Ptr, aName.ToAnsiChars(true), aShape.ToArray, aShape.NumDims);
     end;
 
-    method SetAttrShapeList(const aName: not nullable String; aShapeList: not nullable array of Shape);
+    method SetAttrShapeList(const aName: NotNull<String>; aList: NotNull<array of Shape>);
     begin
-      var num_shapes: Int32 := aShapeList.Length;
+      var num_shapes: Int32 := aList.Length;
       var dims: array of array of Int64 := new array of Int64[num_shapes];
       var num_dims: array of Int32 := new Int32[num_shapes];
 
       for I: Integer := 0 to num_shapes - 1 do begin
-        dims[I] := aShapeList[I].ToArray;
-        num_dims[I] := aShapeList[I].NumDims;
+        dims[I] := aList[I].ToArray;
+        num_dims[I] := aList[I].NumDims;
       end;
 
       TF_SetAttrShapeList(Ptr, aName.ToAnsiChars(true), ^^Int64(dims), num_dims, num_shapes);
@@ -499,7 +501,7 @@ type
       end;
   end;
 
-  ScopeRestoreAction = public block(const aScopeToRestore: not nullable String);
+  ScopeRestoreAction = public block(const aScopeToRestore: NotNull<String>);
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Scope = public class(DisposableObject)
@@ -513,7 +515,8 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withScopeToSave(const aScope: not nullable String) RestoreAction(aAction: ScopeRestoreAction);
+    constructor withScopeToSave(const aScope: NotNull<String>) 
+      RestoreAction(aAction: ScopeRestoreAction);
     begin
       fSavedScope := aScope;
       fRestoreAction := aAction;
@@ -594,7 +597,7 @@ type
     fIndex: Integer;
     fOper: Operation;
   public
-    constructor withOp(aOp: not nullable Operation) Index(aIndex: Integer = 0);
+    constructor withOp(aOp: NotNull<Operation>) Index(aIndex: Integer = 0);
     begin
       fIndex := aIndex;
       fOper := aOp;
@@ -626,7 +629,7 @@ type
         result := fOper;
       end;
 
-    property &Type: TF_DataType
+    property DataType: TF_DataType
       read begin
         result := TF_OperationOutputType(ToTFOutput);
       end;
@@ -652,7 +655,7 @@ type
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
     fPendingInitVars: OperationList := new OperationList;
 
-    method MakeUniqueName(const aName: not nullable String): String;
+    method MakeUniqueName(const aName: NotNull<String>): String;
     begin
       var seqid := 0;
       if fNamesCache.ContainsKey(aName) then begin
@@ -681,7 +684,7 @@ type
       inherited constructor withPtr(lgraph) DisposeAction(aPtr->TF_DeleteGraph(aPtr));
     end;
 
-    method WithScope(aNewScope: not nullable String): Scope;
+    method WithScope(aNewScope: NotNull<String>): Scope;
     begin
       result := new Scope withScopeToSave(fCurrentScope)
         RestoreAction(aScopeToRestore->begin fCurrentScope := aScopeToRestore end);
@@ -693,7 +696,7 @@ type
       end
     end;
 
-    method GetOperationByName(const aOpName: not nullable String): Tuple of (Boolean, Operation);
+    method GetOperationByName(const aOpName: NotNull<String>): Tuple of (Boolean, Operation);
     begin
       var op := TF_GraphOperationByName(Ptr, aOpName.ToAnsiChars(true));
 
@@ -705,7 +708,7 @@ type
       end;
     end;
 
-    method GetShape(aOutput: not nullable Output; aStatus: Status := nil): Tuple of (Boolean, Shape);
+    method GetShape(aOutput: NotNull<Output>; aStatus: Status := nil): Tuple of (Boolean, Shape);
     begin
       using lStatus := new Status do begin
         var nativeOut := aOutput.ToTFOutput;
@@ -733,7 +736,7 @@ type
       end;
     end;
 
-    method MakeName(const aOpType, aOpName: not nullable String): String;
+    method MakeName(const aOpType, aOpName: NotNull<String>): String;
     begin
       var lOpName :=
         if String.IsNullOrEmpty(aOpName) then
@@ -750,7 +753,7 @@ type
       result := MakeUniqueName(name);
     end;
 
-    method AddInitVariable(aOp: not nullable Operation);
+    method AddInitVariable(aOp: NotNull<Operation>);
     begin
       for each el in fPendingInitVars do begin
         if el.Equals(aOp) then exit;
@@ -759,7 +762,7 @@ type
       fPendingInitVars.Add(aOp);
     end;
 
-    method PrintTensorInfo(aOutput: not nullable Output; aStatus: Status := nil): String;
+    method PrintTensorInfo(aOutput: NotNull<Output>; aStatus: Status := nil): String;
     begin
       using lStatus := new Status do begin
         var success: Boolean;
@@ -774,7 +777,7 @@ type
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Ptr));
           result := $'Tensor ("{name}: {aOutput.Index}", ' +
                     $'shape={shp.ToString}, '+
-                    $'dtype={Helper.TFDataTypeToString(aOutput.Type)} )';
+                    $'dtype={Helper.TFDataTypeToString(aOutput.DataType)} )';
         end else begin
           result := '';
         end;
@@ -828,7 +831,7 @@ type
       // by whoever creates that raw Tensor pointer.
     end;
 
-    constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
+    constructor withTFTensor(aTensor: NotNull<^TF_Tensor>);
     begin
       fBytes := TF_TensorData(aTensor);
       fDataType := TF_TensorType(aTensor);
@@ -872,7 +875,7 @@ type
 
   TensorData<T> = public class(TensorData)
   public
-    constructor withValues(aVals: not nullable array of T) Shape(aShp: not nullable Shape);
+    constructor withValues(aVals: NotNull<array of T>) Shape(aShp: NotNull<Shape>);
     begin
       fDataType := Helper.ToTFDataType(typeOf(T));
       fShape := aShp;
@@ -908,30 +911,30 @@ type
   private
     fData: TensorData;
 
-    class method ConvertToTensor<T>(aValues: not nullable array of T): Tensor; overload;
+    class method ConvertToTensor<T>(aVals: NotNull<array of T>): Tensor; overload;
     begin
-      var shp := new Shape withDims([aValues.Length]);
-      var data := new TensorData<T> withValues(aValues) Shape(shp);
+      var shp := new Shape withDims([aVals.Length]);
+      var data := new TensorData<T> withValues(aVals) Shape(shp);
       result := new Tensor withData(data);
     end;
 
-    class method ConvertToTensor<T>(aValues: not nullable array of not nullable array of T): Tensor; overload;
+    class method ConvertToTensor<T>(aVals: NotNull<array of NotNull<array of T>>): Tensor; overload;
     begin
-      var height := aValues.Length;
-      var width  := aValues[0].Length;
+      var height := aVals.Length;
+      var width  := aVals[0].Length;
 
       for I: Integer := 0 to height - 1 do begin
-        if aValues[I].Length <> width then begin
+        if aVals[I].Length <> width then begin
           raise new InvalidRectangularTensorData(
             $'Array [Rectangular array height={height} width={width}].' +
-            $'Invalid row {I} width={aValues[I].Length}.'
+            $'Invalid row {I} width={aVals[I].Length}.'
           );
         end;
       end;
 
       var arr: array of T := new T[height * width];
       for I: Integer := 0 to height - 1 do begin
-        memcpy(@arr[I + I * width], @aValues[I][0], width * sizeOf(T));
+        memcpy(@arr[I + I * width], @aVals[I][0], width * sizeOf(T));
       end;
 
       var shp := new Shape withDims([height, width]);
@@ -956,7 +959,7 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withData(aData: not nullable TensorData);
+    constructor withData(aData: NotNull<TensorData>);
     begin
       var lTensor := TF_NewTensor(
         aData.DataType,
@@ -1016,77 +1019,77 @@ type
       result := ConvertToTensor<Double>(aValue);
     end;
 
-    operator Implicit(aValue: not nullable String): Tensor;
+    operator Implicit(aValue: NotNull<String>): Tensor;
     begin
       result := ConvertToTensor<String>(aValue);
     end;
 
-    operator Implicit(aValues: not nullable array of Boolean): Tensor;
+    operator Implicit(aValues: NotNull<array of Boolean>): Tensor;
     begin
       result := ConvertToTensor<Boolean>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of Byte): Tensor;
+    operator Implicit(aValues: NotNull<array of Byte>): Tensor;
     begin
       result := ConvertToTensor<Byte>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of Int16): Tensor;
+    operator Implicit(aValues: NotNull<array of Int16>): Tensor;
     begin
       result := ConvertToTensor<Int16>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of Integer): Tensor;
+    operator Implicit(aValues: NotNull<array of Integer>): Tensor;
     begin
       result := ConvertToTensor<Integer>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of Int64): Tensor;
+    operator Implicit(aValues: NotNull<array of Int64>): Tensor;
     begin
       result := ConvertToTensor<Int64>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of Single): Tensor;
+    operator Implicit(aValues: NotNull<array of Single>): Tensor;
     begin
       result := ConvertToTensor<Single>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of Double): Tensor;
+    operator Implicit(aValues: NotNull<array of Double>): Tensor;
     begin
       result := ConvertToTensor<Double>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of String): Tensor;
+    operator Implicit(aValues: NotNull<array of String>): Tensor;
     begin
       result := ConvertToTensor<String>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Byte): Tensor;
+    operator Implicit(aValues: NotNull<array of NotNull<array of Byte>>): Tensor;
     begin
       result := ConvertToTensor<Byte>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Int16): Tensor;
+    operator Implicit(aValues: NotNull<array of NotNull<array of Int16>>): Tensor;
     begin
       result := ConvertToTensor<Int16>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Integer): Tensor;
+    operator Implicit(aValues: NotNull<array of NotNull<array of Integer>>): Tensor;
     begin
       result := ConvertToTensor<Integer>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Int64): Tensor;
+    operator Implicit(aValues: NotNull<array of NotNull<array of Int64>>): Tensor;
     begin
       result := ConvertToTensor<Int64>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Single): Tensor;
+    operator Implicit(aValues: NotNull<array of NotNull<array of Single>>): Tensor;
     begin
       result := ConvertToTensor<Single>(aValues);
     end;
 
-    operator Implicit(aValues: not nullable array of not nullable array of Double): Tensor;
+    operator Implicit(aValues: NotNull<array of NotNull<array of Double>>): Tensor;
     begin
       result := ConvertToTensor<Double>(aValues);
     end;
@@ -1183,7 +1186,7 @@ type
       inherited constructor withPtr(session_opts) DisposeAction(aPtr->TF_DeleteSessionOptions(aPtr));
     end;
 
-    method SetConfig(aProtoData: not nullable array of Byte; aStatus: Status := nil);
+    method SetConfig(aProtoData: NotNull<array of Byte>; aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
         TF_SetConfig(Ptr, aProtoData, aProtoData.Length, lStatus.Ptr);
@@ -1257,25 +1260,25 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withSession(aSession: not nullable Session);
+    constructor withSession(aSession: NotNull<Session>);
     begin
       fSession := aSession;
     end;
 
-    method AddInput(aInput: not nullable Output; aValue: Tensor): SessionRunner;
+    method AddInput(aInput: NotNull<Output>; aValue: Tensor): SessionRunner;
     begin
       fContext.Inputs.Add(aInput);
       fContext.InputValues.Add(aValue);
       result := self;
     end;
 
-    method Fetch(aOutput: not nullable Output): SessionRunner;
+    method Fetch(aOutput: NotNull<Output>): SessionRunner;
     begin
       fContext.Outputs.Add(aOutput);
       result := self;
     end;
 
-    method AddTarget(aTarget: not nullable Operation): SessionRunner;
+    method AddTarget(aTarget: NotNull<Operation>): SessionRunner;
     begin
       fContext.Targets.Add(aTarget);
       result := self;
@@ -1287,16 +1290,16 @@ type
       fContext := new SessionRunnerContext;
     end;
 
-    method Run(aOp: not nullable Output; aStatus: Status := nil): Tensor;
+    method Run(aOp: NotNull<Output>; aStatus: Status := nil): Tensor;
     begin
       Reset;
       Fetch(aOp);
       result := Run(aStatus):Item[0]; // May return nil.
     end;
 
-    method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) Options(aOpts: Buffer := nil): TensorList;
+    method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) Options(aOpts: Buffer := nil)
+      : TensorList;
     begin
-
       using lStatus := new Status do begin
         var run_options := aOpts: Ptr;
         var inputs := fContext.Inputs.ToTFOutputArray;
