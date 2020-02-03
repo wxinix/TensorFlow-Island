@@ -609,6 +609,7 @@ type
     fDims: ^Int64;
     fNumDims: Int32;
     fDisposed: Boolean := false;
+    fL1_Norm: UInt64;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -633,8 +634,11 @@ type
       if numBytes >0 then begin
         fDims := ^Int64(malloc(numBytes));
         memcpy(fDims, aDims, numBytes);
+        fL1_Norm := 1;
+        for I: Integer := 0 to fNumDims - 1 do fL1_Norm := fL1_Norm * aDims[I];
       end else begin
         fDims := nil;
+        fL1_Norm := 1;
       end;
     end;
 
@@ -666,11 +670,6 @@ type
       result := new Shape withDims(aDims);
     end;
 
-    property NumDims: Int32
-      read begin
-        result := fNumDims;
-      end;
-
     property Dim[aIndex: Int32]: Int64
       read begin
         if (NumDims > 0) and (0 <= aIndex < NumDims) then begin
@@ -678,6 +677,16 @@ type
         end else begin
           raise new InvalidShapeDimIndexException(aIndex, NumDims);
         end;
+      end;
+
+    property NumDims: Int32
+      read begin
+        result := fNumDims;
+      end;
+
+    property L1_Norm: UInt64
+      read begin
+        result := fL1_Norm;
       end;
   end;
 
@@ -892,28 +901,6 @@ type
       fPendingInitVars.Add(aOp);
     end;
 
-    method PrintTensorInfo(aOutput: NotNull<Output>; aStatus: Status := nil): String;
-    begin
-      using lStatus := new Status do begin
-        var success: Boolean;
-        var shp: Shape;
-        (success, shp) := GetShape(aOutput, lStatus);
-
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
-
-        if success then begin
-          var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Ptr));
-          result := $'Tensor ("{name}: {aOutput.Index}", ' +
-                    $'shape={shp.ToString}, '+
-                    $'dtype={Helper.TFDataTypeToString(aOutput.DataType)} )';
-        end else begin
-          result := '';
-        end;
-      end;
-    end;
-
     property CurrentScope: String
       read begin
         result := fCurrentScope;
@@ -1026,7 +1013,7 @@ type
         result := fDataType
       end;
 
-    property Shape: Shape
+    property &Shape: Shape
       read begin
         result := fShape
       end;
@@ -1091,7 +1078,7 @@ type
     class method ConvertToTensor<T>(aVals: NotNull<array of T>): Tensor; overload;
     begin
       var data := new TensorData<T> withValues(aVals) Dims([aVals.Length]);
-      result := new Tensor withData(data.Move);
+      result := new Tensor withData(data.Move); // Moved data for Tensor's ownership.
     end;
 
     class method ConvertToTensor<T>(aVals: NotNull<array of NotNull<array of T>>): Tensor; overload;
@@ -1114,13 +1101,13 @@ type
       end;
 
       var data := new TensorData<T> withValues(arr) Dims([height, width]);
-      result := new Tensor withData(data.Move);
+      result := new Tensor withData(data.Move); // Moved data for Tensor's ownership.
     end;
 
     class method ConvertToTensor<T>(aValue: T): Tensor; overload;
     begin
       var data := new TensorData<T> withValues([aValue]) Dims(nil);
-      result := new Tensor withData(data.Move);
+      result := new Tensor withData(data.Move); // Moved data for Tensor's ownership.
     end;
 
   protected
@@ -1275,15 +1262,37 @@ type
     end;
 
     method AsScalar<T>: Tuple of (Boolean, nullable T);
-    begin
-      if (not IsScalar) or
-         (fData.DataType <> Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false)) or
-         (typeOf(T) = typeOf(String))
+    begin      
+      if (not IsScalar) or (typeOf(T) = typeOf(String)) or
+         (fData.DataType <> Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false))
       then begin
         result := (false, nil);
       end else begin
         var value: T := (^T(fData.Bytes))^;
         result := (true, value);
+      end;
+    end;
+
+    method AsArray<T>: Tuple of (Boolean, array of T);
+    begin      
+      if IsScalar or (typeOf(T) = typeOf(String)) or
+         (fData.DataType <> Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false))
+      then begin
+        result := (false, nil);
+      end else begin
+        var values: array of T := new T[fData.Shape.L1_Norm];
+        memcpy(values, fData.Bytes, fData.NumBytes); 
+        result := (true, values);
+      end;
+    end;
+
+    method AsString: Tuple of (Boolean, NotNull<String>);
+    begin
+      if not (IsScalar and (fData.DataType = TF_DataType.STRING)) then begin
+        result := (false, '');
+      end else begin
+        var str: String := String.FromPAnsiChars(^AnsiChar(fData.Bytes));
+        result := (true, str);
       end;
     end;
 
@@ -1348,6 +1357,28 @@ type
             TF_DeleteSession(aPtr, lStatus.Ptr);
           end;
         end);
+    end;
+
+    method Print(aOutput: NotNull<Output>; aStatus: Status := nil): String;
+    begin
+      using lStatus := new Status do begin
+        var success: Boolean;
+        var shp: Shape;
+        (success, shp) := fGraph.GetShape(aOutput, lStatus);
+
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+
+        if success then begin
+          var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Ptr));
+          result := $'Tensor ("{name}: {aOutput.Index}", ' +
+                    $'shape={shp.ToString}, '+
+                    $'dtype={Helper.TFDataTypeToString(aOutput.DataType)} )';
+        end else begin
+          result := '';
+        end;
+      end;
     end;
 
     property &Graph: Graph
