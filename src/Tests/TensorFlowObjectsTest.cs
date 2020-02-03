@@ -83,24 +83,35 @@ namespace TensorFlow.Island.Tests
         public void When_CreatingTensorWithString_Expect_Success()
         {
             Tensor tensor = "MySuperCoolTensorFlowApp";
-            var (success, str) = tensor.AsString();
+            var (success, str) = tensor.AsScalar<String>();
             Assert.IsTrue(success);
             Assert.AreEqual(str, "MySuperCoolTensorFlowApp");
+        }
+
+        public void When_CreatingTensorWithStrings_Expect_Success()
+        {
+            Tensor tensor = {"Hello", "World", "TensorFlow"};
+            var (success, strs) = tensor.AsArray<String>();
+            Assert.IsTrue(success);
+            Assert.AreEqual(strs.Length, 3);
+            Assert.AreEqual(strs[0], "Hello");
+            Assert.AreEqual(strs[1], "World");
+            Assert.AreEqual(strs[2], "TensorFlow");
         }
 
         public void When_CallingPrintTensorInfo_Expect_Success()
         {
             var lSession = new Session(); 
             var lOutput = lSession.Graph.OpConst(1);
-            var str = lSession.Print(lOutput);
+            var str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_0: 0\", shape=TensorShape([]), dtype=Int32 )");
              
             lOutput = lSession.Graph.OpConst({1, 2});
-            str = lSession.Print(lOutput);
+            str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_1: 0\", shape=TensorShape([Dimension(2)]), dtype=Int32 )");   
         
             lOutput = lSession.Graph.OpConst({{1, 2}});
-            str = lSession.Print(lOutput);
+            str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32 )"); 
         }
 
