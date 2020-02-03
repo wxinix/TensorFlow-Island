@@ -22,9 +22,9 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  TensorFlow.Island.Aspects,
   RemObjects.Elements.System,
-  TensorFlow;
+  TensorFlow,
+  TensorFlow.Island.Aspects;
 
 type
   NotNull<T> = public not nullable T;
@@ -1262,37 +1262,49 @@ type
     end;
 
     method AsScalar<T>: Tuple of (Boolean, nullable T);
-    begin      
-      if (not IsScalar) or (typeOf(T) = typeOf(String)) or
-         (fData.DataType <> Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false))
-      then begin
+    begin
+      var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
+
+      if not (IsScalar and valid_type) then begin
         result := (false, nil);
       end else begin
-        var value: T := (^T(fData.Bytes))^;
-        result := (true, value);
+        if (fData.DataType = TF_DataType.STRING) then begin
+          var str: String := String.FromPAnsiChars(^AnsiChar(fData.Bytes));
+          result := (true, T(str));
+        end else begin
+          var value: T := (^T(fData.Bytes))^;
+          result := (true, value);
+        end;
       end;
     end;
 
     method AsArray<T>: Tuple of (Boolean, array of T);
-    begin      
-      if IsScalar or (typeOf(T) = typeOf(String)) or
-         (fData.DataType <> Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false))
-      then begin
+    begin   
+      var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
+ 
+      if not (not IsScalar and valid_type) then begin
         result := (false, nil);
       end else begin
-        var values: array of T := new T[fData.Shape.L1_Norm];
-        memcpy(values, fData.Bytes, fData.NumBytes); 
-        result := (true, values);
-      end;
-    end;
-
-    method AsString: Tuple of (Boolean, NotNull<String>);
-    begin
-      if not (IsScalar and (fData.DataType = TF_DataType.STRING)) then begin
-        result := (false, '');
-      end else begin
-        var str: String := String.FromPAnsiChars(^AnsiChar(fData.Bytes));
-        result := (true, str);
+        if (fData.DataType = TF_DataType.STRING) then begin
+          var byte_pos:= 0;
+          var str_list: List<String> := new List<String>;
+          // Retrieve strings from bytes into String List.
+          while byte_pos < fData.NumBytes do begin
+            var str := String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + byte_pos));
+            str_list.Add(str);
+            byte_pos := byte_pos + str.Length + 1;
+          end;
+          // From String List to array of String. This is to hush compiler.
+          var str_arr: array of T := new T[str_list.Count];
+          for I: Integer := 0 to str_list.Count - 1 do begin
+            str_arr[I] := T(str_list[I]);
+          end;
+          result := (true, str_arr);
+        end else begin
+          var values: array of T := new T[fData.Shape.L1_Norm];
+          memcpy(values, fData.Bytes, fData.NumBytes); 
+          result := (true, values);
+        end;
       end;
     end;
 
@@ -1359,7 +1371,7 @@ type
         end);
     end;
 
-    method Print(aOutput: NotNull<Output>; aStatus: Status := nil): String;
+    method GetTensorInfo(aOutput: NotNull<Output>; aStatus: Status := nil): String;
     begin
       using lStatus := new Status do begin
         var success: Boolean;
