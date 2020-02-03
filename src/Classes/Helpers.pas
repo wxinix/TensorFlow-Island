@@ -87,8 +87,7 @@ type
       result := tfCode.ToString;
     end;
 
-    class method ToTFDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True)
-      : TF_DataType;
+    class method ToTFDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): TF_DataType;
     begin
       case aType.Code of
         TypeCodes.Boolean: result := TF_DataType.TF_BOOL;
