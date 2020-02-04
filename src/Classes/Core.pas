@@ -1261,6 +1261,12 @@ type
       result := ConvertToTensor<Double>(aValues);
     end;
 
+    /// <summary>
+    /// Convert tensor data to typed scalar value. If the underlying TensorFlow data
+    /// type does not match the type parameter, no cast will be performed.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     method AsScalar<T>: Tuple of (Boolean, nullable T);
     begin
       var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
@@ -1278,6 +1284,12 @@ type
       end;
     end;
 
+    /// <summary>
+    /// Convert tensor data to typed array. If the underlying TensorFlow data type
+    /// does not match the type parameter, no cast will be performed.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     method AsArray<T>: Tuple of (Boolean, array of T);
     begin   
       var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
@@ -1306,6 +1318,158 @@ type
           result := (true, values);
         end;
       end;
+    end;
+
+    /// <summary>
+    /// Convert the tensor data to string array. If the underlying TensorFlow
+    /// data type is TF_STRING, no cast will be performed. Otherwise, numerical
+    /// type will be converted to String according to the specified aDecimalDigits
+    /// parameter.
+    /// </summary>
+    /// <param name="aDecimalDigits"></param>
+    /// <returns></returns>
+    method AsStrings(const aDecimalDigits: Integer := 1): Tuple of (Boolean, array of String); private;
+    begin
+      result := (false, nil);
+      if IsScalar then exit; // Scalar is not relevant.
+
+      var success: Boolean;
+      var str_arr: array of String;
+      (success, str_arr) := AsArray<String>;
+      if success then exit (true, str_arr); // If can directly convert, return.
+
+      var len := fData.Shape.L1_Norm;   
+      str_arr := new String[len];
+
+      case fData.DataType of // Convert numerical types.
+        TF_DataType.TF_BOOL: 
+        begin
+          var values := new Boolean[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_UINT8: 
+        begin
+          var values := new Byte[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_UINT16: 
+        begin
+          var values := new UInt16[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_UINT32: 
+        begin
+          var values := new UInt32[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_UINT64: 
+        begin
+          var values := new UInt64[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_INT8:
+        begin
+          var values := new Int8[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_INT16:
+        begin
+          var values := new Int16[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_INT32:
+        begin
+          var values := new Int32[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_INT64: 
+        begin
+          var values := new Int64[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+        end;
+        
+        TF_DataType.TF_FLOAT:
+        begin
+          var values := new Single[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := Double(values[I]).ToString(aDecimalDigits);
+        end;
+        
+        TF_DataType.TF_DOUBLE:
+        begin
+          var values := new Double[len];
+          memcpy(values, fData.Bytes, fData.NumBytes);
+          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString(aDecimalDigits);
+        end;
+      else 
+        result := (false, nil); 
+      end;         
+    end;
+
+    method Print(const aDecimalDigits: Integer = 1; const aMaxWidth: Integer = 8): String;
+    begin
+      const maxBytes = 1000;
+      const allowedTypes = TensorFlowNumericalTypes + [TF_DataType.STRING];     
+      
+      if fData.NumBytes > maxBytes then begin
+        exit 'Tensor has {fData.NumBytes} bytes. Too large (>{maxBytes}) to print.';
+      end;
+
+      if not (fData.DataType in allowedTypes) then begin
+        exit $'Tensor (dtype={Helper.TFDataTypeToString(fData.DataType)}) cannot print.';
+      end;
+    
+      var success: Boolean;
+      var str_arr: array of String;
+      (success, str_arr) := AsStrings(aDecimalDigits);
+      if not success then exit 'Cannot print tensor.';
+
+      var high_dim := fData.Shape.Dim[fData.Shape.NumDims - 1];
+      var str_list := new List<String>(fData.Shape.L1_Norm/high_dim);
+      var str: String := '';
+      for I: Integer := 0 to str_arr.Length - 1 do begin
+        if str_arr[I].Length >= aMaxWidth then exit $'Data item {str_arr[I]} exceeds max width {aMaxWidth}';
+        str := str + str_arr[I].PadStart(aMaxWidth, ' ');
+        if ((I + 1) mod high_dim = 0) then begin
+          str_list.Add($'[{str}]');
+          str := '';
+        end;
+      end;
+
+      for I: Integer := 0 to str_list.Count - 1 do begin
+        for J: Integer := fData.Shape.NumDims - 2 downto 0 do begin
+          if ((I + 1) mod fData.Shape.Dim[J]) =  0 then
+            str_list[I] := $'{str_list[I]} ]'
+          else
+            str_list[I] := $'{str_list[I]}  ';
+
+          if ((I + 1) mod fData.Shape.Dim[J]) =  1 then 
+            str_list[I] := $'[ {str_list[I]}'
+          else
+            str_list[I] := $'  {str_list[I]}';
+        end;
+      end; 
+    
+      for str in str_list do str := str + '#10';
+      str_list.Insert(0, '[' + #10);
+      str_list.Add(']' + #10);      
     end;
 
     property Data: TensorData
