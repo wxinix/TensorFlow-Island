@@ -53,34 +53,58 @@ namespace TensorFlow.Island.Tests
 
         }
 
-        public void When_CallingOpAddWithScalars_12_19_Expect_31()
+        public void OpAdd_XAs12_YAs19_Calculated()
         {
             var lGraph = m_session.Graph;
-            var a = lGraph.OpConst(12);
-            var b = lGraph.OpConst(19);
-            var c = lGraph.OpAdd(a, b);
-            Tensor result = m_session.Runner.Run(c);
-            var (success, sum) = result.AsScalar<Integer>();
+            var input_x = lGraph.OpConst(12);
+            var input_y = lGraph.OpConst(19);
+            var output_sum = lGraph.OpAdd(input_x, input_y);
+            Tensor tensor_sum = m_session.Runner.Run(output_sum);
+            var (success, sum_value) = tensor_sum.AsScalar<Integer>();
             Assert.IsTrue(success);
-            Assert.AreEqual(sum, 12 + 19);
+            Assert.AreEqual(sum_value, 12 + 19);
         }
 
-        public void When_CallingOpFillWithDim_2_3_Value_9_Expect_Tensor_2_3_9()
+        public void OpFill_DimAs2By3_ValueAs9_Calculated()
         {
             var lGraph = m_session.Graph;
-            var fill = lGraph.OpFill({2,3}, 9);
-            Tensor result = m_session.Runner.Run(fill);
-            Assert.AreEqual(result.Data.Shape.NumDims, 2);
-            Assert.AreEqual(result.Data.Shape.Dim[0], 2);
-            Assert.AreEqual(result.Data.Shape.Dim[1], 3);
-            Assert.AreEqual(result.Data.NumBytes, 2 * 3 * sizeOf(Integer));
+            var output_fill = lGraph.OpFill({2,3}, 9);
+            Tensor tensor_fill = m_session.Runner.Run(output_fill);
+            Assert.AreEqual(tensor_fill.Data.Shape.NumDims, 2);
+            Assert.AreEqual(tensor_fill.Data.Shape.Dim[0], 2);
+            Assert.AreEqual(tensor_fill.Data.Shape.Dim[1], 3);
+            Assert.AreEqual(tensor_fill.Data.NumBytes, 2 * 3 * sizeOf(Integer));
             // With explicit initial values, data is int[2,3] static array;
             // Without explicit initial values, data is dynamic array int[2][3]
             var data = new int[2,3] {{0,0,0},{0,0,0}};  
             // If data is static array, we can do a continuous mem copy below.
             // If dynamic array, we can NOT do continuous mem copy.
-            memcpy(&data[0,0], result.Data.Bytes, result.Data.NumBytes);
+            memcpy(&data[0,0], tensor_fill.Data.Bytes, tensor_fill.Data.NumBytes);
             Assert.AreEqual(data[1, 2], 9);
+        }
+
+        public void OpNegate_XAs1By3Vector_Caculated()
+        {
+            var lGraph = m_session.Graph;
+            var input_x = lGraph.OpConst({1, 2, 3});
+            var output_neg = lGraph.OpNegate(input_x);
+            Tensor tensor_neg = m_session.Runner.Run(output_neg);
+            var (success, values) = tensor_neg.AsArray<int>();
+            Assert.IsTrue(success);
+            Assert.AreEqual(values[0], -1);
+            Assert.AreEqual(values[1], -2);
+            Assert.AreEqual(values[2], -3);
+        }
+
+        public void OpInv_XAs1By3Vector_Caculated()
+        {
+            var lGraph = m_session.Graph;
+            var input_x = lGraph.OpConst({1.0, 2.0, 3.0}); // will default to double type.
+            var output_inv = lGraph.OpInv(input_x);
+            Tensor tensor_inv = m_session.Runner.Run(output_inv);
+            var (success, values) = tensor_inv.AsArray<double>();
+            Assert.IsTrue(success);
+            Assert.AreEqual(values.Length, 3);
         }
     }
 }
