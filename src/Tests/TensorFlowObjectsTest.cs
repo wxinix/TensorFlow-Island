@@ -68,7 +68,7 @@ namespace TensorFlow.Island.Tests
             Assert.Throws(()=>shp.Dim[5], typeof(InvalidShapeDimIndexException));
         }
 
-        public void When_CreatingTensorWith2DArray_Expect_Success()
+        public void When_CreatingTensorWith2DArray_Expect_Created()
         {
             Tensor tensor = {{1,2,3},{4,5,6}};
             Assert.AreEqual(tensor.Data.DataType, TF_DataType.TF_INT32);
@@ -80,7 +80,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(data[0,2], 3);
         }
 
-        public void When_CreatingTensorWithString_Expect_Success()
+        public void When_CreatingTensorWithString_Expect_Created()
         {
             Tensor tensor = "MySuperCoolTensorFlowApp";
             var (success, str) = tensor.AsScalar<String>();
@@ -88,7 +88,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(str, "MySuperCoolTensorFlowApp");
         }
 
-        public void When_CreatingTensorWithStrings_Expect_Success()
+        public void When_CreatingTensorWithStrings_Expect_Created()
         {
             Tensor tensor = {"Hello", "World", "TensorFlow"};
             var (success, strs) = tensor.AsArray<String>();
@@ -99,7 +99,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(strs[2], "TensorFlow");
         }
 
-        public void When_CallingPrintTensorInfo_Expect_Success()
+        public void When_GettingTensorInfo_Expect_Success()
         {
             var lSession = new Session(); 
             var lOutput = lSession.Graph.OpConst(1);
