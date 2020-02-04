@@ -176,6 +176,18 @@ type
         [dims, val]);
     end;
 
+    method OpInv(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
+    begin
+      const lOpType: String = 'Inv';
+      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+    end;
+
+    method OpNegate(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
+    begin
+      const lOpType: String = 'Neg';
+      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+    end;
+
     method OpMatMul(a, b: NotNull<Output>; transpose_a: Boolean := false;
       transpose_b: Boolean := false; aOpName: NotNull<String> := '')
       : Output;
