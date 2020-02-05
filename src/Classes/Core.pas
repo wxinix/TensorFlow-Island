@@ -1269,7 +1269,7 @@ type
 
     /// <summary>
     /// Convert tensor data to typed scalar value. If the underlying TensorFlow data
-    /// type does not match the type parameter, no cast will be performed.
+    /// type does not match the type parameter, no cast will be performed and nil returned.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -1292,7 +1292,7 @@ type
 
     /// <summary>
     /// Convert tensor data to typed array. If the underlying TensorFlow data type
-    /// does not match the type parameter, no cast will be performed.
+    /// does not match the type parameter, no cast will be performed and nil array returned.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -1334,145 +1334,88 @@ type
     /// </summary>
     /// <param name="aDecimalDigits"></param>
     /// <returns></returns>
-    method AsStrings(const aDecimalDigits: Integer := 1): Tuple of (Boolean, array of String); private;
-    begin
-      result := (false, nil);
-      if IsScalar then exit; // Scalar is not relevant.
-
-      var success: Boolean;
-      var str_arr: array of String;
-      (success, str_arr) := AsArray<String>;
-      if success then exit (true, str_arr); // If can directly convert, return.
-
-      var len := fData.Shape.L1_Norm;
-      str_arr := new String[len];
-      result := (true, str_arr);
-      case fData.DataType of // Convert numerical types.
-        TF_DataType.TF_BOOL: 
-        begin
-          var values := new Boolean[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+    method ConvertDataToStrings(aDecimalDigits: Integer := 1): Tuple of (Boolean, array of String); private;
+    begin   
+      // Local method to convert typed data array to string array.
+      method _DoConvertDataToStrings<T>(_aData: array of T): array of String;
+      begin        
+        if not assigned(_aData) then begin
+          result := nil
+        end else begin
+          result := new String[_aData.Length];
         end;
-
-        TF_DataType.TF_UINT8: 
-        begin
-          var values := new Byte[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
+      
+        for I: Integer := 0 to _aData.Length - 1 do begin        
+          if (typeOf(T) = typeOf(Single)) or (typeOf(T) = typeOf(Double)) then
+            result[I] := Double(_aData[I]).ToString(aDecimalDigits)
+          else
+            result[I] := _aData[I].ToString;
         end;
-
-        TF_DataType.TF_UINT16: 
-        begin
-          var values := new UInt16[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
-        end;
-
-        TF_DataType.TF_UINT32: 
-        begin
-          var values := new UInt32[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
-        end;
-
-        TF_DataType.TF_UINT64: 
-        begin
-          var values := new UInt64[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
-        end;
-
-        TF_DataType.TF_INT8:
-        begin
-          var values := new Int8[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
-        end;
-
-        TF_DataType.TF_INT16:
-        begin
-          var values := new Int16[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
-        end;
-
-        TF_DataType.TF_INT32:
-        begin
-          var values := new Int32[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
-        end;
-
-        TF_DataType.TF_INT64: 
-        begin
-          var values := new Int64[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
-        end;
-
-        TF_DataType.TF_FLOAT:
-        begin
-          var values := new Single[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := Double(values[I]).ToString(aDecimalDigits);
-        end;
-
-        TF_DataType.TF_DOUBLE:
-        begin
-          var values := new Double[len];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString(aDecimalDigits);
-        end;
-      else 
-        result := (false, nil); 
       end;
+
+      var str_arr := case fData.DataType of 
+        TF_DataType.TF_BOOL   : _DoConvertDataToStrings<Boolean>(AsArray<Boolean>()[1]);
+        TF_DataType.TF_UINT8  : _DoConvertDataToStrings<Byte>   (AsArray<Byte>   ()[1]);
+        TF_DataType.TF_UINT16 : _DoConvertDataToStrings<UInt16> (AsArray<UInt16> ()[1]);
+        TF_DataType.TF_UINT32 : _DoConvertDataToStrings<UInt32> (AsArray<UInt32> ()[1]);
+        TF_DataType.TF_UINT64 : _DoConvertDataToStrings<UInt64> (AsArray<UInt64> ()[1]);
+        TF_DataType.TF_INT8   : _DoConvertDataToStrings<Int8>   (AsArray<Int8>   ()[1]);
+        TF_DataType.TF_INT16  : _DoConvertDataToStrings<Int16>  (AsArray<Int16>  ()[1]);
+        TF_DataType.TF_INT32  : _DoConvertDataToStrings<Int32>  (AsArray<Int32>  ()[1]);
+        TF_DataType.TF_INT64  : _DoConvertDataToStrings<Int64>  (AsArray<Int64>  ()[1]);
+        TF_DataType.TF_FLOAT  : _DoConvertDataToStrings<Single> (AsArray<Single> ()[1]);
+        TF_DataType.TF_DOUBLE : _DoConvertDataToStrings<Double> (AsArray<Double> ()[1]);
+        TF_DataType.TF_STRING : AsArray<String>()[1];
+      else 
+        nil; 
+      end;
+
+      result := (assigned(str_arr), str_arr);
     end;
 
     method Print(const aDecimalDigits: Integer = 1; const aMaxWidth: Integer = 8): String;
     begin
-      const maxBytes = 1000;
-      const allowedTypes = TensorFlowNumericalTypes + [TF_DataType.STRING, TF_DataType.BOOL];
-
-      if fData.NumBytes > maxBytes then begin
-        exit 'Tensor has {fData.NumBytes} bytes. Too large (>{maxBytes}) to print.';
-      end;
-
-      if not (fData.DataType in allowedTypes) then begin
+      const cMaxBytes = 1000; // Tensor cannot exceed this limit in order to print.
+      const cAllowedTypes = TensorFlowNumericalTypes + [TF_DataType.STRING, TF_DataType.BOOL];
+      // Validate max bytes and allowed types.
+      if fData.NumBytes > cMaxBytes then
+        exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
+      if not (fData.DataType in cAllowedTypes) then
         exit $'Tensor (dtype={Helper.TFDataTypeToString(fData.DataType)}) cannot print.';
-      end;
-
-      var success: Boolean;
-      var str_arr: array of String;
-      (success, str_arr) := AsStrings(aDecimalDigits);
+      
+      // Convert the tensor data to str_arr. Numerical type will be cast based on aDecimalDigits.
+      var (success, str_arr) := ConvertDataToStrings(aDecimalDigits);
       if not success then exit 'Cannot print tensor.';
-
+      
+      // Put high_dims item into one line [v_1, v_2, ..,v_high_dim], inserting each into a seperate str_list
       var high_dim := fData.Shape.Dim[fData.Shape.NumDims - 1];
       var str_list := new List<String>(fData.Shape.L1_Norm/high_dim);
       var str: String := '';
       for I: Integer := 0 to str_arr.Length - 1 do begin
         if str_arr[I].Length >= aMaxWidth then exit $'Data item {str_arr[I]} exceeds max width {aMaxWidth}';
         str := str + str_arr[I].PadStart(aMaxWidth, ' ');
-        if ((I + 1) mod high_dim = 0) then begin
-          str_list.Add($'[{str}]');
+        if ((I + 1) mod high_dim = 0) then begin // At each "high-dim" check point
+          str_list.Add($'[{str}]'); // Prefix [ and suffix ], then insert into a seperate str_list
           str := '';
         end;
       end;
-
-      for I: Integer := 0 to str_list.Count - 1 do begin
-        for J: Integer := fData.Shape.NumDims - 2 downto 0 do begin
-          if ((I + 1) mod fData.Shape.Dim[J]) =  0 then
-            str_list[I] := $'{str_list[I]} ]'
+      
+      // Processt the new str_list: prefix [ and suffix ] with proper white-space.
+      for strIndex: Integer := 0 to str_list.Count - 1 do begin
+        for dimIndex: Integer := fData.Shape.NumDims - 2 downto 0 do begin
+          if ((strIndex + 1) mod fData.Shape.Dim[dimIndex]) =  0 then
+            str_list[strIndex] := $'{str_list[strIndex]} ]'
           else
-            str_list[I] := $'{str_list[I]}  ';
+            str_list[strIndex] := $'{str_list[strIndex]}  ';
 
-          if ((I + 1) mod fData.Shape.Dim[J]) =  1 then 
-            str_list[I] := $'[ {str_list[I]}'
+          if ((strIndex + 1) mod fData.Shape.Dim[dimIndex]) =  1 then 
+            str_list[strIndex] := $'[ {str_list[strIndex ]}'
           else
-            str_list[I] := $'  {str_list[I]}';
+            str_list[strIndex] := $'  {str_list[strIndex]}';
         end;
       end; 
 
+      // Concat all strings into one string, using line feed.
       result := str_list.JoinedString(#10);
     end;
 
@@ -1524,8 +1467,7 @@ type
               result := (lStatus.OK, lStatus.Message, lSession);
             end;
           end;
-        end
-       )();
+        end)();
 
       if not createSessionResult.Success then begin
         raise new SessionCreateException withMessage(createSessionResult.Msg);
@@ -1542,9 +1484,7 @@ type
     method GetTensorInfo(aOutput: NotNull<Output>; aStatus: Status := nil): String;
     begin
       using lStatus := new Status do begin
-        var success: Boolean;
-        var shp: Shape;
-        (success, shp) := fGraph.GetShape(aOutput, lStatus);
+        var (success, shp) := fGraph.GetShape(aOutput, lStatus);
 
         if assigned(aStatus) then begin
           aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
