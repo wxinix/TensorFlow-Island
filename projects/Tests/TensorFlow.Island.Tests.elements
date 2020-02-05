@@ -70,10 +70,6 @@
       <SubType>Code</SubType>
       <Link>..\..\Src\Tests\TensorFlowObjects.cs</Link>
     </Compile>
-    <Compile Include="..\..\Src\Tests\MachineLearningBookExamples.cs">
-      <SubType>Code</SubType>
-      <Link>..\..\Src\Tests\MachineLearningBookExamples.cs</Link>
-    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>

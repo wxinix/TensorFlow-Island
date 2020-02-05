@@ -8,6 +8,7 @@ namespace TensorFlow.Island.Tests
          {
             var lTests = Discovery.DiscoverTests();
             Runner.RunTests(lTests) withListener(Runner.DefaultListener);
+            readLn();
          }
     }
 }
