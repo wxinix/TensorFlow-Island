@@ -1335,16 +1335,16 @@ type
     /// <param name="aDecimalDigits"></param>
     /// <returns></returns>
     method ConvertDataToStrings(aDecimalDigits: Integer := 1): Tuple of (Boolean, array of String); private;
-    begin   
+    begin
       // Local method to convert typed data array to string array.
       method _DoConvertDataToStrings<T>(_aData: array of T): array of String;
-      begin        
+      begin
         if not assigned(_aData) then begin
           result := nil
         end else begin
           result := new String[_aData.Length];
         end;
-      
+
         for I: Integer := 0 to _aData.Length - 1 do begin
           if (typeOf(T) = typeOf(Single)) or (typeOf(T) = typeOf(Double)) then
             result[I] := Double(_aData[I]).ToString(aDecimalDigits)
