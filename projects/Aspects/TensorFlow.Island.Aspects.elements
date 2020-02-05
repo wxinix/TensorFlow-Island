@@ -32,11 +32,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src\Aspects" />
+    <Folder Include="..\..\Src\Aspects" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.pas" />
-    <Compile Include="..\..\src\Aspects\RaiseOnDisposed.pas">
+    <Compile Include="..\..\Src\Aspects\RaiseOnDisposed.pas">
       <SubType>Code</SubType>
       <Link>..\..\src\Aspects\RaiseOnDisposed.pas</Link>
     </Compile>

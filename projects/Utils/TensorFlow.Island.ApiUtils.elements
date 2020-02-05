@@ -39,12 +39,12 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow">
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
+      <HintPath>..\..\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Utils" />
+    <Folder Include="..\..\Src\Utils" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Src\Utils\ApiUtils.pas">

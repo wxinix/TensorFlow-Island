@@ -43,33 +43,33 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow">
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
+      <HintPath>..\..\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TensorFlow.Island.Aspects">
       <IsCirrusRef>True</IsCirrusRef>
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\Cirrus\TensorFlow.Island.Aspects.dll</HintPath>
+      <HintPath>..\..\Cirrus\TensorFlow.Island.Aspects.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\src\Classes" />
+    <Folder Include="..\..\Src\Classes" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\Classes\Core.pas">
+    <Compile Include="..\..\Src\Classes\Core.pas">
       <SubType>Code</SubType>
-      <Link>..\..\src\Classes\Core.pas</Link>
+      <Link>..\..\Src\Classes\Core.pas</Link>
     </Compile>
-    <Compile Include="..\..\src\Classes\GraphOps.pas">
+    <Compile Include="..\..\Src\Classes\GraphOps.pas">
       <SubType>Code</SubType>
       <Link>..\..\src\Classes\GraphOps.pas</Link>
     </Compile>
-    <Compile Include="..\..\src\Classes\Helpers.pas">
+    <Compile Include="..\..\Src\Classes\Helpers.pas">
       <SubType>Code</SubType>
       <Link>..\..\src\Classes\Helpers.pas</Link>
     </Compile>
-    <Compile Include="..\..\src\Classes\Exceptions.pas">
+    <Compile Include="..\..\Src\Classes\Exceptions.pas">
       <SubType>Code</SubType>
-      <Link>..\..\src\Classes\Exceptions.pas</Link>
+      <Link>..\..\Src\Classes\Exceptions.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
