@@ -35,6 +35,10 @@
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elements">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Windows\x86_64\Elements.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="gc" />
     <Reference Include="Island" />
     <Reference Include="rtl" />
