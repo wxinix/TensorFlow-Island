@@ -38,14 +38,18 @@ type
   Graph_Operations = public extension class(Graph)
   private
     method InternalCreateOp(const aOpType, aOpName: NotNull<String>;
-      const aInputs: InputArray = []; const aAttrs: AttributeArray = [])
-      : Tuple of (Operation, Output);
+      const aInputs: InputArray = []; const aAttrs: AttributeArray = [];
+      const aInputList: InputArray = []): Tuple of (Operation, Output);
     begin
       var lOpDesc := new OperationDescription withGraph(self) OpType(aOpType)
         OpName(MakeName(aOpType, aOpName));
 
       for each x in aInputs do begin
         lOpDesc.AddInput(x);
+      end;
+
+      if aInputList.Length > 0 then begin
+        lOpDesc.AddInputs(aInputList);
       end;
 
       for each a in aAttrs do begin
@@ -284,11 +288,18 @@ type
       result := OpSum(aInput, reductionIndices, aKeepDims, aOpName);
     end;
 
+    method OpSave(aFilename: NotNull<Output>; aTensorNames: NotNull<Output>; aData: InputArray;
+      aOpName: NotNull<String> := ''): Operation;
+    begin
+      const lOPType: String = 'Save';
+      (result, nil) := InternalCreateOp(lOPType, aOpName, [aFilename, aTensorNames], aData);
+    end;
+
     method OpSin(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Sin';
       (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
-    end;
+    end;    
 
     method OpSub(x, y: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
