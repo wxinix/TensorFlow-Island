@@ -1345,7 +1345,7 @@ type
           result := new String[_aData.Length];
         end;
       
-        for I: Integer := 0 to _aData.Length - 1 do begin        
+        for I: Integer := 0 to _aData.Length - 1 do begin
           if (typeOf(T) = typeOf(Single)) or (typeOf(T) = typeOf(Double)) then
             result[I] := Double(_aData[I]).ToString(aDecimalDigits)
           else
