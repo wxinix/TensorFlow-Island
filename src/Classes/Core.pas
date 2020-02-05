@@ -22,6 +22,7 @@
 namespace TensorFlow.Island.Classes;
 
 uses
+  RemObjects.Elements.RTL,
   RemObjects.Elements.System,
   TensorFlow,
   TensorFlow.Island.Aspects;
@@ -1097,7 +1098,7 @@ type
 
       var arr: array of T := new T[height * width];
       for I: Integer := 0 to height - 1 do begin
-        memcpy(@arr[I + I * width], @aVals[I][0], width * sizeOf(T));
+        memcpy(@arr[I * width], @aVals[I][0], width * sizeOf(T));
       end;
 
       var data := new TensorData<T> withValues(arr) Dims([height, width]);
@@ -1236,6 +1237,11 @@ type
       result := ConvertToTensor<Byte>(aValues);
     end;
 
+    operator Implicit(aValues: NotNull<array of NotNull<array of Boolean>>): Tensor;
+    begin
+      result := ConvertToTensor<Boolean>(aValues);
+    end;
+
     operator Implicit(aValues: NotNull<array of NotNull<array of Int16>>): Tensor;
     begin
       result := ConvertToTensor<Int16>(aValues);
@@ -1293,7 +1299,7 @@ type
     method AsArray<T>: Tuple of (Boolean, array of T);
     begin   
       var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
- 
+
       if not (not IsScalar and valid_type) then begin
         result := (false, nil);
       end else begin
@@ -1338,9 +1344,9 @@ type
       (success, str_arr) := AsArray<String>;
       if success then exit (true, str_arr); // If can directly convert, return.
 
-      var len := fData.Shape.L1_Norm;   
+      var len := fData.Shape.L1_Norm;
       str_arr := new String[len];
-
+      result := (true, str_arr);
       case fData.DataType of // Convert numerical types.
         TF_DataType.TF_BOOL: 
         begin
@@ -1348,70 +1354,70 @@ type
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_UINT8: 
         begin
           var values := new Byte[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_UINT16: 
         begin
           var values := new UInt16[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_UINT32: 
         begin
           var values := new UInt32[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_UINT64: 
         begin
           var values := new UInt64[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_INT8:
         begin
           var values := new Int8[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_INT16:
         begin
           var values := new Int16[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_INT32:
         begin
           var values := new Int32[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_INT64: 
         begin
           var values := new Int64[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := values[I].ToString;
         end;
-        
+
         TF_DataType.TF_FLOAT:
         begin
           var values := new Single[len];
           memcpy(values, fData.Bytes, fData.NumBytes);
           for I: Integer := 0 to len - 1 do str_arr[I] := Double(values[I]).ToString(aDecimalDigits);
         end;
-        
+
         TF_DataType.TF_DOUBLE:
         begin
           var values := new Double[len];
@@ -1420,14 +1426,14 @@ type
         end;
       else 
         result := (false, nil); 
-      end;         
+      end;
     end;
 
     method Print(const aDecimalDigits: Integer = 1; const aMaxWidth: Integer = 8): String;
     begin
       const maxBytes = 1000;
-      const allowedTypes = TensorFlowNumericalTypes + [TF_DataType.STRING];     
-      
+      const allowedTypes = TensorFlowNumericalTypes + [TF_DataType.STRING, TF_DataType.BOOL];
+
       if fData.NumBytes > maxBytes then begin
         exit 'Tensor has {fData.NumBytes} bytes. Too large (>{maxBytes}) to print.';
       end;
@@ -1435,7 +1441,7 @@ type
       if not (fData.DataType in allowedTypes) then begin
         exit $'Tensor (dtype={Helper.TFDataTypeToString(fData.DataType)}) cannot print.';
       end;
-    
+
       var success: Boolean;
       var str_arr: array of String;
       (success, str_arr) := AsStrings(aDecimalDigits);
@@ -1466,10 +1472,8 @@ type
             str_list[I] := $'  {str_list[I]}';
         end;
       end; 
-    
-      for str in str_list do str := str + '#10';
-      str_list.Insert(0, '[' + #10);
-      str_list.Add(']' + #10);      
+
+      result := str_list.JoinedString(#10);
     end;
 
     property Data: TensorData
