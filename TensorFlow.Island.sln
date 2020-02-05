@@ -40,6 +40,7 @@ Global
 		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.Deploy.0 = Debug
 		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.ActiveCfg = Release
 		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Build.0 = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Deploy.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
