@@ -20,7 +20,7 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Island.Samples.TensorInfo;
+namespace TensorFlow.Island.Samples.GraphInfo;
 
 uses
   TensorFlow,
@@ -31,7 +31,8 @@ type
   public
     class method Main(args: array of String): Int32;
     begin
-      var graph := LoadGraph('C:\DEVLIBS\TensorFlow-Island\exe\Windows\x86_64\graph.pb');
+      var cur_dir := Environment.CurrentDirectory;
+      var graph := LoadGraph(cur_dir + '\graph.pb');
       var status := TF_NewStatus();
 
       try
@@ -40,15 +41,13 @@ type
           exit 1;
         end;
 
-        PrintTensorInfo(graph, 'input_4', status);
-        writeLn('');
-        PrintTensorInfo(graph, 'output_node0', status);
+        PrintOps(graph, status);
         readLn;
       finally
-        TF_DeleteStatus(status);
         DeleteGraph(graph);
+        TF_DeleteStatus(status);
       end;
-    end;
+    end;      
   end;
 
 end.

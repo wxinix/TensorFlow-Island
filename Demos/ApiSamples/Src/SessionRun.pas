@@ -31,7 +31,8 @@ type
     begin
       var inputTensor, outputTensor: ^TF_Tensor;
       var session: ^TF_Session;
-      var graph := LoadGraph('C:\DEVLIBS\TensorFlow-Island\exe\Windows\x86_64\graph.pb');
+      var cur_dir := Environment.CurrentDirectory;
+      var graph := LoadGraph(cur_dir + '\graph.pb');
       var status := TF_NewStatus();
 
       try

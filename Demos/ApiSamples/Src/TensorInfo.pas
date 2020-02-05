@@ -20,18 +20,19 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Island.Samples.GraphInfo;
+namespace TensorFlow.Island.Samples.TensorInfo;
 
 uses
   TensorFlow,
-  TensorFlow.Island.Utils;
+  TensorFlow.Island.ApiUtils;
 
 type 
   Program = class
   public
     class method Main(args: array of String): Int32;
     begin
-      var graph := LoadGraph('C:\DEVLIBS\TensorFlow-Island\exe\Windows\x86_64\graph.pb');
+      var cur_dir := Environment.CurrentDirectory;
+      var graph := LoadGraph(cur_dir + '\graph.pb');
       var status := TF_NewStatus();
 
       try
@@ -40,13 +41,15 @@ type
           exit 1;
         end;
 
-        PrintOps(graph, status);
+        PrintTensorInfo(graph, 'input_4', status);
+        writeLn('');
+        PrintTensorInfo(graph, 'output_node0', status);
         readLn;
       finally
-        DeleteGraph(graph);
         TF_DeleteStatus(status);
+        DeleteGraph(graph);
       end;
-    end;      
+    end;
   end;
 
 end.

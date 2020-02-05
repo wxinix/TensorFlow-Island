@@ -1,33 +1,34 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
-    <ProjectGuid>{dad6093c-a565-4b36-8e41-8905c862c787}</ProjectGuid>
+    <RootNamespace>InterfaceTest</RootNamespace>
+    <ProjectGuid>{367f3264-1650-46c5-a0db-e13f39ddcdfc}</ProjectGuid>
     <OutputType>Executable</OutputType>
-    <AssemblyName>CreateTensor</AssemblyName>
+    <AssemblyName>InterfaceTest</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>CreateTensor</Name>
+    <Name>InterfaceTest</Name>
     <Architecture>x86_64</Architecture>
     <OutputPath>..\Bin\$(Configuration)</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>..\..\Exe\</OutputPath>
+    <OutputPath>..\Exe\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <GenerateDebugInfo>True</GenerateDebugInfo>
     <CpuType>x86</CpuType>
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <AssemblyName>CreateTensor</AssemblyName>
+    <AssemblyName>InterfaceTest</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
+    <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\Exe\</OutputPath>
+    <OutputPath>..\Exe\</OutputPath>
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <AssemblyName>CreateTensor</AssemblyName>
+    <AssemblyName>InterfaceTest</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
@@ -35,17 +36,21 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow">
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
+      <HintPath>..\..\..\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TensorFlow.Island.ApiUtils">
+      <HintPath>..\..\..\libtensorflow-1.15.0-cpu\Windows\x86_64\TensorFlow.Island.ApiUtils.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="C:\DEVLIBS\TensorFlow-Island\Src\Samples" />
+    <Folder Include="..\Src" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Src\Samples\CreateTensor.pas">
+    <Compile Include="..\Src\InterfaceTest.pas">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Samples\CreateTensor.pas</Link>
+      <Link>..\Src\InterfaceTest.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />

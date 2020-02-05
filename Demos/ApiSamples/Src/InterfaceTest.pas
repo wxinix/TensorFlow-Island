@@ -30,7 +30,8 @@ type
   public
     class method Main(args: array of String): Int32;
     begin
-      var graph := LoadGraph('C:\DEVLIBS\TensorFlow-Island\exe\Windows\x86_64\graph.pb');
+      var cur_dir := Environment.CurrentDirectory;
+      var graph := LoadGraph(cur_dir + '\graph.pb');
       var status := TF_NewStatus();
       var inputOps, outputOps: List<TF_Output>;
       var inputTensors: List<^TF_Tensor>;
