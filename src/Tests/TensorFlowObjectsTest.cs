@@ -136,7 +136,5 @@ namespace TensorFlow.Island.Tests
                 "  [  True  True  True] ]";
             Assert.AreEqual(print_str, validation_str);
         }
-
-
     }
 }
