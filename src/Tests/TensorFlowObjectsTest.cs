@@ -105,15 +105,38 @@ namespace TensorFlow.Island.Tests
             var lOutput = lSession.Graph.OpConst(1);
             var str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_0: 0\", shape=TensorShape([]), dtype=Int32 )");
-             
+
             lOutput = lSession.Graph.OpConst({1, 2});
             str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_1: 0\", shape=TensorShape([Dimension(2)]), dtype=Int32 )");   
-        
+
             lOutput = lSession.Graph.OpConst({{1, 2}});
             str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32 )"); 
         }
+
+        public void When_PrintingTensorWithInt32Values_Expect_Success()
+        {
+            Tensor tensor = {{1,2,3},{4,5,6},{7,8,9}};
+            var print_str = tensor.Print(1, 6);
+            const string validation_str =
+                "[ [     1     2     3]  " + '\n' +
+                "  [     4     5     6]  " + '\n' +
+                "  [     7     8     9] ]";
+            Assert.AreEqual(print_str, validation_str);
+        }
+
+        public void When_PrintingTensorWithBoolValues_Expect_Success()
+        {
+            Tensor tensor = {{true,false,true},{false,false,false},{true,true,true}};
+            var print_str = tensor.Print(1, 6);
+            const string validation_str =
+                "[ [  True False  True]  " + '\n' +
+                "  [ False False False]  " + '\n' +
+                "  [  True  True  True] ]";
+            Assert.AreEqual(print_str, validation_str);
+        }
+
 
     }
 }
