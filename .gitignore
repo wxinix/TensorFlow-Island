@@ -4,3 +4,4 @@ Bin/
 *.cache
 .vs/
 obj/
+exe/
