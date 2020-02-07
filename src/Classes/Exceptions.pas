@@ -53,9 +53,11 @@ type
 
   ObjectDisposedException = public class(Exception)
   public
-    constructor (aObject: DisposableObject);
+    constructor (aObject: TensorFlowDisposableObject);
     begin
-      inherited constructor($'{aObject.GetType.Name} instance already disposed.');
+      var name := aObject.GetType.Name;
+      var id := aObject.ID;
+      inherited constructor($'{name} instance {id} already disposed.');
     end;
   end;
 
