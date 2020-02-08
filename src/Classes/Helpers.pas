@@ -129,7 +129,7 @@ type
       end;
     end;
 
-    class method ReadBufferDataFromFile(aFile: not nullable String): array of Byte;
+    class method ReadBytesFromFile(aFile: not nullable String): array of Byte;
     begin
       if not File.Exists(aFile) then begin
         raise new BufferFileNotExistException(aFile);
@@ -143,6 +143,40 @@ type
           result := nil;
         end;
       end;
+    end;
+
+    class method EncodeString(const aValue: NotNull<String>): String;
+    begin
+      var src := aValue.ToAnsiChars(false); // Do not take care the case aValue empty.
+      var src_len := aValue.Length;
+      var dst_len := TF_StringEncodedSize(src_len);
+      var dst := new AnsiChar[dst_len];
+
+      using lStatus := new Status do begin
+        TF_StringEncode(src, src_len, dst, dst_len, lStatus.Handle);
+        if lStatus.OK then begin
+          result := String.FromPAnsiChars(dst, dst_len);
+        end else begin
+          raise new StringEncodeException withString(aValue) Error(lStatus.Message);
+        end;
+      end;
+    end;
+
+    class method DecodeString(const aValue: NotNull<String>): String;
+    begin
+      var src := aValue.ToAnsiChars;
+      var src_len := aValue.Length;
+      var dst: ^AnsiChar;
+      var dst_len: UInt64;
+
+      using lStatus:= new Status do begin
+        TF_StringDecode(src, src_len, @dst, @dst_len, lStatus.Handle);
+        if lStatus.OK then begin
+          result := String.FromPAnsiChars(dst, dst_len);
+        end else begin
+          raise new StringDecodeException withError(lStatus.Message);
+        end;
+      end;    
     end;
   end;
 end.
