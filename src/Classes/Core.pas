@@ -215,7 +215,7 @@ type
   public
     constructor withFile(aFile: NotNull<String>);
     begin
-      var buf_bytes := Helper.ReadBufferDataFromFile(aFile);
+      var buf_bytes := Helper.ReadBytesFromFile(aFile);
 
       if assigned(buf_bytes) then begin
         fNumBytes := buf_bytes.Length;
@@ -630,7 +630,7 @@ type
     fDims: ^Int64;
     fNumDims: Int32;
     fDisposed: Boolean := false;
-    fL1_Norm: UInt64;
+    fSize: UInt64;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -655,11 +655,11 @@ type
       if numBytes >0 then begin
         fDims := ^Int64(malloc(numBytes));
         memcpy(fDims, aDims, numBytes);
-        fL1_Norm := 1;
-        for I: Integer := 0 to fNumDims - 1 do fL1_Norm := fL1_Norm * aDims[I];
+        fSize := 1;
+        for I: Integer := 0 to fNumDims - 1 do fSize := fSize * aDims[I];
       end else begin
         fDims := nil;
-        fL1_Norm := 1;
+        fSize := 1;
       end;
     end;
 
@@ -704,10 +704,13 @@ type
       read begin
         result := fNumDims;
       end;
-
-    property L1_Norm: UInt64
+    /// <summary>
+    /// Total number of elements that this shape can contain.
+    /// </summary>
+    /// <value></value>
+    property Size: UInt64
       read begin
-        result := fL1_Norm;
+        result := fSize;
       end;
   end;
 
@@ -1074,10 +1077,14 @@ type
     end;
   public
     constructor withValues(aVals: NotNull<array of T>) Dims(aDims: array of Int64);
-    begin
+    begin     
       fDataType := Helper.ToTFDataType(typeOf(T));
       fShape := new Shape withDims(aDims);
       fManaged := true;
+
+      if aVals.Length <> fShape.Size then begin
+        raise new InvalidTensorDataSizeException withDataSize(aVals.Length) DimSize(fShape.Size);
+      end;
 
       if fDataType <> TF_DataType.TF_STRING then begin
         fNumBytes := TF_DataTypeSize(fDataType) * aVals.Length;
@@ -1087,18 +1094,30 @@ type
         end else begin
           memcpy(fBytes, aVals, fNumBytes);
         end;
-      end else begin
-        for I: Integer := 0 to aVals.Length -1 do begin
-          fNumBytes := fNumBytes + String(aVals[I]).Length + 1;
+      end else begin // Special handling for TF_STRING
+        fNumBytes := 0;
+        for I: Integer := 0 to aVals.Length - 1 do begin
+          var str := Helper.EncodeString(String(aVals[I]));
+          aVals[I] := T(str); // Replace with encoded string.
+          fNumBytes := fNumBytes + str.Length + sizeOf(UInt64); // Offset is UInt64
         end;
 
         fBytes := malloc(fNumBytes);
-        var curPos: Integer := 0;
+        var num_offsets := aVals.Length; // num_offsets equal to aVals.Length
+        var offsets := new UInt64[num_offsets];
+        var offsets_region_size := num_offsets * sizeOf(UInt64);
+        var nbytes := 0;
 
         for I: Integer := 0 to aVals.Length - 1 do begin
-          var num := String(aVals[I]).Length + 1; //1 byte for null terminator.
-          memcpy(fBytes + curPos, String(aVals[I]).ToAnsiChars(true), num);
-          curPos := curPos + num;
+          offsets[I] := offsets_region_size + nbytes;
+          memcpy(^Void(^Byte(fBytes) + offsets[I]), String(aVals[I]).ToAnsiChars, String(aVals[I]).Length);
+          nbytes := nbytes + String(aVals[I]).Length;
+        end;
+
+        if fShape.NumDims = 0 then begin
+          memset(fBytes, 0, sizeOf(UInt64));
+        end else begin
+          memcpy(fBytes, offsets, offsets_region_size);
         end;
       end;
     end;
@@ -1315,7 +1334,8 @@ type
         result := (false, nil);
       end else begin
         if (fData.DataType = TF_DataType.STRING) then begin
-          var str: String := String.FromPAnsiChars(^AnsiChar(fData.Bytes));
+          var str: String := Helper.DecodeString(String.FromPAnsiChars(
+            ^AnsiChar(^Byte(fData.Bytes) + sizeOf(UInt64)), fData.NumBytes - sizeOf(UInt64)));
           result := (true, T(str));
         end else begin
           var value: T := (^T(fData.Bytes))^;
@@ -1338,14 +1358,17 @@ type
         result := (false, nil);
       end else begin
         if (fData.DataType = TF_DataType.STRING) then begin
-          var byte_pos:= 0;
+          var offsets := new UInt64[fData.Shape.Size];
+          memcpy(offsets, fData.Bytes, sizeOf(UInt64) * fData.Shape.Size);
+          
           var str_list: List<String> := new List<String>;
-          // Retrieve strings from bytes into String List.
-          while byte_pos < fData.NumBytes do begin
-            var str := String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + byte_pos));
+          for I: Integer := 0 to offsets.Length - 1 do begin
+            var nbytes := if (I <> offsets.Length - 1) then (offsets[I + 1] - offsets[I]) else (fData.NumBytes - offsets[I]);
+            var str := String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + offsets[I]), nbytes);
+            str := Helper.DecodeString(str);
             str_list.Add(str);
-            byte_pos := byte_pos + str.Length + 1;
           end;
+      
           // From String List to array of String. This is to hush compiler.
           var str_arr: array of T := new T[str_list.Count];
           for I: Integer := 0 to str_list.Count - 1 do begin
@@ -1353,7 +1376,7 @@ type
           end;
           result := (true, str_arr);
         end else begin
-          var values: array of T := new T[fData.Shape.L1_Norm];
+          var values: array of T := new T[fData.Shape.Size];
           memcpy(values, fData.Bytes, fData.NumBytes); 
           result := (true, values);
         end;
@@ -1421,7 +1444,7 @@ type
       
       // Put high_dims item into one line [v_1, v_2, ..,v_high_dim], inserting each into a seperate str_list
       var high_dim := fData.Shape.Dim[fData.Shape.NumDims - 1];
-      var str_list := new List<String>(fData.Shape.L1_Norm/high_dim);
+      var str_list := new List<String>(fData.Shape.Size/high_dim);
       var str: String := '';
       for I: Integer := 0 to str_arr.Length - 1 do begin
         if str_arr[I].Length >= aMaxWidth then exit $'Data item {str_arr[I]} exceeds max width {aMaxWidth}';
@@ -1478,7 +1501,7 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Session = public class(TensorFlowHandledObject<TF_Session>)
   private
-    fGraph: NotNull<Graph> := new Graph;
+    fGraph: Graph:= nil; // Created in constructor.
     fRunner: SessionRunner := nil; // Delayed creation upon access.
     fDisposed: Boolean := false;
   protected
