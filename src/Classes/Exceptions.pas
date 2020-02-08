@@ -97,4 +97,28 @@ type
     end;
   end;
 
+  StringEncodeException = public class(Exception)
+  public
+    constructor withString(aValue: String) Error(aErrMsg: String);
+    begin
+      inherited constructor($'String "{aValue}" cannot be encoded with error: {aErrMsg}');
+    end;
+  end;
+
+  StringDecodeException = public class(Exception)
+  public
+    constructor withError(aErrMsg: String);
+    begin
+      inherited constructor(aErrMsg);
+    end;
+  end;
+
+  InvalidTensorDataSizeException = public class(Exception)
+  public
+    constructor withDataSize(aDataSize: Integer) DimSize(aDimSize: Integer);
+    begin
+      inherited constructor($'Data size {aDataSize} inconsistent with shape size {aDimSize}');
+    end;
+  end;
+
 end.
