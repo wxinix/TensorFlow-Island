@@ -24,7 +24,7 @@ namespace TensorFlow.Island.Classes;
 uses
   RemObjects.Elements.RTL,
   RemObjects.Elements.System,
-  TensorFlow,
+  TensorFlow.Island.Api,
   TensorFlow.Island.Aspects;
 
 type
@@ -130,7 +130,7 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorFlowHandledObject<T> = public abstract class(TensorFlowDisposableObject, ITensorFlowHandledObject)
   public
-    type DisposeAction<T> = public block(aHandle: ^T);
+    type DisposeAction<T> = block(aHandle: ^T);
   private    
     fOnDispose: DisposeAction<T>;
     fHandle: ^T := nil;
@@ -362,14 +362,14 @@ type
 
     method AddInput(aInput: NotNull<Output>);
     begin
-      TF_AddInput(Handle, aInput.ToTFOutput);
+      TF_AddInput(Handle, aInput.AsTFOutput);
     end;
 
     method AddInputs(aInputList: NotNull<array of Output>);
     begin
       var tfOutput := new TF_Output[aInputList.Length];
       for I: Integer := 0 to aInputList.Length - 1 do begin
-        tfOutput[I] := aInputList[I].ToTFOutput;
+        tfOutput[I] := aInputList[I].AsTFOutput;
       end;
 
       TF_AddInputList(Handle, tfOutput, tfOutput.Length);
@@ -588,10 +588,10 @@ type
       end;
   end;
 
-  ScopeRestoreAction = public block(const aScopeToRestore: NotNull<String>);
-
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Scope = public class(TensorFlowDisposableObject)
+  public
+    type ScopeRestoreAction = block(const aScopeToRestore: NotNull<String>);
   private
     fRestoreAction: ScopeRestoreAction;
     fSavedScope: String;
@@ -739,7 +739,7 @@ type
       fOper := aOp;
     end;
 
-    method ToTFOutput: TF_Output;
+    method AsTFOutput: TF_Output;
     begin
       result.oper  := self.Oper.Handle;
       result.index := self.Index;
@@ -757,7 +757,7 @@ type
 
     property NumConsumers: Integer
       read begin
-        result := TF_OperationOutputNumConsumers(ToTFOutput());
+        result := TF_OperationOutputNumConsumers(AsTFOutput());
       end;
 
     property Oper: Operation
@@ -767,7 +767,7 @@ type
 
     property DataType: TF_DataType
       read begin
-        result := TF_OperationOutputType(ToTFOutput);
+        result := TF_OperationOutputType(AsTFOutput);
       end;
   end;
 
@@ -796,7 +796,7 @@ type
       if fList.Count = 0 then exit nil;
       result := new TF_Output[fList.Count];
       for I: Integer := 0 to fList.Count - 1 do begin
-        result[I] := fList[I].ToTFOutput;
+        result[I] := fList[I].AsTFOutput;
       end;
     end;
   public
@@ -815,7 +815,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Graph = public class(TensorFlowHandledObject<TF_Graph>)
+  Graph = public partial class(TensorFlowHandledObject<TF_Graph>)
   private
     fCurrentScope: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
@@ -825,6 +825,7 @@ type
     method MakeUniqueName(const aName: NotNull<String>): String;
     begin
       var seqid := 0;
+      
       if fNamesCache.ContainsKey(aName) then begin
         seqid := fNamesCache[aName];
         inc(seqid);
@@ -884,7 +885,7 @@ type
     method GetShape(aOutput: NotNull<Output>; aStatus: Status := nil): Tuple of (Boolean, Shape);
     begin
       using lStatus := new Status do begin
-        var nativeOut := aOutput.ToTFOutput;
+        var nativeOut := aOutput.AsTFOutput;
         var numDims := TF_GraphGetTensorNumDims(Handle, nativeOut, lStatus.Handle);
 
         if (not lStatus.OK) then begin

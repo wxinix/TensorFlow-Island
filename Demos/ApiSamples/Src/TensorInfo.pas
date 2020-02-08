@@ -20,10 +20,10 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Island.Samples.TensorInfo;
+namespace TensorFlow.Island.ApiSamples.TensorInfo;
 
 uses
-  TensorFlow,
+  TensorFlow.Island.Api,
   TensorFlow.Island.ApiUtils;
 
 type 

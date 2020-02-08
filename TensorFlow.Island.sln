@@ -1,51 +1,52 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29609.76
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Classes", "Projects\Classes\TensorFlow.Island.Classes.elements", "{93B81566-E004-4BD8-9525-336A904B0F64}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Api", "Projects\Import\TensorFlow.Island.Api.elements", "{F1872D65-C288-44F9-9BE4-D7937A7A5C03}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.ApiUtils", "Projects\Utils\TensorFlow.Island.ApiUtils.elements", "{7D05CE55-4854-4BB2-82BC-C796CA35088E}"
 EndProject
 Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Aspects", "Projects\Aspects\TensorFlow.Island.Aspects.elements", "{50D60A44-30E4-42B2-9C89-9FB13797C1AE}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.ApiUtils", "Projects\Utils\TensorFlow.Island.ApiUtils.elements", "{7D05CE55-4854-4BB2-82BC-C796CA35088E}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Classes", "Projects\Classes\TensorFlow.Island.Classes.elements", "{93B81566-E004-4BD8-9525-336A904B0F64}"
 EndProject
 Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Tests", "Projects\Tests\TensorFlow.Island.Tests.elements", "{49DBEAD5-5983-42D8-B7E2-2FE215653756}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Default = Debug|Default
-		Release|Default = Release|Default
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.ActiveCfg = Debug
-		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.Build.0 = Debug
-		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.Deploy.0 = Debug
-		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.ActiveCfg = Release
-		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.Build.0 = Release
-		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.Deploy.0 = Release
-		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|Default.ActiveCfg = Debug
-		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|Default.Build.0 = Debug
-		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|Default.Deploy.0 = Debug
-		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|Default.ActiveCfg = Release
-		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|Default.Build.0 = Release
-		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|Default.Deploy.0 = Release
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.ActiveCfg = Debug
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.Build.0 = Debug
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.Deploy.0 = Debug
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.ActiveCfg = Release
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.Build.0 = Release
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.Deploy.0 = Release
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.ActiveCfg = Debug
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.Build.0 = Debug
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.Deploy.0 = Debug
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.ActiveCfg = Release
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Build.0 = Release
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Deploy.0 = Release
+		{F1872D65-C288-44F9-9BE4-D7937A7A5C03}.Debug|AnyCPU.ActiveCfg = Debug|AnyCPU
+		{F1872D65-C288-44F9-9BE4-D7937A7A5C03}.Debug|AnyCPU.Build.0 = Debug|AnyCPU
+		{F1872D65-C288-44F9-9BE4-D7937A7A5C03}.Release|AnyCPU.ActiveCfg = Release|AnyCPU
+		{F1872D65-C288-44F9-9BE4-D7937A7A5C03}.Release|AnyCPU.Build.0 = Release|AnyCPU
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|AnyCPU.ActiveCfg = Debug
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|AnyCPU.Build.0 = Debug
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|AnyCPU.Deploy.0 = Debug
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|AnyCPU.ActiveCfg = Release
+		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|AnyCPU.Build.0 = Release
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|AnyCPU.ActiveCfg = Debug
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|AnyCPU.Build.0 = Debug
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Debug|AnyCPU.Deploy.0 = Debug
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|AnyCPU.ActiveCfg = Release
+		{50D60A44-30E4-42B2-9C89-9FB13797C1AE}.Release|AnyCPU.Build.0 = Release
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|AnyCPU.ActiveCfg = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|AnyCPU.Build.0 = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|AnyCPU.Deploy.0 = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|AnyCPU.ActiveCfg = Release
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|AnyCPU.Build.0 = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.ActiveCfg = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.Build.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.Deploy.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.ActiveCfg = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5E990A9E-3555-41B2-B1F2-62726D8AD626}
+		SolutionGuid = {8FB5E4E2-733E-4F1F-B00B-E2A6628A3B20}
 	EndGlobalSection
 EndGlobal

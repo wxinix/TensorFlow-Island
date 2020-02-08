@@ -22,7 +22,7 @@
 namespace TensorFlow.Island.ApiUtils;
 
 uses
-  TensorFlow;
+  TensorFlow.Island.Api;
 
   method DeallocateBuffer(aData: ^Void; aSize: UInt64);
   begin

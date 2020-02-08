@@ -23,7 +23,7 @@ namespace TensorFlow.Island.Classes;
 
 uses
   RemObjects.Elements.System,
-  TensorFlow;
+  TensorFlow.Island.Api;
 
 type
   BufferFileNotExistException = public class(Exception)

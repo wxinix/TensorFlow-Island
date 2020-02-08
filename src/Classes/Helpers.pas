@@ -22,7 +22,7 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  TensorFlow;
+  TensorFlow.Island.Api;
 
 type
   TensorFlowDataType = assembly enum

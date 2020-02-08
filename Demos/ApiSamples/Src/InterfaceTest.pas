@@ -19,10 +19,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace TensorFlow.Island.Samples.InterfaceTest;
+namespace TensorFlow.Island.ApiSamples.InterfaceTest;
 
 uses
-  TensorFlow,
+  TensorFlow.Island.Api,
   TensorFlow.Island.ApiUtils;
 
 type

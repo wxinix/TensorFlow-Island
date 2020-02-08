@@ -19,10 +19,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace TensorFlow.Island.Samples.HelloTensorFlow;
+namespace TensorFlow.Island.ApiSamples.HelloTensorFlow;
 
 uses
-  TensorFlow;
+  TensorFlow.Island.Api;
 
 type
   Program = class

@@ -22,24 +22,17 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  TensorFlow;
+  TensorFlow.Island.Api;
 
 type
-  InputArray nested in Graph_Operations = private 
-    NotNull<array of NotNull<Output>>;
-
-  Attribute nested in Graph_Operations = private
-    Tuple of (Name: NotNull<String>, Value: NotNull<Object>);
-
-  AttributeArray  nested in Graph_Operations = private
-    NotNull<array of Attribute>;
-
-  [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Graph_Operations = public extension class(Graph)
+  Graph = public partial class
   private
-    method InternalCreateOp(const aOpType, aOpName: NotNull<String>;
-      const aInputs: InputArray = []; const aAttrs: AttributeArray = [];
-      const aInputList: InputArray = []): Tuple of (Operation, Output);
+     type Attribute = Tuple of (Name: NotNull<String>, Value: NotNull<Object>);
+     type AttributeArray = NotNull<array of Attribute>;
+     type InputArray = NotNull<array of NotNull<Output>>;
+  private
+    method CreateOp(const aOpType, aOpName: NotNull<String>; const aInputs: InputArray = []; 
+      const aAttrs: AttributeArray = []; const aInputList: InputArray = []): Tuple of (Operation, Output);
     begin
       var lOpDesc := new OperationDescription withGraph(self) OpType(aOpType)
         OpName(MakeName(aOpType, aOpName));
@@ -72,7 +65,7 @@ type
     begin
       const lOpType: String = 'Abort';
 
-      (result, nil) := InternalCreateOp(
+      (result, nil) := CreateOp(
         lOpType,
         aOpName,
         [],
@@ -85,55 +78,55 @@ type
    method OpAbs(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Abs';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpAcos(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
      const lOpType: String = 'Acos';
-     (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+     (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpAdd(x, y: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Add';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x, y]);
     end;
 
     method OpAddN(aInputs: InputArray; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'AddN';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, aInputs);
+      (nil, result) := CreateOp(lOpType, aOpName, aInputs);
     end;
 
     method OpArgMax(aInput, aDim: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'ArgMax';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [aInput, aDim]);
+      (nil, result) := CreateOp(lOpType, aOpName, [aInput, aDim]);
     end;
 
     method OpArgMin(aInput, aDim: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'ArgMin';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [aInput, aDim]);
+      (nil, result) := CreateOp(lOpType, aOpName, [aInput, aDim]);
     end;
 
     method OpAssignVar(aRsrc, aValue: NotNull<Output>; aOpName: NotNull<String> := ''): Operation;
     begin
       const lOpType: String = 'AssignVariableOp';
-      (result, nil) := InternalCreateOp(lOpType, aOpName, [aRsrc, aValue]);
+      (result, nil) := CreateOp(lOpType, aOpName, [aRsrc, aValue]);
     end;
 
     method OpAsin(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Asin';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpAtan(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Atan';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpConst(aValue: NotNull<Tensor>; aOpName: NotNull<String> := ''): Output; overload;
@@ -146,7 +139,7 @@ type
     begin
       const lOpType: String = 'Const';
 
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [],
@@ -159,13 +152,13 @@ type
     method OpCos(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Cos';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpDiv(x, y: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Div';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x, y]);
     end;
 
     method OpFill(aDims, aValue: NotNull<Tensor>; aOpName: NotNull<String> := ''): Output;
@@ -174,7 +167,7 @@ type
       var dims := OpConst(aDims) as NotNull<Output>;
       var val := OpConst(aValue) as NotNull<Output>;
 
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [dims, val]);
@@ -183,13 +176,13 @@ type
     method OpInv(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Inv';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpNegate(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Neg';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpMatMul(a, b: NotNull<Output>; transpose_a: Boolean := false;
@@ -197,7 +190,7 @@ type
       : Output;
     begin
       const lOpType: String = 'MatMul';
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [a, b],
@@ -210,13 +203,13 @@ type
     method OpMul(x, y: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Mul';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x, y]);
     end;
 
     method OpPlaceholder(aDataType: TF_DataType; aOpName: NotNull<String> := ''): Output; overload;
     begin
       const lOpType: String = 'Placeholder';
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [],
@@ -229,7 +222,7 @@ type
       aOpName: NotNull<String> := ''): Output; overload;
     begin
       const lOpType: String = 'Placeholder';
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [],
@@ -242,14 +235,14 @@ type
     method OpRange(aStart, aLimit, aDelta: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Range';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [aStart, aLimit, aDelta]);
+      (nil, result) := CreateOp(lOpType, aOpName, [aStart, aLimit, aDelta]);
     end;
 
     method OpReadVar(aResource: NotNull<Output>; aDataType: TF_DataType;
       aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'ReadVariableOp';
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [aResource],
@@ -292,26 +285,26 @@ type
       aOpName: NotNull<String> := ''): Operation;
     begin
       const lOPType: String = 'Save';
-      (result, nil) := InternalCreateOp(lOPType, aOpName, [aFilename, aTensorNames], aData);
+      (result, nil) := CreateOp(lOPType, aOpName, [aFilename, aTensorNames], aData);
     end;
 
     method OpSin(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Sin';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;    
 
     method OpSub(x, y: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Sub';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x, y]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x, y]);
     end;
 
     method OpSum(aInput, aReductionIndices: NotNull<Output>; aKeepDims: Boolean := false;
       aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Sum';
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [aInput, aReductionIndices],
@@ -323,7 +316,7 @@ type
     method OpTan(x: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'Tan';
-      (nil, result) := InternalCreateOp(lOpType, aOpName, [x]);
+      (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
     method OpVarHandle(aDataType: TF_DataType; aShape: NotNull<Shape>;
@@ -331,7 +324,7 @@ type
       aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'VarHandleOp';
-      (nil, result) := InternalCreateOp(
+      (nil, result) := CreateOp(
         lOpType,
         aOpName,
         [],

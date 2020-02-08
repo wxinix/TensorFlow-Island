@@ -23,7 +23,7 @@
 namespace TensorFlow.Island.Samples.GraphInfo;
 
 uses
-  TensorFlow,
+  TensorFlow.Island.Api,
   TensorFlow.Island.ApiUtils;
 
 type 

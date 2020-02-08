@@ -20,10 +20,10 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Island.Samples.AllocateTensor;
+namespace TensorFlow.Island.ApiSamples.AllocateTensor;
 
 uses
-  TensorFlow;
+  TensorFlow.Island.Api;
 
 type
   Program = class
