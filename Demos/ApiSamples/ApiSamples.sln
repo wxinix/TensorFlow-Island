@@ -19,8 +19,6 @@ Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorInfo", "Projects\Tens
 EndProject
 Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "StringEncode", "Projects\StringEncode.elements", "{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.ApiUtils", "..\..\Projects\Utils\TensorFlow.Island.ApiUtils.elements", "{7D05CE55-4854-4BB2-82BC-C796CA35088E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Default = Debug|Default
@@ -64,12 +62,9 @@ Global
 		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Release|Default.Build.0 = Release
 		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Debug|Default.ActiveCfg = Debug
 		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Debug|Default.Build.0 = Debug
+		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Debug|Default.Deploy.0 = Debug
 		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Release|Default.ActiveCfg = Release
 		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Release|Default.Build.0 = Release
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.ActiveCfg = Debug
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Debug|Default.Build.0 = Debug
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.ActiveCfg = Release
-		{7D05CE55-4854-4BB2-82BC-C796CA35088E}.Release|Default.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

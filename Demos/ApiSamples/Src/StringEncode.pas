@@ -31,7 +31,7 @@ type
   public
     class method Main(args: array of String): Int32;
     begin
-      const str = '1234567890';
+      const str = '123456789012';
       var status := TF_NewStatus;
       var tensor := ScalarStringTensor(str.ToAnsiChars(true), status);
       var byte_size := TF_TensorByteSize(tensor);

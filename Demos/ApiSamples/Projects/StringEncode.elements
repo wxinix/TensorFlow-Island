@@ -39,6 +39,10 @@
       <HintPath>..\..\..\libtensorflow-1.15.0\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TensorFlow.Island.ApiUtils">
+      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0\Windows\x86_64\TensorFlow.Island.ApiUtils.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\Src" />
@@ -48,13 +52,6 @@
       <SubType>Code</SubType>
       <Link>..\Src\StringEncode.pas</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Projects\Utils\TensorFlow.Island.ApiUtils.elements">
-      <Name>TensorFlow.Island.ApiUtils</Name>
-      <Project>{7d05ce55-4854-4bb2-82bc-c796ca35088e}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>
