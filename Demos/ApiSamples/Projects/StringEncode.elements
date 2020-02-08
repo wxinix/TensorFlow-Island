@@ -1,0 +1,60 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>3.5</ProductVersion>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <ProjectGuid>{fbefd37b-71e6-4ae7-8a1c-d850a6776119}</ProjectGuid>
+    <OutputType>Executable</OutputType>
+    <AssemblyName>StringEncode</AssemblyName>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Name>StringEncode</Name>
+    <Architecture>x86_64</Architecture>
+    <OutputPath>..\Bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <OutputPath>..\Exe\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <GenerateDebugInfo>True</GenerateDebugInfo>
+    <CpuType>x86</CpuType>
+    <Architecture>x86_64</Architecture>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <EnableAsserts>True</EnableAsserts>
+    <AssemblyName>StringEncode</AssemblyName>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\Exe\</OutputPath>
+    <CpuType>x86</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <Architecture>x86_64</Architecture>
+    <AssemblyName>StringEncode</AssemblyName>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gc" />
+    <Reference Include="Island" />
+    <Reference Include="rtl" />
+    <Reference Include="TensorFlow.Island.Api">
+      <HintPath>..\..\..\libtensorflow-1.15.0\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="..\Src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Src\StringEncode.pas">
+      <SubType>Code</SubType>
+      <Link>..\Src\StringEncode.pas</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Projects\Utils\TensorFlow.Island.ApiUtils.elements">
+      <Name>TensorFlow.Island.ApiUtils</Name>
+      <Project>{7d05ce55-4854-4bb2-82bc-c796ca35088e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
+</Project>
