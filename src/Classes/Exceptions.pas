@@ -121,4 +121,12 @@ type
     end;
   end;
 
+  InvalidOsBitSizeException = public class(Exception)
+  public
+    constructor withDetectedOsBitSize(aSize: Integer);
+    begin
+      inherited constructor($'Invalid OS bit size {aSize}. Support 64bit only.');
+    end;
+  end;
+
 end.
