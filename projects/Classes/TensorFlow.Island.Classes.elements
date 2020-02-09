@@ -59,9 +59,9 @@
       <SubType>Code</SubType>
       <Link>..\..\Src\Classes\Core.pas</Link>
     </Compile>
-    <Compile Include="..\..\Src\Classes\GraphOps.pas">
+    <Compile Include="..\..\Src\Classes\ExtraOps.pas">
       <SubType>Code</SubType>
-      <Link>..\..\src\Classes\GraphOps.pas</Link>
+      <Link>..\..\src\Classes\ExtraOps.pas</Link>
     </Compile>
     <Compile Include="..\..\Src\Classes\Helpers.pas">
       <SubType>Code</SubType>
@@ -70,6 +70,18 @@
     <Compile Include="..\..\Src\Classes\Exceptions.pas">
       <SubType>Code</SubType>
       <Link>..\..\Src\Classes\Exceptions.pas</Link>
+    </Compile>
+    <Compile Include="..\..\Src\Classes\Optimizer.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\Src\Classes\Optimizer.pas</Link>
+    </Compile>
+    <Compile Include="..\..\Src\Classes\Queue.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\Src\Classes\Queue.pas</Link>
+    </Compile>
+    <Compile Include="..\..\Src\Classes\GeneratedOps.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\Src\Classes\GeneratedOps.pas</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
