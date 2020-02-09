@@ -30,11 +30,11 @@ uses
 type
   NotNull<T> = public not nullable T;
 
-  ITensorFlowDisposableObject = public interface(IDisposable)
+  ITensorFlowDisposable = public interface(IDisposable)
     property ID: NativeUInt read;
   end;
 
-  TensorFlowDisposableObject = public abstract class(ITensorFlowDisposableObject)
+  TensorFlowDisposable = public abstract class(ITensorFlowDisposable)
   private
     fDisposed: Boolean := false;
 
@@ -74,8 +74,8 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  TensorFlowDisposableObjectList<T> = public abstract class(TensorFlowDisposableObject, IEnumerable<T>)
-    where T is ITensorFlowDisposableObject;
+  TensorFlowDisposableList<T> = public abstract class(TensorFlowDisposable, IEnumerable<T>)
+    where T is ITensorFlowDisposable;
   private
     fDisposed: Boolean := false;
   protected
@@ -123,12 +123,12 @@ type
       end; default;
   end;
 
-  ITensorFlowHandledObject = public interface(ITensorFlowDisposableObject)
+  ITensorFlowObject = public interface(ITensorFlowDisposable)
     property Handle: ^Void read;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  TensorFlowHandledObject<T> = public abstract class(TensorFlowDisposableObject, ITensorFlowHandledObject)
+  TensorFlowObject<T> = public abstract class(TensorFlowDisposable, ITensorFlowObject)
   public
     type DisposeAction<T> = block(aHandle: ^T);
   private
@@ -176,8 +176,8 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  TensorFlowHandledObjectList<T> = public abstract class(TensorFlowDisposableObjectList<T>)
-    where T is ITensorFlowHandledObject;
+  TensorFlowObjectList<T> = public abstract class(TensorFlowDisposableList<T>)
+    where T is ITensorFlowObject;
   public
     property Handles: array of ^Void
       read begin
@@ -190,29 +190,17 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Buffer = public class(TensorFlowHandledObject<TF_Buffer>)
+  Buffer = public class(TensorFlowObject<TF_Buffer>)
   private
     fData: ^Void := nil;
-    fDisposeAction: DisposeAction<TF_Buffer> := aHandle->TF_DeleteBuffer(aHandle);
-    fManaged: Boolean := true; // Whether buffer managed by this class.
     fNumBytes: UInt64 := 0;
-    fDisposed: Boolean := false;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if (assigned(fData) and fManaged) then begin
-        free(fData);
-      end;
-
-      inherited Dispose(aDisposing);
-    end;
+    fOnDispose: DisposeAction<TF_Buffer> := aHandle->TF_DeleteBuffer(aHandle);
   public
+    class method DeallocateBuffer(aData: ^Void; aSize: UInt64);
+    begin
+      free(aData);
+    end;
+
     constructor withFile(aFile: NotNull<String>);
     begin
       var buf_bytes := Helper.ReadBytesFromFile(aFile);
@@ -229,10 +217,9 @@ type
       var buf_handle := TF_NewBuffer();
       buf_handle^.data := fData;
       buf_handle^.length := fNumBytes;
-      buf_handle^.data_deallocator := nil;
+      buf_handle^.data_deallocator := @DeallocateBuffer;
 
-      fManaged := true;
-      inherited constructor withHandle(buf_handle) OnDispose(fDisposeAction);
+      inherited constructor withHandle(buf_handle) OnDispose(fOnDispose);
     end;
 
     constructor withString(const aProtoBuf: NotNull<String>);
@@ -240,10 +227,16 @@ type
       var proto_len := lstrlenA(aProtoBuf.ToAnsiChars(true));
       var buf_handle: ^TF_Buffer := TF_NewBufferFromString(aProtoBuf.ToAnsiChars, proto_len);
 
-      fManaged := false;
       fData := buf_handle^.data;
       fNumBytes := buf_handle^.length;
-      inherited constructor withHandle(buf_handle) OnDispose(fDisposeAction);
+      inherited constructor withHandle(buf_handle) OnDispose(fOnDispose);
+    end;
+
+    constructor withHandle(aHandle: ^TF_Buffer);
+    begin
+      fData := aHandle^.data;
+      fNumBytes := aHandle^.length;
+      inherited constructor withHandle(aHandle) OnDispose(fOnDispose);
     end;
 
     method ToArray: array of Byte;
@@ -263,26 +256,10 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Operation = public class(TensorFlowHandledObject<TF_Operation>)
+  Operation = public class(TensorFlowObject<TF_Operation>)
   private
     fName: String;
     fGraph: Graph;
-    fDisposed: Boolean := false;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if aDisposing then begin
-        //
-      end;
-
-      inherited Dispose(aDisposing);
-    end;
   public
     constructor withHandle(aHandle: ^TF_Operation) Name(aName: NotNull<String>) Graph(aGraph: NotNull<Graph>);
     begin
@@ -306,7 +283,7 @@ type
       end;
   end;
 
-  OperationList = public class(TensorFlowHandledObjectList<Operation>)
+  OperationList = public class(TensorFlowObjectList<Operation>)
   public
     constructor withCapacity(aCapacity: Integer);
     begin
@@ -320,27 +297,11 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  OperationDescription = public class(TensorFlowHandledObject<TF_OperationDescription>)
+  OperationDescription = public class(TensorFlowObject<TF_OperationDescription>)
   private
     fGraph: Graph;
     fOpType: String;
     fOperName: String;
-    fDisposed: Boolean := false;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if aDisposing then begin
-        //
-      end;
-
-      inherited Dispose(aDisposing);
-    end;
   public
     constructor withGraph(aGraph: NotNull<Graph>) OpType(aType: NotNull<String>)
       OpName(aName: NotNull<String>);
@@ -534,24 +495,10 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Status = public class(TensorFlowHandledObject<TF_Status>)
-  private
-    fDisposed: Boolean := false;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if aDisposing then begin
-        //
-      end;
-
-      inherited Dispose(aDisposing);
-    end;
+  Status = public class(TensorFlowObject<TF_Status>)    
+  public
+    [ThreadLocal] 
+    class var &Default: Status := new Status;
   public
     constructor;
     begin
@@ -565,6 +512,11 @@ type
         TF_SetStatus(Handle, aCode, aMsg.ToAnsiChars(true))
       else
         TF_SetStatus(Handle, aCode, nil);
+    end;
+
+    method ToString: String; override;
+    begin
+      exit $'[Status: Code={Helper.TFCodeToString(Code)}, Message={Message}]';
     end;
 
     class method ForwardOrCreate(aIncoming: Status): Status;
@@ -589,7 +541,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Scope = public class(TensorFlowDisposableObject)
+  Scope = public class(TensorFlowDisposable)
   public
     type ScopeRestoreAction = block(const aScopeToRestore: NotNull<String>);
   private
@@ -625,63 +577,39 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Shape = public class(TensorFlowDisposableObject)
+  Shape = public class(TensorFlowDisposable)
   private
-    fDims: ^Int64;
+    fDims: array of Int64;
     fNumDims: Int32;
-    fDisposed: Boolean := false;
     fSize: UInt64;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if aDisposing then begin
-      end;
-
-      free(fDims);
-      inherited Dispose(aDisposing);
-    end;
   public
     constructor withDims(aDims: array of Int64); // aDims can be nil.
     begin
       fNumDims := if assigned(aDims) then aDims.Length else 0;
-      var numBytes := sizeOf(int64_t) * fNumDims;
+      fDims := aDims;
 
-      if numBytes > 0 then begin
-        fDims := ^Int64(malloc(numBytes));
-        memcpy(fDims, aDims, numBytes);
+      if NumDims> 0 then begin
         fSize := 1;
-        for I: Integer := 0 to fNumDims - 1 do fSize := fSize * aDims[I];
+        for I: Integer := 0 to fNumDims - 1 do fSize := fSize * fDims[I];
       end else begin
-        fDims := nil;
         fSize := 1;
       end;
     end;
 
     method ToArray: array of Int64;
     begin
-      if assigned(fDims) then begin
-        result := new Int64[NumDims];
-        memcpy(result, fDims, sizeOf(Int64) * NumDims);
-      end else begin
-        result := nil;
-      end;
+      result := fDims;
     end;
 
     method ToString: String; override;
     begin
       var dims_str: String := '';
-      for I: Integer := 0 to NumDims - 1 do begin
+      for I: Integer := 0 to fNumDims - 1 do begin
         dims_str :=
-          if (I < NumDims - 1) then
-            dims_str + $'Dimension({Dim[I]}), '
+          if (I < fNumDims - 1) then
+            dims_str + $'Dimension({fDims[I]}), '
           else
-            dims_str + $'Dimension({Dim[I]})';
+            dims_str + $'Dimension({fDims[I]})';
       end;
       result := $'TensorShape([{dims_str}])';
     end;
@@ -693,10 +621,10 @@ type
 
     property Dim[aIndex: Int32]: Int64
       read begin
-        if (NumDims > 0) and (0 <= aIndex < NumDims) then begin
+        if (fNumDims > 0) and (0 <= aIndex < fNumDims) then begin
           result := fDims[aIndex]
         end else begin
-          raise new InvalidShapeDimIndexException(aIndex, NumDims);
+          raise new InvalidShapeDimIndexException(aIndex, fNumDims);
         end;
       end;
 
@@ -704,10 +632,7 @@ type
       read begin
         result := fNumDims;
       end;
-    /// <summary>
-    /// Total number of elements that a tensor of this shape contains.
-    /// </summary>
-    /// <value></value>
+
     property Size: UInt64
       read begin
         result := fSize;
@@ -715,26 +640,10 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Output = public class(TensorFlowDisposableObject)
+  Output = public class(TensorFlowDisposable)
   private
     fIndex: Integer;
     fOper: Operation;
-    fDisposed: Boolean := false;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if aDisposing then begin
-        //
-      end;
-
-      inherited Dispose(aDisposing);
-    end;
   public
     constructor withOp(aOp: NotNull<Operation>) Index(aIndex: Integer = 0);
     begin
@@ -775,26 +684,9 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  OutputList = public class(TensorFlowDisposableObjectList<Output>)
-  private
-    fDisposed: Boolean := false;
+  OutputList = public class(TensorFlowDisposableList<Output>)
   protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if aDisposing then begin
-        //
-      end;
-
-      inherited Dispose(aDisposing);
-    end;
-
-    method GetTFOutputs: array of TF_Output;
+    method ConvertToTFOutputs: array of TF_Output;
     begin
       if fList.Count = 0 then exit nil;
       result := new TF_Output[fList.Count];
@@ -805,7 +697,7 @@ type
   public
     method AsTFOutputs: array of TF_Output;
     begin
-      result := GetTFOutputs;
+      result := ConvertToTFOutputs;
     end;
   end;
 
@@ -813,12 +705,12 @@ type
   public
     method AsTFInputs: array of TF_Output;
     begin
-      result := GetTFOutputs;
+      result := ConvertToTFOutputs;
     end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Graph = public partial class(TensorFlowHandledObject<TF_Graph>)
+  Graph = public partial class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
@@ -951,7 +843,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  TensorData = public class(TensorFlowDisposableObject)
+  TensorData = public class(TensorFlowDisposable)
   private
     fDisposed: Boolean := false;
   protected
@@ -1124,7 +1016,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Tensor = public class(TensorFlowHandledObject<TF_Tensor>)
+  Tensor = public class(TensorFlowObject<TF_Tensor>)
   private
     fData: TensorData;
     fDisposed: Boolean := false;
@@ -1485,7 +1377,7 @@ type
       end;
   end;
 
-  TensorList = public class(TensorFlowHandledObjectList<Tensor>)
+  TensorList = public class(TensorFlowObjectList<Tensor>)
   public
     constructor withCapacity(aCapacity: Integer);
     begin
@@ -1499,7 +1391,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Session = public class(TensorFlowHandledObject<TF_Session>)
+  Session = public class(TensorFlowObject<TF_Session>)
   private
     fGraph: Graph:= nil; // Created in constructor.
     fRunner: SessionRunner := nil; // Delayed creation upon access.
@@ -1583,24 +1475,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  SessionOptions = public class(TensorFlowHandledObject<TF_SessionOptions>)
-  private
-    fDisposed: Boolean := false;
-  protected
-    method Dispose(aDisposing: Boolean); override;
-    begin
-      if fDisposed then begin
-        exit;
-      end else begin
-        fDisposed := true;
-      end;
-
-      if aDisposing then begin
-        //
-      end;
-
-      inherited Dispose(aDisposing);
-    end;
+  SessionOptions = public class(TensorFlowObject<TF_SessionOptions>)
   public
     constructor;
     begin
@@ -1625,7 +1500,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  SessionRunnerContext nested in SessionRunner = private class(TensorFlowDisposableObject)
+  SessionRunnerContext nested in SessionRunner = private class(TensorFlowDisposable)
   private
     fInputs: InputList := new InputList;
     fInputValues: TensorList := new TensorList;
@@ -1673,7 +1548,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  SessionRunner = public class(TensorFlowDisposableObject)
+  SessionRunner = public class(TensorFlowDisposable)
   private
     fSession: Session := nil; // Not created by SessionRunner.
     fContext: SessionRunnerContext := new SessionRunnerContext;
@@ -1767,6 +1642,50 @@ type
         end;
       end;
     end;
+  end;
+
+  Environment = public static class
+  private
+    method CheckOsBitSize; static;
+    begin
+      var os_bit := sizeOf(NativeUInt);
+      if os_bit <> sizeOf(UInt64) then begin
+        raise new InvalidOsBitSizeException withDetectedOsBitSize(os_bit * sizeOf(Byte));
+      end;
+    end;
+  public
+    constructor;
+    begin
+      CheckOsBitSize;
+    end;
+
+    method GetAllOpList: Buffer;
+    begin
+      result := new Buffer withHandle(TF_GetAllOpList);
+    end;
+
+    method GetAllRegisteredKernels(aStatus: Status := nil): Buffer;
+    begin
+      using lStatus := new Status do begin
+        var buf_handle := TF_GetAllRegisteredKernels(lStatus.Handle);
+        result := if lStatus.OK then new Buffer withHandle(buf_handle) else nil;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method GetRegisteredKernelsForOp(aOpName: NotNull<String>; aStatus: Status := nil): Buffer;
+    begin
+      using lStatus := new Status do begin
+        var buf_handle := TF_GetRegisteredKernelsForOp(aOpName.ToAnsiChars(true), lStatus.Handle);
+        result := if lStatus.OK then new Buffer withHandle(buf_handle) else nil;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    property Version: String
+      read begin
+        result := String.FromPAnsiChars(TF_Version);
+      end;
   end;
 
 end.
