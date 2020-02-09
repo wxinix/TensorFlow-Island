@@ -91,21 +91,21 @@ const
   ];
 
 type
-  Helper = public class
+  Helper = public static class
   public
-    class method TFDataTypeToString(aDataType: TF_DataType): String;
+    method TFDataTypeToString(aDataType: TF_DataType): String;
     begin
-      var tfDataType := TensorFlowDataType(ord(aDataType));
-      result := tfDataType.ToString;
+      var dtype := TensorFlowDataType(ord(aDataType));
+      result := dtype.ToString;
     end;
 
     class method TFCodeToString(aCode: TF_Code): String;
     begin
-      var tfCode := TensorFlowCode(ord(aCode));
-      result := tfCode.ToString;
+      var code := TensorFlowCode(ord(aCode));
+      result := code.ToString;
     end;
 
-    class method ToTFDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): TF_DataType;
+    method ToTFDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): TF_DataType;
     begin
       case aType.Code of
         TypeCodes.Boolean: result := TF_DataType.TF_BOOL;
@@ -129,7 +129,7 @@ type
       end;
     end;
 
-    class method ReadBytesFromFile(aFile: not nullable String): array of Byte;
+    method ReadBytesFromFile(aFile: not nullable String): array of Byte;
     begin
       if not File.Exists(aFile) then begin
         raise new BufferFileNotExistException(aFile);
@@ -145,7 +145,7 @@ type
       end;
     end;
 
-    class method EncodeString(const aValue: NotNull<String>): String;
+    method EncodeString(const aValue: NotNull<String>): String;
     begin
       var src := aValue.ToAnsiChars(false); // Do not take care the case aValue empty.
       var src_len := aValue.Length;
@@ -162,7 +162,7 @@ type
       end;
     end;
 
-    class method DecodeString(const aValue: NotNull<String>): String;
+    method DecodeString(const aValue: NotNull<String>): String;
     begin
       var src := aValue.ToAnsiChars;
       var src_len := aValue.Length;
