@@ -3,6 +3,8 @@ RemObjects Island platform bindings for TensorFlow C API v1.15.0.
 
 TensorFlow-Island is a high-level abstraction of TensorFlow C-APIs, in several modern languages: Swift, Oxygene, Java, Go and C#.  It is dependent on RemObjects Elements LLVM-based Island platform compilers, genenating CPU-native code for machine-learning applications on Windows, Linux, and MacOS. 
 
+TensorFlow-Island is inspired by TensorFlow4Delphi (https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is heavily infuenced by TensorFlowSharp https://github.com/migueldeicaza/TensorFlowSharp. Special thanks to the authors and contributors of these two projects.
+
 # Difference with other TensorFlow bindings
 The difference between TensorFlow-Island and other wellknown TensorFlow bindings, for example, TensorFlow.NET (https://github.com/SciSharp/TensorFlow.NET) is:
 - Multiple programming language support, including Oxygene, Swift, Java, Go, and C#, thanks to RemObjects LLVM-based Island platform compilers;
