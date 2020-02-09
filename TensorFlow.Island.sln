@@ -2,13 +2,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.ApiUtils", "Projects\Utils\TensorFlow.Island.ApiUtils.elements", "{7D05CE55-4854-4BB2-82BC-C796CA35088E}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "ApiUtils", "Projects\Utils\ApiUtils.elements", "{7D05CE55-4854-4BB2-82BC-C796CA35088E}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Aspects", "Projects\Aspects\TensorFlow.Island.Aspects.elements", "{50D60A44-30E4-42B2-9C89-9FB13797C1AE}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Aspects", "Projects\Aspects\Aspects.elements", "{50D60A44-30E4-42B2-9C89-9FB13797C1AE}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Classes", "Projects\Classes\TensorFlow.Island.Classes.elements", "{93B81566-E004-4BD8-9525-336A904B0F64}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Classes", "Projects\Classes\Classes.elements", "{93B81566-E004-4BD8-9525-336A904B0F64}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorFlow.Island.Tests", "Projects\Tests\TensorFlow.Island.Tests.elements", "{49DBEAD5-5983-42D8-B7E2-2FE215653756}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Tests", "Projects\Tests\Tests.elements", "{49DBEAD5-5983-42D8-B7E2-2FE215653756}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpGenerator", "Projects\OpGenerator\OpGenerator.csproj", "{700E5928-3D5D-4B54-AD4D-BC48E79E389E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.Deploy.0 = Debug
 		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.ActiveCfg = Release
 		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.Build.0 = Release
+		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
