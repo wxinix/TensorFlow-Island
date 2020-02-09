@@ -31,7 +31,7 @@ type
      type AttributeArray = NotNull<array of Attribute>;
      type InputArray = NotNull<array of NotNull<Output>>;
   private
-    method CreateOp(const aOpType, aOpName: NotNull<String>; const aInputs: InputArray = []; 
+    method CreateOp(const aOpType, aOpName: NotNull<String>; const aInputs: InputArray = [];
       const aAttrs: AttributeArray = []; const aInputList: InputArray = []): Tuple of (Operation, Output);
     begin
       var lOpDesc := new OperationDescription withGraph(self) OpType(aOpType)
@@ -292,7 +292,7 @@ type
     begin
       const lOpType: String = 'Sin';
       (nil, result) := CreateOp(lOpType, aOpName, [x]);
-    end;    
+    end;
 
     method OpSub(x, y: NotNull<Output>; aOpName: NotNull<String> := ''): Output;
     begin

@@ -131,7 +131,7 @@ type
   TensorFlowHandledObject<T> = public abstract class(TensorFlowDisposableObject, ITensorFlowHandledObject)
   public
     type DisposeAction<T> = block(aHandle: ^T);
-  private    
+  private
     fOnDispose: DisposeAction<T>;
     fHandle: ^T := nil;
     fDisposed: Boolean := false;
@@ -342,14 +342,14 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withGraph(aGraph: NotNull<Graph>) OpType(aType: NotNull<String>) 
+    constructor withGraph(aGraph: NotNull<Graph>) OpType(aType: NotNull<String>)
       OpName(aName: NotNull<String>);
     begin
       fOpType := aType;
       fOperName := aName;
       fGraph := aGraph;
 
-      var op_desc_handle := TF_NewOperation(aGraph.Handle, aType.ToAnsiChars(true), 
+      var op_desc_handle := TF_NewOperation(aGraph.Handle, aType.ToAnsiChars(true),
         aName.ToAnsiChars(true));
       // OnDispose nil, TF_FinishOption will delete OperationDescription.
       inherited constructor withHandle(op_desc_handle) OnDispose(nil);
@@ -492,7 +492,7 @@ type
       TF_SetAttrTypeList(Handle, aName.ToAnsiChars(true), aTypeList, aTypeList.Length);
     end;
 
-    method SetAttrTensor(const aName: NotNull<String>; aTensor: NotNull<Tensor>; 
+    method SetAttrTensor(const aName: NotNull<String>; aTensor: NotNull<Tensor>;
       aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
@@ -616,7 +616,7 @@ type
       inherited Dispose(aDisposing);
     end;
   public
-    constructor withScopeToSave(const aScope: NotNull<String>) 
+    constructor withScopeToSave(const aScope: NotNull<String>)
       RestoreAction(aAction: ScopeRestoreAction);
     begin
       fSavedScope := aScope;
@@ -652,7 +652,7 @@ type
       fNumDims := if assigned(aDims) then aDims.Length else 0;
       var numBytes := sizeOf(int64_t) * fNumDims;
 
-      if numBytes >0 then begin
+      if numBytes > 0 then begin
         fDims := ^Int64(malloc(numBytes));
         memcpy(fDims, aDims, numBytes);
         fSize := 1;
@@ -705,7 +705,7 @@ type
         result := fNumDims;
       end;
     /// <summary>
-    /// Total number of elements that this shape can contain.
+    /// Total number of elements that a tensor of this shape contains.
     /// </summary>
     /// <value></value>
     property Size: UInt64
@@ -806,7 +806,7 @@ type
     method AsTFOutputs: array of TF_Output;
     begin
       result := GetTFOutputs;
-    end; 
+    end;
   end;
 
   InputList = public class(OutputList)
@@ -828,7 +828,7 @@ type
     method MakeUniqueName(const aName: NotNull<String>): String;
     begin
       var seqid := 0;
-      
+
       if fNamesCache.ContainsKey(aName) then begin
         seqid := fNamesCache[aName];
         inc(seqid);
@@ -851,7 +851,7 @@ type
       if aDisposing then begin
         fPendingInitVars.Dispose;
       end;
-      
+
       inherited Dispose(aDisposing);
     end;
   public
@@ -1015,7 +1015,7 @@ type
       fShape := new Shape withDims(lDims);
     end;
 
-    constructor (aBytes: ^Void; aDataType: TF_DataType; aNumBytes: Int64; 
+    constructor (aBytes: ^Void; aDataType: TF_DataType; aNumBytes: Int64;
       aShp: NotNull<Shape>; aManaged: Boolean); private;
     begin
       fBytes := aBytes;
@@ -1024,9 +1024,9 @@ type
       fShape := aShp;
       fManaged := aManaged;
     end;
-     
+
     /// <summary>
-    /// Move the internal data to a new object, while flagging the old object 
+    /// Move the internal data to a new object, while flagging the old object
     /// as disposed. This emulates C++/14 move constructor.
     /// </summary>
     /// <returns></returns>
@@ -1035,7 +1035,7 @@ type
       fDisposed := true;
       result := new TensorData(fBytes, fDataType, fNumBytes, fShape, fManaged);
     end;
-     
+
     property Bytes: ^Void
       read begin
         result := fBytes;
@@ -1077,7 +1077,7 @@ type
     end;
   public
     constructor withValues(aVals: NotNull<array of T>) Dims(aDims: array of Int64);
-    begin     
+    begin
       fDataType := Helper.ToTFDataType(typeOf(T));
       fShape := new Shape withDims(aDims);
       fManaged := true;
@@ -1351,7 +1351,7 @@ type
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     method AsArray<T>: Tuple of (Boolean, array of T);
-    begin   
+    begin
       var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
 
       if not (not IsScalar and valid_type) then begin
@@ -1360,7 +1360,7 @@ type
         if (fData.DataType = TF_DataType.STRING) then begin
           var offsets := new UInt64[fData.Shape.Size];
           memcpy(offsets, fData.Bytes, sizeOf(UInt64) * fData.Shape.Size);
-          
+
           var str_list: List<String> := new List<String>;
           for I: Integer := 0 to offsets.Length - 1 do begin
             var nbytes := if (I <> offsets.Length - 1) then (offsets[I + 1] - offsets[I]) else (fData.NumBytes - offsets[I]);
@@ -1368,7 +1368,7 @@ type
             str := Helper.DecodeString(str);
             str_list.Add(str);
           end;
-      
+
           // From String List to array of String. This is to hush compiler.
           var str_arr: array of T := new T[str_list.Count];
           for I: Integer := 0 to str_list.Count - 1 do begin
@@ -1377,7 +1377,7 @@ type
           result := (true, str_arr);
         end else begin
           var values: array of T := new T[fData.Shape.Size];
-          memcpy(values, fData.Bytes, fData.NumBytes); 
+          memcpy(values, fData.Bytes, fData.NumBytes);
           result := (true, values);
         end;
       end;
@@ -1410,7 +1410,7 @@ type
         end;
       end;
 
-      var str_arr := case fData.DataType of 
+      var str_arr := case fData.DataType of
         TF_DataType.TF_BOOL   : _DoConvertDataToStrings<Boolean>(AsArray<Boolean>()[1]);
         TF_DataType.TF_UINT8  : _DoConvertDataToStrings<Byte>   (AsArray<Byte>   ()[1]);
         TF_DataType.TF_UINT16 : _DoConvertDataToStrings<UInt16> (AsArray<UInt16> ()[1]);
@@ -1437,11 +1437,11 @@ type
         exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
       if not (fData.DataType in cAllowedTypes) then
         exit $'Tensor (dtype={Helper.TFDataTypeToString(fData.DataType)}) cannot print.';
-      
+
       // Convert the tensor data to str_arr. Numerical type will be cast based on aDecimalDigits.
       var (success, str_arr) := ConvertDataToStrings(aDecimalDigits);
       if not success then exit 'Cannot print tensor.';
-      
+
       // Put high_dims item into one line [v_1, v_2, ..,v_high_dim], inserting each into a seperate str_list
       var high_dim := fData.Shape.Dim[fData.Shape.NumDims - 1];
       var str_list := new List<String>(fData.Shape.Size/high_dim);
@@ -1454,7 +1454,7 @@ type
           str := '';
         end;
       end;
-      
+
       // Processt the new str_list: prefix [ and suffix ] with proper white-space.
       for strIndex: Integer := 0 to str_list.Count - 1 do begin
         for dimIndex: Integer := fData.Shape.NumDims - 2 downto 0 do begin
@@ -1463,12 +1463,12 @@ type
           else
             str_list[strIndex] := $'{str_list[strIndex]}  ';
 
-          if ((strIndex + 1) mod fData.Shape.Dim[dimIndex]) =  1 then 
+          if ((strIndex + 1) mod fData.Shape.Dim[dimIndex]) =  1 then
             str_list[strIndex] := $'[ {str_list[strIndex ]}'
           else
             str_list[strIndex] := $'  {str_list[strIndex]}';
         end;
-      end; 
+      end;
 
       // Concat all strings into one string, using line feed.
       result := str_list.JoinedString(#10);
@@ -1733,7 +1733,7 @@ type
       result := Run(aStatus):Item[0]; // May return nil.
     end;
 
-    method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil) 
+    method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil)
       Options(aOpts: Buffer := nil): TensorList;
     begin
       using lStatus := new Status do begin

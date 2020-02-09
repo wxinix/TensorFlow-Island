@@ -76,16 +76,16 @@ type
   TensorFlowDataTypeSet = public set of TF_DataType;
 
 const
-  TensorFlowNumericalTypes: TensorFlowDataTypeSet = 
+  TensorFlowNumericalTypes: TensorFlowDataTypeSet =
   [
     TF_DataType.TF_DOUBLE,
-    TF_DataType.TF_FLOAT, 
-    TF_DataType.TF_INT16, 
-    TF_DataType.TF_INT32, 
-    TF_DataType.TF_INT64, 
-    TF_DataType.TF_INT8, 
-    TF_DataType.TF_FLOAT, 
-    TF_DataType.TF_UINT32, 
+    TF_DataType.TF_FLOAT,
+    TF_DataType.TF_INT16,
+    TF_DataType.TF_INT32,
+    TF_DataType.TF_INT64,
+    TF_DataType.TF_INT8,
+    TF_DataType.TF_FLOAT,
+    TF_DataType.TF_UINT32,
     TF_DataType.TF_UINT64,
     TF_DataType.TF_UINT8
   ];
@@ -176,7 +176,7 @@ type
         end else begin
           raise new StringDecodeException withError(lStatus.Message);
         end;
-      end;    
+      end;
     end;
   end;
 end.
