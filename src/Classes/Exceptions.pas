@@ -53,7 +53,7 @@ type
 
   ObjectDisposedException = public class(Exception)
   public
-    constructor (aObject: TensorFlowDisposableObject);
+    constructor (aObject: TensorFlowDisposable);
     begin
       var name := aObject.GetType.Name;
       var id := aObject.ID;
