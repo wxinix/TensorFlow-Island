@@ -2,9 +2,8 @@
 // Consider using 'partial classes' to extend these types
 // Input: api_def.proto
 
-#pragma warning disable CS1591, CS0612, CS3021
-
-namespace tensorflow
+#pragma warning disable CS1591, CS0612, CS3021, IDE1006
+namespace Tensorflow
 {
 
     [global::ProtoBuf.ProtoContract()]
@@ -17,6 +16,13 @@ namespace tensorflow
         [global::ProtoBuf.ProtoMember(1, Name = @"graph_op_name")]
         [global::System.ComponentModel.DefaultValue("")]
         public string GraphOpName { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(12, Name = @"deprecation_message")]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string DeprecationMessage { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(13, Name = @"deprecation_version")]
+        public int DeprecationVersion { get; set; }
 
         [global::ProtoBuf.ProtoMember(2)]
         public Visibility visibility { get; set; }
@@ -63,7 +69,10 @@ namespace tensorflow
             [global::System.ComponentModel.DefaultValue("")]
             public string Name { get; set; } = "";
 
-            [global::ProtoBuf.ProtoMember(2, Name = @"deprecation_version")]
+            [global::ProtoBuf.ProtoMember(3, Name = @"deprecated")]
+            public bool Deprecated { get; set; }
+
+            [global::ProtoBuf.ProtoMember(4, Name = @"deprecation_version")]
             public int DeprecationVersion { get; set; }
 
         }
@@ -142,4 +151,4 @@ namespace tensorflow
 
 }
 
-#pragma warning restore CS1591, CS0612, CS3021
+#pragma warning restore CS1591, CS0612, CS3021, IDE1006
