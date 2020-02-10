@@ -12,7 +12,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>..\..\Exe\</OutputPath>
+    <OutputPath>.\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <GenerateDebugInfo>True</GenerateDebugInfo>
     <CpuType>x86</CpuType>
@@ -26,7 +26,7 @@
     <ExportAllTypes>True</ExportAllTypes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\Exe\</OutputPath>
+    <OutputPath>.\Bin\</OutputPath>
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
@@ -46,11 +46,11 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\libtensorflow-1.15.0\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TensorFlow.Island.Classes">
-      <HintPath>..\..\libtensorflow-1.15.0\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

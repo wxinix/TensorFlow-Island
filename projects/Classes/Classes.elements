@@ -12,7 +12,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>..\..\libtensorflow-1.15.0\</OutputPath>
+    <OutputPath>..\..\Libs\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <GenerateDebugInfo>True</GenerateDebugInfo>
     <CpuType>x86</CpuType>
@@ -25,7 +25,7 @@
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\libtensorflow-1.15.0\</OutputPath>
+    <OutputPath>..\..\Libs\</OutputPath>
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
@@ -43,7 +43,7 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>..\..\libtensorflow-1.15.0\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TensorFlow.Island.Aspects">

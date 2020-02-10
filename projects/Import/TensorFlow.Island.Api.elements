@@ -10,7 +10,7 @@
     <ImportSearchPaths>.\</ImportSearchPaths>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>..\..\libtensorflow-1.15.0</OutputPath>
+    <OutputPath>..\..\Libs\</OutputPath>
     <EnableAsserts>True</EnableAsserts>
     <Optimize>False</Optimize>
     <GenerateDebugInfo>True</GenerateDebugInfo>
@@ -18,7 +18,7 @@
     <RootNamespace>TensorFlow.Island.Api</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\libtensorflow-1.15.0\</OutputPath>
+    <OutputPath>..\..\Libs\</OutputPath>
     <RootNamespace>TensorFlow.Island.Api</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Target)' == 'Island.Windows' ">
@@ -28,7 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ImportHeader Include="Import.h" />
-    <ImportLinkLibrary Include="..\..\libtensorflow-1.15.0\Windows\x86_64\tensorflow.lib">
+    <ImportLinkLibrary Include="..\..\TensorFlow\tensorflow-r1.15\libtensorflow\cpu-windows-x86-64\lib\tensorflow.lib">
       <Target>Island.Windows</Target>
     </ImportLinkLibrary>
   </ItemGroup>
