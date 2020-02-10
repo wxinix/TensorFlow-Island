@@ -8,11 +8,9 @@
 //
 // Authors:
 //   Miguel de Icaza
-//   Wuping Xin
 //
 // Copyright 2017, the year of downfall, Microsoft Inc
-// Copyright 2020, the year of 
-
+//
 #pragma warning disable RECS0063 // Warns when a culture-aware 'StartsWith' call is used by default.
 
 using System;
@@ -22,7 +20,7 @@ using ProtoBuf;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
-using tensorflow;
+using Tensorflow;
 
 class ApiDefMap : IDisposable 
 {
@@ -201,13 +199,12 @@ class OpGenerator
 	// Determines if the specified ArgDef represents a TensorFlow list
 	bool IsListArg (OpDef.ArgDef arg)
 	{
-		return arg.type_list_attr != "" || arg.number_attr != "";
+		return arg.TypeListAttr != "" || arg.NumberAttr != "";
 	}
 
 	// 
 	// These values are the result of calling SetupArguments
 	//
-	Dictionary<string, bool> inferred_input_args;
 	List<OpDef.AttrDef> required_attrs, optional_attrs;
 	bool have_return_value;
 
@@ -219,23 +216,23 @@ class OpGenerator
 		required_attrs = new List<OpDef.AttrDef> ();
 		optional_attrs = new List<OpDef.AttrDef> ();
 
-		foreach (var argdef in def.input_arg) {
-			if (argdef.type_attr != "")
-				inferred_input_args [argdef.type_attr] = true;
-			else if (argdef.type_list_attr != "")
-				inferred_input_args [argdef.type_list_attr] = true;
-			if (argdef.number_attr != "")
-				inferred_input_args [argdef.number_attr] = true;
+		foreach (var argdef in def.InputArgs) {
+			if (argdef.TypeAttr != "")
+				inferred_input_args [argdef.TypeAttr] = true;
+			else if (argdef.TypeListAttr != "")
+				inferred_input_args [argdef.TypeListAttr] = true;
+			if (argdef.NumberAttr != "")
+				inferred_input_args [argdef.NumberAttr] = true;
 		}
-		foreach (var attr in def.attr) {
-			if (inferred_input_args.ContainsKey (attr.name))
+		foreach (var attr in def.Attrs) {
+			if (inferred_input_args.ContainsKey (attr.Name))
 				continue;
-			if (attr.default_value == null)
+			if (attr.DefaultValue == null)
 				required_attrs.Add (attr);
 			else
 				optional_attrs.Add (attr);
 		}
-		have_return_value = def.output_arg.Count > 0;
+		have_return_value = def.OutputArgs.Count > 0;
 	}
 
 	// Generates arguments:
@@ -246,34 +243,33 @@ class OpGenerator
 	{
 		var sb = new StringBuilder ();
 		string comma = "";
-		foreach (var inarg in def.input_arg) {
+		foreach (var inarg in def.InputArgs) {
 			string type = "TFOutput" + (IsListArg (inarg) ? "[]" : "");
 
-			sb.AppendFormat ($"{comma}{type} {ParamMap (inarg.name)}");
+			sb.AppendFormat ($"{comma}{type} {ParamMap (inarg.Name)}");
 			comma = ", ";
 		}
 		foreach (var attr in required_attrs) {
-			sb.AppendFormat ($"{comma}{CSharpType (attr.type)} {ParamMap (attr.name)}");
+			sb.AppendFormat ($"{comma}{CSharpType (attr.Type)} {ParamMap (attr.Name)}");
 			comma = ", ";
 		}
 
 #if false
 		if (!return_is_tfoutput) {
-			foreach (var arg in def.output_arg) {
+			foreach (var arg in def.OutputArg) {
 				string type = "TFOutput" + (IsListArg (arg) ? "[]" : "");
 
-				sb.AppendFormat ($"{comma}ref {type} {ParamMap (arg.name)}");
+				sb.AppendFormat ($"{comma}ref {type} {ParamMap (arg.Name)}");
 				comma = ", ";
 			}
 		}
 #endif
-		int n = 0;
 		foreach (var attr in optional_attrs) {
-			bool reftype = IsReferenceType (attr.type);
-			var cstype = CSharpType (attr.type);
+			bool reftype = IsReferenceType (attr.Type);
+			var cstype = CSharpType (attr.Type);
 			var cstypesuffix = reftype ? "" : "?";
 
-			sb.AppendFormat ($"{comma}{cstype}{cstypesuffix} {attr.name} = null");
+			sb.AppendFormat ($"{comma}{cstype}{cstypesuffix} {attr.Name} = null");
 			comma = ", ";
 		}
 		if (sb.Length != 0)
@@ -337,7 +333,7 @@ class OpGenerator
 	// Produces the C# inline documentation
 	void GenDocs (OpDef oper)
 	{
-		var api = apimap.Get (oper.name);
+		var api = apimap.Get (oper.Name);
 		p ("/// <summary>");
 		Comment (api.Summary);
 		p ("/// </summary>");
@@ -348,40 +344,40 @@ class OpGenerator
 		}
 #if DOCS
 		if (!return_is_tfoutput) {
-			foreach (var attr in oper.output_arg) {
+			foreach (var attr in oper.OutputArg) {
 				if (String.IsNullOrEmpty (attr.description))
 					continue;
-				p ($"/// <param name=\"{ParamMap (attr.name)}\">");
+				p ($"/// <param name=\"{ParamMap (attr.Name)}\">");
 				Comment (attr.description);
 				p ($"/// </param>");
 			}
 		}
 #endif
 		p ("/// <param name=\"operName\">");
-		p ($"///   If specified, the created operation in the graph will be this one, otherwise it will be named '{oper.name}'.");
+		p ($"///   If specified, the created operation in the graph will be this one, otherwise it will be named '{oper.Name}'.");
 		p ("/// </param>");
 		foreach (var attr in optional_attrs) {
-			p ($"/// <param name=\"{ParamMap (attr.name)}\">");
+			p ($"/// <param name=\"{ParamMap (attr.Name)}\">");
 			Comment ("Optional argument");
 
-			Comment (api.Attrs.Where (x=>x.Name == attr.name).FirstOrDefault ().Description);
+			Comment (api.Attrs.Where (x=>x.Name == attr.Name).FirstOrDefault ().Description);
 			p ($"/// </param>");
 		}
 		foreach (var attr in required_attrs) {
-			p ($"/// <param name=\"{ParamMap (attr.name)}\">");
-			Comment (api.Attrs.Where (x=>x.Name == attr.name).FirstOrDefault ().Description);
+			p ($"/// <param name=\"{ParamMap (attr.Name)}\">");
+			Comment (api.Attrs.Where (x=>x.Name == attr.Name).FirstOrDefault ().Description);
 			p ($"/// </param>");
 		}
 		p ($"/// <returns>");
 		if (have_return_value) {
-			if (oper.output_arg.Count == 1) {
+			if (oper.OutputArgs.Count == 1) {
 				Comment (api.OutArgs.First ().Description);
 				Comment ("The TFOperation can be fetched from the resulting TFOutput, by fetching the Operation property from the result.");
 			} else {
 				Comment ("Returns a tuple with multiple values, as follows:");
-				foreach (var arg in oper.output_arg) {
-					var oapi = api.OutArgs.Where (x => x.Name == arg.name).FirstOrDefault ();
-					Comment (ParamMap (arg.name) + ": " + oapi.Description);
+				foreach (var arg in oper.OutputArgs) {
+					var oapi = api.OutArgs.Where (x => x.Name == arg.Name).FirstOrDefault ();
+					Comment (ParamMap (arg.Name) + ": " + oapi.Description);
 				}
 
 				Comment ("The TFOperation can be fetched from any of the TFOutputs returned in the tuple values, by fetching the Operation property.");
@@ -448,32 +444,32 @@ class OpGenerator
 		SetupArguments (oper);
 		GenDocs (oper);
 
-		var name = oper.name;
+		var name = oper.Name;
 		string retType;
 
 		if (have_return_value) {
-			if (oper.output_arg.Count > 1) {
+			if (oper.OutputArgs.Count > 1) {
 				var rb = new StringBuilder ("(");
-				foreach (var arg in oper.output_arg) {
-					rb.AppendFormat ("TFOutput{0} {1}, ", IsListArg (arg) ? "[]" : "", ParamMap (arg.name));
+				foreach (var arg in oper.OutputArgs) {
+					rb.AppendFormat ("TFOutput{0} {1}, ", IsListArg (arg) ? "[]" : "", ParamMap (arg.Name));
 				}
 				rb.Remove (rb.Length - 2, 2);
 				rb.Append (")");
 				retType = rb.ToString ();
 			} else 
-				retType = "TFOutput" + (IsListArg (oper.output_arg.First ()) ? "[]" : "");
+				retType = "TFOutput" + (IsListArg (oper.OutputArgs.First ()) ? "[]" : "");
 		} else
 			retType = "TFOperation";
 		
 		p ($"public {retType} {name} ({FillArguments(oper)}string operName = null)");
 		pi ("{");
-		bool needStatus = required_attrs.Concat (optional_attrs).Any (attr => attr.type.Contains ("TFTensor"));
-		p ($"var desc = new TFOperationDesc (this, \"{oper.name}\", MakeName (\"{oper.name}\", operName));");
-		foreach (var arg in oper.input_arg) {
+		bool needStatus = required_attrs.Concat (optional_attrs).Any (attr => attr.Type.Contains ("TFTensor"));
+		p ($"var desc = new TFOperationDesc (this, \"{oper.Name}\", MakeName (\"{oper.Name}\", operName));");
+		foreach (var arg in oper.InputArgs) {
 			if (IsListArg (arg))
-				p ($"desc.AddInputs ({ParamMap (arg.name)});");
+				p ($"desc.AddInputs ({ParamMap (arg.Name)});");
 			   else
-				p ($"desc.AddInput ({ParamMap (arg.name)});");
+				p ($"desc.AddInput ({ParamMap (arg.Name)});");
 		}
 
 		pi ("foreach ( TFOperation control in CurrentDependencies )");
@@ -483,46 +479,46 @@ class OpGenerator
 		// If we have attributes
 		if (required_attrs.Count > 0 || optional_attrs.Count > 0) {
 			foreach (var attr in required_attrs) {
-				SetAttribute (attr.type, attr.name, ParamMap (attr.name));
+				SetAttribute (attr.Type, attr.Name, ParamMap (attr.Name));
 			}
 
 			foreach (var attr in optional_attrs) {
-				var reftype = IsReferenceType (attr.type);
-				var csattr = ParamMap (attr.name);
+				var reftype = IsReferenceType (attr.Type);
+				var csattr = ParamMap (attr.Name);
 				if (reftype)
 					pi ($"if ({csattr} != null)");
 				else
 					pi ($"if ({csattr}.HasValue)");
-				SetAttribute (attr.type, attr.name, csattr + (reftype ? "" : ".Value"));
+				SetAttribute (attr.Type, attr.Name, csattr + (reftype ? "" : ".Value"));
 				pd ("");
 
 			}
 		}
 
 		p ("var op = desc.FinishOperation ();");
-		if (oper.output_arg.Count () > 0)
+		if (oper.OutputArgs.Count () > 0)
 			p ("int _idx = 0;");
-		if (oper.output_arg.Any (x => IsListArg (x)))
+		if (oper.OutputArgs.Any (x => IsListArg (x)))
 			p ("int _n = 0;");
-		foreach (var arg in oper.output_arg) {
+		foreach (var arg in oper.OutputArgs) {
 			if (IsListArg (arg)) {
 				var outputs = new StringBuilder ();
-				p ($"_n = op.OutputListLength (\"{ParamMap (arg.name)}\");");
-				p ($"var {ParamMap (arg.name)} = new TFOutput [_n];");
+				p ($"_n = op.OutputListLength (\"{ParamMap (arg.Name)}\");");
+				p ($"var {ParamMap (arg.Name)} = new TFOutput [_n];");
 				pi ("for (int i = 0; i < _n; i++)");
-				p ($"{ParamMap (arg.name)} [i] = new TFOutput (op, _idx++);");
+				p ($"{ParamMap (arg.Name)} [i] = new TFOutput (op, _idx++);");
 				pd ("");
 			} else {
-				p ($"var {ParamMap (arg.name)} = new TFOutput (op, _idx++);");
+				p ($"var {ParamMap (arg.Name)} = new TFOutput (op, _idx++);");
 			}
 		}
 
 		if (have_return_value) {
-			if (oper.output_arg.Count == 1) {
-				p ($"return {ParamMap (oper.output_arg.First ().name)};");
+			if (oper.OutputArgs.Count == 1) {
+				p ($"return {ParamMap (oper.OutputArgs.First ().Name)};");
 			} else {
 				;
-				p ("return (" + oper.output_arg.Select (x => ParamMap (x.name)).Aggregate ((i, j) => (i + ", " + j)) + ");");
+				p ("return (" + oper.OutputArgs.Select (x => ParamMap (x.Name)).Aggregate ((i, j) => (i + ", " + j)) + ");");
 			}
 		} else {
 			p ("return op;");
@@ -574,37 +570,37 @@ class OpGenerator
 
 		pi ("namespace TensorFlow {");
 		pi ("public partial class TFGraph {");
-		foreach (var oper in (from o in operations orderby o.name select o)){
+		foreach (var oper in (from o in operations orderby o.Name select o)){
 			// Skip internal operations
-			if (oper.name.StartsWith ("_"))
+			if (oper.Name.StartsWith ("_"))
 				continue;
 
 			// Ignore functions where we lack a C# type mapping
-			if (oper.attr.Any (attr => CSharpType (attr.type) == null)) {
-				var attr = oper.attr.First (a => CSharpType (a.type) == null);
+			if (oper.Attrs.Any (attr => CSharpType (attr.Type) == null)) {
+				var attr = oper.Attrs.First (a => CSharpType (a.Type) == null);
 
-				Console.WriteLine ($"SkipTYPE: {oper.name} due to attribute ({attr.type} {attr.name}) lacking a mapping to C#");
+				Console.WriteLine ($"SkipTYPE: {oper.Name} due to attribute ({attr.Type} {attr.Name}) lacking a mapping to C#");
 				continue;
 			}
 
 #if false
 			// Ignore reference types as well (per go's binding)
 			if (oper.input_arg.Any (ia => ia.is_ref)) {
-				var pars = String.Join (", ", oper.input_arg.Where (x => x.is_ref).Select (x => $"{x.type} {x.name}"));
-				Console.WriteLine ($"SkipInREF: {oper.name} parameters with is_ref: {pars}");
+				var pars = String.Join (", ", oper.input_arg.Where (x => x.is_ref).Select (x => $"{x.Type} {x.Name}"));
+				Console.WriteLine ($"SkipInREF: {oper.Name} parameters with is_ref: {pars}");
 				continue;
 			}
 
 			// Ignore reference types as well (per go's binding)
-			if (oper.output_arg.Any (ia => ia.is_ref)) {
-				var pars = String.Join (", ", oper.output_arg.Where (x => x.is_ref).Select (x => $"{x.type} {x.name}"));
-				var all = String.Join (", ", oper.input_arg.Select (x => $"{x.type} {x.name}"));
-				Console.WriteLine ($"SkipOutREF: {oper.name} parameters with is_ref: {pars} all: {all}");
+			if (oper.OutputArg.Any (ia => ia.is_ref)) {
+				var pars = String.Join (", ", oper.OutputArg.Where (x => x.is_ref).Select (x => $"{x.Type} {x.Name}"));
+				var all = String.Join (", ", oper.input_arg.Select (x => $"{x.Type} {x.Name}"));
+				Console.WriteLine ($"SkipOutREF: {oper.Name} parameters with is_ref: {pars} all: {all}");
 
 				continue;
 			}
 #endif
-			var def = apimap.Get (oper.name);
+			var def = apimap.Get (oper.Name);
 
 			// Undocumented operation, perhaps we should not surface
 			if (def.Summary == "")
@@ -651,7 +647,7 @@ class OpGenerator
 		if (Marshal.SizeOf (typeof (IntPtr)) != 8)
 			throw new Exception ("Need to run in 64");
 		if (args.Length == 0)
-			args = new string [] { "/DEVLIBS/tensorflow/tensorflow/core/api_def/base_api" };
+			args = new string [] { "../../../TensorFlow/tensorflow-r1.15/tensorflow/core/api_def/base_api" };
 
 
 

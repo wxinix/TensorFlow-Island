@@ -76,10 +76,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api_def.cs" />
     <Compile Include="OpGenerator.cs" />
-    <Compile Include="op_defs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoGen\api_def.cs" />
+    <Compile Include="ProtoGen\attr_value.cs" />
+    <Compile Include="ProtoGen\op_def.cs" />
+    <Compile Include="ProtoGen\resource_handle.cs" />
+    <Compile Include="ProtoGen\tensor.cs" />
+    <Compile Include="ProtoGen\tensor_shape.cs" />
+    <Compile Include="ProtoGen\types.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
