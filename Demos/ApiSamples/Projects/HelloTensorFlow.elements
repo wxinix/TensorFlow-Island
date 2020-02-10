@@ -18,14 +18,14 @@
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <OutputPath>..\Exe\</OutputPath>
+    <OutputPath>..\Bin\</OutputPath>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <OutputPath>..\Exe\</OutputPath>
+    <OutputPath>..\Bin\</OutputPath>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
@@ -33,7 +33,7 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>..\..\..\libtensorflow-1.15.0\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <HintPath>..\..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
