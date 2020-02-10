@@ -6,3 +6,6 @@ Bin/
 obj/
 exe/
 Packages/
+TensorFlow/tensorflow-r1.15/
+Tools/
+Libs/
