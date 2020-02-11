@@ -1,1 +1,1 @@
-protogen.exe --proto_path=C:\DEVLIBS\TensorFlow-Island\Projects\OpGenerator\ProtoBufs\r1.15\ --csharp_out=C:\DEVLIBS\TensorFlow-Island\Projects\OpGenerator\ProtoGen\  *.proto
+protogen.exe --proto_path=.\ProtoBufs\r1.15\ --csharp_out=.\ProtoGenFiles\  *.proto
