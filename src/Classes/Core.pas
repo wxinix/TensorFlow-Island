@@ -332,6 +332,11 @@ type
       TF_AddInput(Handle, aInput.AsTFOutput);
     end;
 
+    method AddControlInput(aOp: NotNull<Operation>);
+    begin
+      TF_AddControlInput(Handle, aOp.Handle);
+    end;
+
     method AddInputs(aInputList: NotNull<array of Output>);
     begin
       var tfOutput := new TF_Output[aInputList.Length];
@@ -385,7 +390,7 @@ type
         typeOf(TensorFlowDataType).GetHashCode:
           SetAttrType(aName, TF_DataType(ord(aValue as TensorFlowDataType)));
         typeOf(String).GetHashCode:
-          SetAttrStr(aName, aValue as String);
+          SetAttrString(aName, aValue as String);
         typeOf(array of String).GetHashCode:
           SetAttrStringList(aName, aValue as array of String);
       end;
@@ -427,7 +432,7 @@ type
       TF_SetAttrIntList(Handle, aName.ToAnsiChars(true), aList, aList.Length);
     end;
 
-    method SetAttrStr(const aName: NotNull<String>; aValue: NotNull<String>);
+    method SetAttrString(const aName: NotNull<String>; aValue: NotNull<String>);
     begin
       var length := lstrlenA(aValue.ToAnsiChars(true));
       TF_SetAttrString(Handle, aName.ToAnsiChars(true), aValue.ToAnsiChars, length);
@@ -459,17 +464,6 @@ type
       TF_SetAttrTypeList(Handle, aName.ToAnsiChars(true), aTypeList, aTypeList.Length);
     end;
 
-    method SetAttrTensor(const aName: NotNull<String>; aTensor: NotNull<Tensor>;
-      aStatus: Status := nil);
-    begin
-      using lStatus := new Status do begin
-        TF_SetAttrTensor(Handle, aName.ToAnsiChars(true), aTensor.Handle, lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
-      end;
-    end;
-
     method SetAttrShape(const aName: NotNull<String>; aShape: NotNull<Shape>);
     begin
       TF_SetAttrShape(Handle, aName.ToAnsiChars(true), aShape.ToArray, aShape.NumDims);
@@ -489,6 +483,65 @@ type
       TF_SetAttrShapeList(Handle, aName.ToAnsiChars(true), ^^Int64(dims), num_dims, num_shapes);
     end;
 
+    method SetAttrTensor(const aName: NotNull<String>; aTensor: NotNull<Tensor>;
+      aStatus: Status := nil);
+    begin
+      using lStatus := new Status do begin
+        TF_SetAttrTensor(Handle, aName.ToAnsiChars(true), aTensor.Handle, lStatus.Handle);
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    method SetAttrTensorList(const aName: NotNull<String>; aTensorList: NotNull<TensorList>; 
+      aStatus: Status := nil);
+    begin
+      using lStatus := new Status do begin
+        TF_SetAttrTensorList(Handle, aName.ToAnsiChars(true), aTensorList.Handles,
+          aTensorList.Count, lStatus.Handle);
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    method SetAttrTensorShapeProto(const aName: NotNull<String>; aProto: NotNull<array of Byte>;
+      aStatus: Status := nil);
+    begin
+      using lStatus := new Status do begin
+        TF_SetAttrTensorShapeProto(Handle, aName.ToAnsiChars(true), aProto, 
+          aProto.Length, lStatus.Handle);
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    method SetAttrTensorShapeProtoList(const aName: NotNull<String>; aProtos: NotNull<array of array of Byte>; 
+      aProtoLens: NotNull<array of UInt64>; aStatus: Status := nil);
+    begin
+      using lStatus := new Status do begin
+        TF_SetAttrTensorShapeProtoList(Handle, aName.ToAnsiChars(true), 
+          ^^Void(aProtos), aProtoLens, aProtoLens.Length, lStatus.Handle);
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+    
+    method SetAttrValueProto(const aName: NotNull<String>; aProto: NotNull<array of Byte>;
+      aStatus: Status := nil);
+    begin
+      using lStatus := new Status do begin
+        TF_SetAttrValueProto(Handle, aName.ToAnsiChars(true), aProto, 
+          aProto.Length, lStatus.Handle);
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+    
     property OpType: String
       read begin
         result := fOpType;
