@@ -393,6 +393,10 @@ type
           SetAttrString(aName, aValue as String);
         typeOf(array of String).GetHashCode:
           SetAttrStringList(aName, aValue as array of String);
+        typeOf(TensorList).GetHashCode:
+          SetAttrTensorList(aName, aValue as TensorList);
+        typeOf(array of Byte).GetHashCode:
+          SetAttrValueProto(aName, aValue as array of Byte);
       end;
     end;
 
