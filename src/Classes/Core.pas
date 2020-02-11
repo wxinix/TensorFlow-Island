@@ -112,6 +112,11 @@ type
       fList.Add(aItem);
     end;
 
+    method ToArray: array of T;
+    begin
+      result := fList.ToArray;
+    end;
+
     property Count: Integer
       read begin
         result := fList.Count;
@@ -190,7 +195,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Buffer = public class(TensorFlowObject<TF_Buffer>)
+  Buffer = public sealed class(TensorFlowObject<TF_Buffer>)
   private
     fData: ^Void := nil;
     fNumBytes: UInt64 := 0;
@@ -232,7 +237,7 @@ type
       inherited constructor withHandle(buf_handle) OnDispose(fOnDispose);
     end;
 
-    constructor withHandle(aHandle: ^TF_Buffer);
+    constructor withHandle(aHandle: ^TF_Buffer); assembly;
     begin
       fData := aHandle^.data;
       fNumBytes := aHandle^.length;
@@ -256,12 +261,13 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Operation = public class(TensorFlowObject<TF_Operation>)
+  Operation = public sealed class(TensorFlowObject<TF_Operation>)
   private
     fName: String;
     fGraph: Graph;
   public
-    constructor withHandle(aHandle: ^TF_Operation) Name(aName: NotNull<String>) Graph(aGraph: NotNull<Graph>);
+    constructor withHandle(aHandle: ^TF_Operation) Name(aName: NotNull<String>) 
+      Graph(aGraph: NotNull<Graph>); assembly;
     begin
       fGraph := aGraph;
       fName := aName;
@@ -283,7 +289,7 @@ type
       end;
   end;
 
-  OperationList = public class(TensorFlowObjectList<Operation>)
+  OperationList = public sealed class(TensorFlowObjectList<Operation>)
   public
     constructor withCapacity(aCapacity: Integer);
     begin
@@ -297,7 +303,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  OperationDescription = public class(TensorFlowObject<TF_OperationDescription>)
+  OperationDescription = public sealed class(TensorFlowObject<TF_OperationDescription>)
   private
     fGraph: Graph;
     fOpType: String;
@@ -495,7 +501,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Status = public class(TensorFlowObject<TF_Status>)    
+  Status = public sealed class(TensorFlowObject<TF_Status>)    
   public
     [ThreadLocal] 
     class var &Default: Status := new Status;
@@ -506,17 +512,17 @@ type
       inherited constructor withHandle(status_handle) OnDispose(aHandle->TF_DeleteStatus(aHandle));
     end;
 
-    method SetCode(aCode: TF_Code) withMessage(const aMsg: String);
+    method SetCode(aCode: TensorFlowCode) withMessage(const aMsg: String);
     begin
       if not String.IsNullOrEmpty(aMsg) then
-        TF_SetStatus(Handle, aCode, aMsg.ToAnsiChars(true))
+        TF_SetStatus(Handle, TF_Code(ord(aCode)), aMsg.ToAnsiChars(true))
       else
-        TF_SetStatus(Handle, aCode, nil);
+        TF_SetStatus(Handle, TF_Code(ord(aCode)), nil);
     end;
 
     method ToString: String; override;
     begin
-      exit $'[Status: Code={Helper.TFCodeToString(Code)}, Message={Message}]';
+      exit $'[Status: Code={Code.ToString}, Message={Message}]';
     end;
 
     class method ForwardOrCreate(aIncoming: Status): Status;
@@ -526,12 +532,12 @@ type
 
     property OK: Boolean
       read begin
-        result := Code = TF_Code.TF_OK;
+        result := ord(Code) = ord(TF_Code.TF_OK);
       end;
 
-    property Code: TF_Code
+    property Code: TensorFlowCode
       read begin
-        result := TF_GetCode(Handle);
+        result := TensorFlowCode(ord(TF_GetCode(Handle)));
       end;
 
     property Message: String
@@ -541,7 +547,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Scope = public class(TensorFlowDisposable)
+  Scope = public sealed class(TensorFlowDisposable)
   public
     type ScopeRestoreAction = block(const aScopeToRestore: NotNull<String>);
   private
@@ -577,7 +583,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Shape = public class(TensorFlowDisposable)
+  Shape = public sealed class(TensorFlowDisposable)
   private
     fDims: array of Int64;
     fNumDims: Int32;
@@ -640,7 +646,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Output = public class(TensorFlowDisposable)
+  Output = public sealed class(TensorFlowDisposable)
   private
     fIndex: Integer;
     fOper: Operation;
@@ -651,7 +657,7 @@ type
       fOper := aOp;
     end;
 
-    method AsTFOutput: TF_Output;
+    method AsTFOutput: TF_Output; assembly;
     begin
       result.oper  := self.Oper.Handle;
       result.index := self.Index;
@@ -677,40 +683,31 @@ type
         result := fOper;
       end;
 
-    property DataType: TF_DataType
+    property DataType: TensorFlowDataType
       read begin
-        result := TF_OperationOutputType(AsTFOutput);
+        result := TensorFlowDataType(ord(TF_OperationOutputType(AsTFOutput)));
       end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  OutputList = public class(TensorFlowDisposableList<Output>)
-  protected
-    method ConvertToTFOutputs: array of TF_Output;
-    begin
-      if fList.Count = 0 then exit nil;
-      result := new TF_Output[fList.Count];
-      for I: Integer := 0 to fList.Count - 1 do begin
-        result[I] := fList[I].AsTFOutput;
-      end;
-    end;
-  public
+  OutputList = public sealed class(TensorFlowDisposableList<Output>)
+  assembly
     method AsTFOutputs: array of TF_Output;
     begin
-      result := ConvertToTFOutputs;
+      result := Helper.ToArray(self.ToArray);
     end;
   end;
 
-  InputList = public class(OutputList)
-  public
+  InputList = public sealed class(TensorFlowDisposableList<Output>)
+  assembly
     method AsTFInputs: array of TF_Output;
     begin
-      result := ConvertToTFOutputs;
+      result := Helper.ToArray(self.ToArray);
     end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Graph = public partial class(TensorFlowObject<TF_Graph>)
+  Graph = public sealed partial class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
@@ -848,7 +845,7 @@ type
     fDisposed: Boolean := false;
   protected
     fBytes: ^Void;
-    fDataType: TF_DataType;
+    fDataType: TensorFlowDataType;
     fManaged: Boolean;
     fNumBytes: UInt64;
     fShape: Shape;
@@ -886,18 +883,18 @@ type
       // by whoever creates that raw Tensor pointer.
     end;
 
-    constructor withTFTensor(aTensor: NotNull<^TF_Tensor>);
+    constructor withTensorHandle(aTensorHandle: NotNull<^TF_Tensor>); assembly;
     begin
-      fBytes := TF_TensorData(aTensor);
-      fDataType := TF_TensorType(aTensor);
-      fNumBytes := TF_TensorByteSize(aTensor);
+      fBytes := TF_TensorData(aTensorHandle);
+      fDataType := TensorFlowDataType(ord(TF_TensorType(aTensorHandle)));
+      fNumBytes := TF_TensorByteSize(aTensorHandle);
 
-      var lNumDims := TF_NumDims(aTensor);
+      var lNumDims := TF_NumDims(aTensorHandle);
       var lDims: array of Int64;
       if lNumDims > 0 then begin
         lDims := new Int64[lNumDims];
         for I: Integer := 0 to lNumDims - 1 do begin
-          lDims[I] := TF_Dim(aTensor, I);
+          lDims[I] := TF_Dim(aTensorHandle, I);
         end;
       end else begin
         lDims := nil;
@@ -907,7 +904,7 @@ type
       fShape := new Shape withDims(lDims);
     end;
 
-    constructor (aBytes: ^Void; aDataType: TF_DataType; aNumBytes: Int64;
+    constructor (aBytes: ^Void; aDataType: TensorFlowDataType; aNumBytes: Int64;
       aShp: NotNull<Shape>; aManaged: Boolean); private;
     begin
       fBytes := aBytes;
@@ -938,7 +935,7 @@ type
         result := fNumBytes
       end;
 
-    property DataType: TF_DataType
+    property DataType: TensorFlowDataType
       read begin
         result := fDataType
       end;
@@ -949,7 +946,7 @@ type
       end;
   end;
 
-  TensorData<T> = public class(TensorData)
+  TensorData<T> = public sealed class(TensorData)
   private
     fDisposed: Boolean := false;
   protected
@@ -970,7 +967,7 @@ type
   public
     constructor withValues(aVals: NotNull<array of T>) Dims(aDims: array of Int64);
     begin
-      fDataType := Helper.ToTFDataType(typeOf(T));
+      fDataType := Helper.ToTensorFlowDataType(typeOf(T));
       fShape := new Shape withDims(aDims);
       fManaged := true;
 
@@ -978,8 +975,8 @@ type
         raise new InvalidTensorDataSizeException withDataSize(aVals.Length) DimSize(fShape.Size);
       end;
 
-      if fDataType <> TF_DataType.TF_STRING then begin
-        fNumBytes := TF_DataTypeSize(fDataType) * aVals.Length;
+      if fDataType <> TensorFlowDataType.String then begin
+        fNumBytes := TF_DataTypeSize(TF_DataType(ord(fDataType))) * aVals.Length;
         fBytes := malloc(fNumBytes);
         if aVals.Length = 1 then begin
           (^T(fBytes))^ := aVals[0];
@@ -1016,7 +1013,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Tensor = public class(TensorFlowObject<TF_Tensor>)
+  Tensor = public sealed class(TensorFlowObject<TF_Tensor>)
   private
     fData: TensorData;
     fDisposed: Boolean := false;
@@ -1075,7 +1072,7 @@ type
     constructor withData(aData: NotNull<TensorData>);
     begin
       var tensor_handle := TF_NewTensor(
-        aData.DataType,
+        TF_DataType(ord(aData.DataType)),
         aData.Shape.ToArray,
         aData.Shape.NumDims,
         aData.Bytes, // Must be raw bytes; cannot be managed array.
@@ -1091,9 +1088,9 @@ type
       inherited constructor withHandle(tensor_handle) OnDispose(aHandle->TF_DeleteTensor(aHandle));
     end;
 
-    constructor withTFTensor(aTensor: not nullable ^TF_Tensor);
+    constructor withHandle(aHandle: not nullable ^TF_Tensor); assembly;
     begin
-      var lData: TensorData := new TensorData withTFTensor(aTensor);
+      var lData: TensorData := new TensorData withTensorHandle(aHandle);
       constructor withData(lData);
     end;
 
@@ -1220,12 +1217,12 @@ type
     /// <returns></returns>
     method AsScalar<T>: Tuple of (Boolean, nullable T);
     begin
-      var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
+      var valid_type := (fData.DataType = Helper.ToTensorFlowDataType(typeOf(T)) RaiseOnInvalid(false));
 
       if not (IsScalar and valid_type) then begin
         result := (false, nil);
       end else begin
-        if (fData.DataType = TF_DataType.STRING) then begin
+        if (fData.DataType = TensorFlowDataType.String) then begin
           var str: String := Helper.DecodeString(String.FromPAnsiChars(
             ^AnsiChar(^Byte(fData.Bytes) + sizeOf(UInt64)), fData.NumBytes - sizeOf(UInt64)));
           result := (true, T(str));
@@ -1244,12 +1241,12 @@ type
     /// <returns></returns>
     method AsArray<T>: Tuple of (Boolean, array of T);
     begin
-      var valid_type := (fData.DataType = Helper.ToTFDataType(typeOf(T)) RaiseOnInvalid(false));
+      var valid_type := (fData.DataType = Helper.ToTensorFlowDataType(typeOf(T)) RaiseOnInvalid(false));
 
       if not (not IsScalar and valid_type) then begin
         result := (false, nil);
       end else begin
-        if (fData.DataType = TF_DataType.STRING) then begin
+        if (fData.DataType = TensorFlowDataType.String) then begin
           var offsets := new UInt64[fData.Shape.Size];
           memcpy(offsets, fData.Bytes, sizeOf(UInt64) * fData.Shape.Size);
 
@@ -1303,18 +1300,18 @@ type
       end;
 
       var str_arr := case fData.DataType of
-        TF_DataType.TF_BOOL   : _DoConvertDataToStrings<Boolean>(AsArray<Boolean>()[1]);
-        TF_DataType.TF_UINT8  : _DoConvertDataToStrings<Byte>   (AsArray<Byte>   ()[1]);
-        TF_DataType.TF_UINT16 : _DoConvertDataToStrings<UInt16> (AsArray<UInt16> ()[1]);
-        TF_DataType.TF_UINT32 : _DoConvertDataToStrings<UInt32> (AsArray<UInt32> ()[1]);
-        TF_DataType.TF_UINT64 : _DoConvertDataToStrings<UInt64> (AsArray<UInt64> ()[1]);
-        TF_DataType.TF_INT8   : _DoConvertDataToStrings<Int8>   (AsArray<Int8>   ()[1]);
-        TF_DataType.TF_INT16  : _DoConvertDataToStrings<Int16>  (AsArray<Int16>  ()[1]);
-        TF_DataType.TF_INT32  : _DoConvertDataToStrings<Int32>  (AsArray<Int32>  ()[1]);
-        TF_DataType.TF_INT64  : _DoConvertDataToStrings<Int64>  (AsArray<Int64>  ()[1]);
-        TF_DataType.TF_FLOAT  : _DoConvertDataToStrings<Single> (AsArray<Single> ()[1]);
-        TF_DataType.TF_DOUBLE : _DoConvertDataToStrings<Double> (AsArray<Double> ()[1]);
-        TF_DataType.TF_STRING : AsArray<String>()[1];
+        TensorFlowDataType.Bool   : _DoConvertDataToStrings<Boolean>(AsArray<Boolean>()[1]);
+        TensorFlowDataType.UInt8  : _DoConvertDataToStrings<Byte>   (AsArray<Byte>   ()[1]);
+        TensorFlowDataType.UInt16 : _DoConvertDataToStrings<UInt16> (AsArray<UInt16> ()[1]);
+        TensorFlowDataType.UInt32 : _DoConvertDataToStrings<UInt32> (AsArray<UInt32> ()[1]);
+        TensorFlowDataType.UInt64 : _DoConvertDataToStrings<UInt64> (AsArray<UInt64> ()[1]);
+        TensorFlowDataType.Int8   : _DoConvertDataToStrings<Int8>   (AsArray<Int8>   ()[1]);
+        TensorFlowDataType.Int16  : _DoConvertDataToStrings<Int16>  (AsArray<Int16>  ()[1]);
+        TensorFlowDataType.Int32  : _DoConvertDataToStrings<Int32>  (AsArray<Int32>  ()[1]);
+        TensorFlowDataType.Int64  : _DoConvertDataToStrings<Int64>  (AsArray<Int64>  ()[1]);
+        TensorFlowDataType.Float  : _DoConvertDataToStrings<Single> (AsArray<Single> ()[1]);
+        TensorFlowDataType.Double : _DoConvertDataToStrings<Double> (AsArray<Double> ()[1]);
+        TensorFlowDataType.String : AsArray<String>()[1];
       else nil; end;
 
       result := (assigned(str_arr), str_arr);
@@ -1323,12 +1320,12 @@ type
     method Print(const aDecimalDigits: Integer = 1; const aMaxWidth: Integer = 8): String;
     begin
       const cMaxBytes = 1000; // Tensor cannot exceed this limit in order to print.
-      const cAllowedTypes = TensorFlowNumericalTypes + [TF_DataType.STRING, TF_DataType.BOOL];
+      const cAllowedTypes = TensorFlowNumericalTypes + [TensorFlowDataType.String, TensorFlowDataType.Bool];
       // Validate max bytes and allowed types.
       if fData.NumBytes > cMaxBytes then
         exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
       if not (fData.DataType in cAllowedTypes) then
-        exit $'Tensor (dtype={Helper.TFDataTypeToString(fData.DataType)}) cannot print.';
+        exit $'Tensor (dtype={fData.DataType.ToString}) cannot print.';
 
       // Convert the tensor data to str_arr. Numerical type will be cast based on aDecimalDigits.
       var (success, str_arr) := ConvertDataToStrings(aDecimalDigits);
@@ -1391,7 +1388,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Session = public class(TensorFlowObject<TF_Session>)
+  Session = public sealed class(TensorFlowObject<TF_Session>)
   private
     fGraph: Graph:= nil; // Created in constructor.
     fRunner: SessionRunner := nil; // Delayed creation upon access.
@@ -1452,7 +1449,7 @@ type
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Handle));
           result := $'Tensor ("{name}: {aOutput.Index}", ' +
                     $'shape={shp.ToString}, '+
-                    $'dtype={Helper.TFDataTypeToString(aOutput.DataType)} )';
+                    $'dtype={aOutput.DataType.ToString} )';
         end else begin
           result := '';
         end;
@@ -1475,7 +1472,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  SessionOptions = public class(TensorFlowObject<TF_SessionOptions>)
+  SessionOptions = public sealed class(TensorFlowObject<TF_SessionOptions>)
   public
     constructor;
     begin
@@ -1548,7 +1545,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  SessionRunner = public class(TensorFlowDisposable)
+  SessionRunner = public sealed class(TensorFlowDisposable)
   private
     fSession: Session := nil; // Not created by SessionRunner.
     fContext: SessionRunnerContext := new SessionRunnerContext;
@@ -1630,7 +1627,7 @@ type
         if lStatus.OK then begin
           result := new TensorList withCapacity(noutputs);
           for I: Integer := 0 to noutputs - 1 do begin
-            result.Add(new Tensor withTFTensor(output_values[I]));
+            result.Add(new Tensor withHandle(output_values[I]));
           end;
         end else begin
           writeLn($'SessionRunner.Run failed. Code {ord(lStatus.Code)}. {lStatus.Message}');
@@ -1644,7 +1641,7 @@ type
     end;
   end;
 
-  Environment = public static class
+  Environment = public sealed static class
   private
     method CheckOsBitSize; static;
     begin
