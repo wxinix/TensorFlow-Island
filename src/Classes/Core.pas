@@ -879,7 +879,7 @@ type
       // calling TF_DeleteTensor, this user defined deallocator will not be called.
       // In any case, this class will manage the user-allocated memory if it is
       // constructed using constructor withData. If this class is constructed
-      // using constructor withTensor, then the associated data will be managed
+      // using constructor withTensorHandle, then the associated data will be managed
       // by whoever creates that raw Tensor pointer.
     end;
 
@@ -1063,7 +1063,7 @@ type
       end;
 
       if aDisposing then begin
-        fData.Dispose;
+        fData.Dispose; // The internal data gets released here.
       end;
 
       inherited Dispose(aDisposing);
