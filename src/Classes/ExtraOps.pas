@@ -134,7 +134,7 @@ type
       result := OpConst(aValue, aValue.Data.DataType, aOpName);
     end;
 
-    method OpConst(aValue: NotNull<Tensor>; aDataType: TF_DataType; aOpName: NotNull<String> := '')
+    method OpConst(aValue: NotNull<Tensor>; aDataType: TensorFlowDataType; aOpName: NotNull<String> := '')
       : Output; overload;
     begin
       const lOpType: String = 'Const';
@@ -145,7 +145,7 @@ type
         [],
         [
           ('value', aValue),
-          ('dtype', TensorFlowDataType(ord(aDataType)))
+          ('dtype', aDataType)
         ]);
     end;
 
@@ -238,7 +238,7 @@ type
       (nil, result) := CreateOp(lOpType, aOpName, [aStart, aLimit, aDelta]);
     end;
 
-    method OpReadVar(aResource: NotNull<Output>; aDataType: TF_DataType;
+    method OpReadVar(aResource: NotNull<Output>; aDataType: TensorFlowDataType;
       aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'ReadVariableOp';
@@ -262,7 +262,7 @@ type
             if shp.NumDims > 0 then begin
               var arr := new Int32[shp.NumDims];
               for I: Integer := 0 to shp.NumDims - 1 do arr[I] := I;
-              result := OpConst(arr, TF_DataType.TF_INT32);
+              result := OpConst(arr, TensorFlowDataType.Int32);
             end else begin
               result := OpRange(OpConst(0), OpConst(0), OpConst(1));
             end;
@@ -319,7 +319,7 @@ type
       (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
-    method OpVarHandle(aDataType: TF_DataType; aShape: NotNull<Shape>;
+    method OpVarHandle(aDataType: TensorFlowDataType; aShape: NotNull<Shape>;
       aContainer: NotNull<String> := ''; aSharedName: NotNull<String> := '';
       aOpName: NotNull<String> := ''): Output;
     begin
@@ -331,7 +331,7 @@ type
         [
           ('container', aContainer),
           ('shared_name', aSharedName),
-          ('dtype', TensorFlowDataType(ord(aDataType))),
+          ('dtype', aDataType),
           ('shape', aShape)
         ]);
     end;

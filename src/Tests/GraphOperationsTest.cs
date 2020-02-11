@@ -20,7 +20,6 @@
 // SOFTWARE.
 
 using RemObjects.Elements.EUnit;
-using TensorFlow;
 using TensorFlow.Island.Classes;
 
 namespace TensorFlow.Island.Tests

@@ -80,10 +80,9 @@ type
 
   TensorCreateException = class(Exception)
   public
-    constructor(aType: TF_DataType);
+    constructor(aType: TensorFlowDataType);
     begin
-      var typeStr := Helper.TFDataTypeToString(aType);
-      var msg := $'Cannot create tensor for type {typeStr}';
+      var msg := $'Cannot create tensor for type {aType.ToString}';
       inherited constructor(msg);
     end;
   end;
