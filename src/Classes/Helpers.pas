@@ -25,7 +25,7 @@ uses
   TensorFlow.Island.Api;
 
 type
-  TensorFlowDataType = assembly enum
+  TensorFlowDataType = public enum
   (
     Float              = TF_DataType.FLOAT,
     Double             = TF_DataType.DOUBLE,
@@ -52,7 +52,7 @@ type
     UInt64             = TF_DataType.UINT64
   );
 
-  TensorFlowCode = assembly enum
+  TensorFlowCode = public enum
   (
     Ok                 = TF_Code.TF_OK,
     Cancelled          = TF_Code.TF_CANCELLED,
@@ -73,53 +73,50 @@ type
     Unauthenticated    = TF_Code.TF_UNAUTHENTICATED
   );
 
-  TensorFlowDataTypeSet = public set of TF_DataType;
+  TensorFlowDataTypeSet = public set of TensorFlowDataType;
 
 const
   TensorFlowNumericalTypes: TensorFlowDataTypeSet =
   [
-    TF_DataType.TF_DOUBLE,
-    TF_DataType.TF_FLOAT,
-    TF_DataType.TF_INT16,
-    TF_DataType.TF_INT32,
-    TF_DataType.TF_INT64,
-    TF_DataType.TF_INT8,
-    TF_DataType.TF_FLOAT,
-    TF_DataType.TF_UINT32,
-    TF_DataType.TF_UINT64,
-    TF_DataType.TF_UINT8
+    TensorFlowDataType.Double,
+    TensorFlowDataType.Float,
+    TensorFlowDataType.Int8,
+    TensorFlowDataType.Int16,
+    TensorFlowDataType.Int32,
+    TensorFlowDataType.Int64,
+    TensorFlowDataType.UInt8,
+    TensorFlowDataType.UInt16,
+    TensorFlowDataType.UInt32,
+    TensorFlowDataType.UInt64
   ];
 
 type
-  Helper = public static class
+  Helper = assembly static class
   public
-    method TFDataTypeToString(aDataType: TF_DataType): String;
+    method ToArray(aList: not nullable array of Output): array of TF_Output;
     begin
-      var dtype := TensorFlowDataType(ord(aDataType));
-      result := dtype.ToString;
+      if aList.Length = 0 then exit nil;
+      result := new TF_Output[aList.Length];
+      for I: Integer := 0 to aList.Length - 1 do begin
+        result[I] := aList[I].AsTFOutput;
+      end;
     end;
 
-    class method TFCodeToString(aCode: TF_Code): String;
-    begin
-      var code := TensorFlowCode(ord(aCode));
-      result := code.ToString;
-    end;
-
-    method ToTFDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): TF_DataType;
+    method ToTensorFlowDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): TensorFlowDataType;
     begin
       case aType.Code of
-        TypeCodes.Boolean: result := TF_DataType.TF_BOOL;
-        TypeCodes.Byte   : result := TF_DataType.TF_UINT8;
-        TypeCodes.UInt16 : result := TF_DataType.TF_UINT16;
-        TypeCodes.UInt32 : result := TF_DataType.TF_UINT32;
-        TypeCodes.UInt64 : result := TF_DataType.TF_UINT64;
-        TypeCodes.SByte  : result := TF_DataType.TF_INT8;
-        TypeCodes.Int16  : result := TF_DataType.TF_INT16;
-        TypeCodes.Int32  : result := TF_DataType.TF_INT32;
-        TypeCodes.Int64  : result := TF_DataType.TF_INT64;
-        TypeCodes.Single : result := TF_DataType.TF_FLOAT;
-        TypeCodes.Double : result := TF_DataType.TF_DOUBLE;
-        TypeCodes.String : result := TF_DataType.TF_STRING;
+        TypeCodes.Boolean: result := TensorFlowDataType.Bool;
+        TypeCodes.Byte   : result := TensorFlowDataType.UInt8;
+        TypeCodes.UInt16 : result := TensorFlowDataType.UInt16;
+        TypeCodes.UInt32 : result := TensorFlowDataType.UInt32;
+        TypeCodes.UInt64 : result := TensorFlowDataType.UInt64;
+        TypeCodes.SByte  : result := TensorFlowDataType.Int8;
+        TypeCodes.Int16  : result := TensorFlowDataType.Int16;
+        TypeCodes.Int32  : result := TensorFlowDataType.Int32;
+        TypeCodes.Int64  : result := TensorFlowDataType.Int64;
+        TypeCodes.Single : result := TensorFlowDataType.Float;
+        TypeCodes.Double : result := TensorFlowDataType.Double;
+        TypeCodes.String : result := TensorFlowDataType.String;
       else
         if aFlag then begin
           raise new UnSupportedTypeException(aType);
