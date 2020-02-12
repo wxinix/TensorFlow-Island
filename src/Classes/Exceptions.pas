@@ -28,9 +28,25 @@ uses
 type
   BufferFileNotExistException = public class(Exception)
   public
-    constructor (aFile: not nullable String);
+    constructor(aFile: not nullable String);
     begin
       inherited constructor($'Buffer file {aFile} not existing.');
+    end;
+  end;
+
+  DeviceNameAlreadySetException = public class(Exception)
+  public
+    constructor withCurrentDeviceName(aName: String);
+    begin
+      inherited constructor($'Device name already set, existing name {aName}.');
+    end;
+  end;
+
+  DeviceNameEmptyException = public class(Exception)
+  public
+    constructor;
+    begin
+      inherited constructor($'Trying to set an empty device name.');
     end;
   end;
 
@@ -126,6 +142,14 @@ type
     begin
       inherited constructor($'Invalid OS bit size {aSize}. Support 64bit only.');
     end;
+  end;
+
+  LibraryLoadException = public class(Exception)
+  public
+    constructor withFileName(aName: NotNull<String>) Message(aMsg: NotNull<String>);
+    begin
+      inherited constructor($'Cannot load TensorFlow library from {aName}. {aMsg}');
+    end;   
   end;
 
 end.
