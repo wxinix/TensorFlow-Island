@@ -25,6 +25,13 @@ uses
   TensorFlow.Island.Api;
 
 type
+  TensorFlowDeviceType = public enum
+  (
+    CPU,
+    GPU,
+    TPU  
+  );
+  
   TensorFlowDataType = public enum
   (
     Float              = TF_DataType.FLOAT,
@@ -91,6 +98,25 @@ const
   ];
 
 type
+  TensorFlowDeviceAttributes = public class
+  private
+    fName: String;
+    fType: TensorFlowDeviceType;
+    fMemoryLimit: UInt64;
+  public
+    constructor withName(aName: NotNull<String>) &Type(aType: TensorFlowDeviceType) 
+      MemoryLimit(aLimit: UInt64); assembly;
+    begin
+      fName := aName;
+      fType := aType;
+      fMemoryLimit := aLimit;
+    end;
+
+    property Name: String read fName;
+    property &Type: TensorFlowDeviceType read fType;
+    property MemoryLimitBytes: UInt64 read fMemoryLimit;
+  end;
+
   Helper = assembly static class
   public
     method ToArray(aList: not nullable array of Output): array of TF_Output;
