@@ -27,12 +27,12 @@ uses
 type
   Graph = public partial class
   private
-     type Attribute = Tuple of (Name: NotNull<String>, Value: NotNull<Object>);
-     type AttributeArray = NotNull<array of Attribute>;
-     type InputArray = NotNull<array of NotNull<Output>>;
+     type Attr = Tuple of (Name: NotNull<String>, Value: NotNull<Object>);
+     type Attrs = NotNull<array of Attr>;
+     type Inputs = NotNull<array of NotNull<Output>>;
   private
-    method CreateOp(const aOpType, aOpName: NotNull<String>; const aInputs: InputArray = [];
-      const aAttrs: AttributeArray = []; const aInputList: InputArray = []): Tuple of (Operation, Output);
+    method CreateOp(const aOpType, aOpName: NotNull<String>; const aInputs: Inputs = [];
+      const aAttrs: Attrs = []; const aInputList: Inputs = []): Tuple of (Operation, Output);
     begin
       var lOpDesc := new OperationDescription withGraph(self) OpType(aOpType)
         OpName(MakeName(aOpType, aOpName));
@@ -93,7 +93,7 @@ type
       (nil, result) := CreateOp(lOpType, aOpName, [x, y]);
     end;
 
-    method OpAddN(aInputs: InputArray; aOpName: NotNull<String> := ''): Output;
+    method OpAddN(aInputs: Inputs; aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'AddN';
       (nil, result) := CreateOp(lOpType, aOpName, aInputs);
@@ -281,7 +281,7 @@ type
       result := OpSum(aInput, reductionIndices, aKeepDims, aOpName);
     end;
 
-    method OpSave(aFilename: NotNull<Output>; aTensorNames: NotNull<Output>; aData: InputArray;
+    method OpSave(aFilename: NotNull<Output>; aTensorNames: NotNull<Output>; aData: Inputs;
       aOpName: NotNull<String> := ''): Operation;
     begin
       const lOPType: String = 'Save';
