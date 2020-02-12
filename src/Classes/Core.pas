@@ -106,15 +106,15 @@ type
 
   TensorFlowAttrType = public enum
   (
-		String = TF_AttrType.ATTR_STRING,
-		Int = TF_AttrType.ATTR_INT,
-		Float = TF_AttrType.ATTR_FLOAT,
-		Bool = TF_AttrType.ATTR_BOOL,
-		&Type = TF_AttrType.ATTR_TYPE,
-		Shape = TF_AttrType.ATTR_SHAPE,
-		Tensor = TF_AttrType.ATTR_TENSOR,
-		Placeholder = TF_AttrType.ATTR_PLACEHOLDER,
-		Func = TF_AttrType.ATTR_FUNC
+    String             = TF_AttrType.ATTR_STRING,
+    Int                = TF_AttrType.ATTR_INT,
+    Float              = TF_AttrType.ATTR_FLOAT,
+    Bool               = TF_AttrType.ATTR_BOOL,
+    &Type              = TF_AttrType.ATTR_TYPE,
+    Shape              = TF_AttrType.ATTR_SHAPE,
+    Tensor             = TF_AttrType.ATTR_TENSOR,
+    Placeholder        = TF_AttrType.ATTR_PLACEHOLDER,
+    Func               = TF_AttrType.ATTR_FUNC
   );
 
   TensorFlowAttrMetaData = public record
