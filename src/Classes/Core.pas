@@ -30,6 +30,118 @@ uses
 type
   NotNull<T> = public not nullable T;
 
+  TensorFlowDeviceType = public enum
+  (
+    CPU,
+    GPU,
+    TPU  
+  );
+
+  TensorFlowDeviceAttrs = public class
+  private
+    fName: String;
+    fType: TensorFlowDeviceType;
+    fMemoryLimit: UInt64;
+  public
+    constructor withName(aName: NotNull<String>) &Type(aType: TensorFlowDeviceType) 
+      MemoryLimit(aLimit: UInt64); assembly;
+    begin
+      fName := aName;
+      fType := aType;
+      fMemoryLimit := aLimit;
+    end;
+
+    property Name: String read fName;
+    property &Type: TensorFlowDeviceType read fType;
+    property MemoryLimitBytes: UInt64 read fMemoryLimit;
+  end;
+  
+  TensorFlowDataType = public enum
+  (
+    Float              = TF_DataType.FLOAT,
+    Double             = TF_DataType.DOUBLE,
+    Int32              = TF_DataType.INT32,
+    UInt8              = TF_DataType.UINT8,
+    Int16              = TF_DataType.INT16,
+    Int8               = TF_DataType.INT8,
+    String             = TF_DataType.STRING,
+    Complex64          = TF_DataType.COMPLEX64,
+    Int64              = TF_DataType.INT64,
+    Bool               = TF_DataType.BOOL,
+    QInt8              = TF_DataType.QINT8,
+    QUInt8             = TF_DataType.QUINT8,
+    QInt32             = TF_DataType.QINT32,
+    BFloat16           = TF_DataType.BFLOAT16,
+    QInt16             = TF_DataType.QINT16,
+    QUInt16            = TF_DataType.QUINT16,
+    UInt16             = TF_DataType.UINT16,
+    Complex128         = TF_DataType.COMPLEX128,
+    Half               = TF_DataType.HALF,
+    Resource           = TF_DataType.RESOURCE,
+    Variant            = TF_DataType.VARIANT,
+    UInt32             = TF_DataType.UINT32,
+    UInt64             = TF_DataType.UINT64
+  );
+
+  TensorFlowCode = public enum
+  (
+    Ok                 = TF_Code.TF_OK,
+    Cancelled          = TF_Code.TF_CANCELLED,
+    Unknown            = TF_Code.TF_UNKNOWN,
+    InvalidArgument    = TF_Code.TF_INVALID_ARGUMENT,
+    DeadlineExceed     = TF_Code.TF_DEADLINE_EXCEEDED,
+    NotFound           = TF_Code.TF_NOT_FOUND,
+    AlreadyExists      = TF_Code.TF_ALREADY_EXISTS,
+    PermissionDenied   = TF_Code.TF_PERMISSION_DENIED,
+    ResourceExhausted  = TF_Code.TF_RESOURCE_EXHAUSTED,
+    FailedPrecondition = TF_Code.TF_FAILED_PRECONDITION,
+    Aborted            = TF_Code.TF_ABORTED,
+    OutOfRange         = TF_Code.TF_OUT_OF_RANGE,
+    Unimplemented      = TF_Code.TF_UNIMPLEMENTED,
+    Internal           = TF_Code.TF_INTERNAL,
+    Unavailable        = TF_Code.TF_UNAVAILABLE,
+    DataLoss           = TF_Code.TF_DATA_LOSS,
+    Unauthenticated    = TF_Code.TF_UNAUTHENTICATED
+  );
+
+  TensorFlowAttrType = public enum
+  (
+		String = TF_AttrType.ATTR_STRING,
+		Int = TF_AttrType.ATTR_INT,
+		Float = TF_AttrType.ATTR_FLOAT,
+		Bool = TF_AttrType.ATTR_BOOL,
+		&Type = TF_AttrType.ATTR_TYPE,
+		Shape = TF_AttrType.ATTR_SHAPE,
+		Tensor = TF_AttrType.ATTR_TENSOR,
+		Placeholder = TF_AttrType.ATTR_PLACEHOLDER,
+		Func = TF_AttrType.ATTR_FUNC
+  );
+
+  TensorFlowAttrMetaData = public record
+  private
+    fAttrMetaData: TF_AttrMetadata;
+  public
+    constructor(aData: TF_AttrMetadata); assembly;
+    begin
+      fAttrMetaData := aData;
+    end;
+
+    operator Implicit(aData: TF_AttrMetadata): TensorFlowAttrMetaData; assembly;
+    begin
+      result := new TensorFlowAttrMetaData(aData);
+    end;
+
+    property IsList: Byte read fAttrMetaData.is_list;
+    property ListSize: Int64 read fAttrMetaData.list_size;
+    
+    property &Type: TensorFlowAttrType 
+      read begin
+        result := TensorFlowAttrType(ord(fAttrMetaData.type));
+      end;
+
+    property TotalSize: Int64 read fAttrMetaData.total_size;
+  end;
+
   ITensorFlowDisposable = public interface(IDisposable)
     property ID: NativeUInt read;
   end;
@@ -270,6 +382,23 @@ type
       fGraph := aGraph;
       fName := aName;
       inherited constructor withHandle(aHandle) OnDispose(nil);
+    end;
+
+    method GetAttrMetaData(const aAttrName: NotNull<String>; aStatus: Status := nil)
+      : Tuple of (Boolean, nullable TensorFlowAttrMetaData);
+    begin
+      using lStatus := new Status do begin
+        var meta_data := TF_OperationGetAttrMetadata(Handle, aAttrName.ToAnsiChars(true), lStatus.Handle);
+
+        if lStatus.OK then begin
+          result := (true, meta_data)
+        end else begin
+          result := (false, nil);
+        end;
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
     end;
 
     method ToString: String; override;
