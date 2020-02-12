@@ -209,22 +209,7 @@ type
     constructor withFile(aFile: NotNull<String>);
     begin
       var buf_bytes := Helper.ReadBytesFromFile(aFile);
-
-      if assigned(buf_bytes) then begin
-        fNumBytes := buf_bytes.Length;
-        fData := malloc(fNumBytes);
-        memcpy(fData, buf_bytes, fNumBytes);
-      end else begin
-        fNumBytes := 0;
-        fData := nil;
-      end;
-
-      var buf_handle := TF_NewBuffer();
-      buf_handle^.data := fData;
-      buf_handle^.length := fNumBytes;
-      buf_handle^.data_deallocator := @DeallocateBuffer;
-
-      inherited constructor withHandle(buf_handle) OnDispose(fOnDispose);
+      constructor withData(buf_bytes) NumBytes(buf_bytes.Length);
     end;
 
     constructor withString(const aProtoBuf: NotNull<String>);
@@ -242,6 +227,19 @@ type
       fData := aHandle^.data;
       fNumBytes := aHandle^.length;
       inherited constructor withHandle(aHandle) OnDispose(fOnDispose);
+    end;
+
+    constructor withData(aData: ^Void) NumBytes(aNumBytes: UInt64);
+    begin
+      fNumBytes := aNumBytes;
+      fData := malloc(fNumBytes);
+      memcpy(fData, aData, fNumBytes);
+      var buf_handle := TF_NewBuffer();
+      buf_handle^.data := fData;
+      buf_handle^.length := fNumBytes;
+      buf_handle^.data_deallocator := @DeallocateBuffer;
+
+      inherited constructor withHandle(buf_handle) OnDispose(fOnDispose);
     end;
 
     method ToArray: array of Byte;
@@ -320,6 +318,11 @@ type
         aName.ToAnsiChars(true));
       // OnDispose nil, TF_FinishOption will delete OperationDescription.
       inherited constructor withHandle(op_desc_handle) OnDispose(nil);
+    end;
+
+    method ColocateWith(aOp: NotNull<Operation>);
+    begin
+      TF_ColocateWith(Handle, aOp.Handle);
     end;
 
     method SetDevice(aDevice: not nullable String);
@@ -604,12 +607,12 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Scope = public sealed class(TensorFlowDisposable)
+  RestorableObjectCache = public abstract class(TensorFlowDisposable)
   public
-    type ScopeRestoreAction = block(const aScopeToRestore: NotNull<String>);
+    type RestoreAction = block(const aSavedObject: NotNull<Object>);
   private
-    fRestoreAction: ScopeRestoreAction;
-    fSavedScope: String;
+    fOnRestore: RestoreAction;
+    fCachedObject: Object;
     fDisposed: Boolean := false;
   protected
     method Dispose(aDisposing: Boolean); override;
@@ -623,19 +626,42 @@ type
       if aDisposing then begin
       end;
 
-      if assigned(fRestoreAction) then begin
-        fRestoreAction(fSavedScope);
-        fRestoreAction := nil;
+      if assigned(fOnRestore) then begin
+        fOnRestore(fCachedObject);
+        fOnRestore := nil;
       end;
 
       inherited Dispose(aDisposing);
     end;
-  public
-    constructor withScopeToSave(const aScope: NotNull<String>)
-      RestoreAction(aAction: ScopeRestoreAction);
+
+    constructor withCachedObject(const aObject: NotNull<Object>) OnRestore(aAction: RestoreAction);
     begin
-      fSavedScope := aScope;
-      fRestoreAction := aAction;
+      fCachedObject := aObject;
+      fOnRestore := aAction;
+    end;
+  end;
+
+  Scope = public sealed class(RestorableObjectCache)
+  public
+    constructor withScopeName(const aScopeName: NotNull<String>) OnRestore(aAction: RestoreAction);
+    begin
+      inherited constructor withCachedObject(aScopeName) OnRestore(aAction);
+    end;
+  end;
+  
+  Device = public sealed class(RestorableObjectCache)
+  public
+    constructor withDeviceName(const aDeviceName: NotNull<String>) OnRestore(aAction: RestoreAction);
+    begin
+      inherited constructor withCachedObject(aDeviceName) OnRestore(aAction);
+    end;
+  end;
+
+  Dependencies = public sealed class(RestorableObjectCache)
+  public
+    constructor withOperations(aOps: NotNull<List<Operation>>) OnRestore(aAction: RestoreAction);
+    begin
+      inherited constructor withCachedObject(aOps) OnRestore(aAction);
     end;
   end;
 
@@ -767,6 +793,8 @@ type
   Graph = public sealed partial class(TensorFlowObject<TF_Graph>)
   private
     fCurrentScope: NotNull<String> := '';
+    fCurrentDependencies: List<Operation> := new List<Operation>;
+    fDeviceName: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
     fPendingInitVars: OperationList := new OperationList;
     fDisposed: Boolean := false;
@@ -807,15 +835,39 @@ type
       inherited constructor withHandle(graph_handle) OnDispose(aHandle->TF_DeleteGraph(aHandle));
     end;
 
-    method WithScope(aNewScope: NotNull<String>): Scope;
+    method WithDevice(aNewDeviceName: NotNull<String>): Device;
     begin
-      result := new Scope withScopeToSave(fCurrentScope)
-        RestoreAction(aScopeToRestore->begin fCurrentScope := aScopeToRestore end);
+      result := new Device withDeviceName(fDeviceName) OnRestore(aDeviceName->begin fDeviceName := (aDeviceName as String) end);
 
-      if String.IsNullOrEmpty(CurrentScope) then begin
-        fCurrentScope := aNewScope
+      if not String.IsNullOrEmpty(fDeviceName) then
+        raise new DeviceNameAlreadySetException withCurrentDeviceName(fDeviceName);
+      if not String.IsNullOrEmpty(aNewDeviceName) then
+        raise new DeviceNameEmptyException;
+
+      fDeviceName := aNewDeviceName;
+    end;
+
+    method WithDependencies(aNewDependencies: NotNull<List<Operation>>): Dependencies;
+    begin
+      result := new Dependencies withOperations(fCurrentDependencies) 
+        OnRestore(aDependencies->begin 
+          fCurrentDependencies := aDependencies as List<Operation> 
+        end);
+
+      fCurrentDependencies := fCurrentDependencies.Concat(aNewDependencies).Distinct.ToList;
+    end;
+
+    method WithScope(aNewScopeName: NotNull<String>): Scope;
+    begin
+      result := new Scope withScopeName(fCurrentScope) 
+        OnRestore(aScopeName->begin 
+          fCurrentScope := (aScopeName as String) 
+        end);
+
+      if String.IsNullOrEmpty(fCurrentScope) then begin
+        fCurrentScope := aNewScopeName
       end else begin
-        fCurrentScope := fCurrentScope + '/' + aNewScope;
+        fCurrentScope := fCurrentScope + '/' + aNewScopeName;
       end
     end;
 
@@ -888,6 +940,16 @@ type
     property CurrentScope: String
       read begin
         result := fCurrentScope;
+      end;
+
+    property DeviceName: String
+      read begin
+        result := fDeviceName;
+      end;
+
+    property CurrentDependences: List<Operation>
+      read begin
+        result := fCurrentDependencies;
       end;
 
     property GlobalVariableInitializer: array of ^TF_Operation
@@ -1739,6 +1801,75 @@ type
     property Version: String
       read begin
         result := String.FromPAnsiChars(TF_Version);
+      end;
+  end;
+
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
+  TensorFlowLibrary = public class(TensorFlowObject<TF_Library>)
+  public
+    constructor withFileName(aName: NotNull<String>);
+    begin
+      var lStatus := new Status;
+      var handle := TF_LoadLibrary(aName.ToAnsiChars(true), lStatus.Handle);
+
+      if not lStatus.OK then raise new LibraryLoadException withFileName(aName) Message(lStatus.Message);
+      inherited constructor withHandle(handle) OnDispose(aHandle->TF_DeleteLibraryHandle(aHandle));
+    end;
+
+    method GetOpList: Buffer;
+    begin
+      var buffer := TF_GetOpList(Handle);
+      // buffer memory is owned by the lib_handle, so we do NOT take ownership.
+      result := new Buffer withData(buffer.data) NumBytes(buffer.length); 
+    end;
+  end;
+
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
+  TensorFlowFunction = public class(TensorFlowObject<TF_Function>)
+  public
+    constructor withHandle(aHandle: ^TF_Function); assembly;
+    begin
+      inherited constructor withHandle(aHandle) OnDispose(aHnd->TF_DeleteFunction(aHnd));
+    end;
+
+    method ToFunctionDef(aStatus: Status := nil): Tuple of (Boolean, Buffer);
+    begin
+      using lStatus := new Status do begin
+        var buf_handle := TF_NewBuffer;
+        TF_FunctionToFunctionDef(Handle, buf_handle, lStatus.Handle);
+        if lStatus.OK then begin
+          result := (true, new Buffer withHandle(buf_handle));
+        end else begin
+          result := (false, nil);
+          TF_DeleteBuffer(buf_handle);
+        end;
+
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    class method ImportFunctionDef(aProto: NotNull<array of Byte>; aStatus: Status := nil)
+      : Tuple of (Boolean, TensorFlowFunction);
+    begin
+      using lStatus := new Status do begin
+        var func_handle := TF_FunctionImportFunctionDef(aProto, aProto.Length, lStatus.Handle);
+
+        if lStatus.OK then begin
+          result := (true, new TensorFlowFunction withHandle(func_handle));
+        end else begin
+          result := (false, nil);
+        end;
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    property Name: String
+      read begin
+        result := String.FromPAnsiChars(TF_FunctionName(Handle));
       end;
   end;
 
