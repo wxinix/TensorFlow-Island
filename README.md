@@ -1,7 +1,9 @@
 # TensorFlow-Island
 RemObjects Island platform bindings for TensorFlow C API v1.15.0.
 
-TensorFlow-Island is a high-level abstraction of TensorFlow C-APIs, in several modern languages: Swift, Oxygene, Java, Go and C#.  It is dependent on RemObjects Elements LLVM-based Island platform compilers, genenating CPU-native code for machine-learning applications on Windows, Linux, and MacOS. 
+TensorFlow-Island is a high-level abstraction of TensorFlow C-APIs, in several modern languages: Swift, Oxygene, Java, Go and C#.  It is dependent on RemObjects Elements LLVM-based Island platform compilers, genenating CPU-native code for machine-learning applications on Windows, Linux, and MacOS.
+
+Note - these supported languages (Swift, Oxygene, Java, Go and C#) are all compiled into CPU native code, without any dependency on .NET CLR, JVM, or any virtual machine environment. This is a unique capability of RemObjects Elements compiler toolchain. This particularly fits the design objective and goal of TenorFlow-Island, hence we select this toolchain for TensorFlow-Island.
 
 TensorFlow-Island is inspired by TensorFlow4Delphi (https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is heavily infuenced by TensorFlowSharp https://github.com/migueldeicaza/TensorFlowSharp. Special thanks to the authors and contributors of these two projects.
 
@@ -19,7 +21,7 @@ The difference between TensorFlow-Island and other wellknown TensorFlow bindings
  - Provides a foundational Computational Graph framework to be integrated in PTV Vissim Microscopic Traffic Simulator, enabling GPU computing for External Driver Model, and Signal Control API modules.
 
 # Compilers Toolchain Requirements
-TensorFlow Island requires RemObjects Elements Compilers. For commmercial, open-source, or academic applications, please contact RemObjects (mh@remobjects.com) for different licensing options.
+TensorFlow Island requires RemObjects Elements Compilers. For commmercial, open-source, or academic applications, please contact RemObjects (https://www.elementscompiler.com/elements/) for different licensing options.
 
 # License
 MIT License (c) 2019-2020. Copywright Wuping Xin and KLD Engineering, P. C. 
