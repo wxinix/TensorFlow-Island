@@ -318,20 +318,20 @@ type
       free(aData);
     end;
 
-    constructor withFile(aFile: NotNull<String>);
+    constructor withProtoFile(aFile: NotNull<String>);
     begin
-      var buf_bytes := Helper.ReadBytesFromFile(aFile);
-      constructor withData(buf_bytes) NumBytes(buf_bytes.Length);
+      var bytes := Helper.ReadBytesFromFile(aFile);
+      constructor withData(bytes) NumBytes(bytes.Length);
     end;
 
-    constructor withString(const aProtoBuf: NotNull<String>);
+    constructor withString(const aProtoBuf: NotNull<array of AnsiChar>);
     begin
-      var proto_len := lstrlenA(aProtoBuf.ToAnsiChars(true));
-      var buf_handle: ^TF_Buffer := TF_NewBufferFromString(aProtoBuf.ToAnsiChars, proto_len);
+      var proto_len := aProtoBuf.Length;
+      var buffer_hnd := TF_NewBufferFromString(aProtoBuf, proto_len);
 
-      fData := buf_handle^.data;
-      fNumBytes := buf_handle^.length;
-      inherited constructor withHandle(buf_handle) OnDispose(fOnDispose);
+      fData := buffer_hnd^.data;
+      fNumBytes := buffer_hnd^.length;
+      inherited constructor withHandle(buffer_hnd) OnDispose(fOnDispose);
     end;
 
     constructor withHandle(aHandle: ^TF_Buffer); assembly;
@@ -346,12 +346,12 @@ type
       fNumBytes := aNumBytes;
       fData := malloc(fNumBytes);
       memcpy(fData, aData, fNumBytes);
-      var buf_handle := TF_NewBuffer();
-      buf_handle^.data := fData;
-      buf_handle^.length := fNumBytes;
-      buf_handle^.data_deallocator := @DeallocateBuffer;
+      var buffer_hnd := TF_NewBuffer();
+      buffer_hnd^.data := fData;
+      buffer_hnd^.length := fNumBytes;
+      buffer_hnd^.data_deallocator := @DeallocateBuffer;
 
-      inherited constructor withHandle(buf_handle) OnDispose(fOnDispose);
+      inherited constructor withHandle(buffer_hnd) OnDispose(fOnDispose);
     end;
 
     method ToArray: array of Byte;
@@ -373,14 +373,11 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Operation = public sealed class(TensorFlowObject<TF_Operation>)
   private
-    fName: String;
     fGraph: Graph;
   public
-    constructor withHandle(aHandle: ^TF_Operation) Name(aName: NotNull<String>) 
-      Graph(aGraph: NotNull<Graph>); assembly;
+    constructor withHandle(aHandle: ^TF_Operation) Graph(aGraph: NotNull<Graph>); assembly;
     begin
       fGraph := aGraph;
-      fName := aName;
       inherited constructor withHandle(aHandle) OnDispose(nil);
     end;
 
@@ -395,25 +392,440 @@ type
         end else begin
           result := (false, nil);
         end;
+
         if assigned(aStatus) then begin
           aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
         end;
       end;
     end;
 
+    method GetAttrValue<T>(const aAttrName: NotNull<String>; aStatus: Status := nil)
+      : Tuple of (Boolean, nullable T);
+    begin
+      using lStatus := new Status do begin
+        var (success, attr_meta_data) := GetAttrMetaData(aAttrName, lStatus);
+        
+        if not success then begin
+          if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+          exit (false, nil);
+        end;
+
+        case typeOf(T).GetHashCode of
+          typeOf(String).GetHashCode:
+          begin
+            var (_success, val) := GetAttrString(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of String).GetHashCode:
+          begin
+            var (_success, val) := GetAttrStringList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(Boolean).GetHashCode:
+          begin
+            var (_success, val) := GetAttrBool(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of Boolean).GetHashCode:
+          begin
+            var (_success, val) := GetAttrBoolList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(Int64).GetHashCode:
+          begin
+            var (_success, val) := GetAttrInt(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of Int64).GetHashCode:
+          begin
+            var (_success, val) := GetAttrIntList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(Single).GetHashCode:
+          begin
+            var (_success, val) := GetAttrFloat(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of Single).GetHashCode:
+          begin
+            var (_success, val) := GetAttrFloatList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(TensorFlowDataType).GetHashCode:
+          begin
+            var (_success, val) := GetAttrType(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of TensorFlowDataType).GetHashCode:
+          begin
+            var (_success, val) := GetAttrTypeList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(Shape).GetHashCode:
+          begin
+            var (_success, val) := GetAttrShape(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of Shape).GetHashCode:
+          begin
+            var (_success, val) := GetAttrShapeList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(Tensor).GetHashCode:
+          begin
+            var (_success, val) := GetAttrTensor(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of Tensor).GetHashCode:
+          begin
+            var (_success, val) := GetAttrTensorList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(Buffer).GetHashCode:
+          begin
+            var (_success, val) := GetAttrTensorShapeProto(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+
+          typeOf(array of Buffer).GetHashCode:
+          begin
+            var (_success, val) := GetAttrTensorShapeProtoList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+        else   
+          raise new InvalidAttrType($'Invalid operation attr type {typeOf(T).Name}');
+        end;
+
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method GetAttrString(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData; 
+      aStatus: Status): Tuple of (Boolean, String);
+    begin
+      var max_length := aAttrMeta.TotalSize;
+      var value := new AnsiChar[max_length];      
+      TF_OperationGetAttrString(Handle, aAttrName.ToAnsiChars(true), value, max_length, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, String.FromPAnsiChars(value, max_length));
+      end else begin
+        result := (false, nil);
+      end;
+    end;
+
+    method GetAttrStringList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, array of String);
+    begin
+      var max_values := aAttrMeta.ListSize;
+      var values := new ^AnsiChar[max_values];
+      var lengths := new UInt64[max_values];
+      var storage_size := aAttrMeta.TotalSize;
+      var storage := new AnsiChar[storage_size];
+      TF_OperationGetAttrStringList(Handle, aAttrName.ToAnsiChars(true), ^^Void(@values[0]), lengths, 
+        max_values, storage, storage_size, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        var strs := new String[max_values];
+        for I: Integer := 0 to max_values - 1 do begin
+          strs[I] := String.FromPAnsiChars(values[I], lengths[I]);
+        end;
+        result := (true, strs);
+      end else begin
+        result := (false, nil);
+      end;    
+    end;
+
+    method GetAttrBool(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, nullable Boolean);
+    begin
+      var value: Byte;
+      TF_OperationGetAttrBool(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, value <> 0);
+      end else begin
+        result := (false, nil);
+      end;    
+    end;
+
+    method GetAttrBoolList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, array of Boolean);
+    begin
+      var max_values := aAttrMeta.ListSize;
+      var values := new Byte[max_values];
+      
+      TF_OperationGetAttrBoolList(Handle, aAttrName.ToAnsiChars(true), values, max_values, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        var bools := new Boolean[max_values];
+        for I: Integer := 0 to max_values - 1 do bools[I] := values[I] <> 0;
+        result := (true, bools);
+      end else begin
+        result := (false, nil);
+      end;    
+    end;
+
+    method GetAttrInt(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, nullable Int64);
+    begin
+      var value: Int64;
+      TF_OperationGetAttrInt(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, value);
+      end else begin
+        result := (false, nil);
+      end;     
+    end;
+
+    method GetAttrIntList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, array of Int64);
+    begin
+      var max_values := aAttrMeta.ListSize;
+      var values := new Int64[max_values];
+      
+      TF_OperationGetAttrIntList(Handle, aAttrName.ToAnsiChars(true), values, max_values, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, values);
+      end else begin
+        result := (false, nil);
+      end;     
+    end;
+
+    method GetAttrFloat(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, nullable Single);
+    begin
+      var value: Single;
+      TF_OperationGetAttrFloat(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, value);
+      end else begin
+        result := (false, nil);
+      end;     
+    end;
+
+    method GetAttrFloatList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, array of Single);
+    begin
+      var max_values := aAttrMeta.ListSize;
+      var values := new Single[max_values];
+      
+      TF_OperationGetAttrFloatList(Handle, aAttrName.ToAnsiChars(true), values, max_values, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, values);
+      end else begin
+        result := (false, nil);
+      end;    
+    end;
+
+    method GetAttrType(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, nullable TensorFlowDataType);
+    begin
+      var value: TF_DataType;
+      TF_OperationGetAttrType(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, TensorFlowDataType(ord(value)));
+      end else begin
+        result := (false, nil);
+      end;  
+    end;
+
+    method GetAttrTypeList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, array of TensorFlowDataType);
+    begin
+      var max_values := aAttrMeta.ListSize;
+      var values := new TF_DataType[max_values];
+      
+      TF_OperationGetAttrTypeList(Handle, aAttrName.ToAnsiChars(true), values, max_values, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        var _values := new TensorFlowDataType[max_values];
+        for I: Integer := 0 to max_values - 1 do begin
+          _values[I] := TensorFlowDataType(ord(values[I]));
+        end;
+        result := (true, _values);
+      end else begin
+        result := (false, nil);
+      end;    
+    end;
+
+    method GetAttrShape(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, nullable Shape);
+    begin
+      var num_dim := aAttrMeta.TotalSize;
+      var value := new Int64[num_dim];
+      TF_OperationGetAttrShape(Handle, aAttrName.ToAnsiChars(true), value, num_dim, aStatus.Handle);
+      
+      if aStatus.OK then begin
+        result := (true, new Shape withDims(value));
+      end else begin
+        result := (false, nil);
+      end;
+    end;
+
+    method GetAttrShapeList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, array of Shape);
+    begin
+      var num_shapes := aAttrMeta.ListSize;
+      var dims := new ^Int64[num_shapes];
+      var num_dims := new Int32[num_shapes];
+      var storage_size := aAttrMeta.TotalSize;
+      var storage := new Int64[storage_size];
+
+      TF_OperationGetAttrShapeList(Handle, aAttrName, @dims[0], num_dims, 
+        num_shapes, storage, storage_size, aStatus.Handle);
+
+      if aStatus.OK then begin
+        var shapes := new Shape[num_shapes];
+        for I: Integer := 0 to num_shapes - 1 do begin
+          if num_dims[I] >= 0 then
+            shapes[I] := new Shape(dims[I], num_dims[I])
+          else
+            shapes[I] := nil; // num_dims[I] = -1, meaning shape is unknown. 
+        end;
+        result := (true, shapes);
+      end else begin
+        result := (false, nil);
+      end;
+    end;
+
+    method GetAttrTensor(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, Tensor);
+    begin
+    
+    end;
+
+    method GetAttrTensorList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean,  array of Tensor);
+    begin
+    
+    end;
+
+    method GetAttrTensorShapeProto(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, nullable Buffer);
+    begin
+    
+    end; 
+
+    method GetAttrTensorShapeProtoList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
+      aStatus: Status): Tuple of (Boolean, array of Buffer);
+    begin
+    
+    end; 
+
+    method GetAttrValueProto(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData; 
+      aStatus: Status): Tuple of (Boolean, Buffer);
+    begin
+    
+    end; 
+
+    method GetOutputListLength(const aArgName: NotNull<String>; aStatus: Status := nil): Integer;
+    begin
+      using lStatus := new Status do begin
+        result := TF_OperationOutputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    method GetInputListLength(const aArgName: NotNull<String>; aStatus: Status := nil): Integer;
+    begin
+      using lStatus := new Status do begin
+        result := TF_OperationInputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
+        if assigned(aStatus) then begin
+          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    method ToNodeDef: Tuple of (Boolean, Buffer);
+    begin
+      using lStatus := new Status do begin
+        var buffer_hnd := TF_NewBuffer;
+        TF_OperationToNodeDef(Handle, buffer_hnd, lStatus.Handle);
+        if lStatus.OK then begin
+          result := (true, new Buffer withHandle(buffer_hnd));
+        end else begin
+          TF_DeleteBuffer(buffer_hnd);
+          result := (false, nil);
+        end;
+      end;
+    end;
+
     method ToString: String; override;
     begin
-      result := $'Operation: {Convert.UInt64ToHexString(ID, 16)}';
+      result := $'Operation: {Name}';
     end;
+
+    property ControlOutputs: List<Operation>
+      read begin
+        var num_control_outputs := NumControlOutputs;
+        var op_hnds := new ^TF_Operation[num_control_outputs];
+        TF_OperationGetControlOutputs(Handle, op_hnds, num_control_outputs);
+        for I: Integer := 0 to num_control_outputs - 1 do begin
+          result.Add(new Operation withHandle(op_hnds[I]) Graph(fGraph));
+        end;
+      end;
 
     property &Graph: Graph
       read begin
         result := fGraph;
       end;
+    
     property Name: String
       read begin
-        result := fName;
+        result := String.FromPAnsiChars(TF_OperationName(Handle));
       end;
+
+    property NumControlInputs: Integer
+      read begin
+        result := TF_OperationNumControlInputs(Handle);
+      end;
+
+    property NumControlOutputs: Integer
+      read begin
+        result := TF_OperationNumControlOutputs(Handle);
+      end;
+
+    property NumInputs: Integer
+      read begin
+        result := TF_OperationNumInputs(Handle);
+      end;
+
+    property NumOutputs: Integer
+      read begin
+        result := TF_OperationNumOutputs(Handle);
+      end;
+
+    property OpType: String
+      read begin
+        result := String.FromPAnsiChars(TF_OperationOpType(Handle));
+      end;
+
+    property Outputs[aIndex: Integer]: Output
+      read begin
+        result := new Output withOp(self) &Index(aIndex);
+      end; default;
   end;
 
   OperationList = public sealed class(TensorFlowObjectList<Operation>)
@@ -434,19 +846,17 @@ type
   private
     fGraph: Graph;
     fOpType: String;
-    fOperName: String;
   public
     constructor withGraph(aGraph: NotNull<Graph>) OpType(aType: NotNull<String>)
       OpName(aName: NotNull<String>);
     begin
       fOpType := aType;
-      fOperName := aName;
       fGraph := aGraph;
 
-      var op_desc_handle := TF_NewOperation(aGraph.Handle, aType.ToAnsiChars(true),
+      var opdesc_hnd := TF_NewOperation(aGraph.Handle, aType.ToAnsiChars(true),
         aName.ToAnsiChars(true));
       // OnDispose nil, TF_FinishOption will delete OperationDescription.
-      inherited constructor withHandle(op_desc_handle) OnDispose(nil);
+      inherited constructor withHandle(opdesc_hnd) OnDispose(nil);
     end;
 
     method ColocateWith(aOp: NotNull<Operation>);
@@ -483,10 +893,10 @@ type
     begin
       using lStatus := new Status do begin
         // Desc ptr gets deleted inside TF_FinishOperation.
-        var op_handle := TF_FinishOperation(Handle, lStatus.Handle);
+        var op_hnd := TF_FinishOperation(Handle, lStatus.Handle);
 
         if lStatus.OK then begin
-          result := (true, new Operation withHandle(op_handle) Name(fOperName) Graph(fGraph))
+          result := (true, new Operation withHandle(op_hnd) Graph(fGraph))
         end else begin
           result := (false, nil);
         end;
@@ -556,6 +966,11 @@ type
     method SetAttrFloatList(const aName: NotNull<String>; aList: NotNull<array of Single>);
     begin
       TF_SetAttrFloatList(Handle, aName.ToAnsiChars(true), aList, aList.Length);
+    end;
+
+    method SetAttrFuncName(const aName: NotNull<String>; const aFuncName: NotNull<String>);
+    begin
+      TF_SetAttrFuncName(Handle, aName.ToAnsiChars(true), aFuncName.ToAnsiChars, aFuncName.Length);
     end;
 
     method SetAttrInt(const aName: NotNull<String>; aValue: Int64);
@@ -682,11 +1097,6 @@ type
       read begin
         result := fOpType;
       end;
-
-    property OperName: String
-      read begin
-        result := fOperName;
-      end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -697,8 +1107,8 @@ type
   public
     constructor;
     begin
-      var status_handle := TF_NewStatus();
-      inherited constructor withHandle(status_handle) OnDispose(aHandle->TF_DeleteStatus(aHandle));
+      var status_hnd := TF_NewStatus();
+      inherited constructor withHandle(status_hnd) OnDispose(aHandle->TF_DeleteStatus(aHandle));
     end;
 
     method SetCode(aCode: TensorFlowCode) withMessage(const aMsg: String);
@@ -812,6 +1222,18 @@ type
       end else begin
         fSize := 1;
       end;
+    end;
+
+    constructor(aDims: ^Int64; aNumDim: Int32); assembly;
+    begin
+      var dims: array of Int64 := nil;     
+      
+      if aNumDim > 0 then begin
+        dims := new Int64[aNumDim];
+        memcpy(dims, aDims, fNumDims * sizeOf(Int64));
+      end;
+
+      constructor withDims(dims);
     end;
 
     method ToArray: array of Int64;
@@ -960,8 +1382,8 @@ type
   public
     constructor;
     begin
-      var graph_handle := TF_NewGraph();
-      inherited constructor withHandle(graph_handle) OnDispose(aHandle->TF_DeleteGraph(aHandle));
+      var graph_hnd := TF_NewGraph();
+      inherited constructor withHandle(graph_hnd) OnDispose(aHandle->TF_DeleteGraph(aHandle));
     end;
 
     method WithDevice(aNewDeviceName: NotNull<String>): Device;
@@ -1002,11 +1424,11 @@ type
 
     method GetOperationByName(const aOpName: NotNull<String>): Tuple of (Boolean, Operation);
     begin
-      var op_handle := TF_GraphOperationByName(Handle, aOpName.ToAnsiChars(true));
+      var op_hnd := TF_GraphOperationByName(Handle, aOpName.ToAnsiChars(true));
 
-      if assigned(op_handle) then begin
+      if assigned(op_hnd) then begin
         result := (true,
-          new Operation withHandle(op_handle) Name(aOpName) Graph(self));
+          new Operation withHandle(op_hnd) Graph(self));
       end else begin
         result := (false, nil);
       end;
@@ -1319,7 +1741,7 @@ type
   public
     constructor withData(aData: NotNull<TensorData>);
     begin
-      var tensor_handle := TF_NewTensor(
+      var tensor_hnd := TF_NewTensor(
         TF_DataType(ord(aData.DataType)),
         aData.Shape.ToArray,
         aData.Shape.NumDims,
@@ -1328,12 +1750,12 @@ type
         @TensorData.DeallocateTensorData, // does nothing.
         nil);
 
-      if not assigned(tensor_handle) then begin
+      if not assigned(tensor_hnd) then begin
         raise new TensorCreateException(aData.DataType);
       end;
 
       fData := aData;
-      inherited constructor withHandle(tensor_handle) OnDispose(aHandle->TF_DeleteTensor(aHandle));
+      inherited constructor withHandle(tensor_hnd) OnDispose(aHandle->TF_DeleteTensor(aHandle));
     end;
 
     constructor withHandle(aHandle: not nullable ^TF_Tensor); assembly;
@@ -1666,8 +2088,8 @@ type
         begin
           using lStatus := new Status do begin
             using opts := new SessionOptions do begin // Nested
-              var sess_handle := TF_NewSession(fGraph.Handle, opts.Handle, lStatus.Handle);
-              result := (lStatus.OK, lStatus.Message, sess_handle);
+              var sess_hnd := TF_NewSession(fGraph.Handle, opts.Handle, lStatus.Handle);
+              result := (lStatus.OK, lStatus.Message, sess_hnd);
             end;
           end;
         end)();
@@ -1724,8 +2146,8 @@ type
   public
     constructor;
     begin
-      var sess_opts_handle := TF_NewSessionOptions();
-      inherited constructor withHandle(sess_opts_handle) OnDispose(aHandle->TF_DeleteSessionOptions(aHandle));
+      var sessopts_hnd := TF_NewSessionOptions();
+      inherited constructor withHandle(sessopts_hnd) OnDispose(aHandle->TF_DeleteSessionOptions(aHandle));
     end;
 
     method SetConfig(aProtoData: NotNull<array of Byte>; aStatus: Status := nil);
@@ -1912,8 +2334,8 @@ type
     method GetAllRegisteredKernels(aStatus: Status := nil): Buffer;
     begin
       using lStatus := new Status do begin
-        var buf_handle := TF_GetAllRegisteredKernels(lStatus.Handle);
-        result := if lStatus.OK then new Buffer withHandle(buf_handle) else nil;
+        var buffer_hnd := TF_GetAllRegisteredKernels(lStatus.Handle);
+        result := if lStatus.OK then new Buffer withHandle(buffer_hnd) else nil;
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
@@ -1921,8 +2343,8 @@ type
     method GetRegisteredKernelsForOp(aOpName: NotNull<String>; aStatus: Status := nil): Buffer;
     begin
       using lStatus := new Status do begin
-        var buf_handle := TF_GetRegisteredKernelsForOp(aOpName.ToAnsiChars(true), lStatus.Handle);
-        result := if lStatus.OK then new Buffer withHandle(buf_handle) else nil;
+        var buffer_hnd := TF_GetRegisteredKernelsForOp(aOpName.ToAnsiChars(true), lStatus.Handle);
+        result := if lStatus.OK then new Buffer withHandle(buffer_hnd) else nil;
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
@@ -1964,13 +2386,13 @@ type
     method ToFunctionDef(aStatus: Status := nil): Tuple of (Boolean, Buffer);
     begin
       using lStatus := new Status do begin
-        var buf_handle := TF_NewBuffer;
-        TF_FunctionToFunctionDef(Handle, buf_handle, lStatus.Handle);
+        var buffer_hnd := TF_NewBuffer;
+        TF_FunctionToFunctionDef(Handle, buffer_hnd, lStatus.Handle);
         if lStatus.OK then begin
-          result := (true, new Buffer withHandle(buf_handle));
+          result := (true, new Buffer withHandle(buffer_hnd));
         end else begin
           result := (false, nil);
-          TF_DeleteBuffer(buf_handle);
+          TF_DeleteBuffer(buffer_hnd);
         end;
 
         if assigned(aStatus) then begin
@@ -1983,10 +2405,10 @@ type
       : Tuple of (Boolean, TensorFlowFunction);
     begin
       using lStatus := new Status do begin
-        var func_handle := TF_FunctionImportFunctionDef(aProto, aProto.Length, lStatus.Handle);
+        var func_hnd := TF_FunctionImportFunctionDef(aProto, aProto.Length, lStatus.Handle);
 
         if lStatus.OK then begin
-          result := (true, new TensorFlowFunction withHandle(func_handle));
+          result := (true, new TensorFlowFunction withHandle(func_hnd));
         end else begin
           result := (false, nil);
         end;
