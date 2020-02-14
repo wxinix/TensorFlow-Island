@@ -393,9 +393,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -786,9 +784,7 @@ type
     begin
       using lStatus := new Status do begin
         result := TF_OperationOutputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -796,9 +792,7 @@ type
     begin
       using lStatus := new Status do begin
         result := TF_OperationInputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -945,9 +939,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -1083,9 +1075,7 @@ type
     begin
       using lStatus := new Status do begin
         TF_SetAttrTensor(Handle, aName.ToAnsiChars(true), aTensor.Handle, lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -1095,9 +1085,7 @@ type
       using lStatus := new Status do begin
         TF_SetAttrTensorList(Handle, aName.ToAnsiChars(true), aTensorList.Handles,
           aTensorList.Count, lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -1107,9 +1095,7 @@ type
       using lStatus := new Status do begin
         TF_SetAttrTensorShapeProto(Handle, aName.ToAnsiChars(true), aProto, 
           aProto.Length, lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -1119,9 +1105,7 @@ type
       using lStatus := new Status do begin
         TF_SetAttrTensorShapeProtoList(Handle, aName.ToAnsiChars(true), 
           ^^Void(aProtos), aProtoLens, aProtoLens.Length, lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
     
@@ -1131,9 +1115,7 @@ type
       using lStatus := new Status do begin
         TF_SetAttrValueProto(Handle, aName.ToAnsiChars(true), aProto, 
           aProto.Length, lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
     
@@ -1500,9 +1482,7 @@ type
           end;
         end;
 
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -2154,11 +2134,8 @@ type
     begin
       using lStatus := new Status do begin
         var (success, shp) := fGraph.GetShape(aOutput, lStatus);
-
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
-
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+  
         if success then begin
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Handle));
           result := $'Tensor ("{name}: {aOutput.Index}", ' +
@@ -2198,9 +2175,7 @@ type
     begin
       using lStatus := new Status do begin
         TF_SetConfig(Handle, aProtoData, aProtoData.Length, lStatus.Handle);
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -2348,9 +2323,7 @@ type
           result := nil;
         end;
 
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
   end;
@@ -2432,6 +2405,7 @@ type
       using lStatus := new Status do begin
         var buffer_hnd := TF_NewBuffer;
         TF_FunctionToFunctionDef(Handle, buffer_hnd, lStatus.Handle);
+        
         if lStatus.OK then begin
           result := (true, new Buffer withHandle(buffer_hnd));
         end else begin
@@ -2439,9 +2413,7 @@ type
           TF_DeleteBuffer(buffer_hnd);
         end;
 
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
@@ -2456,9 +2428,8 @@ type
         end else begin
           result := (false, nil);
         end;
-        if assigned(aStatus) then begin
-          aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;
+
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
