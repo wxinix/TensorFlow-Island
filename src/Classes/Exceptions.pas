@@ -96,7 +96,7 @@ type
 
   TensorCreateException = class(Exception)
   public
-    constructor(aType: TensorFlowDataType);
+    constructor(aType: DataType);
     begin
       var msg := $'Cannot create tensor for type {aType.ToString}';
       inherited constructor(msg);

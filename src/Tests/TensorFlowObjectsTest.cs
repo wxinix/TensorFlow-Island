@@ -70,7 +70,7 @@ namespace TensorFlow.Island.Tests
         public void When_CreatingTensorWith2DArray_Expect_Created()
         {
             Tensor tensor = {{1,2,3},{4,5,6}};
-            Assert.AreEqual(tensor.Data.DataType, TensorFlowDataType.Int32);
+            Assert.AreEqual(tensor.Data.Type, DataType.Int32);
             Assert.AreEqual(tensor.Data.Shape.NumDims, 2);
             Assert.AreEqual(tensor.Data.Shape.Dim[0], 2);
             Assert.AreEqual(tensor.Data.Shape.Dim[1], 3);

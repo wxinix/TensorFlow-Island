@@ -131,10 +131,10 @@ type
 
     method OpConst(aValue: NotNull<Tensor>; aOpName: NotNull<String> := ''): Output; overload;
     begin
-      result := OpConst(aValue, aValue.Data.DataType, aOpName);
+      result := OpConst(aValue, aValue.Data.Type, aOpName);
     end;
 
-    method OpConst(aValue: NotNull<Tensor>; aDataType: TensorFlowDataType; aOpName: NotNull<String> := '')
+    method OpConst(aValue: NotNull<Tensor>; aDataType: DataType; aOpName: NotNull<String> := '')
       : Output; overload;
     begin
       const lOpType: String = 'Const';
@@ -214,7 +214,7 @@ type
         aOpName,
         [],
         [
-          ('dtype', TensorFlowDataType(ord(aDataType)))
+          ('dtype', DataType(ord(aDataType)))
         ]);
     end;
 
@@ -228,7 +228,7 @@ type
         [],
         [
           ('shape', aShape),
-          ('dtype', TensorFlowDataType(ord(aDataType)))
+          ('dtype', DataType(ord(aDataType)))
         ]);
     end;
 
@@ -238,7 +238,7 @@ type
       (nil, result) := CreateOp(lOpType, aOpName, [aStart, aLimit, aDelta]);
     end;
 
-    method OpReadVar(aResource: NotNull<Output>; aDataType: TensorFlowDataType;
+    method OpReadVar(aResource: NotNull<Output>; aDataType: DataType;
       aOpName: NotNull<String> := ''): Output;
     begin
       const lOpType: String = 'ReadVariableOp';
@@ -247,7 +247,7 @@ type
         aOpName,
         [aResource],
         [
-          ('dtype', TensorFlowDataType(ord(aDataType)))
+          ('dtype', DataType(ord(aDataType)))
         ]);
     end;
 
@@ -262,7 +262,7 @@ type
             if shp.NumDims > 0 then begin
               var arr := new Int32[shp.NumDims];
               for I: Integer := 0 to shp.NumDims - 1 do arr[I] := I;
-              result := OpConst(arr, TensorFlowDataType.Int32);
+              result := OpConst(arr, DataType.Int32);
             end else begin
               result := OpRange(OpConst(0), OpConst(0), OpConst(1));
             end;
@@ -319,7 +319,7 @@ type
       (nil, result) := CreateOp(lOpType, aOpName, [x]);
     end;
 
-    method OpVarHandle(aDataType: TensorFlowDataType; aShape: NotNull<Shape>;
+    method OpVarHandle(aDataType: DataType; aShape: NotNull<Shape>;
       aContainer: NotNull<String> := ''; aSharedName: NotNull<String> := '';
       aOpName: NotNull<String> := ''): Output;
     begin
@@ -351,13 +351,13 @@ type
           end;
 
           using shp do begin
-            lOpVarHnd := OpVarHandle(aIniValue.DataType, shp);
+            lOpVarHnd := OpVarHandle(aIniValue.Type, shp);
           end;
 
           using assignScope := WithScope('Assign') do begin
             lOpAssignVar := OpAssignVar(lOpVarHnd, aIniValue);
             using readScope := WithScope('Read') do begin
-              lOpReadVar := OpReadVar(lOpVarHnd, aIniValue.DataType);
+              lOpReadVar := OpReadVar(lOpVarHnd, aIniValue.Type);
             end;
           end;
         end;

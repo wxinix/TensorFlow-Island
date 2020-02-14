@@ -25,21 +25,21 @@ uses
   TensorFlow.Island.Api;
 
 type
-  TensorFlowDataTypeSet = public set of TensorFlowDataType;
+  TensorFlowDataTypeSet = public set of DataType;
 
 const
   TensorFlowNumericalTypes: TensorFlowDataTypeSet =
   [
-    TensorFlowDataType.Double,
-    TensorFlowDataType.Float,
-    TensorFlowDataType.Int8,
-    TensorFlowDataType.Int16,
-    TensorFlowDataType.Int32,
-    TensorFlowDataType.Int64,
-    TensorFlowDataType.UInt8,
-    TensorFlowDataType.UInt16,
-    TensorFlowDataType.UInt32,
-    TensorFlowDataType.UInt64
+    DataType.Double,
+    DataType.Float,
+    DataType.Int8,
+    DataType.Int16,
+    DataType.Int32,
+    DataType.Int64,
+    DataType.UInt8,
+    DataType.UInt16,
+    DataType.UInt32,
+    DataType.UInt64
   ];
 
 type
@@ -54,21 +54,21 @@ type
       end;
     end;
 
-    method ToTensorFlowDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): TensorFlowDataType;
+    method ToTensorFlowDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): DataType;
     begin
       case aType.Code of
-        TypeCodes.Boolean: result := TensorFlowDataType.Bool;
-        TypeCodes.Byte   : result := TensorFlowDataType.UInt8;
-        TypeCodes.UInt16 : result := TensorFlowDataType.UInt16;
-        TypeCodes.UInt32 : result := TensorFlowDataType.UInt32;
-        TypeCodes.UInt64 : result := TensorFlowDataType.UInt64;
-        TypeCodes.SByte  : result := TensorFlowDataType.Int8;
-        TypeCodes.Int16  : result := TensorFlowDataType.Int16;
-        TypeCodes.Int32  : result := TensorFlowDataType.Int32;
-        TypeCodes.Int64  : result := TensorFlowDataType.Int64;
-        TypeCodes.Single : result := TensorFlowDataType.Float;
-        TypeCodes.Double : result := TensorFlowDataType.Double;
-        TypeCodes.String : result := TensorFlowDataType.String;
+        TypeCodes.Boolean: result := DataType.Bool;
+        TypeCodes.Byte   : result := DataType.UInt8;
+        TypeCodes.UInt16 : result := DataType.UInt16;
+        TypeCodes.UInt32 : result := DataType.UInt32;
+        TypeCodes.UInt64 : result := DataType.UInt64;
+        TypeCodes.SByte  : result := DataType.Int8;
+        TypeCodes.Int16  : result := DataType.Int16;
+        TypeCodes.Int32  : result := DataType.Int32;
+        TypeCodes.Int64  : result := DataType.Int64;
+        TypeCodes.Single : result := DataType.Float;
+        TypeCodes.Double : result := DataType.Double;
+        TypeCodes.String : result := DataType.String;
       else
         if aFlag then begin
           raise new UnSupportedTypeException(aType);
