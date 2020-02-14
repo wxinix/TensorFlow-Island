@@ -507,7 +507,7 @@ type
             result := (_success, T(val));
           end;
         else   
-          raise new InvalidAttrType($'Invalid operation attr type {typeOf(T).Name}');
+          raise new InvalidAttrTypeException($'Invalid operation attr type {typeOf(T).Name}');
         end;
 
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
@@ -711,31 +711,75 @@ type
     method GetAttrTensor(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
       aStatus: Status): Tuple of (Boolean, Tensor);
     begin
-    
+      var tensor_hnd: ^TF_Tensor;
+      TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @tensor_hnd, aStatus.Handle);
+      if aStatus.OK then begin
+        result := (true, new Tensor withHandle(tensor_hnd));
+      end else begin
+        result := (false, nil);
+      end;
     end;
 
     method GetAttrTensorList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
       aStatus: Status): Tuple of (Boolean,  array of Tensor);
     begin
-    
+      var max_values := aAttrMeta.ListSize;
+      var values := new ^TF_Tensor[max_values];
+      TF_OperationGetAttrTensorList(Handle, aAttrName.ToAnsiChars(true), values,
+        max_values, aStatus.Handle);
+      if aStatus.OK then begin
+        var tensors := new Tensor[max_values];
+        for I: Integer := 0 to max_values - 1 do begin
+          tensors[I] := new Tensor withHandle(values[I]);
+        end;
+        result := (true, tensors);
+      end else begin
+        result := (false, nil);
+      end;
     end;
 
     method GetAttrTensorShapeProto(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
       aStatus: Status): Tuple of (Boolean, nullable Buffer);
     begin
-    
+      var value: ^TF_Buffer;
+      TF_OperationGetAttrTensorShapeProto(Handle, aAttrName.ToAnsiChars(true), 
+        value, aStatus.Handle);
+      if aStatus.OK then begin
+        result := (true, new Buffer withHandle(value));
+      end else begin
+        result := (false, nil);
+      end;
     end; 
 
     method GetAttrTensorShapeProtoList(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData;
       aStatus: Status): Tuple of (Boolean, array of Buffer);
     begin
-    
+      var max_values := aAttrMeta.ListSize;
+      var values := new ^TF_Buffer[max_values];
+      TF_OperationGetAttrTensorShapeProtoList(Handle, aAttrName.ToAnsiChars(true), 
+        values, max_values, aStatus.Handle);
+      if aStatus.OK then begin
+        var buffers := new Buffer[max_values];
+        for I: Integer := 0 to max_values - 1 do begin
+          buffers[I] := new Buffer withHandle(values[I]);
+          result := (true, buffers);
+        end;
+      end else begin
+        result := (false, nil);
+      end;
     end; 
 
     method GetAttrValueProto(const aAttrName: NotNull<String>; aAttrMeta: TensorFlowAttrMetaData; 
       aStatus: Status): Tuple of (Boolean, Buffer);
     begin
-    
+      var output_attr_value: ^TF_Buffer;
+      TF_OperationGetAttrValueProto(Handle, aAttrName.ToAnsiChars(true), 
+         output_attr_value, aStatus.Handle);
+      if aStatus.OK then begin
+        result := (true, new Buffer withHandle(output_attr_value));
+      end else begin
+        result := (false, nil);
+      end;
     end; 
 
     method GetOutputListLength(const aArgName: NotNull<String>; aStatus: Status := nil): Integer;

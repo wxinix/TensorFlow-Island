@@ -152,4 +152,7 @@ type
     end;   
   end;
 
+  InvalidAttrTypeException = public class(Exception)
+  end;
+
 end.
