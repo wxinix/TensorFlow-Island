@@ -36,7 +36,7 @@ type
 
   DeviceNameAlreadySetException = public class(Exception)
   public
-    constructor withCurrentDeviceName(aName: String);
+    constructor withExistingName(aName: String);
     begin
       inherited constructor($'Device name already set, existing name {aName}.');
     end;
@@ -47,6 +47,25 @@ type
     constructor;
     begin
       inherited constructor($'Trying to set an empty device name.');
+    end;
+  end;
+
+  InvalidTensorDataSizeException = public class(Exception)
+  public
+    constructor withDataSize(aDataSize: Integer) DimSize(aDimSize: Integer);
+    begin
+      inherited constructor($'Data size {aDataSize} inconsistent with shape size {aDimSize}');
+    end;
+  end;
+
+  InvalidAttrTypeException = public class(Exception)
+  end;
+
+  InvalidOsBitSizeException = public class(Exception)
+  public
+    constructor withDetectedOsBitSize(aSize: Integer);
+    begin
+      inherited constructor($'Invalid OS bit size {aSize}. Support 64bit only.');
     end;
   end;
 
@@ -65,6 +84,14 @@ type
       var msg := $'Invalid dim index {aIndex}, NumDims = {aNumDims}.';
       inherited constructor(msg);
     end;
+  end;
+
+  LibraryLoadException = public class(Exception)
+  public
+    constructor withFileName(aName: NotNull<String>) Message(aMsg: NotNull<String>);
+    begin
+      inherited constructor($'Cannot load TensorFlow library from {aName}. {aMsg}');
+    end;   
   end;
 
   ObjectDisposedException = public class(Exception)
@@ -94,6 +121,22 @@ type
     end;
   end;
 
+  StringDecodeException = public class(Exception)
+  public
+    constructor withError(aErrMsg: String);
+    begin
+      inherited constructor(aErrMsg);
+    end;
+  end;
+
+  StringEncodeException = public class(Exception)
+  public
+    constructor withString(aValue: String) Error(aErrMsg: String);
+    begin
+      inherited constructor($'String "{aValue}" cannot be encoded with error: {aErrMsg}');
+    end;
+  end;
+
   TensorCreateException = class(Exception)
   public
     constructor(aType: DataType);
@@ -110,49 +153,6 @@ type
       var msg := $'Cannot convert {aType.ToString} to TensorFlow DataType.';
       inherited constructor(msg);
     end;
-  end;
-
-  StringEncodeException = public class(Exception)
-  public
-    constructor withString(aValue: String) Error(aErrMsg: String);
-    begin
-      inherited constructor($'String "{aValue}" cannot be encoded with error: {aErrMsg}');
-    end;
-  end;
-
-  StringDecodeException = public class(Exception)
-  public
-    constructor withError(aErrMsg: String);
-    begin
-      inherited constructor(aErrMsg);
-    end;
-  end;
-
-  InvalidTensorDataSizeException = public class(Exception)
-  public
-    constructor withDataSize(aDataSize: Integer) DimSize(aDimSize: Integer);
-    begin
-      inherited constructor($'Data size {aDataSize} inconsistent with shape size {aDimSize}');
-    end;
-  end;
-
-  InvalidOsBitSizeException = public class(Exception)
-  public
-    constructor withDetectedOsBitSize(aSize: Integer);
-    begin
-      inherited constructor($'Invalid OS bit size {aSize}. Support 64bit only.');
-    end;
-  end;
-
-  LibraryLoadException = public class(Exception)
-  public
-    constructor withFileName(aName: NotNull<String>) Message(aMsg: NotNull<String>);
-    begin
-      inherited constructor($'Cannot load TensorFlow library from {aName}. {aMsg}');
-    end;   
-  end;
-
-  InvalidAttrTypeException = public class(Exception)
   end;
 
 end.
