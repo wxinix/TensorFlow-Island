@@ -22,6 +22,8 @@
 namespace TensorFlow.Island.Classes;
 
 uses
+  RemObjects.Elements.RTL,
+  RemObjects.Elements.System,
   TensorFlow.Island.Api;
 
 type
@@ -45,6 +47,65 @@ const
 type
   Helper = assembly static class
   public
+    method AsEnum<T>(const aStr: NotNull<String>): Tuple of (Boolean, nullable T);   
+    begin
+      result := (false, nil);
+      if not typeOf(T).IsEnum then exit; 
+      for each el in typeOf(T).Constants do begin
+        if el.Name.Equals(aStr) then exit (true, T(el.Value));
+      end;
+    end;
+
+    method DecodeString(const aValue: NotNull<String>): String;
+    begin
+      var src := aValue.ToAnsiChars;
+      var src_len := aValue.Length;
+      var dst: ^AnsiChar;
+      var dst_len: UInt64;
+
+      using lStatus:= new Status do begin
+        TF_StringDecode(src, src_len, @dst, @dst_len, lStatus.Handle);
+        if lStatus.OK then begin
+          result := String.FromPAnsiChars(dst, dst_len);
+        end else begin
+          raise new StringDecodeException withError(lStatus.Message);
+        end;
+      end;
+    end;
+
+    method EncodeString(const aValue: NotNull<String>): String;
+    begin
+      var src := aValue.ToAnsiChars(false); // Do not take care the case aValue empty.
+      var src_len := aValue.Length;
+      var dst_len := TF_StringEncodedSize(src_len);
+      var dst := new AnsiChar[dst_len];
+
+      using lStatus := new Status do begin
+        TF_StringEncode(src, src_len, dst, dst_len, lStatus.Handle);
+        if lStatus.OK then begin
+          result := String.FromPAnsiChars(dst, dst_len);
+        end else begin
+          raise new StringEncodeException withString(aValue) Error(lStatus.Message);
+        end;
+      end;
+    end;
+  
+    method ReadBytesFromFile(aFile: not nullable String): array of Byte;
+    begin
+      if not File.Exists(aFile) then begin
+        raise new BufferFileNotExistException(aFile);
+      end;
+
+      using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
+        if fs.Length > 0 then begin
+          result := new Byte[fs.Length];
+          fs.Read(result, fs.Length);
+        end else begin
+          result := nil;
+        end;
+      end;
+    end;
+
     method ToArray(aList: not nullable array of Output): array of TF_Output;
     begin
       if aList.Length = 0 then exit nil;
@@ -74,56 +135,6 @@ type
           raise new UnSupportedTypeException(aType);
         end else begin
           result := -1;
-        end;
-      end;
-    end;
-
-    method ReadBytesFromFile(aFile: not nullable String): array of Byte;
-    begin
-      if not File.Exists(aFile) then begin
-        raise new BufferFileNotExistException(aFile);
-      end;
-
-      using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
-        if fs.Length > 0 then begin
-          result := new Byte[fs.Length];
-          fs.Read(result, fs.Length);
-        end else begin
-          result := nil;
-        end;
-      end;
-    end;
-
-    method EncodeString(const aValue: NotNull<String>): String;
-    begin
-      var src := aValue.ToAnsiChars(false); // Do not take care the case aValue empty.
-      var src_len := aValue.Length;
-      var dst_len := TF_StringEncodedSize(src_len);
-      var dst := new AnsiChar[dst_len];
-
-      using lStatus := new Status do begin
-        TF_StringEncode(src, src_len, dst, dst_len, lStatus.Handle);
-        if lStatus.OK then begin
-          result := String.FromPAnsiChars(dst, dst_len);
-        end else begin
-          raise new StringEncodeException withString(aValue) Error(lStatus.Message);
-        end;
-      end;
-    end;
-
-    method DecodeString(const aValue: NotNull<String>): String;
-    begin
-      var src := aValue.ToAnsiChars;
-      var src_len := aValue.Length;
-      var dst: ^AnsiChar;
-      var dst_len: UInt64;
-
-      using lStatus:= new Status do begin
-        TF_StringDecode(src, src_len, @dst, @dst_len, lStatus.Handle);
-        if lStatus.OK then begin
-          result := String.FromPAnsiChars(dst, dst_len);
-        end else begin
-          raise new StringDecodeException withError(lStatus.Message);
         end;
       end;
     end;
