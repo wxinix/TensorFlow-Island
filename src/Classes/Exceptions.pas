@@ -91,7 +91,7 @@ type
     constructor withFileName(aName: NotNull<String>) Message(aMsg: NotNull<String>);
     begin
       inherited constructor($'Cannot load TensorFlow library from {aName}. {aMsg}');
-    end;   
+    end; 
   end;
 
   ObjectDisposedException = public class(Exception)

@@ -34,7 +34,7 @@ type
   (
     CPU,
     GPU,
-    TPU  
+    TPU
   );
 
   DeviceAttrs = public class
@@ -43,7 +43,7 @@ type
     fType: DeviceType;
     fMemoryLimit: UInt64;
   public
-    constructor withName(aName: NotNull<String>) &Type(aType: DeviceType) 
+    constructor withName(aName: NotNull<String>) &Type(aType: DeviceType)
       MemoryLimit(aLimit: UInt64); assembly;
     begin
       fName := aName;
@@ -55,7 +55,7 @@ type
     property MemoryLimitBytes: UInt64 read fMemoryLimit;
     property Name: String read fName;
   end;
-  
+
   DataType = public enum
   (
     Float              = TF_DataType.FLOAT,
@@ -133,8 +133,8 @@ type
 
     property IsList: Byte read fAttrMetaData.is_list;
     property ListSize: Int64 read fAttrMetaData.list_size;
-    
-    property &Type: AttrType 
+
+    property &Type: AttrType
       read begin
         result := AttrType(ord(fAttrMetaData.type));
       end;
@@ -401,7 +401,7 @@ type
       : Tuple of (Boolean, nullable T);
     begin
       using lStatus := new Status do begin
-        var (success, attr_meta_data) := GetAttrMetaData(aAttrName, lStatus);        
+        var (success, attr_meta_data) := GetAttrMetaData(aAttrName, lStatus);
         if not success then begin
           if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
           exit (false, nil);
@@ -488,7 +488,7 @@ type
             var (_success, val) := GetAttrTensorShapeProtoList(aAttrName, attr_meta_data, lStatus);
             result := (_success, T(val));
           end;
-        else   
+        else
           raise new InvalidAttrTypeException($'Invalid operation attr type {typeOf(T).Name}');
         end;
 
@@ -496,15 +496,15 @@ type
       end;
     end;
 
-    method GetAttrString(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; 
+    method GetAttrString(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
       aStatus: Status): Tuple of (Boolean, String);
     begin
       var max_length := aAttrMeta.TotalSize;
       var value := new AnsiChar[max_length];
-      
-      TF_OperationGetAttrString(Handle, aAttrName.ToAnsiChars(true), value, 
+
+      TF_OperationGetAttrString(Handle, aAttrName.ToAnsiChars(true), value,
         max_length, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, String.FromPAnsiChars(value, max_length));
       end else begin
@@ -520,10 +520,10 @@ type
       var lengths := new UInt64[max_values];
       var storage_size := aAttrMeta.TotalSize;
       var storage := new AnsiChar[storage_size];
-      
-      TF_OperationGetAttrStringList(Handle, aAttrName.ToAnsiChars(true), ^^Void(@values[0]), 
+
+      TF_OperationGetAttrStringList(Handle, aAttrName.ToAnsiChars(true), ^^Void(@values[0]),
         lengths, max_values, storage, storage_size, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         var strs := new String[max_values];
         for I: Integer := 0 to max_values - 1 do begin
@@ -532,22 +532,22 @@ type
         result := (true, strs);
       end else begin
         result := (false, nil);
-      end;    
+      end;
     end;
 
     method GetAttrBool(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
       aStatus: Status): Tuple of (Boolean, nullable Boolean);
     begin
       var value: Byte;
-      
-      TF_OperationGetAttrBool(Handle, aAttrName.ToAnsiChars(true), @value, 
-        aStatus.Handle);      
-      
+
+      TF_OperationGetAttrBool(Handle, aAttrName.ToAnsiChars(true), @value,
+        aStatus.Handle);
+
       if aStatus.Ok then begin
         result := (true, value <> 0);
       end else begin
         result := (false, nil);
-      end;    
+      end;
     end;
 
     method GetAttrBoolList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
@@ -555,32 +555,32 @@ type
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new Byte[max_values];
-      
-      TF_OperationGetAttrBoolList(Handle, aAttrName.ToAnsiChars(true), values, 
+
+      TF_OperationGetAttrBoolList(Handle, aAttrName.ToAnsiChars(true), values,
         max_values, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         var bools := new Boolean[max_values];
         for I: Integer := 0 to max_values - 1 do bools[I] := values[I] <> 0;
         result := (true, bools);
       end else begin
         result := (false, nil);
-      end;    
+      end;
     end;
 
     method GetAttrInt(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
       aStatus: Status): Tuple of (Boolean, nullable Int64);
     begin
       var value: Int64;
-      
-      TF_OperationGetAttrInt(Handle, aAttrName.ToAnsiChars(true), @value, 
+
+      TF_OperationGetAttrInt(Handle, aAttrName.ToAnsiChars(true), @value,
         aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, value);
       end else begin
         result := (false, nil);
-      end;     
+      end;
     end;
 
     method GetAttrIntList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
@@ -588,30 +588,30 @@ type
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new Int64[max_values];
-      
-      TF_OperationGetAttrIntList(Handle, aAttrName.ToAnsiChars(true), values, 
+
+      TF_OperationGetAttrIntList(Handle, aAttrName.ToAnsiChars(true), values,
         max_values, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, values);
       end else begin
         result := (false, nil);
-      end;     
+      end;
     end;
 
     method GetAttrFloat(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
       aStatus: Status): Tuple of (Boolean, nullable Single);
     begin
       var value: Single;
-      
-      TF_OperationGetAttrFloat(Handle, aAttrName.ToAnsiChars(true), @value, 
+
+      TF_OperationGetAttrFloat(Handle, aAttrName.ToAnsiChars(true), @value,
         aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, value);
       end else begin
         result := (false, nil);
-      end;     
+      end;
     end;
 
     method GetAttrFloatList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
@@ -619,15 +619,15 @@ type
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new Single[max_values];
-      
-      TF_OperationGetAttrFloatList(Handle, aAttrName.ToAnsiChars(true), values, 
+
+      TF_OperationGetAttrFloatList(Handle, aAttrName.ToAnsiChars(true), values,
         max_values, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, values);
       end else begin
         result := (false, nil);
-      end;    
+      end;
     end;
 
     method GetAttrType(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
@@ -635,12 +635,12 @@ type
     begin
       var value: TF_DataType;
       TF_OperationGetAttrType(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, DataType(ord(value)));
       end else begin
         result := (false, nil);
-      end;  
+      end;
     end;
 
     method GetAttrTypeList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
@@ -648,10 +648,10 @@ type
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new TF_DataType[max_values];
-      
-      TF_OperationGetAttrTypeList(Handle, aAttrName.ToAnsiChars(true), values, 
+
+      TF_OperationGetAttrTypeList(Handle, aAttrName.ToAnsiChars(true), values,
         max_values, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         var _values := new DataType[max_values];
         for I: Integer := 0 to max_values - 1 do begin
@@ -660,7 +660,7 @@ type
         result := (true, _values);
       end else begin
         result := (false, nil);
-      end;    
+      end;
     end;
 
     method GetAttrShape(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
@@ -669,9 +669,9 @@ type
       var num_dim := aAttrMeta.TotalSize;
       var value := new Int64[num_dim];
 
-      TF_OperationGetAttrShape(Handle, aAttrName.ToAnsiChars(true), value, 
+      TF_OperationGetAttrShape(Handle, aAttrName.ToAnsiChars(true), value,
         num_dim, aStatus.Handle);
-     
+
       if aStatus.Ok then begin
         result := (true, new Shape withDims(value));
       end else begin
@@ -688,7 +688,7 @@ type
       var storage_size := aAttrMeta.TotalSize;
       var storage := new Int64[storage_size];
 
-      TF_OperationGetAttrShapeList(Handle, aAttrName, @dims[0], num_dims, 
+      TF_OperationGetAttrShapeList(Handle, aAttrName, @dims[0], num_dims,
         num_shapes, storage, storage_size, aStatus.Handle);
 
       if aStatus.Ok then begin
@@ -697,7 +697,7 @@ type
           if num_dims[I] >= 0 then
             shapes[I] := new Shape(dims[I], num_dims[I])
           else
-            shapes[I] := nil; // num_dims[I] = -1, meaning shape is unknown. 
+            shapes[I] := nil; // num_dims[I] = -1, meaning shape is unknown.
         end;
         result := (true, shapes);
       end else begin
@@ -709,10 +709,10 @@ type
       aStatus: Status): Tuple of (Boolean, Tensor);
     begin
       var tensor_hnd: ^TF_Tensor;
-      
-      TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @tensor_hnd, 
+
+      TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @tensor_hnd,
         aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, new Tensor withHandle(tensor_hnd));
       end else begin
@@ -745,7 +745,7 @@ type
     begin
       var value: ^TF_Buffer;
 
-      TF_OperationGetAttrTensorShapeProto(Handle, aAttrName.ToAnsiChars(true), 
+      TF_OperationGetAttrTensorShapeProto(Handle, aAttrName.ToAnsiChars(true),
         value, aStatus.Handle);
 
       if aStatus.Ok then begin
@@ -753,7 +753,7 @@ type
       end else begin
         result := (false, nil);
       end;
-    end; 
+    end;
 
     method GetAttrTensorShapeProtoList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
       aStatus: Status): Tuple of (Boolean, array of Buffer);
@@ -761,9 +761,9 @@ type
       var max_values := aAttrMeta.ListSize;
       var values := new ^TF_Buffer[max_values];
 
-      TF_OperationGetAttrTensorShapeProtoList(Handle, aAttrName.ToAnsiChars(true), 
+      TF_OperationGetAttrTensorShapeProtoList(Handle, aAttrName.ToAnsiChars(true),
         values, max_values, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         var buffers := new Buffer[max_values];
         for I: Integer := 0 to max_values - 1 do begin
@@ -773,22 +773,22 @@ type
       end else begin
         result := (false, nil);
       end;
-    end; 
+    end;
 
-    method GetAttrValueProto(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; 
+    method GetAttrValueProto(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
       aStatus: Status): Tuple of (Boolean, Buffer);
     begin
       var output_attr_value: ^TF_Buffer;
 
-      TF_OperationGetAttrValueProto(Handle, aAttrName.ToAnsiChars(true), 
+      TF_OperationGetAttrValueProto(Handle, aAttrName.ToAnsiChars(true),
          output_attr_value, aStatus.Handle);
-      
+
       if aStatus.Ok then begin
         result := (true, new Buffer withHandle(output_attr_value));
       end else begin
         result := (false, nil);
       end;
-    end; 
+    end;
 
     method GetOutputListLength(const aArgName: NotNull<String>; aStatus: Status := nil): Integer;
     begin
@@ -830,7 +830,7 @@ type
         var num_control_outputs := NumControlOutputs;
         var op_hnds := new ^TF_Operation[num_control_outputs];
         TF_OperationGetControlOutputs(Handle, op_hnds, num_control_outputs);
-        
+
         for op_hnd in op_hnds do begin
           result.Add(new Operation withHandle(op_hnd) Graph(fGraph));
         end;
@@ -840,7 +840,7 @@ type
       read begin
         result := fGraph;
       end;
-    
+
     property Name: String
       read begin
         result := String.FromPAnsiChars(TF_OperationName(Handle));
@@ -1090,7 +1090,7 @@ type
       end;
     end;
 
-    method SetAttrTensorList(const aName: NotNull<String>; aTensorList: NotNull<TensorList>; 
+    method SetAttrTensorList(const aName: NotNull<String>; aTensorList: NotNull<TensorList>;
       aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
@@ -1104,13 +1104,13 @@ type
       aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
-        TF_SetAttrTensorShapeProto(Handle, aName.ToAnsiChars(true), aProto, 
+        TF_SetAttrTensorShapeProto(Handle, aName.ToAnsiChars(true), aProto,
           aProto.Length, lStatus.Handle);
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
-    method SetAttrTensorShapeProtoList(const aName: NotNull<String>; aProtos: NotNull<array of array of Byte>; 
+    method SetAttrTensorShapeProtoList(const aName: NotNull<String>; aProtos: NotNull<array of array of Byte>;
       aProtoLens: NotNull<array of UInt64>; aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
@@ -1119,7 +1119,7 @@ type
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
-    
+
     method SetAttrValueProto(const aName: NotNull<String>; aProto: NotNull<array of Byte>;
       aStatus: Status := nil);
     begin
@@ -1128,7 +1128,7 @@ type
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
-    
+
     property OpType: String
       read begin
         result := fOpType;
@@ -1136,9 +1136,9 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Status = public sealed class(TensorFlowObject<TF_Status>)    
+  Status = public sealed class(TensorFlowObject<TF_Status>)
   public
-    [ThreadLocal] 
+    [ThreadLocal]
     class var &Default: Status := new Status;
   public
     constructor;
@@ -1223,7 +1223,7 @@ type
       inherited constructor withCachedObject(aScopeName) OnRestore(aAction);
     end;
   end;
-  
+
   Device = public sealed class(RestorableObjectCache)
   public
     constructor withDeviceName(const aDeviceName: NotNull<String>) OnRestore(aAction: RestoreAction);
@@ -1262,8 +1262,8 @@ type
 
     constructor(aDims: ^Int64; aNumDim: Int32); assembly;
     begin
-      var dims: array of Int64 := nil;     
-      
+      var dims: array of Int64 := nil;
+
       if aNumDim > 0 then begin
         dims := new Int64[aNumDim];
         memcpy(dims, aDims, fNumDims * sizeOf(Int64));
@@ -1398,7 +1398,7 @@ type
 
   // Returns a string because we don't want to directly set TF_WhileParams.name
   // which is a ^AnsiChar, inside the callback. If we do that, we'll have to manage
-  // the life time of that pointer. We use/expose TF_WhileParams directly without 
+  // the life time of that pointer. We use/expose TF_WhileParams directly without
   // any wrap-up because copying back-and-forth between raw TF types and TF-Island
   // types would not be good for performance reason.
   WhileConstructor = public block(var aWhileParam: TF_WhileParams): String;
@@ -1460,13 +1460,13 @@ type
     /// <returns>The partial derivatives, the size of the array is the same as the length of the <paramref name="y"/> array.</returns>
     /// <param name="y">The y elements.</param>
     /// <param name="x">The x elements.</param>
-    /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives of some loss function `L` w.r.t. <paramref name="y"/> ).   
+    /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives of some loss function `L` w.r.t. <paramref name="y"/> ).
     /// If the parameter is null, the implementation will use dx for 'OnesLike' for all shapes in <paramref name="y"/></param>
     /// <param name="status">Status buffer, if specified a status code will be left here, if not specified, a <see cref="T:TensorFlow.TFException"/> exception is raised if there is an error.</param>
     /// <remarks>
     /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradient(y: NotNull<OutputList>; x: NotNull<OutputList>; dx: NotNull<OutputList>; 
+    method AddGradient(y: NotNull<OutputList>; x: NotNull<OutputList>; dx: NotNull<OutputList>;
       aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
@@ -1476,10 +1476,10 @@ type
 
       using lStatus := new Status do begin
         var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
-        
-        TF_AddGradients(Handle, y.ToOutputArray, y.Count, x.ToOutputArray, x.Count, 
+
+        TF_AddGradients(Handle, y.ToOutputArray, y.Count, x.ToOutputArray, x.Count,
           dx.ToOutputArray, lStatus.Handle, dy);
-          
+ 
         if not lStatus.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
           for el in dy do begin
@@ -1487,7 +1487,7 @@ type
             result_list.Add(new Output withOp(op) &Index(el.index));
           end;
           result := (true, result_list);
-        end else begin        
+        end else begin
           result := (false, nil);
         end;
 
@@ -1499,19 +1499,19 @@ type
     /// Adds a gradient: the operations needed to compute the partial derivatives of sum of <paramref name="y"/>` wrt to <paramref name="x"/>.
     /// </summary>
     /// <returns>The partial derivatives, the size of the array is the same as the length of the <paramref name="y"/> array.</returns>
-    /// <param name="prefix">names the scope into which all gradients operations are being added.  This must be unique within 
+    /// <param name="prefix">names the scope into which all gradients operations are being added.  This must be unique within
     /// the provided graph otherwise this operation will fail. If the value is null, the default prefixing behaviour takes
     /// place, see AddGradients for more details.
     /// </param>
     /// <param name="y">The y elements.</param>
     /// <param name="x">The x elements.</param>
-    /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives of some loss function `L` w.r.t. <paramref name="y"/> ).   
+    /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives of some loss function `L` w.r.t. <paramref name="y"/> ).
     /// If the parameter is null, the implementation will use dx for 'OnesLike' for all shapes in <paramref name="y"/></param>
     /// <param name="status">Status buffer, if specified a status code will be left here, if not specified, a <see cref="T:TensorFlow.TFException"/> exception is raised if there is an error.</param>
     /// <remarks>
     /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradientWithPrefix(aPrefix: NotNull<String>; y: NotNull<OutputList>; 
+    method AddGradientWithPrefix(aPrefix: NotNull<String>; y: NotNull<OutputList>;
       x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil)
       : Tuple of (Boolean, OutputList);
     begin
@@ -1522,10 +1522,10 @@ type
 
       using lStatus := new Status do begin
         var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
-        
+
         TF_AddGradientsWithPrefix(Handle, aPrefix.ToAnsiChars(true), y.ToOutputArray,
           y.Count, x.ToOutputArray, x.Count, dx.ToOutputArray, lStatus.Handle, dy);
-          
+ 
         if not lStatus.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
           for el in dy do begin
@@ -1533,7 +1533,7 @@ type
             result_list.Add(new Output withOp(op) &Index(el.index));
           end;
           result := (true, result_list);
-        end else begin        
+        end else begin
           result := (false, nil);
         end;
 
@@ -1632,7 +1632,7 @@ type
       result := MakeUniqueName(name);
     end;
 
-    method ImportGraphDef(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>; 
+    method ImportGraphDef(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>;
       aStatus: Status := nil); overload;
     begin
       using lStatus := new Status do begin
@@ -1641,7 +1641,7 @@ type
       end;
     end;
 
-    method ImportGraphDef(aBytes: NotNull<array of Byte>; aOpts: NotNull<ImportGraphDefOptions>; 
+    method ImportGraphDef(aBytes: NotNull<array of Byte>; aOpts: NotNull<ImportGraphDefOptions>;
       aStatus: Status := nil); overload;
     begin
       using graph_def := new Buffer withData(aBytes) NumBytes(aBytes.Length) do begin
@@ -1649,7 +1649,7 @@ type
       end;
     end;
 
-    method ImportGraphDef(aGraphDef: NotNull<Buffer>; aPrefix: NotNull<String> := ''; 
+    method ImportGraphDef(aGraphDef: NotNull<Buffer>; aPrefix: NotNull<String> := '';
       aStatus: Status := nil); overload;
     begin
       using opts := new ImportGraphDefOptions do begin
@@ -1658,7 +1658,7 @@ type
       end;
     end;
 
-    method ImportGraphDef(aBytes: NotNull<array of Byte>; aPrefix: NotNull<String> := ''; 
+    method ImportGraphDef(aBytes: NotNull<array of Byte>; aPrefix: NotNull<String> := '';
       aStatus: Status := nil); overload;
     begin
       using opts := new ImportGraphDefOptions do begin
@@ -1675,7 +1675,7 @@ type
       using lStatus := new Status do begin
         var num_return_outputs := TF_ImportGraphDefOptionsNumReturnOutputs(aOpts.Handle);
         var return_outputs: array of TF_Output := if num_return_outputs > 0 then new TF_Output[num_return_outputs] else nil;
-        
+
         TF_GraphImportGraphDefWithReturnOutputs(Handle, ^TF_Buffer(aGraphDef.Handle), aOpts.Handle,
           return_outputs, num_return_outputs, lStatus.Handle);
 
@@ -1698,11 +1698,11 @@ type
     begin
       var pos: UInt64 := 0;
       var op_hnd: ^TF_Operation;
-      
-      op_hnd := TF_GraphNextOperation(Handle, @pos); 
+
+      op_hnd := TF_GraphNextOperation(Handle, @pos);
       while(assigned(op_hnd)) do begin
         yield (new Operation withHandle(op_hnd) Graph(self));
-        op_hnd := TF_GraphNextOperation(Handle, @pos); 
+        op_hnd := TF_GraphNextOperation(Handle, @pos);
       end;
     end;
 
@@ -1716,15 +1716,15 @@ type
 
     method WithDependencies(aNewDependencies: NotNull<List<Operation>>): Dependencies;
     begin
-      result := new Dependencies withOperations(fCurrentDependencies) 
-        OnRestore(aDependencies->begin 
-          fCurrentDependencies := aDependencies as List<Operation> 
+      result := new Dependencies withOperations(fCurrentDependencies)
+        OnRestore(aDependencies->begin
+          fCurrentDependencies := aDependencies as List<Operation>
         end);
 
       fCurrentDependencies := fCurrentDependencies.Concat(aNewDependencies).Distinct.ToList;
     end;
 
-    method ToFunction(aName: NotNull<String>; aDesc: NotNull<String>; aOps: NotNull<OperationList>; 
+    method ToFunction(aName: NotNull<String>; aDesc: NotNull<String>; aOps: NotNull<OperationList>;
       aInputs: InputList; aOutputs: OutputList; aOutputNames: NotNull<StringList>;
       aAppendHashToName: Boolean := false; aStatus: Status := nil): Tuple of (Boolean, TensorFlowFunction);
     begin
@@ -1740,7 +1740,7 @@ type
         var fn_opts: ^TF_FunctionOptions := nil;
 
         var fn_hnd := TF_GraphToFunction(
-          Handle, 
+          Handle,
           aName.ToAnsiChars(true),
           append_hash_to_fn_name,
           num_opers,
@@ -1753,13 +1753,13 @@ type
           fn_opts,
           aDesc.ToAnsiChars(true),
           lStatus.Handle);
-        
+
         if lStatus.Ok then begin
           result := (true, new TensorFlowFunction withHandle(fn_hnd));
         end else begin
           result := (false, nil);
         end;
-        
+
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
@@ -1769,13 +1769,13 @@ type
       using lStatus := new Status do begin
         var buffer_hnd := TF_NewBuffer;
         TF_GraphToGraphDef(Handle, buffer_hnd, lStatus.Handle);
-        
+
         if lStatus.Ok then begin
           result := (true, new Buffer withHandle(buffer_hnd));
         end else begin
           result := (false, nil);
         end;
-        
+
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
@@ -1800,18 +1800,18 @@ type
       using lStatus := new Status do begin
         var buffer_hnd := TF_NewBuffer;
         TF_GraphVersions(Handle, buffer_hnd, lStatus.Handle);
-        
+
         if lStatus.Ok then begin
           result := (true, new Buffer withHandle(buffer_hnd));
         end else begin
           result := (false, nil);
         end;
-        
+
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
 
-    method &While(aInputs: NotNull<InputList>; aWhileCtor: NotNull<WhileConstructor>; 
+    method &While(aInputs: NotNull<InputList>; aWhileCtor: NotNull<WhileConstructor>;
       aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
@@ -1822,10 +1822,10 @@ type
             if not lStatus.Ok then exit (false, nil);
             // No need to set tf_while_params.name inside this callback. It will be
             // overwritten anyway.
-            var name := aWhileCtor(var tf_while_params); 
+            var name := aWhileCtor(var tf_while_params);
             if String.IsNullOrEmpty(name) then name := MakeUniqueName(name);
             tf_while_params.name := name.ToAnsiChars(true); // Overwritten here.
-            
+   
             var outputs := new TF_Output[aInputs.Count];
             TF_FinishWhile(@tf_while_params, lStatus.Handle, outputs);
             if not lStatus.Ok then exit (false, nil);
@@ -1850,7 +1850,7 @@ type
     begin
       result := new Device withDeviceName(fDeviceName)
         OnRestore(aDeviceName->begin fDeviceName := (aDeviceName as String) end);
-      
+
       if not String.IsNullOrEmpty(fDeviceName) then begin
         raise new DeviceNameAlreadySetException withExistingName(fDeviceName);
       end;
@@ -1864,9 +1864,9 @@ type
 
     method WithScope(aNewNameScope: NotNull<String>): Scope;
     begin
-      result := new Scope withScopeName(fCurrentNameScope) 
-        OnRestore(aScopeName->begin 
-          fCurrentNameScope := (aScopeName as String) 
+      result := new Scope withScopeName(fCurrentNameScope)
+        OnRestore(aScopeName->begin
+          fCurrentNameScope := (aScopeName as String)
         end);
 
       if String.IsNullOrEmpty(fCurrentNameScope) then begin
@@ -1923,7 +1923,7 @@ type
 
     method AddInputMapping (const aSrcName: NotNull<String>; aSrcIndex: Integer; aDst: NotNull<Output>);
     begin
-      TF_ImportGraphDefOptionsAddInputMapping(Handle, aSrcName.ToAnsiChars(true), 
+      TF_ImportGraphDefOptionsAddInputMapping(Handle, aSrcName.ToAnsiChars(true),
         aSrcIndex, aDst.AsTFOutput);
     end;
 
@@ -1954,7 +1954,7 @@ type
 
     method SetUniquifyPrefix(aUniquifyPrefix: Boolean);
     begin
-      TF_ImportGraphDefOptionsSetUniquifyPrefix(Handle, if aUniquifyPrefix then 1 else 0);      
+      TF_ImportGraphDefOptionsSetUniquifyPrefix(Handle, if aUniquifyPrefix then 1 else 0);
     end;
 
     property NumReturnOutputs: Integer
@@ -2510,14 +2510,14 @@ type
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Session = public sealed class(TensorFlowObject<TF_Session>)
-  private    
+  private
     fDisposed: Boolean := false;
     fGraph: Graph:= nil;
     fOwnsGraph: Boolean := false; // Graph owned by this Session?
-    fDeleteStatus: Status := new Status; 
-    fOnDispose: DisposeAction<TF_Session> := aHandle->TF_DeleteSession(aHandle, fDeleteStatus.Handle);    
+    fDeleteStatus: Status := new Status;
+    fOnDispose: DisposeAction<TF_Session> := aHandle->TF_DeleteSession(aHandle, fDeleteStatus.Handle);
     fRunner: SessionRunner := nil; // Delayed creation upon access.
-    
+
     method CreateSession(aSessOpts: SessionOptions := nil): Tuple of (Ok: Boolean, Msg: String, Handle: ^TF_Session);
     begin
       using lStatus := new Status do begin
@@ -2557,7 +2557,7 @@ type
       inherited constructor withHandle(create_session.Handle) OnDispose(fOnDispose);
     end;
 
-    constructor withHandle(aHandle: ^TF_Session) Graph(aGraph: NotNull<Graph>) 
+    constructor withHandle(aHandle: ^TF_Session) Graph(aGraph: NotNull<Graph>)
       OwnsGraph(aOwnsGraph: Boolean := false); assembly;
     begin
       fGraph := aGraph;
@@ -2580,7 +2580,7 @@ type
     end;
 
     /// <summary>
-    /// Close a session. Contacts any other processes associates with session, if 
+    /// Close a session. Contacts any other processes associates with session, if
     /// applicable. May not be called after Dispose.
     /// </summary>
     /// <param name="aStatus">Optional status.</param>
@@ -2597,7 +2597,7 @@ type
       using lStatus := new Status do begin
         var (success, shp) := fGraph.GetTensorShape(aOutput, lStatus);
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-  
+
         if success then begin
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Handle));
           result := $'Tensor ("{name}: {aOutput.Index}", ' +
@@ -2618,26 +2618,26 @@ type
 
           var list_size := TF_DeviceListCount(devlist_hnd);
           var devlist := new List<DeviceAttrs>;
-          
+ 
           for I: Integer := 0 to list_size - 1 do begin
             var nameptr := TF_DeviceListName(devlist_hnd, I, lStatus.Handle);
-            if not lStatus.Ok then exit (false, nil);           
+            if not lStatus.Ok then exit (false, nil);  
             var name := String.FromPAnsiChars(nameptr);
 
             var typestr_ptr := TF_DeviceListType(devlist_hnd, I, lStatus.Handle);
-            if not lStatus.Ok then exit (false, nil);            
+            if not lStatus.Ok then exit (false, nil);   
             var (nil, dev_type) := Helper.AsEnum<DeviceType>(String.FromPAnsiChars(typestr_ptr));
 
             var nbytes := TF_DeviceListMemoryBytes(Handle, I, lStatus.Handle);
             if not lStatus.Ok then exit (false, nil);
 
-            devlist.Add(new DeviceAttrs withName(name) &Type(dev_type) MemoryLimit(nbytes));            
+            devlist.Add(new DeviceAttrs withName(name) &Type(dev_type) MemoryLimit(nbytes));   
           end;
 
           result := (true, devlist);
         finally
           if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-        end;        
+        end;
       end;
     end;
 
@@ -2648,8 +2648,8 @@ type
     /// This function loads the data that was saved using the SavedModel file format, as described
     /// here: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/saved_model/README.md
     /// </remarks>
-    class method LoadFromSavedModel (aSessOpts: NotNull<SessionOptions>; aRunOptions: Buffer; 
-      aExportDir: NotNull<String>; aTags: NotNull<array of String>; aGraph: NotNull<Graph>; 
+    class method LoadFromSavedModel (aSessOpts: NotNull<SessionOptions>; aRunOptions: Buffer;
+      aExportDir: NotNull<String>; aTags: NotNull<array of String>; aGraph: NotNull<Graph>;
       aMetaGraphDef: Buffer; aStatus: Status := nil): Tuple of (Boolean, Session);
     begin
       var tags_len := aTags.Length;
@@ -2658,13 +2658,13 @@ type
 
       using lStatus := new Status do begin
         var sess_hnd := TF_LoadSessionFromSavedModel(
-          aSessOpts.Handle, 
-          ^TF_Buffer(aRunOptions:Handle), 
-          aExportDir.ToAnsiChars(true), 
-          tags, 
-          tags_len, 
-          aGraph.Handle, 
-          ^TF_Buffer(aMetaGraphDef: Handle), 
+          aSessOpts.Handle,
+          ^TF_Buffer(aRunOptions:Handle),
+          aExportDir.ToAnsiChars(true),
+          tags,
+          tags_len,
+          aGraph.Handle,
+          ^TF_Buffer(aMetaGraphDef: Handle),
           lStatus.Handle);
 
         if lStatus.Ok then begin
@@ -2674,7 +2674,7 @@ type
         end;
 
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
-      end;    
+      end;
     end;
 
     method RestoreTensor(const aFileName: NotNull<String>; const aTensor: NotNull<String>;
@@ -2687,7 +2687,7 @@ type
     begin
       // To-do
     end;
-    
+
     property &Graph: Graph
       read begin
         result := fGraph;
@@ -2859,7 +2859,7 @@ type
         var target_opers  := fContext.Targets.Handles;
         var ntargets      := fContext.Targets.Count;
 
-        TF_SessionPRunSetup(fSession.Handle, inputs, ninputs, outputs, noutputs, 
+        TF_SessionPRunSetup(fSession.Handle, inputs, ninputs, outputs, noutputs,
           target_opers, ntargets, @token_hnd, lStatus.Handle);
 
         if lStatus.Ok then begin
@@ -3007,7 +3007,7 @@ type
     begin
       var buffer := TF_GetOpList(Handle);
       // buffer memory is owned by the lib_handle, so we do NOT take ownership.
-      result := new Buffer withData(buffer.data) NumBytes(buffer.length); 
+      result := new Buffer withData(buffer.data) NumBytes(buffer.length);
     end;
   end;
 
@@ -3024,7 +3024,7 @@ type
       using lStatus := new Status do begin
         var buffer_hnd := TF_NewBuffer;
         TF_FunctionToFunctionDef(Handle, buffer_hnd, lStatus.Handle);
-        
+
         if lStatus.Ok then begin
           result := (true, new Buffer withHandle(buffer_hnd));
         end else begin

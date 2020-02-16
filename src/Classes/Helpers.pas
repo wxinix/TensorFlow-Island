@@ -53,10 +53,10 @@ type
 
   Helper = assembly static class
   public
-    method AsEnum<T>(const aStr: NotNull<String>): Tuple of (Boolean, nullable T);   
+    method AsEnum<T>(const aStr: NotNull<String>): Tuple of (Boolean, nullable T); 
     begin
       result := (false, nil);
-      if not typeOf(T).IsEnum then exit; 
+      if not typeOf(T).IsEnum then exit;
       for each el in typeOf(T).Constants do begin
         if el.Name.Equals(aStr) then exit (true, T(el.Value));
       end;
@@ -95,7 +95,7 @@ type
         end;
       end;
     end;
-  
+
     method ReadBytesFromFile(aFile: not nullable String): array of Byte;
     begin
       if not File.Exists(aFile) then begin
