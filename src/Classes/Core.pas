@@ -1379,22 +1379,23 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  OutputList = public sealed class(TensorFlowDisposableList<Output>)
+  InputList = public sealed class(TensorFlowDisposableList<Output>)
   assembly
-    method AsTFOutputs: array of TF_Output;
+    method ToInputArray: array of TF_Output;
     begin
       result := Helper.ToArray(self.ToArray);
     end;
   end;
 
-  InputList = public sealed class(TensorFlowDisposableList<Output>)
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
+  OutputList = public sealed class(TensorFlowDisposableList<Output>)
   assembly
-    method AsTFInputs: array of TF_Output;
+    method ToOutputArray: array of TF_Output;
     begin
       result := Helper.ToArray(self.ToArray);
     end;
   end;
-  
+
   // Returns a string because we don't want to directly set TF_WhileParams.name
   // which is a ^AnsiChar, inside the callback. If we do that, we'll have to manage
   // the life time of that pointer. We use/expose TF_WhileParams directly without 
@@ -1453,6 +1454,93 @@ type
       inherited constructor withHandle(aHandle) OnDispose(nil);
     end;
 
+    /// <summary>
+    /// Adds a gradient: the operations needed to compute the partial derivatives of sum of <paramref name="y"/>` wrt to <paramref name="x"/>.
+    /// </summary>
+    /// <returns>The partial derivatives, the size of the array is the same as the length of the <paramref name="y"/> array.</returns>
+    /// <param name="y">The y elements.</param>
+    /// <param name="x">The x elements.</param>
+    /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives of some loss function `L` w.r.t. <paramref name="y"/> ).   
+    /// If the parameter is null, the implementation will use dx for 'OnesLike' for all shapes in <paramref name="y"/></param>
+    /// <param name="status">Status buffer, if specified a status code will be left here, if not specified, a <see cref="T:TensorFlow.TFException"/> exception is raised if there is an error.</param>
+    /// <remarks>
+    /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
+    /// </remarks>
+    method AddGradient(y: NotNull<OutputList>; x: NotNull<OutputList>; dx: NotNull<OutputList>; 
+      aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    begin
+      if y.Count <> dx.Count then begin
+        var msg := $'AddGradient y [size={y.Count}] and dx [size={dx.Count}] must have the same size.';
+        raise new ArgumentException(msg);
+      end;
+
+      using lStatus := new Status do begin
+        var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
+        
+        TF_AddGradients(Handle, y.ToOutputArray, y.Count, x.ToOutputArray, x.Count, 
+          dx.ToOutputArray, lStatus.Handle, dy);
+          
+        if not lStatus.Ok then begin
+          var result_list := new OutputList withCapacity(dy.Length);
+          for el in dy do begin
+            var op := new Operation withHandle(el.oper) Graph(self);
+            result_list.Add(new Output withOp(op) &Index(el.index));
+          end;
+          result := (true, result_list);
+        end else begin        
+          result := (false, nil);
+        end;
+
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    /// <summary>
+    /// Adds a gradient: the operations needed to compute the partial derivatives of sum of <paramref name="y"/>` wrt to <paramref name="x"/>.
+    /// </summary>
+    /// <returns>The partial derivatives, the size of the array is the same as the length of the <paramref name="y"/> array.</returns>
+    /// <param name="prefix">names the scope into which all gradients operations are being added.  This must be unique within 
+    /// the provided graph otherwise this operation will fail. If the value is null, the default prefixing behaviour takes
+    /// place, see AddGradients for more details.
+    /// </param>
+    /// <param name="y">The y elements.</param>
+    /// <param name="x">The x elements.</param>
+    /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives of some loss function `L` w.r.t. <paramref name="y"/> ).   
+    /// If the parameter is null, the implementation will use dx for 'OnesLike' for all shapes in <paramref name="y"/></param>
+    /// <param name="status">Status buffer, if specified a status code will be left here, if not specified, a <see cref="T:TensorFlow.TFException"/> exception is raised if there is an error.</param>
+    /// <remarks>
+    /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
+    /// </remarks>
+    method AddGradientWithPrefix(aPrefix: NotNull<String>; y: NotNull<OutputList>; 
+      x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil)
+      : Tuple of (Boolean, OutputList);
+    begin
+      if y.Count <> dx.Count then begin
+        var msg := $'AddGradient y [size={y.Count}] and dx [size={dx.Count}] must have the same size.';
+        raise new ArgumentException(msg);
+      end;
+
+      using lStatus := new Status do begin
+        var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
+        
+        TF_AddGradientsWithPrefix(Handle, aPrefix.ToAnsiChars(true), y.ToOutputArray,
+          y.Count, x.ToOutputArray, x.Count, dx.ToOutputArray, lStatus.Handle, dy);
+          
+        if not lStatus.Ok then begin
+          var result_list := new OutputList withCapacity(dy.Length);
+          for el in dy do begin
+            var op := new Operation withHandle(el.oper) Graph(self);
+            result_list.Add(new Output withOp(op) &Index(el.index));
+          end;
+          result := (true, result_list);
+        end else begin        
+          result := (false, nil);
+        end;
+
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
     method AddInitVariable(aOp: NotNull<Operation>);
     begin
       for each el in fPendingInitVars do begin
@@ -1460,6 +1548,25 @@ type
       end;
 
       fPendingInitVars.Add(aOp);
+    end;
+
+    method GetFunctions(aStatus: Status := nil): tuple of (Boolean, FunctionList);
+    begin
+      using lStatus := new Status do begin
+        var max_func := NumFunctions;
+        var fn_hnds := new ^TF_Function[max_func];
+        TF_GraphGetFunctions(Handle, fn_hnds, max_func, lStatus.Handle);
+        if lStatus.Ok then begin
+          var result_list := new FunctionList withCapacity(max_func);
+          for fn_hnd in fn_hnds do begin
+            result_list.Add(new TensorFlowFunction withHandle(fn_hnd));
+          end;
+          result := (true, result_list);
+        end else begin
+          result := (false, nil);
+        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
     end;
 
     method GetOperationByName(const aOpName: NotNull<String>): Tuple of (Boolean, Operation);
@@ -1563,7 +1670,7 @@ type
     end;
 
     method ImportGraphDefWithReturnOutputs(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>;
-      aStatus: Status := nil): OutputList;
+      aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
         var num_return_outputs := TF_ImportGraphDefOptionsNumReturnOutputs(aOpts.Handle);
@@ -1572,11 +1679,17 @@ type
         TF_GraphImportGraphDefWithReturnOutputs(Handle, ^TF_Buffer(aGraphDef.Handle), aOpts.Handle,
           return_outputs, num_return_outputs, lStatus.Handle);
 
-        result := new OutputList;
-        for I: Integer := 0 to num_return_outputs - 1 do begin
-          var op := new Operation withHandle(return_outputs[I].oper) Graph(self);
-          result.Add(new Output withOp(op) &Index(return_outputs[I].index));
+        if lStatus.Ok then begin
+          var result_list := new OutputList withCapacity(return_outputs.Length);
+          for I: Integer := 0 to num_return_outputs - 1 do begin
+            var op := new Operation withHandle(return_outputs[I].oper) Graph(self);
+            result_list.Add(new Output withOp(op) &Index(return_outputs[I].index));
+          end;
+          result := (true, result_list);
+        end else begin
+          result := (false, nil);
         end;
+
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
@@ -1611,13 +1724,70 @@ type
       fCurrentDependencies := fCurrentDependencies.Concat(aNewDependencies).Distinct.ToList;
     end;
 
+    method ToFunction(aName: NotNull<String>; aDesc: NotNull<String>; aOps: NotNull<OperationList>; 
+      aInputs: InputList; aOutputs: OutputList; aOutputNames: NotNull<StringList>;
+      aAppendHashToName: Boolean := false; aStatus: Status := nil): Tuple of (Boolean, TensorFlowFunction);
+    begin
+      using lStatus := new Status do begin
+        var append_hash_to_fn_name := if aAppendHashToName then 1 else 0;
+        var num_opers := aOps.Count;
+        var opers := aOps.Handles;
+        var ninputs := aInputs.Count;
+        var inputs := aInputs.ToInputArray;
+        var noutputs := aOutputs.Count;
+        var outputs := aOutputs.ToOutputArray;
+        var output_names:= aOutputNames.ToAnsiCharPtrs;
+        var fn_opts: ^TF_FunctionOptions := nil;
+
+        var fn_hnd := TF_GraphToFunction(
+          Handle, 
+          aName.ToAnsiChars(true),
+          append_hash_to_fn_name,
+          num_opers,
+          opers,
+          ninputs,
+          inputs,
+          noutputs,
+          outputs,
+          output_names,
+          fn_opts,
+          aDesc.ToAnsiChars(true),
+          lStatus.Handle);
+        
+        if lStatus.Ok then begin
+          result := (true, new TensorFlowFunction withHandle(fn_hnd));
+        end else begin
+          result := (false, nil);
+        end;
+        
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
     method ToGraphDef(aStatus: Status := nil): Tuple of (Boolean, Buffer);
     begin
       using lStatus := new Status do begin
         var buffer_hnd := TF_NewBuffer;
         TF_GraphToGraphDef(Handle, buffer_hnd, lStatus.Handle);
+        
         if lStatus.Ok then begin
           result := (true, new Buffer withHandle(buffer_hnd));
+        end else begin
+          result := (false, nil);
+        end;
+        
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method TryEvaluateConstant(aOutput: NotNull<Output>; aStatus: Status := nil): Tuple of (Boolean, Tensor);
+    begin
+      using lStatus := new Status do begin
+        var tensor_hnd: ^TF_Tensor;
+        var success := TF_TryEvaluateConstant(Handle, aOutput.AsTFOutput, @tensor_hnd, lStatus.Handle) <> 0;
+
+        if success then begin
+          result := (true, new Tensor withHandle(tensor_hnd));
         end else begin
           result := (false, nil);
         end;
@@ -1625,30 +1795,48 @@ type
       end;
     end;
 
+    method Versions(aStatus: Status := nil): Tuple of (Boolean, Buffer);
+    begin
+      using lStatus := new Status do begin
+        var buffer_hnd := TF_NewBuffer;
+        TF_GraphVersions(Handle, buffer_hnd, lStatus.Handle);
+        
+        if lStatus.Ok then begin
+          result := (true, new Buffer withHandle(buffer_hnd));
+        end else begin
+          result := (false, nil);
+        end;
+        
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
     method &While(aInputs: NotNull<InputList>; aWhileCtor: NotNull<WhileConstructor>; 
-      aStatus: Status := nil): OutputList;
+      aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
         var tf_while_params: TF_WhileParams;
         try
           try
-            tf_while_params := TF_NewWhile(Handle, aInputs.AsTFInputs, aInputs.Count, lStatus.Handle);
-            if not lStatus.Ok then exit nil;
+            tf_while_params := TF_NewWhile(Handle, aInputs.ToInputArray, aInputs.Count, lStatus.Handle);
+            if not lStatus.Ok then exit (false, nil);
             // No need to set tf_while_params.name inside this callback. It will be
             // overwritten anyway.
             var name := aWhileCtor(var tf_while_params); 
             if String.IsNullOrEmpty(name) then name := MakeUniqueName(name);
             tf_while_params.name := name.ToAnsiChars(true); // Overwritten here.
             
-            var output_arr := new TF_Output[aInputs.Count];
-            TF_FinishWhile(@tf_while_params, lStatus.Handle, output_arr);
-            if not lStatus.Ok then exit nil;
+            var outputs := new TF_Output[aInputs.Count];
+            TF_FinishWhile(@tf_while_params, lStatus.Handle, outputs);
+            if not lStatus.Ok then exit (false, nil);
 
-            result := new OutputList;
-            for o in output_arr do begin
+            var result_list := new OutputList withCapacity(outputs.Length);
+            for o in outputs do begin
               var op := new Operation withHandle(o.oper) Graph(self);
-              result.Add(new Output withOp(op) &Index(o.index));
+              result_list.Add(new Output withOp(op) &Index(o.index));
             end;
+
+            result := (true, result_list);
           except
             TF_AbortWhile(@tf_while_params);
           end;
@@ -1693,19 +1881,24 @@ type
         result := fCurrentNameScope;
       end;
 
-    property DeviceName: String
-      read begin
-        result := fDeviceName;
-      end;
-
     property CurrentDependencies: List<Operation>
       read begin
         result := fCurrentDependencies;
       end;
 
+    property DeviceName: String
+      read begin
+        result := fDeviceName;
+      end;
+
     property GlobalVariableInitializer: array of ^TF_Operation
       read begin
         result := fPendingInitVars.Handles;
+      end;
+
+    property NumFunctions: Integer
+      read begin
+        result := TF_GraphNumFunctions(Handle);
       end;
 
     property &Operation[aName: NotNull<String>]: Operation
@@ -2659,9 +2852,9 @@ type
     begin
       using lStatus := new Status do begin
         var token_hnd: ^AnsiChar;
-        var inputs        := fContext.Inputs.AsTFInputs;
+        var inputs        := fContext.Inputs.ToInputArray;
         var ninputs       := fContext.Inputs.Count;
-        var outputs       := fContext.Outputs.AsTFOutputs;
+        var outputs       := fContext.Outputs.ToOutputArray;
         var noutputs      := fContext.Outputs.Count;
         var target_opers  := fContext.Targets.Handles;
         var ntargets      := fContext.Targets.Count;
@@ -2690,10 +2883,10 @@ type
     begin
       using lStatus := new Status do begin
         var run_options   := ^TF_Buffer(aOpts: Handle);
-        var inputs        := fContext.Inputs.AsTFInputs;
+        var inputs        := fContext.Inputs.ToInputArray;
         var input_values  := fContext.InputValues.Handles;
         var ninputs       := fContext.Inputs.Count;
-        var outputs       := fContext.Outputs.AsTFOutputs;
+        var outputs       := fContext.Outputs.ToOutputArray;
         var noutputs      := fContext.Outputs.Count;
         var output_values := new ^TF_Tensor[noutputs];
         var target_opers  := fContext.Targets.Handles;
@@ -2725,10 +2918,10 @@ type
       end;
 
       using lStatus := new Status do begin
-        var inputs        := fContext.Inputs.AsTFInputs;
+        var inputs        := fContext.Inputs.ToInputArray;
         var input_values  := fContext.InputValues.Handles;
         var ninputs       := fContext.Inputs.Count;
-        var outputs       := fContext.Outputs.AsTFOutputs;
+        var outputs       := fContext.Outputs.ToOutputArray;
         var noutputs      := fContext.Outputs.Count;
         var output_values := new ^TF_Tensor[noutputs];
         var target_opers  := fContext.Targets.Handles;
@@ -2863,6 +3056,19 @@ type
       read begin
         result := String.FromPAnsiChars(TF_FunctionName(Handle));
       end;
+  end;
+
+  FunctionList = public sealed class(TensorFlowObjectList<TensorFlowFunction>)
+  public
+    constructor withCapacity(aCapacity: Integer);
+    begin
+      inherited constructor withCapacity(aCapacity);
+    end;
+
+    constructor;
+    begin
+      inherited constructor;
+    end;
   end;
 
 end.
