@@ -257,7 +257,7 @@ type
         result := aAxis;
       end else begin
         using lStatus := new Status do begin
-          var (success, shp) := self.GetShape (aInput, lStatus);
+          var (success, shp) := self.GetTensorShape (aInput, lStatus);
           if success then begin
             if shp.NumDims > 0 then begin
               var arr := new Int32[shp.NumDims];
@@ -344,7 +344,7 @@ type
 
       using variableScope := WithScope(MakeName('Variable', aOpName)) do begin
         using lStatus := new Status do begin
-          var (success, shp) := GetShape(aIniValue, lStatus);
+          var (success, shp) := GetTensorShape(aIniValue, lStatus);
 
           if not success then begin
             raise new OpCreateException withOpType('Variable') Message(lStatus.Message);
