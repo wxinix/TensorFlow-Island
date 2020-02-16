@@ -22,8 +22,6 @@
 namespace TensorFlow.Island.Classes;
 
 uses
-  RemObjects.Elements.RTL,
-  RemObjects.Elements.System,
   TensorFlow.Island.Api;
 
 type
@@ -65,7 +63,7 @@ type
 
       using lStatus:= new Status do begin
         TF_StringDecode(src, src_len, @dst, @dst_len, lStatus.Handle);
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := String.FromPAnsiChars(dst, dst_len);
         end else begin
           raise new StringDecodeException withError(lStatus.Message);
@@ -82,7 +80,7 @@ type
 
       using lStatus := new Status do begin
         TF_StringEncode(src, src_len, dst, dst_len, lStatus.Handle);
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := String.FromPAnsiChars(dst, dst_len);
         end else begin
           raise new StringEncodeException withString(aValue) Error(lStatus.Message);
