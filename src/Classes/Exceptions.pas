@@ -113,6 +113,22 @@ type
     end;
   end;
 
+  PartialRunSetupException = public class(Exception)
+  public
+    constructor withError(aErr: String);
+    begin
+      inherited constructor($'Fail to set up partial run with error {aErr}');
+    end;
+  end;
+
+  PartialRunTokenNotSetupException = public class(Exception)
+  public
+    constructor;
+    begin
+      inherited constructor('Cannot invoke SessionRunner.PartialRun with uninitialized token.');
+    end;
+  end;
+
   SessionCreateException = public class(Exception)
   public
     constructor withMessage(aMsg: not nullable String);
