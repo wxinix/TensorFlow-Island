@@ -387,7 +387,7 @@ type
       using lStatus := new Status do begin
         var meta_data := TF_OperationGetAttrMetadata(Handle, aAttrName.ToAnsiChars(true), lStatus.Handle);
 
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := (true, meta_data)
         end else begin
           result := (false, nil);
@@ -505,7 +505,7 @@ type
       TF_OperationGetAttrString(Handle, aAttrName.ToAnsiChars(true), value, 
         max_length, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, String.FromPAnsiChars(value, max_length));
       end else begin
         result := (false, nil);
@@ -524,7 +524,7 @@ type
       TF_OperationGetAttrStringList(Handle, aAttrName.ToAnsiChars(true), ^^Void(@values[0]), 
         lengths, max_values, storage, storage_size, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         var strs := new String[max_values];
         for I: Integer := 0 to max_values - 1 do begin
           strs[I] := String.FromPAnsiChars(values[I], lengths[I]);
@@ -543,7 +543,7 @@ type
       TF_OperationGetAttrBool(Handle, aAttrName.ToAnsiChars(true), @value, 
         aStatus.Handle);      
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, value <> 0);
       end else begin
         result := (false, nil);
@@ -559,7 +559,7 @@ type
       TF_OperationGetAttrBoolList(Handle, aAttrName.ToAnsiChars(true), values, 
         max_values, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         var bools := new Boolean[max_values];
         for I: Integer := 0 to max_values - 1 do bools[I] := values[I] <> 0;
         result := (true, bools);
@@ -576,7 +576,7 @@ type
       TF_OperationGetAttrInt(Handle, aAttrName.ToAnsiChars(true), @value, 
         aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, value);
       end else begin
         result := (false, nil);
@@ -592,7 +592,7 @@ type
       TF_OperationGetAttrIntList(Handle, aAttrName.ToAnsiChars(true), values, 
         max_values, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, values);
       end else begin
         result := (false, nil);
@@ -607,7 +607,7 @@ type
       TF_OperationGetAttrFloat(Handle, aAttrName.ToAnsiChars(true), @value, 
         aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, value);
       end else begin
         result := (false, nil);
@@ -623,7 +623,7 @@ type
       TF_OperationGetAttrFloatList(Handle, aAttrName.ToAnsiChars(true), values, 
         max_values, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, values);
       end else begin
         result := (false, nil);
@@ -634,10 +634,9 @@ type
       aStatus: Status): Tuple of (Boolean, nullable DataType);
     begin
       var value: TF_DataType;
-      TF_OperationGetAttrType(Handle, aAttrName.ToAnsiChars(true), @value, 
-        aStatus.Handle);
+      TF_OperationGetAttrType(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, DataType(ord(value)));
       end else begin
         result := (false, nil);
@@ -653,7 +652,7 @@ type
       TF_OperationGetAttrTypeList(Handle, aAttrName.ToAnsiChars(true), values, 
         max_values, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         var _values := new DataType[max_values];
         for I: Integer := 0 to max_values - 1 do begin
           _values[I] := DataType(ord(values[I]));
@@ -673,7 +672,7 @@ type
       TF_OperationGetAttrShape(Handle, aAttrName.ToAnsiChars(true), value, 
         num_dim, aStatus.Handle);
      
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, new Shape withDims(value));
       end else begin
         result := (false, nil);
@@ -692,7 +691,7 @@ type
       TF_OperationGetAttrShapeList(Handle, aAttrName, @dims[0], num_dims, 
         num_shapes, storage, storage_size, aStatus.Handle);
 
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         var shapes := new Shape[num_shapes];
         for I: Integer := 0 to num_shapes - 1 do begin
           if num_dims[I] >= 0 then
@@ -714,7 +713,7 @@ type
       TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @tensor_hnd, 
         aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, new Tensor withHandle(tensor_hnd));
       end else begin
         result := (false, nil);
@@ -730,7 +729,7 @@ type
       TF_OperationGetAttrTensorList(Handle, aAttrName.ToAnsiChars(true), values,
         max_values, aStatus.Handle);
 
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         var tensors := new Tensor[max_values];
         for I: Integer := 0 to max_values - 1 do begin
           tensors[I] := new Tensor withHandle(values[I]);
@@ -749,7 +748,7 @@ type
       TF_OperationGetAttrTensorShapeProto(Handle, aAttrName.ToAnsiChars(true), 
         value, aStatus.Handle);
 
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, new Buffer withHandle(value));
       end else begin
         result := (false, nil);
@@ -765,7 +764,7 @@ type
       TF_OperationGetAttrTensorShapeProtoList(Handle, aAttrName.ToAnsiChars(true), 
         values, max_values, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         var buffers := new Buffer[max_values];
         for I: Integer := 0 to max_values - 1 do begin
           buffers[I] := new Buffer withHandle(values[I]);
@@ -784,7 +783,7 @@ type
       TF_OperationGetAttrValueProto(Handle, aAttrName.ToAnsiChars(true), 
          output_attr_value, aStatus.Handle);
       
-      if aStatus.OK then begin
+      if aStatus.Ok then begin
         result := (true, new Buffer withHandle(output_attr_value));
       end else begin
         result := (false, nil);
@@ -812,7 +811,7 @@ type
       using lStatus := new Status do begin
         var buffer_hnd := TF_NewBuffer;
         TF_OperationToNodeDef(Handle, buffer_hnd, lStatus.Handle);
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := (true, new Buffer withHandle(buffer_hnd));
         end else begin
           TF_DeleteBuffer(buffer_hnd);
@@ -945,7 +944,7 @@ type
         // Desc ptr gets deleted inside TF_FinishOperation.
         var op_hnd := TF_FinishOperation(Handle, lStatus.Handle);
 
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := (true, new Operation withHandle(op_hnd) Graph(fGraph))
         end else begin
           result := (false, nil);
@@ -1166,7 +1165,7 @@ type
       result := if assigned(aIncoming) then aIncoming else new Status;
     end;
 
-    property OK: Boolean
+    property Ok: Boolean
       read begin
         result := ord(Code) = ord(TF_Code.TF_OK);
       end;
@@ -1395,11 +1394,18 @@ type
       result := Helper.ToArray(self.ToArray);
     end;
   end;
+  
+  // Returns a string because we don't want to directly set TF_WhileParams.name
+  // which is a ^AnsiChar, inside the callback. If we do that, we'll have to manage
+  // the life time of that pointer. We use/expose TF_WhileParams directly without 
+  // any wrap-up because copying back-and-forth between raw TF types and TF-Island
+  // types would not be good for performance reason.
+  WhileConstructor = public block(var aWhileParam: TF_WhileParams): String;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Graph = public sealed partial class(TensorFlowObject<TF_Graph>)
   private
-    fCurrentScope: NotNull<String> := '';
+    fCurrentNameScope: NotNull<String> := '';
     fCurrentDependencies: List<Operation> := new List<Operation>;
     fDeviceName: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
@@ -1442,44 +1448,18 @@ type
       inherited constructor withHandle(graph_hnd) OnDispose(aHandle->TF_DeleteGraph(aHandle));
     end;
 
-    method WithDevice(aNewDeviceName: NotNull<String>): Device;
+    constructor withUnmangedHandle(aHandle: ^TF_Graph);
     begin
-      result := new Device withDeviceName(fDeviceName)
-        OnRestore(aDeviceName->begin fDeviceName := (aDeviceName as String) end);
-      
-      if not String.IsNullOrEmpty(fDeviceName) then begin
-        raise new DeviceNameAlreadySetException withExistingName(fDeviceName);
-      end;
-
-      if not String.IsNullOrEmpty(aNewDeviceName) then begin
-        raise new DeviceNameEmptyException;
-      end;
-
-      fDeviceName := aNewDeviceName;
+      inherited constructor withHandle(aHandle) OnDispose(nil);
     end;
 
-    method WithDependencies(aNewDependencies: NotNull<List<Operation>>): Dependencies;
+    method AddInitVariable(aOp: NotNull<Operation>);
     begin
-      result := new Dependencies withOperations(fCurrentDependencies) 
-        OnRestore(aDependencies->begin 
-          fCurrentDependencies := aDependencies as List<Operation> 
-        end);
+      for each el in fPendingInitVars do begin
+        if el.Equals(aOp) then exit;
+      end;
 
-      fCurrentDependencies := fCurrentDependencies.Concat(aNewDependencies).Distinct.ToList;
-    end;
-
-    method WithScope(aNewScopeName: NotNull<String>): Scope;
-    begin
-      result := new Scope withScopeName(fCurrentScope) 
-        OnRestore(aScopeName->begin 
-          fCurrentScope := (aScopeName as String) 
-        end);
-
-      if String.IsNullOrEmpty(fCurrentScope) then begin
-        fCurrentScope := aNewScopeName
-      end else begin
-        fCurrentScope := fCurrentScope + '/' + aNewScopeName;
-      end
+      fPendingInitVars.Add(aOp);
     end;
 
     method GetOperationByName(const aOpName: NotNull<String>): Tuple of (Boolean, Operation);
@@ -1494,19 +1474,27 @@ type
       end;
     end;
 
-    method GetShape(aOutput: NotNull<Output>; aStatus: Status := nil): Tuple of (Boolean, Shape);
+    method GetTensorNumDims(aOutput: NotNull<Output>; aStatus: Status := nil): Integer;
+    begin
+      using lStatus := new Status do begin
+        result := TF_GraphGetTensorNumDims(Handle, aOutput.AsTFOutput, lStatus.Handle);
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method GetTensorShape(aOutput: NotNull<Output>; aStatus: Status := nil): Tuple of (Boolean, Shape);
     begin
       using lStatus := new Status do begin
         var nativeOut := aOutput.AsTFOutput;
         var numDims := TF_GraphGetTensorNumDims(Handle, nativeOut, lStatus.Handle);
 
-        if (not lStatus.OK) then begin
+        if (not lStatus.Ok) then begin
           result := (false, nil);
         end else begin
           if numDims > 0 then begin
             var dims := new Int64[numDims];
             TF_GraphGetTensorShape(Handle, nativeOut, dims, numDims, lStatus.Handle);
-            if lStatus.OK then begin
+            if lStatus.Ok then begin
               result := (true, new Shape withDims(dims));
             end else begin
               result := (false, nil);
@@ -1529,26 +1517,180 @@ type
           aOpName;
 
       var name :=
-        if String.IsNullOrEmpty(CurrentScope) then
+        if String.IsNullOrEmpty(CurrentNameScope) then
           $'{lOpName}'
         else
-          $'{CurrentScope}/{lOpName}';
+          $'{CurrentNameScope}/{lOpName}';
 
       result := MakeUniqueName(name);
     end;
 
-    method AddInitVariable(aOp: NotNull<Operation>);
+    method ImportGraphDef(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>; 
+      aStatus: Status := nil); overload;
     begin
-      for each el in fPendingInitVars do begin
-        if el.Equals(aOp) then exit;
+      using lStatus := new Status do begin
+        TF_GraphImportGraphDef(Handle, ^TF_Buffer(aGraphDef.Handle), aOpts.Handle, lStatus.Handle);
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
-
-      fPendingInitVars.Add(aOp);
     end;
 
-    property CurrentScope: String
+    method ImportGraphDef(aBytes: NotNull<array of Byte>; aOpts: NotNull<ImportGraphDefOptions>; 
+      aStatus: Status := nil); overload;
+    begin
+      using graph_def := new Buffer withData(aBytes) NumBytes(aBytes.Length) do begin
+        ImportGraphDef(graph_def, aOpts, aStatus);
+      end;
+    end;
+
+    method ImportGraphDef(aGraphDef: NotNull<Buffer>; aPrefix: NotNull<String> := ''; 
+      aStatus: Status := nil); overload;
+    begin
+      using opts := new ImportGraphDefOptions do begin
+        opts.SetPrefix(aPrefix);
+        ImportGraphDef(aGraphDef, opts, aStatus);
+      end;
+    end;
+
+    method ImportGraphDef(aBytes: NotNull<array of Byte>; aPrefix: NotNull<String> := ''; 
+      aStatus: Status := nil); overload;
+    begin
+      using opts := new ImportGraphDefOptions do begin
+        using graph_def:= new Buffer withData(aBytes) NumBytes(aBytes.Length) do begin
+          opts.SetPrefix(aPrefix);
+          ImportGraphDef(graph_def, opts, aStatus);
+        end;
+      end;
+    end;
+
+    method ImportGraphDefWithReturnOutputs(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>;
+      aStatus: Status := nil): OutputList;
+    begin
+      using lStatus := new Status do begin
+        var num_return_outputs := TF_ImportGraphDefOptionsNumReturnOutputs(aOpts.Handle);
+        var return_outputs: array of TF_Output := if num_return_outputs > 0 then new TF_Output[num_return_outputs] else nil;
+        
+        TF_GraphImportGraphDefWithReturnOutputs(Handle, ^TF_Buffer(aGraphDef.Handle), aOpts.Handle,
+          return_outputs, num_return_outputs, lStatus.Handle);
+
+        result := new OutputList;
+        for I: Integer := 0 to num_return_outputs - 1 do begin
+          var op := new Operation withHandle(return_outputs[I].oper) Graph(self);
+          result.Add(new Output withOp(op) &Index(return_outputs[I].index));
+        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method Operations: sequence of Operation; iterator;
+    begin
+      var pos: UInt64 := 0;
+      var op_hnd: ^TF_Operation;
+      
+      op_hnd := TF_GraphNextOperation(Handle, @pos); 
+      while(assigned(op_hnd)) do begin
+        yield (new Operation withHandle(op_hnd) Graph(self));
+        op_hnd := TF_GraphNextOperation(Handle, @pos); 
+      end;
+    end;
+
+    method SetTensorShape(aOutput: NotNull<Output>; aShape: NotNull<Shape>; aStatus: Status := nil);
+    begin
+      using lStatus := new Status do begin
+        TF_GraphSetTensorShape(Handle, aOutput.AsTFOutput, aShape.ToArray, aShape.NumDims, lStatus.Handle);
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method WithDependencies(aNewDependencies: NotNull<List<Operation>>): Dependencies;
+    begin
+      result := new Dependencies withOperations(fCurrentDependencies) 
+        OnRestore(aDependencies->begin 
+          fCurrentDependencies := aDependencies as List<Operation> 
+        end);
+
+      fCurrentDependencies := fCurrentDependencies.Concat(aNewDependencies).Distinct.ToList;
+    end;
+
+    method ToGraphDef(aStatus: Status := nil): Tuple of (Boolean, Buffer);
+    begin
+      using lStatus := new Status do begin
+        var buffer_hnd := TF_NewBuffer;
+        TF_GraphToGraphDef(Handle, buffer_hnd, lStatus.Handle);
+        if lStatus.Ok then begin
+          result := (true, new Buffer withHandle(buffer_hnd));
+        end else begin
+          result := (false, nil);
+        end;
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method &While(aInputs: NotNull<InputList>; aWhileCtor: NotNull<WhileConstructor>; 
+      aStatus: Status := nil): OutputList;
+    begin
+      using lStatus := new Status do begin
+        var tf_while_params: TF_WhileParams;
+        try
+          try
+            tf_while_params := TF_NewWhile(Handle, aInputs.AsTFInputs, aInputs.Count, lStatus.Handle);
+            if not lStatus.Ok then exit nil;
+            // No need to set tf_while_params.name inside this callback. It will be
+            // overwritten anyway.
+            var name := aWhileCtor(var tf_while_params); 
+            if String.IsNullOrEmpty(name) then name := MakeUniqueName(name);
+            tf_while_params.name := name.ToAnsiChars(true); // Overwritten here.
+            
+            var output_arr := new TF_Output[aInputs.Count];
+            TF_FinishWhile(@tf_while_params, lStatus.Handle, output_arr);
+            if not lStatus.Ok then exit nil;
+
+            result := new OutputList;
+            for o in output_arr do begin
+              var op := new Operation withHandle(o.oper) Graph(self);
+              result.Add(new Output withOp(op) &Index(o.index));
+            end;
+          except
+            TF_AbortWhile(@tf_while_params);
+          end;
+        finally
+          if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+        end;
+      end;
+    end;
+
+    method WithDevice(aNewDeviceName: NotNull<String>): Device;
+    begin
+      result := new Device withDeviceName(fDeviceName)
+        OnRestore(aDeviceName->begin fDeviceName := (aDeviceName as String) end);
+      
+      if not String.IsNullOrEmpty(fDeviceName) then begin
+        raise new DeviceNameAlreadySetException withExistingName(fDeviceName);
+      end;
+
+      if not String.IsNullOrEmpty(aNewDeviceName) then begin
+        raise new DeviceNameEmptyException;
+      end;
+
+      fDeviceName := aNewDeviceName;
+    end;
+
+    method WithScope(aNewNameScope: NotNull<String>): Scope;
+    begin
+      result := new Scope withScopeName(fCurrentNameScope) 
+        OnRestore(aScopeName->begin 
+          fCurrentNameScope := (aScopeName as String) 
+        end);
+
+      if String.IsNullOrEmpty(fCurrentNameScope) then begin
+        fCurrentNameScope := aNewNameScope
+      end else begin
+        fCurrentNameScope := fCurrentNameScope + '/' + aNewNameScope;
+      end
+    end;
+
+    property CurrentNameScope: String
       read begin
-        result := fCurrentScope;
+        result := fCurrentNameScope;
       end;
 
     property DeviceName: String
@@ -1556,7 +1698,7 @@ type
         result := fDeviceName;
       end;
 
-    property CurrentDependences: List<Operation>
+    property CurrentDependencies: List<Operation>
       read begin
         result := fCurrentDependencies;
       end;
@@ -1565,6 +1707,11 @@ type
       read begin
         result := fPendingInitVars.Handles;
       end;
+
+    property &Operation[aName: NotNull<String>]: Operation
+      read begin
+        (nil, result) := GetOperationByName(aName);
+      end; default;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -2173,17 +2320,17 @@ type
   private    
     fDisposed: Boolean := false;
     fGraph: Graph:= nil;
-    fOwnGraph: Boolean := false; // Graph owned by this Session?
+    fOwnsGraph: Boolean := false; // Graph owned by this Session?
     fDeleteStatus: Status := new Status; 
     fOnDispose: DisposeAction<TF_Session> := aHandle->TF_DeleteSession(aHandle, fDeleteStatus.Handle);    
     fRunner: SessionRunner := nil; // Delayed creation upon access.
     
-    method CreateSession(aSessOpts: SessionOptions := nil): Tuple of (Success: Boolean, Msg: String, SessionHandle: ^TF_Session);
+    method CreateSession(aSessOpts: SessionOptions := nil): Tuple of (Ok: Boolean, Msg: String, Handle: ^TF_Session);
     begin
       using lStatus := new Status do begin
         var opts := if assigned(aSessOpts) then aSessOpts else new SessionOptions;
         var sess_hnd := TF_NewSession(fGraph.Handle, opts.Handle, lStatus.Handle);
-        result := (lStatus.OK, lStatus.Message, sess_hnd);
+        result := (lStatus.Ok, lStatus.Message, sess_hnd);
         if not assigned(aSessOpts) then opts.Dispose;
       end;
     end;
@@ -2197,7 +2344,7 @@ type
       end;
 
       if aDisposing then begin
-        if fOwnGraph then fGraph.Dispose;
+        if fOwnsGraph then fGraph.Dispose;
         fRunner:Dispose; // Colon operator; may have delayed creation.
       end;
 
@@ -2207,34 +2354,36 @@ type
     constructor;
     begin
       fGraph := new Graph;
-      fOwnGraph := true;
+      fOwnsGraph := true;
 
       var create_session := CreateSession;
-      if not create_session.Success then begin
+      if not create_session.Ok then begin
         raise new SessionCreateException withMessage(create_session.Msg);
       end;
 
-      inherited constructor withHandle(create_session.SessionHandle) OnDispose(fOnDispose);
+      inherited constructor withHandle(create_session.Handle) OnDispose(fOnDispose);
     end;
 
-    constructor withHandle(aHandle: ^TF_Session) Graph(aGraph: NotNull<Graph>); assembly;
+    constructor withHandle(aHandle: ^TF_Session) Graph(aGraph: NotNull<Graph>) 
+      OwnsGraph(aOwnsGraph: Boolean := false); assembly;
     begin
       fGraph := aGraph;
-      fOwnGraph := false;
+      fOwnsGraph := aOwnsGraph;
       inherited constructor withHandle(aHandle) OnDispose(fOnDispose)
     end;
 
-    constructor withGraph(aGraph: NotNull<Graph>) Options(aOpts: SessionOptions := nil);
+    constructor withGraph(aGraph: NotNull<Graph>) Options(aOpts: SessionOptions := nil)
+      OwnsGraph(aOwnsGraph: Boolean := false);
     begin
       fGraph := aGraph;
-      fOwnGraph := false;
+      fOwnsGraph := aOwnsGraph;
 
       var create_session := CreateSession(aOpts);
-      if not create_session.Success then begin
+      if not create_session.Ok then begin
         raise new SessionCreateException withMessage(create_session.Msg);
       end;
 
-      inherited constructor withHandle(create_session.SessionHandle) OnDispose(fOnDispose);
+      inherited constructor withHandle(create_session.Handle) OnDispose(fOnDispose);
     end;
 
     /// <summary>
@@ -2253,7 +2402,7 @@ type
     method GetTensorInfo(aOutput: NotNull<Output>; aStatus: Status := nil): String;
     begin
       using lStatus := new Status do begin
-        var (success, shp) := fGraph.GetShape(aOutput, lStatus);
+        var (success, shp) := fGraph.GetTensorShape(aOutput, lStatus);
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
   
         if success then begin
@@ -2271,29 +2420,28 @@ type
     begin
       using lStatus := new Status do begin
         try
-          var device_list_hnd := TF_SessionListDevices(Handle, lStatus.Handle);
-          if not lStatus.OK then exit (false, nil);
+          var devlist_hnd := TF_SessionListDevices(Handle, lStatus.Handle);
+          if not lStatus.Ok then exit (false, nil);
 
-          var list_size := TF_DeviceListCount(device_list_hnd);
-          var device_list := new List<DeviceAttrs>;
+          var list_size := TF_DeviceListCount(devlist_hnd);
+          var devlist := new List<DeviceAttrs>;
           
           for I: Integer := 0 to list_size - 1 do begin
-            var namestr_ptr := TF_DeviceListName(device_list_hnd, I, lStatus.Handle);
-            if not lStatus.OK then exit (false, nil);           
-            var name := String.FromPAnsiChars(namestr_ptr);
+            var nameptr := TF_DeviceListName(devlist_hnd, I, lStatus.Handle);
+            if not lStatus.Ok then exit (false, nil);           
+            var name := String.FromPAnsiChars(nameptr);
 
-            var device_typestr_ptr := TF_DeviceListType(device_list_hnd, I, lStatus.Handle);
-            if not lStatus.OK then exit (false, nil);            
-            var (success, dev_type) := Helper.AsEnum<DeviceType>(String.FromPAnsiChars(device_typestr_ptr));
-            if not success then exit (false, nil);
+            var typestr_ptr := TF_DeviceListType(devlist_hnd, I, lStatus.Handle);
+            if not lStatus.Ok then exit (false, nil);            
+            var (nil, dev_type) := Helper.AsEnum<DeviceType>(String.FromPAnsiChars(typestr_ptr));
 
-            var memory := TF_DeviceListMemoryBytes(Handle, I, lStatus.Handle);
-            if not lStatus.OK then exit (false, nil);
+            var nbytes := TF_DeviceListMemoryBytes(Handle, I, lStatus.Handle);
+            if not lStatus.Ok then exit (false, nil);
 
-            device_list.Add(new DeviceAttrs withName(name) &Type(dev_type) MemoryLimit(memory));            
+            devlist.Add(new DeviceAttrs withName(name) &Type(dev_type) MemoryLimit(nbytes));            
           end;
 
-          result := (true, device_list);
+          result := (true, devlist);
         finally
           if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
         end;        
@@ -2301,12 +2449,12 @@ type
     end;
 
     /// <summary>
-		/// Creates a session and graph from a model stored in the SavedModel file format.
-		/// </summary>		
-		/// <remarks>
-		/// This function loads the data that was saved using the SavedModel file format, as described
-		/// here: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/saved_model/README.md
-		/// </remarks>
+    /// Creates a session and graph from a model stored in the SavedModel file format.
+    /// </summary>		
+    /// <remarks>
+    /// This function loads the data that was saved using the SavedModel file format, as described
+    /// here: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/saved_model/README.md
+    /// </remarks>
     class method LoadFromSavedModel (aSessOpts: NotNull<SessionOptions>; aRunOptions: Buffer; 
       aExportDir: NotNull<String>; aTags: NotNull<array of String>; aGraph: NotNull<Graph>; 
       aMetaGraphDef: Buffer; aStatus: Status := nil): Tuple of (Boolean, Session);
@@ -2326,14 +2474,25 @@ type
           ^TF_Buffer(aMetaGraphDef: Handle), 
           lStatus.Handle);
 
-        if lStatus.OK then begin
-          result := (true, new Session withHandle(sess_hnd) Graph(aGraph));
+        if lStatus.Ok then begin
+          result := (true, new Session withHandle(sess_hnd) Graph(aGraph) OwnsGraph(true));
         end else begin
           result := (false, nil);
         end;
 
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;    
+    end;
+
+    method RestoreTensor(const aFileName: NotNull<String>; const aTensor: NotNull<String>;
+      aDataType: DataType): Output;
+    begin
+      // To-do
+    end;
+
+    method SaveTensors(const aFileName: NotNull<String>; aTensors: array of Tuple of (String, Output)): array of Tensor;
+    begin
+      // To-do
     end;
     
     property &Graph: Graph
@@ -2382,6 +2541,7 @@ type
     fOutputs: OutputList := new OutputList;
     fTargets: OperationList := new OperationList;
     fDisposed: Boolean := false;
+    fPRunToken: PartialRunToken := nil;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -2396,6 +2556,7 @@ type
         fInputValues.Dispose;
         fOutputs.Dispose;
         fTargets.Dispose;
+        if assigned(fPRunToken) then fPRunToken.Dispose;
       end;
 
       inherited Dispose(aDisposing);
@@ -2416,10 +2577,28 @@ type
         result := fInputValues;
       end;
 
+    property PRunToken: PartialRunToken
+      read begin
+        result := fPRunToken;
+      end
+      write begin
+        if assigned(fPRunToken) then fPRunToken.Dispose;
+        fPRunToken := value;
+      end;
+
     property Targets: OperationList
       read begin
         result := fTargets;
       end;
+  end;
+
+  [TensorFlow.Island.Aspects.RaiseOnDisposed]
+  PartialRunToken nested in SessionRunner = private class(TensorFlowObject<AnsiChar>)
+  public
+    constructor withHandle(aHandle: ^AnsiChar); assembly;
+    begin
+      inherited constructor withHandle(aHandle) OnDispose(aToken->TF_DeletePRunHandle(aToken));
+    end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -2476,9 +2655,32 @@ type
       fContext := new SessionRunnerContext;
     end;
 
+    method SetupPartialRun(aStatus: Status := nil);
+    begin
+      using lStatus := new Status do begin
+        var token_hnd: ^AnsiChar;
+        var inputs        := fContext.Inputs.AsTFInputs;
+        var ninputs       := fContext.Inputs.Count;
+        var outputs       := fContext.Outputs.AsTFOutputs;
+        var noutputs      := fContext.Outputs.Count;
+        var target_opers  := fContext.Targets.Handles;
+        var ntargets      := fContext.Targets.Count;
+
+        TF_SessionPRunSetup(fSession.Handle, inputs, ninputs, outputs, noutputs, 
+          target_opers, ntargets, @token_hnd, lStatus.Handle);
+
+        if lStatus.Ok then begin
+          fContext.PRunToken := new PartialRunToken withHandle(token_hnd);
+        end else begin
+          raise new PartialRunSetupException withError(lStatus.Message);
+        end;
+
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
     method Run(aOp: NotNull<Output>; aStatus: Status := nil): Tensor;
     begin
-      Reset;
       Fetch(aOp);
       result := Run(aStatus):Item[0]; // May return nil.
     end;
@@ -2502,13 +2704,48 @@ type
           ninputs, outputs, output_values, noutputs, target_opers,
           ntargets, run_metadata, lStatus.Handle);
 
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := new TensorList withCapacity(noutputs);
           for I: Integer := 0 to noutputs - 1 do begin
             result.Add(new Tensor withHandle(output_values[I]));
           end;
         end else begin
           writeLn($'SessionRunner.Run failed. Code {ord(lStatus.Code)}. {lStatus.Message}');
+          result := nil;
+        end;
+
+        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
+      end;
+    end;
+
+    method PartialRun(aStatus: Status := nil): TensorList;
+    begin
+      if not assigned(fContext.PRunToken) then begin
+        raise new PartialRunTokenNotSetupException;
+      end;
+
+      using lStatus := new Status do begin
+        var inputs        := fContext.Inputs.AsTFInputs;
+        var input_values  := fContext.InputValues.Handles;
+        var ninputs       := fContext.Inputs.Count;
+        var outputs       := fContext.Outputs.AsTFOutputs;
+        var noutputs      := fContext.Outputs.Count;
+        var output_values := new ^TF_Tensor[noutputs];
+        var target_opers  := fContext.Targets.Handles;
+        var ntargets      := fContext.Targets.Count;
+        var token_hnd     := fContext.PRunToken.Handle;
+
+        TF_SessionPRun(fSession.Handle, ^AnsiChar(token_hnd), inputs, input_values,
+          ninputs, outputs, output_values, noutputs, target_opers,
+          ntargets, lStatus.Handle);
+
+        if lStatus.Ok then begin
+          result := new TensorList withCapacity(noutputs);
+          for I: Integer := 0 to noutputs - 1 do begin
+            result.Add(new Tensor withHandle(output_values[I]));
+          end;
+        end else begin
+          writeLn($'SessionRunner.PartialRun failed. Code {ord(lStatus.Code)}. {lStatus.Message}');
           result := nil;
         end;
 
@@ -2541,7 +2778,7 @@ type
     begin
       using lStatus := new Status do begin
         var buffer_hnd := TF_GetAllRegisteredKernels(lStatus.Handle);
-        result := if lStatus.OK then new Buffer withHandle(buffer_hnd) else nil;
+        result := if lStatus.Ok then new Buffer withHandle(buffer_hnd) else nil;
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
@@ -2550,7 +2787,7 @@ type
     begin
       using lStatus := new Status do begin
         var buffer_hnd := TF_GetRegisteredKernelsForOp(aOpName.ToAnsiChars(true), lStatus.Handle);
-        result := if lStatus.OK then new Buffer withHandle(buffer_hnd) else nil;
+        result := if lStatus.Ok then new Buffer withHandle(buffer_hnd) else nil;
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
       end;
     end;
@@ -2569,7 +2806,7 @@ type
       var lStatus := new Status;
       var handle := TF_LoadLibrary(aName.ToAnsiChars(true), lStatus.Handle);
 
-      if not lStatus.OK then raise new LibraryLoadException withFileName(aName) Message(lStatus.Message);
+      if not lStatus.Ok then raise new LibraryLoadException withFileName(aName) Message(lStatus.Message);
       inherited constructor withHandle(handle) OnDispose(aHandle->TF_DeleteLibraryHandle(aHandle));
     end;
 
@@ -2595,7 +2832,7 @@ type
         var buffer_hnd := TF_NewBuffer;
         TF_FunctionToFunctionDef(Handle, buffer_hnd, lStatus.Handle);
         
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := (true, new Buffer withHandle(buffer_hnd));
         end else begin
           result := (false, nil);
@@ -2612,7 +2849,7 @@ type
       using lStatus := new Status do begin
         var func_hnd := TF_FunctionImportFunctionDef(aProto, aProto.Length, lStatus.Handle);
 
-        if lStatus.OK then begin
+        if lStatus.Ok then begin
           result := (true, new TensorFlowFunction withHandle(func_hnd));
         end else begin
           result := (false, nil);
