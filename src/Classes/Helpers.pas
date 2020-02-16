@@ -43,6 +43,14 @@ const
   ];
 
 type
+  StringList = public sealed class(List<String>)
+  assembly
+    method ToAnsiCharPtrs: array of ^AnsiChar;
+    begin
+      result := Helper.ToArray(self.ToArray);
+    end;
+  end;
+
   Helper = assembly static class
   public
     method AsEnum<T>(const aStr: NotNull<String>): Tuple of (Boolean, nullable T);   
@@ -110,6 +118,15 @@ type
       result := new TF_Output[aList.Length];
       for I: Integer := 0 to aList.Length - 1 do begin
         result[I] := aList[I].AsTFOutput;
+      end;
+    end;
+
+    method ToArray(aList: not nullable array of String): array of ^AnsiChar;
+    begin
+      if aList.Length = 0 then exit nil;
+      result := new ^AnsiChar[aList.Length];
+      for I: Integer := 0 to aList.Length - 1 do begin
+        result[I] := aList[I].ToAnsiChars(true);
       end;
     end;
 
