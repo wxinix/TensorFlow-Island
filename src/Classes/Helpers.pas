@@ -44,7 +44,12 @@ const
 
 type
   StringList = public sealed class(List<String>)
-  assembly
+  public
+    constructor withCapacity(aCapacity: Integer);
+    begin
+      inherited constructor(aCapacity);
+    end;
+
     method ToAnsiCharPtrs: array of ^AnsiChar;
     begin
       result := Helper.ToArray(self.ToArray);
