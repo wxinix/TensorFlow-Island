@@ -208,7 +208,7 @@ type
       fList.Clear;
       inherited Dispose(aDisposing);
     end;
-
+  public
     constructor withCapacity(aCapacity: Integer);
     begin
       fList := new List<T>(aCapacity);
@@ -218,7 +218,7 @@ type
     begin
       fList := new List<T>;
     end;
-  public
+
     method &Add(aItem: T);
     begin
       fList.Add(aItem);
@@ -307,7 +307,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  Buffer = public sealed class(TensorFlowObject<TF_Buffer>)
+  Buffer = public class(TensorFlowObject<TF_Buffer>)
   private
     fData: ^Void := nil;
     fNumBytes: UInt64 := 0;
@@ -368,6 +368,18 @@ type
       read begin
         result:= fNumBytes;
       end;
+  end;  
+
+  BufferList = public sealed class(TensorFlowObjectList<Buffer>)
+    // Just for a new type.
+  end;
+  
+  TensorShapeProto = public sealed class(Buffer)
+    // Just for a new type.
+  end;
+
+  TensorShapeProtoList = public sealed class(TensorFlowObjectList<TensorShapeProto>)
+    // Just for a new type.
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -463,7 +475,7 @@ type
             var (_success, val) := GetAttrShape(aAttrName, attr_meta_data, lStatus);
             result := (_success, T(val));
           end;
-          typeOf(array of Shape).GetHashCode:
+          typeOf(ShapeList).GetHashCode:
           begin
             var (_success, val) := GetAttrShapeList(aAttrName, attr_meta_data, lStatus);
             result := (_success, T(val));
@@ -473,19 +485,24 @@ type
             var (_success, val) := GetAttrTensor(aAttrName, attr_meta_data, lStatus);
             result := (_success, T(val));
           end;
-          typeOf(array of Tensor).GetHashCode:
+          typeOf(TensorList).GetHashCode:
           begin
             var (_success, val) := GetAttrTensorList(aAttrName, attr_meta_data, lStatus);
             result := (_success, T(val));
           end;
-          typeOf(Buffer).GetHashCode:
+          typeOf(TensorShapeProto).GetHashCode:
           begin
             var (_success, val) := GetAttrTensorShapeProto(aAttrName, attr_meta_data, lStatus);
             result := (_success, T(val));
           end;
-          typeOf(array of Buffer).GetHashCode:
+          typeOf(TensorShapeProtoList).GetHashCode:
           begin
             var (_success, val) := GetAttrTensorShapeProtoList(aAttrName, attr_meta_data, lStatus);
+            result := (_success, T(val));
+          end;
+          typeOf(Buffer).GetHashCode:
+          begin
+            var (_success, val) := GetAttrValueProto(aAttrName, attr_meta_data, lStatus);
             result := (_success, T(val));
           end;
         else
@@ -513,7 +530,7 @@ type
     end;
 
     method GetAttrStringList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
-      aStatus: Status): Tuple of (Boolean, array of String);
+      aStatus: Status): Tuple of (Boolean, StringList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^AnsiChar[max_values];
@@ -525,11 +542,9 @@ type
         lengths, max_values, storage, storage_size, aStatus.Handle);
 
       if aStatus.Ok then begin
-        var strs := new String[max_values];
-        for I: Integer := 0 to max_values - 1 do begin
-          strs[I] := String.FromPAnsiChars(values[I], lengths[I]);
-        end;
-        result := (true, strs);
+        var str_list := new StringList withCapacity(max_values);
+        for v in values index i do str_list.Add(String.FromPAnsiChars(v, lengths[i]));
+        result := (true, str_list);
       end else begin
         result := (false, nil);
       end;
@@ -680,7 +695,7 @@ type
     end;
 
     method GetAttrShapeList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
-      aStatus: Status): Tuple of (Boolean, array of Shape);
+      aStatus: Status): Tuple of (Boolean, ShapeList);
     begin
       var num_shapes := aAttrMeta.ListSize;
       var dims := new ^Int64[num_shapes];
@@ -692,14 +707,14 @@ type
         num_shapes, storage, storage_size, aStatus.Handle);
 
       if aStatus.Ok then begin
-        var shapes := new Shape[num_shapes];
+        var shape_list := new ShapeList withCapacity(num_shapes);
         for I: Integer := 0 to num_shapes - 1 do begin
           if num_dims[I] >= 0 then
-            shapes[I] := new Shape(dims[I], num_dims[I])
+            shape_list.Add(new Shape(dims[I], num_dims[I]))
           else
-            shapes[I] := nil; // num_dims[I] = -1, meaning shape is unknown.
+            shape_list.Add(nil); // num_dims[I] = -1, meaning shape is unknown.
         end;
-        result := (true, shapes);
+        result := (true, shape_list);
       end else begin
         result := (false, nil);
       end;
@@ -708,20 +723,20 @@ type
     method GetAttrTensor(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
       aStatus: Status): Tuple of (Boolean, Tensor);
     begin
-      var tensor_hnd: ^TF_Tensor;
+      var value: ^TF_Tensor;
 
-      TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @tensor_hnd,
+      TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @value,
         aStatus.Handle);
 
       if aStatus.Ok then begin
-        result := (true, new Tensor withHandle(tensor_hnd));
+        result := (true, new Tensor withHandle(value));
       end else begin
         result := (false, nil);
       end;
     end;
 
     method GetAttrTensorList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
-      aStatus: Status): Tuple of (Boolean,  array of Tensor);
+      aStatus: Status): Tuple of (Boolean,  TensorList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^TF_Tensor[max_values];
@@ -730,18 +745,16 @@ type
         max_values, aStatus.Handle);
 
       if aStatus.Ok then begin
-        var tensors := new Tensor[max_values];
-        for I: Integer := 0 to max_values - 1 do begin
-          tensors[I] := new Tensor withHandle(values[I]);
-        end;
-        result := (true, tensors);
+        var tensor_list := new TensorList withCapacity(max_values);
+        for v in values do tensor_list.Add(new Tensor withHandle(v));
+         result := (true, tensor_list);
       end else begin
         result := (false, nil);
       end;
     end;
 
     method GetAttrTensorShapeProto(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
-      aStatus: Status): Tuple of (Boolean, nullable Buffer);
+      aStatus: Status): Tuple of (Boolean, TensorShapeProto);
     begin
       var value: ^TF_Buffer;
 
@@ -749,14 +762,14 @@ type
         value, aStatus.Handle);
 
       if aStatus.Ok then begin
-        result := (true, new Buffer withHandle(value));
+        result := (true, new TensorShapeProto withHandle(value));
       end else begin
         result := (false, nil);
       end;
     end;
 
     method GetAttrTensorShapeProtoList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData;
-      aStatus: Status): Tuple of (Boolean, array of Buffer);
+      aStatus: Status): Tuple of (Boolean, TensorShapeProtoList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^TF_Buffer[max_values];
@@ -765,12 +778,10 @@ type
         values, max_values, aStatus.Handle);
 
       if aStatus.Ok then begin
-        var buffers := new Buffer[max_values];
-        for I: Integer := 0 to max_values - 1 do begin
-          buffers[I] := new Buffer withHandle(values[I]);
-          result := (true, buffers);
-        end;
-      end else begin
+        var proto_list := new TensorShapeProtoList withCapacity(max_values);
+        for v in values do proto_list.Add(new TensorShapeProto withHandle(v));
+        result := (true, proto_list);
+       end else begin
         result := (false, nil);
       end;
     end;
@@ -878,16 +889,7 @@ type
   end;
 
   OperationList = public sealed class(TensorFlowObjectList<Operation>)
-  public
-    constructor withCapacity(aCapacity: Integer);
-    begin
-      inherited constructor withCapacity(aCapacity);
-    end;
-
-    constructor;
-    begin
-      inherited constructor;
-    end;
+    // Just for a new type.
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -930,12 +932,13 @@ type
 
     method AddInputs(aInputList: NotNull<array of Output>);
     begin
-      var tf_outputs := new TF_Output[aInputList.Length];
+      var num_inputs := aInputList.Length;
+      var inputs := new TF_Output[num_inputs];
       for I: Integer := 0 to aInputList.Length - 1 do begin
-        tf_outputs[I] := aInputList[I].AsTFOutput;
+        inputs[I] := aInputList[I].AsTFOutput;
       end;
 
-      TF_AddInputList(Handle, tf_outputs, tf_outputs.Length);
+      TF_AddInputList(Handle, inputs, num_inputs);
     end;
 
     method FinishOperation(aStatus: Status := nil): Tuple of (Boolean, Operation);
@@ -1332,6 +1335,9 @@ type
       read begin
         result := fSize;
       end;
+  end;
+
+  ShapeList = public sealed class(TensorFlowDisposableList<Shape>)
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -1815,30 +1821,30 @@ type
       aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
-        var tf_while_params: TF_WhileParams;
+        var while_params: TF_WhileParams;
         try
           try
-            tf_while_params := TF_NewWhile(Handle, aInputs.ToInputArray, aInputs.Count, lStatus.Handle);
+            while_params := TF_NewWhile(Handle, aInputs.ToInputArray, aInputs.Count, lStatus.Handle);
             if not lStatus.Ok then exit (false, nil);
-            // No need to set tf_while_params.name inside this callback. It will be
+            // No need to set while_params.name inside this callback. It will be
             // overwritten anyway.
-            var name := aWhileCtor(var tf_while_params);
+            var name := aWhileCtor(var while_params);
             if String.IsNullOrEmpty(name) then name := MakeUniqueName(name);
-            tf_while_params.name := name.ToAnsiChars(true); // Overwritten here.
+            while_params.name := name.ToAnsiChars(true); // Overwritten here.
    
             var outputs := new TF_Output[aInputs.Count];
-            TF_FinishWhile(@tf_while_params, lStatus.Handle, outputs);
+            TF_FinishWhile(@while_params, lStatus.Handle, outputs);
             if not lStatus.Ok then exit (false, nil);
 
             var result_list := new OutputList withCapacity(outputs.Length);
-            for o in outputs do begin
-              var op := new Operation withHandle(o.oper) Graph(self);
-              result_list.Add(new Output withOp(op) &Index(o.index));
+            for output in outputs do begin
+              var op := new Operation withHandle(output.oper) Graph(self);
+              result_list.Add(new Output withOp(op) &Index(output.index));
             end;
 
             result := (true, result_list);
           except
-            TF_AbortWhile(@tf_while_params);
+            TF_AbortWhile(@while_params);
           end;
         finally
           if assigned(aStatus) then aStatus.SetCode(lStatus.Code) withMessage(lStatus.Message);
@@ -2495,17 +2501,8 @@ type
       end;
   end;
 
-  TensorList = public class(TensorFlowObjectList<Tensor>)
-  public
-    constructor withCapacity(aCapacity: Integer);
-    begin
-      inherited constructor withCapacity(aCapacity);
-    end;
-
-    constructor;
-    begin
-      inherited constructor;
-    end;
+  TensorList = public sealed class(TensorFlowObjectList<Tensor>)
+    // Just for a new type.
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -2899,9 +2896,7 @@ type
 
         if lStatus.Ok then begin
           result := new TensorList withCapacity(noutputs);
-          for I: Integer := 0 to noutputs - 1 do begin
-            result.Add(new Tensor withHandle(output_values[I]));
-          end;
+          for v in output_values do result.Add(new Tensor withHandle(v));
         end else begin
           writeLn($'SessionRunner.Run failed. Code {ord(lStatus.Code)}. {lStatus.Message}');
           result := nil;
@@ -2934,9 +2929,7 @@ type
 
         if lStatus.Ok then begin
           result := new TensorList withCapacity(noutputs);
-          for I: Integer := 0 to noutputs - 1 do begin
-            result.Add(new Tensor withHandle(output_values[I]));
-          end;
+          for v in output_values do result.Add(new Tensor withHandle(v));
         end else begin
           writeLn($'SessionRunner.PartialRun failed. Code {ord(lStatus.Code)}. {lStatus.Message}');
           result := nil;
