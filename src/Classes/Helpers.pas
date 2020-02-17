@@ -25,10 +25,10 @@ uses
   TensorFlow.Island.Api;
 
 type
-  TensorFlowDataTypeSet = public set of DataType;
+  DataTypeSet = public set of DataType;
 
 const
-  TensorFlowNumericalTypes: TensorFlowDataTypeSet =
+  NumericalTypes: DataTypeSet =
   [
     DataType.Double,
     DataType.Float,
@@ -135,7 +135,7 @@ type
       end;
     end;
 
-    method ToTensorFlowDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): DataType;
+    method ToDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): DataType;
     begin
       case aType.Code of
         TypeCodes.Boolean: result := DataType.Bool;
