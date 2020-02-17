@@ -345,7 +345,7 @@ type
       fNumBytes := aNumBytes;
       fData := malloc(fNumBytes);
       memcpy(fData, aData, fNumBytes);
-      
+
       var hnd := TF_NewBuffer();
       hnd^.data := fData;
       hnd^.length := fNumBytes;
@@ -367,12 +367,12 @@ type
       read begin
         result:= fNumBytes;
       end;
-  end;  
+  end;
 
   BufferList = public sealed class(TensorFlowObjectList<Buffer>)
     // Just for a new type.
   end;
-  
+
   TensorShapeProto = public sealed class(Buffer)
     // Just for a new type.
   end;
@@ -1461,18 +1461,18 @@ type
     end;
 
     /// <summary>
-    /// Adds a gradient: the operations needed to compute the partial derivatives of sum 
+    /// Adds a gradient: the operations needed to compute the partial derivatives of sum
     /// of <paramref name="y"/>` wrt to <paramref name="x"/>.
     /// </summary>
     /// <returns>
-    /// The partial derivatives, the size of the array is the same as the length 
+    /// The partial derivatives, the size of the array is the same as the length
     /// of the <paramref name="y"/> array.
     /// </returns>
     /// <param name="y">The y elements.</param>
     /// <param name="x">The x elements.</param>
     /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives
     /// of some loss function `L` w.r.t. <paramref name="y"/> ).
-    /// If the parameter is null, the implementation will use dx for 'OnesLike' for all 
+    /// If the parameter is null, the implementation will use dx for 'OnesLike' for all
     /// shapes in <paramref name="y"/>
     /// </param>
     /// <remarks>
@@ -1491,7 +1491,7 @@ type
 
         TF_AddGradients(Handle, y.ToOutputArray, y.Count, x.ToOutputArray, x.Count,
           dx.ToOutputArray, lStatus.Handle, dy);
- 
+
         if not lStatus.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
           for el in dy do begin
@@ -1517,7 +1517,7 @@ type
     /// </returns>
     /// <param name="prefix">Names the scope into which all gradients operations are being
     /// added. This must be unique within the provided graph otherwise this operation will
-    /// fail. If the value is null, the default prefixing behaviour takes place, see 
+    /// fail. If the value is null, the default prefixing behaviour takes place, see
     /// AddGradients for more details.
     /// </param>
     /// <remarks>
@@ -1537,7 +1537,7 @@ type
 
         TF_AddGradientsWithPrefix(Handle, aPrefix.ToAnsiChars(true), y.ToOutputArray,
           y.Count, x.ToOutputArray, x.Count, dx.ToOutputArray, lStatus.Handle, dy);
- 
+
         if not lStatus.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
           for el in dy do begin
@@ -1604,15 +1604,15 @@ type
     method GetTensorShape(aOutput: NotNull<Output>; aStatus: Status := nil): Tuple of (Boolean, Shape);
     begin
       using lStatus := new Status do begin
-        var nativeOut := aOutput.AsTFOutput;
-        var numDims := TF_GraphGetTensorNumDims(Handle, nativeOut, lStatus.Handle);
+        var output := aOutput.AsTFOutput;
+        var num_dims := TF_GraphGetTensorNumDims(Handle, output, lStatus.Handle);
 
         if (not lStatus.Ok) then begin
           result := (false, nil);
         end else begin
-          if numDims > 0 then begin
-            var dims := new Int64[numDims];
-            TF_GraphGetTensorShape(Handle, nativeOut, dims, numDims, lStatus.Handle);
+          if num_dims > 0 then begin
+            var dims := new Int64[num_dims];
+            TF_GraphGetTensorShape(Handle, output, dims, num_dims, lStatus.Handle);
             if lStatus.Ok then begin
               result := (true, new Shape withDims(dims));
             end else begin
@@ -1648,7 +1648,8 @@ type
       aStatus: Status := nil); overload;
     begin
       using lStatus := new Status do begin
-        TF_GraphImportGraphDef(Handle, ^TF_Buffer(aGraphDef.Handle), aOpts.Handle, lStatus.Handle);
+        var graph_def := ^TF_Buffer(aGraphDef.Handle);
+        TF_GraphImportGraphDef(Handle, graph_def, aOpts.Handle, lStatus.Handle);
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
       end;
     end;
@@ -1681,13 +1682,13 @@ type
       end;
     end;
 
-    method ImportGraphDefWithReturnOutputs(aGraphDef: NotNull<Buffer>; 
+    method ImportGraphDefWithReturnOutputs(aGraphDef: NotNull<Buffer>;
       aOpts: NotNull<ImportGraphDefOptions>; aStatus: Status := nil)
       : Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
         var num_return_outputs := TF_ImportGraphDefOptionsNumReturnOutputs(aOpts.Handle);
-        var return_outputs: array of TF_Output := 
+        var return_outputs: array of TF_Output :=
           if num_return_outputs > 0 then new TF_Output[num_return_outputs] else nil;
 
         TF_GraphImportGraphDefWithReturnOutputs(Handle, ^TF_Buffer(aGraphDef.Handle), aOpts.Handle,
@@ -1721,7 +1722,7 @@ type
     method SetTensorShape(aOutput: NotNull<Output>; aShape: NotNull<Shape>; aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
-        TF_GraphSetTensorShape(Handle, aOutput.AsTFOutput, aShape.ToArray, 
+        TF_GraphSetTensorShape(Handle, aOutput.AsTFOutput, aShape.ToArray,
           aShape.NumDims, lStatus.Handle);
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
       end;
@@ -1737,10 +1738,10 @@ type
       fCurrentDependencies := fCurrentDependencies.Concat(aNewDependencies).Distinct.ToList;
     end;
 
-    method ToFunction(aName: NotNull<String>; aDesc: NotNull<String>; 
-      aOps: NotNull<OperationList>; aInputs: InputList; aOutputs: OutputList; 
-      aOutputNames: NotNull<StringList>; aAppendHashToName: Boolean := false; 
-      aStatus: Status := nil): Tuple of (Boolean, TensorFlowFunction);
+    method ToFunction(aName, aDesc: NotNull<String>; aOps: NotNull<OperationList>;
+      aInputs: NotNull<InputList>; aOutputs: OutputList; aOutputNames: NotNull<StringList>;
+      aAppendHashToName: Boolean := false; aStatus: Status := nil)
+      : Tuple of (Boolean, TensorFlowFunction);
     begin
       using lStatus := new Status do begin
         var append_hash_to_fn_name := if aAppendHashToName then 1 else 0;
@@ -1750,23 +1751,12 @@ type
         var inputs := aInputs.ToInputArray;
         var noutputs := aOutputs.Count;
         var outputs := aOutputs.ToOutputArray;
-        var output_names:= aOutputNames.ToAnsiCharPtrs;
-        var fn_opts: ^TF_FunctionOptions := nil;
+        var output_names := aOutputNames.ToAnsiCharPtrs;
+        var opts: ^TF_FunctionOptions := nil;
 
-        var hnd := TF_GraphToFunction(
-          Handle,
-          aName.ToAnsiChars(true),
-          append_hash_to_fn_name,
-          num_opers,
-          opers,
-          ninputs,
-          inputs,
-          noutputs,
-          outputs,
-          output_names,
-          fn_opts,
-          aDesc.ToAnsiChars(true),
-          lStatus.Handle);
+        var hnd := TF_GraphToFunction(Handle, aName.ToAnsiChars(true), append_hash_to_fn_name,
+          num_opers, opers, ninputs, inputs, noutputs, outputs, output_names, opts,
+          aDesc.ToAnsiChars(true), lStatus.Handle);
 
         if lStatus.Ok then begin
           result := (true, new TensorFlowFunction withHandle(hnd));
@@ -1840,7 +1830,7 @@ type
             var name := aWhileCtor(var while_params);
             if String.IsNullOrEmpty(name) then name := MakeUniqueName(name);
             while_params.name := name.ToAnsiChars(true); // Overwritten here.
-   
+
             var outputs := new TF_Output[aInputs.Count];
             TF_FinishWhile(@while_params, lStatus.Handle, outputs);
             if not lStatus.Ok then exit (false, nil);
@@ -2106,12 +2096,12 @@ type
   public
     constructor withValues(aVals: NotNull<array of T>) Dims(aDims: array of Int64);
     begin
-      fType := Helper.ToTensorFlowDataType(typeOf(T));
+      fType := Helper.ToDataType(typeOf(T));
       fShape := new Shape withDims(aDims);
       fManaged := true;
 
       if aVals.Length <> fShape.Size then begin
-        raise new InvalidTensorDataSizeException withDataSize(aVals.Length) DimSize(fShape.Size);
+        raise new InvalidTensorDataSizeException withDataSize(aVals.Length) ShapeSize(fShape.Size);
       end;
 
       if fType <> DataType.String then begin
@@ -2138,7 +2128,7 @@ type
 
         for I: Integer := 0 to aVals.Length - 1 do begin
           offsets[I] := offsets_region_size + nbytes;
-          memcpy(^Void(^Byte(fBytes) + offsets[I]), String(aVals[I]).ToAnsiChars, 
+          memcpy(^Void(^Byte(fBytes) + offsets[I]), String(aVals[I]).ToAnsiChars,
             String(aVals[I]).Length);
           nbytes := nbytes + String(aVals[I]).Length;
         end;
@@ -2154,6 +2144,8 @@ type
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   Tensor = public sealed class(TensorFlowObject<TF_Tensor>)
+  public
+    type TensorDeallocator = method(aData: ^Void; aLen: UInt64; aArg: ^Void): Void;
   private
     fData: TensorData;
     fDisposed: Boolean := false;
@@ -2211,16 +2203,17 @@ type
   public
     constructor withData(aData: NotNull<TensorData>);
     begin
-      var hnd := TF_NewTensor(
-        TF_DataType(ord(aData.Type)),
-        aData.Shape.ToArray,
-        aData.Shape.NumDims,
-        aData.Bytes, // Must be raw bytes; cannot be managed array.
-        aData.NumBytes,
-        @TensorData.DeallocateTensorData, // does nothing.
-        nil);
+      var dtype := TF_DataType(ord(aData.Type));
+      var dims := aData.Shape.ToArray;
+      var num_dims := aData.Shape.NumDims;
+      var _data := aData.Bytes;
+      var len := aData.NumBytes;
+      var deallocator: TensorDeallocator := @TensorData.DeallocateTensorData;
+      var deallocator_arg: ^Void := nil;
 
+      var hnd := TF_NewTensor(dtype, dims, num_dims, _data, len, deallocator, deallocator_arg);
       if not assigned(hnd) then raise new TensorCreateException(aData.Type);
+
       fData := aData;
       inherited constructor withHandle(hnd) OnDispose(aHandle->TF_DeleteTensor(aHandle));
     end;
@@ -2350,11 +2343,9 @@ type
     /// Convert tensor data to typed scalar value. If the underlying TensorFlow data
     /// type does not match the type parameter, no cast will be performed and nil returned.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
     method AsScalar<T>: Tuple of (Boolean, nullable T);
     begin
-      var valid_type := (fData.Type = Helper.ToTensorFlowDataType(typeOf(T)) RaiseOnInvalid(false));
+      var valid_type := (fData.Type = Helper.ToDataType(typeOf(T)) RaiseOnInvalid(false));
 
       if not (IsScalar and valid_type) then begin
         result := (false, nil);
@@ -2374,13 +2365,11 @@ type
     /// Convert tensor data to typed array. If the underlying TensorFlow data type
     /// does not match the type parameter, no cast will be performed and nil array returned.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
     method AsArray<T>: Tuple of (Boolean, array of T);
     begin
-      var valid_type := (fData.Type = Helper.ToTensorFlowDataType(typeOf(T)) RaiseOnInvalid(false));
+      var is_valid_type := (fData.Type = Helper.ToDataType(typeOf(T)) RaiseOnInvalid(false));
 
-      if not (not IsScalar and valid_type) then begin
+      if not (not IsScalar and is_valid_type) then begin
         result := (false, nil);
       end else begin
         if (fData.Type = DataType.String) then begin
@@ -2389,12 +2378,12 @@ type
 
           var str_list: List<String> := new List<String>;
           for I: Integer := 0 to offsets.Length - 1 do begin
-            var nbytes := 
-              if (I <> offsets.Length - 1) then 
-                (offsets[I + 1] - offsets[I]) 
-              else 
+            var nbytes :=
+              if (I <> offsets.Length - 1) then
+                (offsets[I + 1] - offsets[I])
+              else
                 (fData.NumBytes - offsets[I]);
-            
+
             var str := String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + offsets[I]), nbytes);
             str := Helper.DecodeString(str);
             str_list.Add(str);
@@ -2420,8 +2409,6 @@ type
     /// type will be converted to String according to the specified aDecimalDigits
     /// parameter.
     /// </summary>
-    /// <param name="aDecimalDigits"></param>
-    /// <returns></returns>
     method ConvertDataToStrings(aDecimalDigits: Integer := 1)
       : Tuple of (Boolean, array of String); private;
     begin
@@ -2463,7 +2450,7 @@ type
     method Print(const aDecimalDigits: Integer = 1; const aMaxWidth: Integer = 8): String;
     begin
       const cMaxBytes = 1000; // Tensor cannot exceed this limit in order to print.
-      const cAllowedTypes = TensorFlowNumericalTypes + [DataType.String, DataType.Bool];
+      const cAllowedTypes = NumericalTypes + [DataType.String, DataType.Bool];
       // Validate max bytes and allowed types.
       if fData.NumBytes > cMaxBytes then
         exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
@@ -2635,20 +2622,20 @@ type
 
           var list_size := TF_DeviceListCount(devlist_hnd);
           var devlist := new List<DeviceAttrs>(list_size);
- 
+
           for I: Integer := 0 to list_size - 1 do begin
             var pname := TF_DeviceListName(devlist_hnd, I, lStatus.Handle);
-            if not lStatus.Ok then exit (false, nil);  
+            if not lStatus.Ok then exit (false, nil);
             var name := String.FromPAnsiChars(pname);
 
             var ptype := TF_DeviceListType(devlist_hnd, I, lStatus.Handle);
-            if not lStatus.Ok then exit (false, nil);   
+            if not lStatus.Ok then exit (false, nil);
             var (nil, dev_type) := Helper.AsEnum<DeviceType>(String.FromPAnsiChars(ptype));
 
             var nbytes := TF_DeviceListMemoryBytes(Handle, I, lStatus.Handle);
             if not lStatus.Ok then exit (false, nil);
 
-            devlist.Add(new DeviceAttrs withName(name) &Type(dev_type) MemoryLimit(nbytes));   
+            devlist.Add(new DeviceAttrs withName(name) &Type(dev_type) MemoryLimit(nbytes));
           end;
 
           result := (true, devlist);
@@ -2662,10 +2649,10 @@ type
     /// Creates a session and graph from a model stored in the SavedModel file format.
     /// </summary>		
     /// <remarks>
-    /// This function loads the data that was saved using the SavedModel file format, as described
-    /// here: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/saved_model/README.md
+    /// SavedModel file format, as described here:
+    /// https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/saved_model/README.md
     /// </remarks>
-    class method LoadFromSavedModel (aSessOpts: NotNull<SessionOptions>; aRunOptions: Buffer;
+    class method LoadFromSavedModel(aSessOpts: NotNull<SessionOptions>; aRunOptions: Buffer;
       aExportDir: NotNull<String>; aTags: NotNull<array of String>; aGraph: NotNull<Graph>;
       aMetaGraphDef: Buffer; aStatus: Status := nil): Tuple of (Boolean, Session);
     begin
@@ -2869,12 +2856,12 @@ type
     method SetupPartialRun(aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
-        var inputs := fContext.Inputs.ToInputArray;
-        var ninputs := fContext.Inputs.Count;
-        var outputs := fContext.Outputs.ToOutputArray;
-        var noutputs := fContext.Outputs.Count;
+        var inputs       := fContext.Inputs.ToInputArray;
+        var ninputs      := fContext.Inputs.Count;
+        var outputs      := fContext.Outputs.ToOutputArray;
+        var noutputs     := fContext.Outputs.Count;
         var target_opers := fContext.Targets.Handles;
-        var ntargets := fContext.Targets.Count;
+        var ntargets     := fContext.Targets.Count;
 
         var token_hnd: ^AnsiChar;
         TF_SessionPRunSetup(fSession.Handle, inputs, ninputs, outputs, noutputs,
@@ -2900,16 +2887,16 @@ type
       Options(aOpts: Buffer := nil): TensorList;
     begin
       using lStatus := new Status do begin
-        var run_options := ^TF_Buffer(aOpts: Handle);
-        var inputs := fContext.Inputs.ToInputArray;
-        var input_values := fContext.InputValues.Handles;
-        var ninputs := fContext.Inputs.Count;
-        var outputs := fContext.Outputs.ToOutputArray;
-        var noutputs := fContext.Outputs.Count;
+        var run_options   := ^TF_Buffer(aOpts: Handle);
+        var inputs        := fContext.Inputs.ToInputArray;
+        var input_values  := fContext.InputValues.Handles;
+        var ninputs       := fContext.Inputs.Count;
+        var outputs       := fContext.Outputs.ToOutputArray;
+        var noutputs      := fContext.Outputs.Count;
         var output_values := new ^TF_Tensor[noutputs];
-        var target_opers := fContext.Targets.Handles;
-        var ntargets := fContext.Targets.Count;
-        var run_metadata := ^TF_Buffer(aMetaData:Handle);
+        var target_opers  := fContext.Targets.Handles;
+        var ntargets      := fContext.Targets.Count;
+        var run_metadata  := ^TF_Buffer(aMetaData:Handle);
 
         TF_SessionRun(fSession.Handle, run_options, inputs, input_values,
           ninputs, outputs, output_values, noutputs, target_opers,
@@ -2934,15 +2921,15 @@ type
       end;
 
       using lStatus := new Status do begin
-        var inputs := fContext.Inputs.ToInputArray;
-        var input_values := fContext.InputValues.Handles;
-        var ninputs := fContext.Inputs.Count;
-        var outputs := fContext.Outputs.ToOutputArray;
-        var noutputs := fContext.Outputs.Count;
+        var inputs        := fContext.Inputs.ToInputArray;
+        var input_values  := fContext.InputValues.Handles;
+        var ninputs       := fContext.Inputs.Count;
+        var outputs       := fContext.Outputs.ToOutputArray;
+        var noutputs      := fContext.Outputs.Count;
         var output_values := new ^TF_Tensor[noutputs];
-        var target_opers := fContext.Targets.Handles;
-        var ntargets := fContext.Targets.Count;
-        var token_hnd := fContext.PRunToken.Handle;
+        var target_opers  := fContext.Targets.Handles;
+        var ntargets      := fContext.Targets.Count;
+        var token_hnd     := fContext.PRunToken.Handle;
 
         TF_SessionPRun(fSession.Handle, ^AnsiChar(token_hnd), inputs, input_values,
           ninputs, outputs, output_values, noutputs, target_opers,
@@ -3008,12 +2995,15 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   TensorFlowLibrary = public class(TensorFlowObject<TF_Library>)
   public
-    constructor withFileName(aName: NotNull<String>);
+    constructor withName(aName: NotNull<String>);
     begin
       var lStatus := new Status;
       var hnd:= TF_LoadLibrary(aName.ToAnsiChars(true), lStatus.Handle);
 
-      if not lStatus.Ok then raise new LibraryLoadException withFileName(aName) Message(lStatus.Message);
+      if not lStatus.Ok then begin
+        raise new LibraryLoadException withLibName(aName) Error(lStatus.Message);
+      end;
+
       inherited constructor withHandle(hnd) OnDispose(aHandle->TF_DeleteLibraryHandle(aHandle));
     end;
 
