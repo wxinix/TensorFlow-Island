@@ -52,9 +52,9 @@ type
 
   InvalidTensorDataSizeException = public class(Exception)
   public
-    constructor withDataSize(aDataSize: Integer) DimSize(aDimSize: Integer);
+    constructor withDataSize(aDataSize: Integer) ShapeSize(aShpSize: Integer);
     begin
-      inherited constructor($'Data size {aDataSize} inconsistent with shape size {aDimSize}');
+      inherited constructor($'Data[size={aDataSize}] inconsistent with shape[size={aShpSize}].');
     end;
   end;
 
@@ -88,9 +88,9 @@ type
 
   LibraryLoadException = public class(Exception)
   public
-    constructor withFileName(aName: NotNull<String>) Message(aMsg: NotNull<String>);
+    constructor withLibName(aName: NotNull<String>) Error(aMsg: NotNull<String>);
     begin
-      inherited constructor($'Cannot load TensorFlow library from {aName}. {aMsg}');
+      inherited constructor($'Cannot load TensorFlow library "{aName}". {aMsg}');
     end; 
   end;
 
@@ -125,7 +125,7 @@ type
   public
     constructor;
     begin
-      inherited constructor('Cannot invoke SessionRunner.PartialRun with uninitialized token.');
+      inherited constructor('Cannot invoke PartialRun with uninitialized token.');
     end;
   end;
 
@@ -149,7 +149,7 @@ type
   public
     constructor withString(aValue: String) Error(aErrMsg: String);
     begin
-      inherited constructor($'String "{aValue}" cannot be encoded with error: {aErrMsg}');
+      inherited constructor($'"{aValue}" cannot be encoded. {aErrMsg}');
     end;
   end;
 
