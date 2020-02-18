@@ -2206,12 +2206,12 @@ type
       var dtype := TF_DataType(ord(aData.Type));
       var dims := aData.Shape.ToArray;
       var num_dims := aData.Shape.NumDims;
-      var _data := aData.Bytes;
+      var data_ := aData.Bytes;
       var len := aData.NumBytes;
       var deallocator: TensorDeallocator := @TensorData.DeallocateTensorData;
       var deallocator_arg: ^Void := nil;
 
-      var hnd := TF_NewTensor(dtype, dims, num_dims, _data, len, deallocator, deallocator_arg);
+      var hnd := TF_NewTensor(dtype, dims, num_dims, data_, len, deallocator, deallocator_arg);
       if not assigned(hnd) then raise new TensorCreateException(aData.Type);
 
       fData := aData;
