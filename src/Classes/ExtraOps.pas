@@ -28,9 +28,9 @@ type
   Graph = public partial class
   public
     method &Const(aValue: NotNull<Tensor>; aOperName: String := nil): Output;
-      begin
-			  exit self.Const (aValue, aValue.Data.Type, aOperName);
-		end;
+    begin
+      exit self.Const (aValue, aValue.Data.Type, aOperName);
+    end;
  
     method ReduceDims(aInput: NotNull<Output>; aAxis: Output := nil): Output;
     begin
