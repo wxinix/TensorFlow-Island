@@ -79,6 +79,10 @@
       <SubType>Code</SubType>
       <Link>..\..\Src\Classes\GeneratedOps.cs</Link>
     </Compile>
+    <Compile Include="..\..\Src\Classes\ExtraOps.pas">
+      <SubType>Code</SubType>
+      <Link>..\..\Src\Classes\ExtraOps.pas</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>
