@@ -60,11 +60,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (error_msg != null) {
-                desc.SetAttr("error_msg", error_msg /* cstatus */);
+                desc.SetAttr("error_msg", error_msg);
             }
 
             if (exit_without_error.HasValue) {
-                desc.SetAttr("exit_without_error", exit_without_error /* cstatus */);
+                desc.SetAttr("exit_without_error", exit_without_error);
             }
 
             using (var status = new Status()) {
@@ -146,7 +146,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -308,7 +308,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -499,11 +499,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -613,11 +613,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -885,7 +885,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -963,16 +963,16 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_true", num_true /* cstatus */);
-            desc.SetAttr("num_sampled", num_sampled /* cstatus */);
-            desc.SetAttr("unique", unique /* cstatus */);
+            desc.SetAttr("num_true", num_true);
+            desc.SetAttr("num_sampled", num_sampled);
+            desc.SetAttr("unique", unique);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -1044,9 +1044,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("concat_dimension", concat_dimension /* cstatus */);
-            desc.SetAttr("split_dimension", split_dimension /* cstatus */);
-            desc.SetAttr("split_count", split_count /* cstatus */);
+            desc.SetAttr("concat_dimension", concat_dimension);
+            desc.SetAttr("split_dimension", split_dimension);
+            desc.SetAttr("split_count", split_count);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -1102,7 +1102,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Tout.HasValue) {
-                desc.SetAttr("Tout", Tout /* cstatus */);
+                desc.SetAttr("Tout", Tout);
             }
 
             using (var status = new Status()) {
@@ -1141,8 +1141,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -1182,8 +1182,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -1226,9 +1226,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("devices", devices /* cstatus */);
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("devices", devices);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -1280,7 +1280,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -1352,7 +1352,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -1414,11 +1414,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -1488,7 +1488,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -1554,11 +1554,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -1647,11 +1647,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -1731,7 +1731,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -1803,7 +1803,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -1897,7 +1897,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -1975,7 +1975,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2058,7 +2058,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2108,7 +2108,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2179,11 +2179,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -2255,7 +2255,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2322,7 +2322,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2384,7 +2384,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2466,7 +2466,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2507,7 +2507,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (tolerance.HasValue) {
-                desc.SetAttr("tolerance", tolerance /* cstatus */);
+                desc.SetAttr("tolerance", tolerance);
             }
 
             using (var status = new Status()) {
@@ -2564,7 +2564,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_type.HasValue) {
-                desc.SetAttr("output_type", output_type /* cstatus */);
+                desc.SetAttr("output_type", output_type);
             }
 
             using (var status = new Status()) {
@@ -2621,7 +2621,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_type.HasValue) {
-                desc.SetAttr("output_type", output_type /* cstatus */);
+                desc.SetAttr("output_type", output_type);
             }
 
             using (var status = new Status()) {
@@ -2759,7 +2759,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (summarize.HasValue) {
-                desc.SetAttr("summarize", summarize /* cstatus */);
+                desc.SetAttr("summarize", summarize);
             }
 
             using (var status = new Status()) {
@@ -2812,8 +2812,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -2869,11 +2869,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (validate_shape.HasValue) {
-                desc.SetAttr("validate_shape", validate_shape /* cstatus */);
+                desc.SetAttr("validate_shape", validate_shape);
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -2924,7 +2924,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -3013,7 +3013,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -3156,23 +3156,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (precision.HasValue) {
-                desc.SetAttr("precision", precision /* cstatus */);
+                desc.SetAttr("precision", precision);
             }
 
             if (scientific.HasValue) {
-                desc.SetAttr("scientific", scientific /* cstatus */);
+                desc.SetAttr("scientific", scientific);
             }
 
             if (shortest.HasValue) {
-                desc.SetAttr("shortest", shortest /* cstatus */);
+                desc.SetAttr("shortest", shortest);
             }
 
             if (width.HasValue) {
-                desc.SetAttr("width", width /* cstatus */);
+                desc.SetAttr("width", width);
             }
 
             if (fill != null) {
-                desc.SetAttr("fill", fill /* cstatus */);
+                desc.SetAttr("fill", fill);
             }
 
             using (var status = new Status()) {
@@ -3380,11 +3380,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("window_size", window_size /* cstatus */);
-            desc.SetAttr("stride", stride /* cstatus */);
+            desc.SetAttr("window_size", window_size);
+            desc.SetAttr("stride", stride);
             
             if (magnitude_squared.HasValue) {
-                desc.SetAttr("magnitude_squared", magnitude_squared /* cstatus */);
+                desc.SetAttr("magnitude_squared", magnitude_squared);
             }
 
             using (var status = new Status()) {
@@ -3444,10 +3444,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("sample_rate", sample_rate /* cstatus */);
+            desc.SetAttr("sample_rate", sample_rate);
             
             if (max_outputs.HasValue) {
-                desc.SetAttr("max_outputs", max_outputs /* cstatus */);
+                desc.SetAttr("max_outputs", max_outputs);
             }
 
             using (var status = new Status()) {
@@ -3509,7 +3509,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (max_outputs.HasValue) {
-                desc.SetAttr("max_outputs", max_outputs /* cstatus */);
+                desc.SetAttr("max_outputs", max_outputs);
             }
 
             using (var status = new Status()) {
@@ -3565,8 +3565,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -3622,12 +3622,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -3682,12 +3682,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -3746,12 +3746,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -3809,12 +3809,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -3880,22 +3880,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (shapes != null) {
-                desc.SetAttr("shapes", shapes /* cstatus */);
+                desc.SetAttr("shapes", shapes);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -3945,7 +3945,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (cancel_pending_enqueues.HasValue) {
-                desc.SetAttr("cancel_pending_enqueues", cancel_pending_enqueues /* cstatus */);
+                desc.SetAttr("cancel_pending_enqueues", cancel_pending_enqueues);
             }
 
             using (var status = new Status()) {
@@ -4030,7 +4030,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_index", component_index /* cstatus */);
+            desc.SetAttr("component_index", component_index);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -4134,18 +4134,18 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (allow_small_batch.HasValue) {
-                desc.SetAttr("allow_small_batch", allow_small_batch /* cstatus */);
+                desc.SetAttr("allow_small_batch", allow_small_batch);
             }
 
             if (wait_for_incomplete.HasValue) {
-                desc.SetAttr("wait_for_incomplete", wait_for_incomplete /* cstatus */);
+                desc.SetAttr("wait_for_incomplete", wait_for_incomplete);
             }
 
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -4252,29 +4252,29 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_batch_threads", num_batch_threads /* cstatus */);
-            desc.SetAttr("max_batch_size", max_batch_size /* cstatus */);
-            desc.SetAttr("batch_timeout_micros", batch_timeout_micros /* cstatus */);
-            desc.SetAttr("grad_timeout_micros", grad_timeout_micros /* cstatus */);
+            desc.SetAttr("num_batch_threads", num_batch_threads);
+            desc.SetAttr("max_batch_size", max_batch_size);
+            desc.SetAttr("batch_timeout_micros", batch_timeout_micros);
+            desc.SetAttr("grad_timeout_micros", grad_timeout_micros);
             
             if (max_enqueued_batches.HasValue) {
-                desc.SetAttr("max_enqueued_batches", max_enqueued_batches /* cstatus */);
+                desc.SetAttr("max_enqueued_batches", max_enqueued_batches);
             }
 
             if (allowed_batch_sizes != null) {
-                desc.SetAttr("allowed_batch_sizes", allowed_batch_sizes /* cstatus */);
+                desc.SetAttr("allowed_batch_sizes", allowed_batch_sizes);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (batching_queue != null) {
-                desc.SetAttr("batching_queue", batching_queue /* cstatus */);
+                desc.SetAttr("batching_queue", batching_queue);
             }
 
             using (var status = new Status()) {
@@ -4325,8 +4325,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -4375,11 +4375,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (parallel_copy.HasValue) {
-                desc.SetAttr("parallel_copy", parallel_copy /* cstatus */);
+                desc.SetAttr("parallel_copy", parallel_copy);
             }
 
             using (var status = new Status()) {
@@ -4448,11 +4448,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (adj_x.HasValue) {
-                desc.SetAttr("adj_x", adj_x /* cstatus */);
+                desc.SetAttr("adj_x", adj_x);
             }
 
             if (adj_y.HasValue) {
-                desc.SetAttr("adj_y", adj_y /* cstatus */);
+                desc.SetAttr("adj_y", adj_y);
             }
 
             using (var status = new Status()) {
@@ -4526,11 +4526,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (adj_x.HasValue) {
-                desc.SetAttr("adj_x", adj_x /* cstatus */);
+                desc.SetAttr("adj_x", adj_x);
             }
 
             if (adj_y.HasValue) {
-                desc.SetAttr("adj_y", adj_y /* cstatus */);
+                desc.SetAttr("adj_y", adj_y);
             }
 
             using (var status = new Status()) {
@@ -4598,8 +4598,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("variance_epsilon", variance_epsilon /* cstatus */);
-            desc.SetAttr("scale_after_normalization", scale_after_normalization /* cstatus */);
+            desc.SetAttr("variance_epsilon", variance_epsilon);
+            desc.SetAttr("scale_after_normalization", scale_after_normalization);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -4671,8 +4671,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("variance_epsilon", variance_epsilon /* cstatus */);
-            desc.SetAttr("scale_after_normalization", scale_after_normalization /* cstatus */);
+            desc.SetAttr("variance_epsilon", variance_epsilon);
+            desc.SetAttr("scale_after_normalization", scale_after_normalization);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -4799,7 +4799,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("block_size", block_size /* cstatus */);
+            desc.SetAttr("block_size", block_size);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -5136,7 +5136,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -5188,7 +5188,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -5371,7 +5371,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("type", type /* cstatus */);
+            desc.SetAttr("type", type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -5646,15 +5646,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (forget_bias.HasValue) {
-                desc.SetAttr("forget_bias", forget_bias /* cstatus */);
+                desc.SetAttr("forget_bias", forget_bias);
             }
 
             if (cell_clip.HasValue) {
-                desc.SetAttr("cell_clip", cell_clip /* cstatus */);
+                desc.SetAttr("cell_clip", cell_clip);
             }
 
             if (use_peephole.HasValue) {
-                desc.SetAttr("use_peephole", use_peephole /* cstatus */);
+                desc.SetAttr("use_peephole", use_peephole);
             }
 
             using (var status = new Status()) {
@@ -5779,7 +5779,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("use_peephole", use_peephole /* cstatus */);
+            desc.SetAttr("use_peephole", use_peephole);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -5904,7 +5904,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("use_peephole", use_peephole /* cstatus */);
+            desc.SetAttr("use_peephole", use_peephole);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -6018,11 +6018,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (cell_clip.HasValue) {
-                desc.SetAttr("cell_clip", cell_clip /* cstatus */);
+                desc.SetAttr("cell_clip", cell_clip);
             }
 
             if (use_peephole.HasValue) {
-                desc.SetAttr("use_peephole", use_peephole /* cstatus */);
+                desc.SetAttr("use_peephole", use_peephole);
             }
 
             using (var status = new Status()) {
@@ -6086,8 +6086,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("max_splits", max_splits /* cstatus */);
-            desc.SetAttr("num_buckets", num_buckets /* cstatus */);
+            desc.SetAttr("max_splits", max_splits);
+            desc.SetAttr("num_buckets", num_buckets);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -6215,10 +6215,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("logits_dimension", logits_dimension /* cstatus */);
+            desc.SetAttr("logits_dimension", logits_dimension);
             
             if (split_type != null) {
-                desc.SetAttr("split_type", split_type /* cstatus */);
+                desc.SetAttr("split_type", split_type);
             }
 
             using (var status = new Status()) {
@@ -6298,7 +6298,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("max_splits", max_splits /* cstatus */);
+            desc.SetAttr("max_splits", max_splits);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -6462,7 +6462,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (max_elements.HasValue) {
-                desc.SetAttr("max_elements", max_elements /* cstatus */);
+                desc.SetAttr("max_elements", max_elements);
             }
 
             using (var status = new Status()) {
@@ -6539,11 +6539,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -6592,7 +6592,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("logits_dimension", logits_dimension /* cstatus */);
+            desc.SetAttr("logits_dimension", logits_dimension);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -6633,7 +6633,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_features", num_features /* cstatus */);
+            desc.SetAttr("num_features", num_features);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -6790,8 +6790,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("max_splits", max_splits /* cstatus */);
-            desc.SetAttr("num_buckets", num_buckets /* cstatus */);
+            desc.SetAttr("max_splits", max_splits);
+            desc.SetAttr("num_buckets", num_buckets);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -6838,7 +6838,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("logits_dimension", logits_dimension /* cstatus */);
+            desc.SetAttr("logits_dimension", logits_dimension);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -6965,7 +6965,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (generate_quantiles.HasValue) {
-                desc.SetAttr("generate_quantiles", generate_quantiles /* cstatus */);
+                desc.SetAttr("generate_quantiles", generate_quantiles);
             }
 
             using (var status = new Status()) {
@@ -7006,7 +7006,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_features", num_features /* cstatus */);
+            desc.SetAttr("num_features", num_features);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -7049,11 +7049,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -7170,8 +7170,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("max_splits", max_splits /* cstatus */);
-            desc.SetAttr("num_buckets", num_buckets /* cstatus */);
+            desc.SetAttr("max_splits", max_splits);
+            desc.SetAttr("num_buckets", num_buckets);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -7262,10 +7262,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("logits_dimension", logits_dimension /* cstatus */);
+            desc.SetAttr("logits_dimension", logits_dimension);
             
             if (split_type != null) {
-                desc.SetAttr("split_type", split_type /* cstatus */);
+                desc.SetAttr("split_type", split_type);
             }
 
             using (var status = new Status()) {
@@ -7334,7 +7334,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("logits_dimension", logits_dimension /* cstatus */);
+            desc.SetAttr("logits_dimension", logits_dimension);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -7416,7 +7416,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("pruning_mode", pruning_mode /* cstatus */);
+            desc.SetAttr("pruning_mode", pruning_mode);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -7690,7 +7690,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("boundaries", boundaries /* cstatus */);
+            desc.SetAttr("boundaries", boundaries);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -7730,8 +7730,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -7779,8 +7779,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -7818,10 +7818,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("DstT", DstT /* cstatus */);
+            desc.SetAttr("DstT", DstT);
             
             if (Truncate.HasValue) {
-                desc.SetAttr("Truncate", Truncate /* cstatus */);
+                desc.SetAttr("Truncate", Truncate);
             }
 
             using (var status = new Status()) {
@@ -7893,7 +7893,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("message", message /* cstatus */);
+            desc.SetAttr("message", message);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -8078,14 +8078,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("T", T /* cstatus */);
-            desc.SetAttr("group_size", group_size /* cstatus */);
-            desc.SetAttr("group_key", group_key /* cstatus */);
-            desc.SetAttr("instance_key", instance_key /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("T", T);
+            desc.SetAttr("group_size", group_size);
+            desc.SetAttr("group_key", group_key);
+            desc.SetAttr("instance_key", instance_key);
+            desc.SetAttr("shape", shape);
             
             if (communication_hint != null) {
-                desc.SetAttr("communication_hint", communication_hint /* cstatus */);
+                desc.SetAttr("communication_hint", communication_hint);
             }
 
             using (var status = new Status()) {
@@ -8130,13 +8130,13 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("group_size", group_size /* cstatus */);
-            desc.SetAttr("group_key", group_key /* cstatus */);
-            desc.SetAttr("instance_key", instance_key /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("group_size", group_size);
+            desc.SetAttr("group_key", group_key);
+            desc.SetAttr("instance_key", instance_key);
+            desc.SetAttr("shape", shape);
             
             if (communication_hint != null) {
-                desc.SetAttr("communication_hint", communication_hint /* cstatus */);
+                desc.SetAttr("communication_hint", communication_hint);
             }
 
             using (var status = new Status()) {
@@ -8181,13 +8181,13 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("group_size", group_size /* cstatus */);
-            desc.SetAttr("group_key", group_key /* cstatus */);
-            desc.SetAttr("instance_key", instance_key /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("group_size", group_size);
+            desc.SetAttr("group_key", group_key);
+            desc.SetAttr("instance_key", instance_key);
+            desc.SetAttr("shape", shape);
             
             if (communication_hint != null) {
-                desc.SetAttr("communication_hint", communication_hint /* cstatus */);
+                desc.SetAttr("communication_hint", communication_hint);
             }
 
             using (var status = new Status()) {
@@ -8284,19 +8284,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("group_size", group_size /* cstatus */);
-            desc.SetAttr("group_key", group_key /* cstatus */);
-            desc.SetAttr("instance_key", instance_key /* cstatus */);
-            desc.SetAttr("merge_op", merge_op /* cstatus */);
-            desc.SetAttr("final_op", final_op /* cstatus */);
-            desc.SetAttr("subdiv_offsets", subdiv_offsets /* cstatus */);
+            desc.SetAttr("group_size", group_size);
+            desc.SetAttr("group_key", group_key);
+            desc.SetAttr("instance_key", instance_key);
+            desc.SetAttr("merge_op", merge_op);
+            desc.SetAttr("final_op", final_op);
+            desc.SetAttr("subdiv_offsets", subdiv_offsets);
             
             if (wait_for != null) {
-                desc.SetAttr("wait_for", wait_for /* cstatus */);
+                desc.SetAttr("wait_for", wait_for);
             }
 
             if (communication_hint != null) {
-                desc.SetAttr("communication_hint", communication_hint /* cstatus */);
+                desc.SetAttr("communication_hint", communication_hint);
             }
 
             using (var status = new Status()) {
@@ -8398,11 +8398,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (pad_per_class.HasValue) {
-                desc.SetAttr("pad_per_class", pad_per_class /* cstatus */);
+                desc.SetAttr("pad_per_class", pad_per_class);
             }
 
             if (clip_boxes.HasValue) {
-                desc.SetAttr("clip_boxes", clip_boxes /* cstatus */);
+                desc.SetAttr("clip_boxes", clip_boxes);
             }
 
             using (var status = new Status()) {
@@ -8524,7 +8524,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Tout.HasValue) {
-                desc.SetAttr("Tout", Tout /* cstatus */);
+                desc.SetAttr("Tout", Tout);
             }
 
             using (var status = new Status()) {
@@ -8568,7 +8568,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Tout.HasValue) {
-                desc.SetAttr("Tout", Tout /* cstatus */);
+                desc.SetAttr("Tout", Tout);
             }
 
             using (var status = new Status()) {
@@ -8632,14 +8632,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_true", num_true /* cstatus */);
+            desc.SetAttr("num_true", num_true);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -8723,8 +8723,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -8879,19 +8879,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (reduction_type != null) {
-                desc.SetAttr("reduction_type", reduction_type /* cstatus */);
+                desc.SetAttr("reduction_type", reduction_type);
             }
 
             using (var status = new Status()) {
@@ -8938,15 +8938,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (embedding_config != null) {
-                desc.SetAttr("embedding_config", embedding_config /* cstatus */);
+                desc.SetAttr("embedding_config", embedding_config);
             }
 
             if (tpu_embedding_config != null) {
-                desc.SetAttr("tpu_embedding_config", tpu_embedding_config /* cstatus */);
+                desc.SetAttr("tpu_embedding_config", tpu_embedding_config);
             }
 
             if (is_global_init.HasValue) {
-                desc.SetAttr("is_global_init", is_global_init /* cstatus */);
+                desc.SetAttr("is_global_init", is_global_init);
             }
 
             using (var status = new Status()) {
@@ -8981,7 +8981,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("config", config /* cstatus */);
+            desc.SetAttr("config", config);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -9099,8 +9099,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("value", value /* cstatus */);
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("value", value);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -9267,23 +9267,23 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (use_cudnn_on_gpu.HasValue) {
-                desc.SetAttr("use_cudnn_on_gpu", use_cudnn_on_gpu /* cstatus */);
+                desc.SetAttr("use_cudnn_on_gpu", use_cudnn_on_gpu);
             }
 
             if (explicit_paddings != null) {
-                desc.SetAttr("explicit_paddings", explicit_paddings /* cstatus */);
+                desc.SetAttr("explicit_paddings", explicit_paddings);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9366,23 +9366,23 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (use_cudnn_on_gpu.HasValue) {
-                desc.SetAttr("use_cudnn_on_gpu", use_cudnn_on_gpu /* cstatus */);
+                desc.SetAttr("use_cudnn_on_gpu", use_cudnn_on_gpu);
             }
 
             if (explicit_paddings != null) {
-                desc.SetAttr("explicit_paddings", explicit_paddings /* cstatus */);
+                desc.SetAttr("explicit_paddings", explicit_paddings);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9464,23 +9464,23 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (use_cudnn_on_gpu.HasValue) {
-                desc.SetAttr("use_cudnn_on_gpu", use_cudnn_on_gpu /* cstatus */);
+                desc.SetAttr("use_cudnn_on_gpu", use_cudnn_on_gpu);
             }
 
             if (explicit_paddings != null) {
-                desc.SetAttr("explicit_paddings", explicit_paddings /* cstatus */);
+                desc.SetAttr("explicit_paddings", explicit_paddings);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9550,15 +9550,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9613,11 +9613,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9687,15 +9687,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9750,11 +9750,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9824,15 +9824,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -9891,11 +9891,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (tensor_name != null) {
-                desc.SetAttr("tensor_name", tensor_name /* cstatus */);
+                desc.SetAttr("tensor_name", tensor_name);
             }
 
             if (debug_ops_spec != null) {
-                desc.SetAttr("debug_ops_spec", debug_ops_spec /* cstatus */);
+                desc.SetAttr("debug_ops_spec", debug_ops_spec);
             }
 
             using (var status = new Status()) {
@@ -9952,11 +9952,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (tensor_name != null) {
-                desc.SetAttr("tensor_name", tensor_name /* cstatus */);
+                desc.SetAttr("tensor_name", tensor_name);
             }
 
             if (debug_ops_spec != null) {
-                desc.SetAttr("debug_ops_spec", debug_ops_spec /* cstatus */);
+                desc.SetAttr("debug_ops_spec", debug_ops_spec);
             }
 
             using (var status = new Status()) {
@@ -10080,7 +10080,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("limit", limit /* cstatus */);
+            desc.SetAttr("limit", limit);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -10169,11 +10169,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (method != null) {
-                desc.SetAttr("method", method /* cstatus */);
+                desc.SetAttr("method", method);
             }
 
             if (extrapolation_value.HasValue) {
-                desc.SetAttr("extrapolation_value", extrapolation_value /* cstatus */);
+                desc.SetAttr("extrapolation_value", extrapolation_value);
             }
 
             using (var status = new Status()) {
@@ -10238,7 +10238,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (method != null) {
-                desc.SetAttr("method", method /* cstatus */);
+                desc.SetAttr("method", method);
             }
 
             using (var status = new Status()) {
@@ -10305,10 +10305,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("T", T /* cstatus */);
+            desc.SetAttr("T", T);
             
             if (method != null) {
-                desc.SetAttr("method", method /* cstatus */);
+                desc.SetAttr("method", method);
             }
 
             using (var status = new Status()) {
@@ -10465,11 +10465,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("beam_width", beam_width /* cstatus */);
-            desc.SetAttr("top_paths", top_paths /* cstatus */);
+            desc.SetAttr("beam_width", beam_width);
+            desc.SetAttr("top_paths", top_paths);
             
             if (merge_repeated.HasValue) {
-                desc.SetAttr("merge_repeated", merge_repeated /* cstatus */);
+                desc.SetAttr("merge_repeated", merge_repeated);
             }
 
             using (var status = new Status()) {
@@ -10552,7 +10552,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (merge_repeated.HasValue) {
-                desc.SetAttr("merge_repeated", merge_repeated /* cstatus */);
+                desc.SetAttr("merge_repeated", merge_repeated);
             }
 
             using (var status = new Status()) {
@@ -10630,15 +10630,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (preprocess_collapse_repeated.HasValue) {
-                desc.SetAttr("preprocess_collapse_repeated", preprocess_collapse_repeated /* cstatus */);
+                desc.SetAttr("preprocess_collapse_repeated", preprocess_collapse_repeated);
             }
 
             if (ctc_merge_repeated.HasValue) {
-                desc.SetAttr("ctc_merge_repeated", ctc_merge_repeated /* cstatus */);
+                desc.SetAttr("ctc_merge_repeated", ctc_merge_repeated);
             }
 
             if (ignore_longer_outputs_than_inputs.HasValue) {
-                desc.SetAttr("ignore_longer_outputs_than_inputs", ignore_longer_outputs_than_inputs /* cstatus */);
+                desc.SetAttr("ignore_longer_outputs_than_inputs", ignore_longer_outputs_than_inputs);
             }
 
             using (var status = new Status()) {
@@ -10741,31 +10741,31 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -10897,27 +10897,27 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -11055,27 +11055,27 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -11227,35 +11227,35 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (num_proj.HasValue) {
-                desc.SetAttr("num_proj", num_proj /* cstatus */);
+                desc.SetAttr("num_proj", num_proj);
             }
 
             if (time_major.HasValue) {
-                desc.SetAttr("time_major", time_major /* cstatus */);
+                desc.SetAttr("time_major", time_major);
             }
 
             using (var status = new Status()) {
@@ -11354,27 +11354,27 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -11474,31 +11474,31 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (num_proj.HasValue) {
-                desc.SetAttr("num_proj", num_proj /* cstatus */);
+                desc.SetAttr("num_proj", num_proj);
             }
 
             using (var status = new Status()) {
@@ -11586,35 +11586,35 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("T", T /* cstatus */);
-            desc.SetAttr("S", S /* cstatus */);
+            desc.SetAttr("T", T);
+            desc.SetAttr("S", S);
             
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (num_proj.HasValue) {
-                desc.SetAttr("num_proj", num_proj /* cstatus */);
+                desc.SetAttr("num_proj", num_proj);
             }
 
             using (var status = new Status()) {
@@ -11711,30 +11711,30 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_params", num_params /* cstatus */);
+            desc.SetAttr("num_params", num_params);
             
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -11849,35 +11849,35 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_params_weights", num_params_weights /* cstatus */);
-            desc.SetAttr("num_params_biases", num_params_biases /* cstatus */);
+            desc.SetAttr("num_params_weights", num_params_weights);
+            desc.SetAttr("num_params_biases", num_params_biases);
             
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (num_proj.HasValue) {
-                desc.SetAttr("num_proj", num_proj /* cstatus */);
+                desc.SetAttr("num_proj", num_proj);
             }
 
             using (var status = new Status()) {
@@ -11995,31 +11995,31 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -12142,39 +12142,39 @@ namespace TensorFlow.Island.Classes
             }
 
             if (rnn_mode != null) {
-                desc.SetAttr("rnn_mode", rnn_mode /* cstatus */);
+                desc.SetAttr("rnn_mode", rnn_mode);
             }
 
             if (input_mode != null) {
-                desc.SetAttr("input_mode", input_mode /* cstatus */);
+                desc.SetAttr("input_mode", input_mode);
             }
 
             if (direction != null) {
-                desc.SetAttr("direction", direction /* cstatus */);
+                desc.SetAttr("direction", direction);
             }
 
             if (dropout.HasValue) {
-                desc.SetAttr("dropout", dropout /* cstatus */);
+                desc.SetAttr("dropout", dropout);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (num_proj.HasValue) {
-                desc.SetAttr("num_proj", num_proj /* cstatus */);
+                desc.SetAttr("num_proj", num_proj);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             if (time_major.HasValue) {
-                desc.SetAttr("time_major", time_major /* cstatus */);
+                desc.SetAttr("time_major", time_major);
             }
 
             using (var status = new Status()) {
@@ -12259,11 +12259,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (exclusive.HasValue) {
-                desc.SetAttr("exclusive", exclusive /* cstatus */);
+                desc.SetAttr("exclusive", exclusive);
             }
 
             if (reverse.HasValue) {
-                desc.SetAttr("reverse", reverse /* cstatus */);
+                desc.SetAttr("reverse", reverse);
             }
 
             using (var status = new Status()) {
@@ -12344,11 +12344,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (exclusive.HasValue) {
-                desc.SetAttr("exclusive", exclusive /* cstatus */);
+                desc.SetAttr("exclusive", exclusive);
             }
 
             if (reverse.HasValue) {
-                desc.SetAttr("reverse", reverse /* cstatus */);
+                desc.SetAttr("reverse", reverse);
             }
 
             using (var status = new Status()) {
@@ -12417,11 +12417,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (exclusive.HasValue) {
-                desc.SetAttr("exclusive", exclusive /* cstatus */);
+                desc.SetAttr("exclusive", exclusive);
             }
 
             if (reverse.HasValue) {
-                desc.SetAttr("reverse", reverse /* cstatus */);
+                desc.SetAttr("reverse", reverse);
             }
 
             using (var status = new Status()) {
@@ -12470,11 +12470,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (src_format != null) {
-                desc.SetAttr("src_format", src_format /* cstatus */);
+                desc.SetAttr("src_format", src_format);
             }
 
             if (dst_format != null) {
-                desc.SetAttr("dst_format", dst_format /* cstatus */);
+                desc.SetAttr("dst_format", dst_format);
             }
 
             using (var status = new Status()) {
@@ -12522,11 +12522,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (src_format != null) {
-                desc.SetAttr("src_format", src_format /* cstatus */);
+                desc.SetAttr("src_format", src_format);
             }
 
             if (dst_format != null) {
-                desc.SetAttr("dst_format", dst_format /* cstatus */);
+                desc.SetAttr("dst_format", dst_format);
             }
 
             using (var status = new Status()) {
@@ -12642,7 +12642,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (stateful_whitelist != null) {
-                desc.SetAttr("stateful_whitelist", stateful_whitelist /* cstatus */);
+                desc.SetAttr("stateful_whitelist", stateful_whitelist);
             }
 
             using (var status = new Status()) {
@@ -12682,8 +12682,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -12860,19 +12860,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (device_name != null) {
-                desc.SetAttr("device_name", device_name /* cstatus */);
+                desc.SetAttr("device_name", device_name);
             }
 
             if (tensor_name != null) {
-                desc.SetAttr("tensor_name", tensor_name /* cstatus */);
+                desc.SetAttr("tensor_name", tensor_name);
             }
 
             if (debug_urls != null) {
-                desc.SetAttr("debug_urls", debug_urls /* cstatus */);
+                desc.SetAttr("debug_urls", debug_urls);
             }
 
             if (gated_grpc.HasValue) {
-                desc.SetAttr("gated_grpc", gated_grpc /* cstatus */);
+                desc.SetAttr("gated_grpc", gated_grpc);
             }
 
             using (var status = new Status()) {
@@ -12933,19 +12933,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (device_name != null) {
-                desc.SetAttr("device_name", device_name /* cstatus */);
+                desc.SetAttr("device_name", device_name);
             }
 
             if (tensor_name != null) {
-                desc.SetAttr("tensor_name", tensor_name /* cstatus */);
+                desc.SetAttr("tensor_name", tensor_name);
             }
 
             if (debug_urls != null) {
-                desc.SetAttr("debug_urls", debug_urls /* cstatus */);
+                desc.SetAttr("debug_urls", debug_urls);
             }
 
             if (gated_grpc.HasValue) {
-                desc.SetAttr("gated_grpc", gated_grpc /* cstatus */);
+                desc.SetAttr("gated_grpc", gated_grpc);
             }
 
             using (var status = new Status()) {
@@ -13048,31 +13048,31 @@ namespace TensorFlow.Island.Classes
             }
 
             if (device_name != null) {
-                desc.SetAttr("device_name", device_name /* cstatus */);
+                desc.SetAttr("device_name", device_name);
             }
 
             if (tensor_name != null) {
-                desc.SetAttr("tensor_name", tensor_name /* cstatus */);
+                desc.SetAttr("tensor_name", tensor_name);
             }
 
             if (debug_urls != null) {
-                desc.SetAttr("debug_urls", debug_urls /* cstatus */);
+                desc.SetAttr("debug_urls", debug_urls);
             }
 
             if (lower_bound.HasValue) {
-                desc.SetAttr("lower_bound", lower_bound /* cstatus */);
+                desc.SetAttr("lower_bound", lower_bound);
             }
 
             if (upper_bound.HasValue) {
-                desc.SetAttr("upper_bound", upper_bound /* cstatus */);
+                desc.SetAttr("upper_bound", upper_bound);
             }
 
             if (mute_if_healthy.HasValue) {
-                desc.SetAttr("mute_if_healthy", mute_if_healthy /* cstatus */);
+                desc.SetAttr("mute_if_healthy", mute_if_healthy);
             }
 
             if (gated_grpc.HasValue) {
-                desc.SetAttr("gated_grpc", gated_grpc /* cstatus */);
+                desc.SetAttr("gated_grpc", gated_grpc);
             }
 
             using (var status = new Status()) {
@@ -13165,27 +13165,27 @@ namespace TensorFlow.Island.Classes
             }
 
             if (channels.HasValue) {
-                desc.SetAttr("channels", channels /* cstatus */);
+                desc.SetAttr("channels", channels);
             }
 
             if (ratio.HasValue) {
-                desc.SetAttr("ratio", ratio /* cstatus */);
+                desc.SetAttr("ratio", ratio);
             }
 
             if (fancy_upscaling.HasValue) {
-                desc.SetAttr("fancy_upscaling", fancy_upscaling /* cstatus */);
+                desc.SetAttr("fancy_upscaling", fancy_upscaling);
             }
 
             if (try_recover_truncated.HasValue) {
-                desc.SetAttr("try_recover_truncated", try_recover_truncated /* cstatus */);
+                desc.SetAttr("try_recover_truncated", try_recover_truncated);
             }
 
             if (acceptable_fraction.HasValue) {
-                desc.SetAttr("acceptable_fraction", acceptable_fraction /* cstatus */);
+                desc.SetAttr("acceptable_fraction", acceptable_fraction);
             }
 
             if (dct_method != null) {
-                desc.SetAttr("dct_method", dct_method /* cstatus */);
+                desc.SetAttr("dct_method", dct_method);
             }
 
             using (var status = new Status()) {
@@ -13272,7 +13272,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (channels.HasValue) {
-                desc.SetAttr("channels", channels /* cstatus */);
+                desc.SetAttr("channels", channels);
             }
 
             using (var status = new Status()) {
@@ -13323,7 +13323,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (compression_type != null) {
-                desc.SetAttr("compression_type", compression_type /* cstatus */);
+                desc.SetAttr("compression_type", compression_type);
             }
 
             using (var status = new Status()) {
@@ -13389,19 +13389,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (field_delim != null) {
-                desc.SetAttr("field_delim", field_delim /* cstatus */);
+                desc.SetAttr("field_delim", field_delim);
             }
 
             if (use_quote_delim.HasValue) {
-                desc.SetAttr("use_quote_delim", use_quote_delim /* cstatus */);
+                desc.SetAttr("use_quote_delim", use_quote_delim);
             }
 
             if (na_value != null) {
-                desc.SetAttr("na_value", na_value /* cstatus */);
+                desc.SetAttr("na_value", na_value);
             }
 
             if (select_cols != null) {
-                desc.SetAttr("select_cols", select_cols /* cstatus */);
+                desc.SetAttr("select_cols", select_cols);
             }
 
             using (var status = new Status()) {
@@ -13539,27 +13539,27 @@ namespace TensorFlow.Island.Classes
             }
 
             if (channels.HasValue) {
-                desc.SetAttr("channels", channels /* cstatus */);
+                desc.SetAttr("channels", channels);
             }
 
             if (ratio.HasValue) {
-                desc.SetAttr("ratio", ratio /* cstatus */);
+                desc.SetAttr("ratio", ratio);
             }
 
             if (fancy_upscaling.HasValue) {
-                desc.SetAttr("fancy_upscaling", fancy_upscaling /* cstatus */);
+                desc.SetAttr("fancy_upscaling", fancy_upscaling);
             }
 
             if (try_recover_truncated.HasValue) {
-                desc.SetAttr("try_recover_truncated", try_recover_truncated /* cstatus */);
+                desc.SetAttr("try_recover_truncated", try_recover_truncated);
             }
 
             if (acceptable_fraction.HasValue) {
-                desc.SetAttr("acceptable_fraction", acceptable_fraction /* cstatus */);
+                desc.SetAttr("acceptable_fraction", acceptable_fraction);
             }
 
             if (dct_method != null) {
-                desc.SetAttr("dct_method", dct_method /* cstatus */);
+                desc.SetAttr("dct_method", dct_method);
             }
 
             using (var status = new Status()) {
@@ -13652,10 +13652,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("out_type", out_type /* cstatus */);
+            desc.SetAttr("out_type", out_type);
             
             if (little_endian.HasValue) {
-                desc.SetAttr("little_endian", little_endian /* cstatus */);
+                desc.SetAttr("little_endian", little_endian);
             }
 
             using (var status = new Status()) {
@@ -13716,11 +13716,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (channels.HasValue) {
-                desc.SetAttr("channels", channels /* cstatus */);
+                desc.SetAttr("channels", channels);
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -13834,20 +13834,20 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("message_type", message_type /* cstatus */);
-            desc.SetAttr("field_names", field_names /* cstatus */);
-            desc.SetAttr("output_types", output_types /* cstatus */);
+            desc.SetAttr("message_type", message_type);
+            desc.SetAttr("field_names", field_names);
+            desc.SetAttr("output_types", output_types);
             
             if (descriptor_source != null) {
-                desc.SetAttr("descriptor_source", descriptor_source /* cstatus */);
+                desc.SetAttr("descriptor_source", descriptor_source);
             }
 
             if (message_format != null) {
-                desc.SetAttr("message_format", message_format /* cstatus */);
+                desc.SetAttr("message_format", message_format);
             }
 
             if (sanitize.HasValue) {
-                desc.SetAttr("sanitize", sanitize /* cstatus */);
+                desc.SetAttr("sanitize", sanitize);
             }
 
             using (var status = new Status()) {
@@ -13900,10 +13900,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("out_type", out_type /* cstatus */);
+            desc.SetAttr("out_type", out_type);
             
             if (little_endian.HasValue) {
-                desc.SetAttr("little_endian", little_endian /* cstatus */);
+                desc.SetAttr("little_endian", little_endian);
             }
 
             using (var status = new Status()) {
@@ -13966,11 +13966,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (desired_channels.HasValue) {
-                desc.SetAttr("desired_channels", desired_channels /* cstatus */);
+                desc.SetAttr("desired_channels", desired_channels);
             }
 
             if (desired_samples.HasValue) {
-                desc.SetAttr("desired_samples", desired_samples /* cstatus */);
+                desc.SetAttr("desired_samples", desired_samples);
             }
 
             using (var status = new Status()) {
@@ -14168,10 +14168,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("set_operation", set_operation /* cstatus */);
+            desc.SetAttr("set_operation", set_operation);
             
             if (validate_indices.HasValue) {
-                desc.SetAttr("validate_indices", validate_indices /* cstatus */);
+                desc.SetAttr("validate_indices", validate_indices);
             }
 
             using (var status = new Status()) {
@@ -14223,8 +14223,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -14303,10 +14303,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("set_operation", set_operation /* cstatus */);
+            desc.SetAttr("set_operation", set_operation);
             
             if (validate_indices.HasValue) {
-                desc.SetAttr("validate_indices", validate_indices /* cstatus */);
+                desc.SetAttr("validate_indices", validate_indices);
             }
 
             using (var status = new Status()) {
@@ -14439,10 +14439,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("block_size", block_size /* cstatus */);
+            desc.SetAttr("block_size", block_size);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -14522,15 +14522,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -14606,15 +14606,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -14690,15 +14690,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -14819,7 +14819,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (mode != null) {
-                desc.SetAttr("mode", mode /* cstatus */);
+                desc.SetAttr("mode", mode);
             }
 
             using (var status = new Status()) {
@@ -14940,7 +14940,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15027,7 +15027,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15073,7 +15073,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (ignore_lookup_error.HasValue) {
-                desc.SetAttr("ignore_lookup_error", ignore_lookup_error /* cstatus */);
+                desc.SetAttr("ignore_lookup_error", ignore_lookup_error);
             }
 
             using (var status = new Status()) {
@@ -15119,7 +15119,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("var_name", var_name /* cstatus */);
+            desc.SetAttr("var_name", var_name);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15332,9 +15332,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("rates", rates /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("rates", rates);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15388,9 +15388,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("rates", rates /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("rates", rates);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15444,9 +15444,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("rates", rates /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("rates", rates);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15490,8 +15490,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15755,7 +15755,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_partitions", num_partitions /* cstatus */);
+            desc.SetAttr("num_partitions", num_partitions);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -15903,11 +15903,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("token", token /* cstatus */);
-            desc.SetAttr("Tout", Tout /* cstatus */);
+            desc.SetAttr("token", token);
+            desc.SetAttr("Tout", Tout);
             
             if (is_async.HasValue) {
-                desc.SetAttr("is_async", is_async /* cstatus */);
+                desc.SetAttr("is_async", is_async);
             }
 
             using (var status = new Status()) {
@@ -16018,7 +16018,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (normalize.HasValue) {
-                desc.SetAttr("normalize", normalize /* cstatus */);
+                desc.SetAttr("normalize", normalize);
             }
 
             using (var status = new Status()) {
@@ -16135,7 +16135,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("equation", equation /* cstatus */);
+            desc.SetAttr("equation", equation);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -16251,10 +16251,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (init.HasValue) {
-                desc.SetAttr("init", init /* cstatus */);
+                desc.SetAttr("init", init);
             }
 
             using (var status = new Status()) {
@@ -16301,7 +16301,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -16349,7 +16349,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (pad.HasValue) {
-                desc.SetAttr("pad", pad /* cstatus */);
+                desc.SetAttr("pad", pad);
             }
 
             using (var status = new Status()) {
@@ -16441,39 +16441,39 @@ namespace TensorFlow.Island.Classes
             }
 
             if (format != null) {
-                desc.SetAttr("format", format /* cstatus */);
+                desc.SetAttr("format", format);
             }
 
             if (quality.HasValue) {
-                desc.SetAttr("quality", quality /* cstatus */);
+                desc.SetAttr("quality", quality);
             }
 
             if (progressive.HasValue) {
-                desc.SetAttr("progressive", progressive /* cstatus */);
+                desc.SetAttr("progressive", progressive);
             }
 
             if (optimize_size.HasValue) {
-                desc.SetAttr("optimize_size", optimize_size /* cstatus */);
+                desc.SetAttr("optimize_size", optimize_size);
             }
 
             if (chroma_downsampling.HasValue) {
-                desc.SetAttr("chroma_downsampling", chroma_downsampling /* cstatus */);
+                desc.SetAttr("chroma_downsampling", chroma_downsampling);
             }
 
             if (density_unit != null) {
-                desc.SetAttr("density_unit", density_unit /* cstatus */);
+                desc.SetAttr("density_unit", density_unit);
             }
 
             if (x_density.HasValue) {
-                desc.SetAttr("x_density", x_density /* cstatus */);
+                desc.SetAttr("x_density", x_density);
             }
 
             if (y_density.HasValue) {
-                desc.SetAttr("y_density", y_density /* cstatus */);
+                desc.SetAttr("y_density", y_density);
             }
 
             if (xmp_metadata != null) {
-                desc.SetAttr("xmp_metadata", xmp_metadata /* cstatus */);
+                desc.SetAttr("xmp_metadata", xmp_metadata);
             }
 
             using (var status = new Status()) {
@@ -16569,7 +16569,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (compression.HasValue) {
-                desc.SetAttr("compression", compression /* cstatus */);
+                desc.SetAttr("compression", compression);
             }
 
             using (var status = new Status()) {
@@ -16660,11 +16660,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("field_names", field_names /* cstatus */);
-            desc.SetAttr("message_type", message_type /* cstatus */);
+            desc.SetAttr("field_names", field_names);
+            desc.SetAttr("message_type", message_type);
             
             if (descriptor_source != null) {
-                desc.SetAttr("descriptor_source", descriptor_source /* cstatus */);
+                desc.SetAttr("descriptor_source", descriptor_source);
             }
 
             using (var status = new Status()) {
@@ -16759,7 +16759,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             using (var status = new Status()) {
@@ -16838,11 +16838,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             if (combiners != null) {
-                desc.SetAttr("combiners", combiners /* cstatus */);
+                desc.SetAttr("combiners", combiners);
             }
 
             using (var status = new Status()) {
@@ -16929,18 +16929,18 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("table_ids", table_ids /* cstatus */);
+            desc.SetAttr("table_ids", table_ids);
             
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             if (combiners != null) {
-                desc.SetAttr("combiners", combiners /* cstatus */);
+                desc.SetAttr("combiners", combiners);
             }
 
             if (max_sequence_lengths != null) {
-                desc.SetAttr("max_sequence_lengths", max_sequence_lengths /* cstatus */);
+                desc.SetAttr("max_sequence_lengths", max_sequence_lengths);
             }
 
             using (var status = new Status()) {
@@ -16981,7 +16981,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17034,14 +17034,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("frame_name", frame_name /* cstatus */);
+            desc.SetAttr("frame_name", frame_name);
             
             if (is_constant.HasValue) {
-                desc.SetAttr("is_constant", is_constant /* cstatus */);
+                desc.SetAttr("is_constant", is_constant);
             }
 
             if (parallel_iterations.HasValue) {
-                desc.SetAttr("parallel_iterations", parallel_iterations /* cstatus */);
+                desc.SetAttr("parallel_iterations", parallel_iterations);
             }
 
             using (var status = new Status()) {
@@ -17096,7 +17096,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (incompatible_shape_error.HasValue) {
-                desc.SetAttr("incompatible_shape_error", incompatible_shape_error /* cstatus */);
+                desc.SetAttr("incompatible_shape_error", incompatible_shape_error);
             }
 
             using (var status = new Status()) {
@@ -17210,7 +17210,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -17432,8 +17432,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17473,8 +17473,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17599,8 +17599,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17644,8 +17644,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17682,8 +17682,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17754,8 +17754,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17796,8 +17796,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17871,15 +17871,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("sparse_keys", sparse_keys /* cstatus */);
-            desc.SetAttr("dense_keys", dense_keys /* cstatus */);
-            desc.SetAttr("sparse_types", sparse_types /* cstatus */);
-            desc.SetAttr("dense_shapes", dense_shapes /* cstatus */);
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("sparse_keys", sparse_keys);
+            desc.SetAttr("dense_keys", dense_keys);
+            desc.SetAttr("sparse_types", sparse_types);
+            desc.SetAttr("dense_shapes", dense_shapes);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (sloppy.HasValue) {
-                desc.SetAttr("sloppy", sloppy /* cstatus */);
+                desc.SetAttr("sloppy", sloppy);
             }
 
             using (var status = new Status()) {
@@ -17921,8 +17921,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -17966,8 +17966,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18018,11 +18018,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (use_fallback.HasValue) {
-                desc.SetAttr("use_fallback", use_fallback /* cstatus */);
+                desc.SetAttr("use_fallback", use_fallback);
             }
 
             using (var status = new Status()) {
@@ -18075,8 +18075,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18122,8 +18122,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18160,11 +18160,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -18237,8 +18237,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18289,19 +18289,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_threads", num_threads /* cstatus */);
-            desc.SetAttr("display_name", display_name /* cstatus */);
+            desc.SetAttr("num_threads", num_threads);
+            desc.SetAttr("display_name", display_name);
             
             if (max_intra_op_parallelism.HasValue) {
-                desc.SetAttr("max_intra_op_parallelism", max_intra_op_parallelism /* cstatus */);
+                desc.SetAttr("max_intra_op_parallelism", max_intra_op_parallelism);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -18339,8 +18339,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18377,8 +18377,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18517,19 +18517,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (centered.HasValue) {
-                desc.SetAttr("centered", centered /* cstatus */);
+                desc.SetAttr("centered", centered);
             }
 
             if (normalized.HasValue) {
-                desc.SetAttr("normalized", normalized /* cstatus */);
+                desc.SetAttr("normalized", normalized);
             }
 
             if (uniform_noise.HasValue) {
-                desc.SetAttr("uniform_noise", uniform_noise /* cstatus */);
+                desc.SetAttr("uniform_noise", uniform_noise);
             }
 
             if (noise != null) {
-                desc.SetAttr("noise", noise /* cstatus */);
+                desc.SetAttr("noise", noise);
             }
 
             using (var status = new Status()) {
@@ -18586,10 +18586,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksizes", ksizes /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("rates", rates /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksizes", ksizes);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("rates", rates);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18633,7 +18633,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_type.HasValue) {
-                desc.SetAttr("output_type", output_type /* cstatus */);
+                desc.SetAttr("output_type", output_type);
             }
 
             using (var status = new Status()) {
@@ -18690,9 +18690,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksizes", ksizes /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksizes", ksizes);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18761,8 +18761,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -18826,19 +18826,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (min.HasValue) {
-                desc.SetAttr("min", min /* cstatus */);
+                desc.SetAttr("min", min);
             }
 
             if (max.HasValue) {
-                desc.SetAttr("max", max /* cstatus */);
+                desc.SetAttr("max", max);
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -18892,19 +18892,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (min.HasValue) {
-                desc.SetAttr("min", min /* cstatus */);
+                desc.SetAttr("min", min);
             }
 
             if (max.HasValue) {
-                desc.SetAttr("max", max /* cstatus */);
+                desc.SetAttr("max", max);
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -18972,11 +18972,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -19038,11 +19038,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -19113,11 +19113,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -19182,11 +19182,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -19402,22 +19402,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (shapes != null) {
-                desc.SetAttr("shapes", shapes /* cstatus */);
+                desc.SetAttr("shapes", shapes);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -19474,22 +19474,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (shapes != null) {
-                desc.SetAttr("shapes", shapes /* cstatus */);
+                desc.SetAttr("shapes", shapes);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -19588,8 +19588,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -19769,26 +19769,26 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("record_bytes", record_bytes /* cstatus */);
+            desc.SetAttr("record_bytes", record_bytes);
             
             if (header_bytes.HasValue) {
-                desc.SetAttr("header_bytes", header_bytes /* cstatus */);
+                desc.SetAttr("header_bytes", header_bytes);
             }
 
             if (footer_bytes.HasValue) {
-                desc.SetAttr("footer_bytes", footer_bytes /* cstatus */);
+                desc.SetAttr("footer_bytes", footer_bytes);
             }
 
             if (hop_bytes.HasValue) {
-                desc.SetAttr("hop_bytes", hop_bytes /* cstatus */);
+                desc.SetAttr("hop_bytes", hop_bytes);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -19851,30 +19851,30 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("record_bytes", record_bytes /* cstatus */);
+            desc.SetAttr("record_bytes", record_bytes);
             
             if (header_bytes.HasValue) {
-                desc.SetAttr("header_bytes", header_bytes /* cstatus */);
+                desc.SetAttr("header_bytes", header_bytes);
             }
 
             if (footer_bytes.HasValue) {
-                desc.SetAttr("footer_bytes", footer_bytes /* cstatus */);
+                desc.SetAttr("footer_bytes", footer_bytes);
             }
 
             if (hop_bytes.HasValue) {
-                desc.SetAttr("hop_bytes", hop_bytes /* cstatus */);
+                desc.SetAttr("hop_bytes", hop_bytes);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (encoding != null) {
-                desc.SetAttr("encoding", encoding /* cstatus */);
+                desc.SetAttr("encoding", encoding);
             }
 
             using (var status = new Status()) {
@@ -20001,41 +20001,41 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_true", num_true /* cstatus */);
-            desc.SetAttr("num_sampled", num_sampled /* cstatus */);
-            desc.SetAttr("unique", unique /* cstatus */);
-            desc.SetAttr("range_max", range_max /* cstatus */);
+            desc.SetAttr("num_true", num_true);
+            desc.SetAttr("num_sampled", num_sampled);
+            desc.SetAttr("unique", unique);
+            desc.SetAttr("range_max", range_max);
             
             if (vocab_file != null) {
-                desc.SetAttr("vocab_file", vocab_file /* cstatus */);
+                desc.SetAttr("vocab_file", vocab_file);
             }
 
             if (distortion.HasValue) {
-                desc.SetAttr("distortion", distortion /* cstatus */);
+                desc.SetAttr("distortion", distortion);
             }
 
             if (num_reserved_ids.HasValue) {
-                desc.SetAttr("num_reserved_ids", num_reserved_ids /* cstatus */);
+                desc.SetAttr("num_reserved_ids", num_reserved_ids);
             }
 
             if (num_shards.HasValue) {
-                desc.SetAttr("num_shards", num_shards /* cstatus */);
+                desc.SetAttr("num_shards", num_shards);
             }
 
             if (shard.HasValue) {
-                desc.SetAttr("shard", shard /* cstatus */);
+                desc.SetAttr("shard", shard);
             }
 
             if (unigrams != null) {
-                desc.SetAttr("unigrams", unigrams /* cstatus */);
+                desc.SetAttr("unigrams", unigrams);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -20235,26 +20235,26 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("pooling_ratio", pooling_ratio /* cstatus */);
+            desc.SetAttr("pooling_ratio", pooling_ratio);
             
             if (pseudo_random.HasValue) {
-                desc.SetAttr("pseudo_random", pseudo_random /* cstatus */);
+                desc.SetAttr("pseudo_random", pseudo_random);
             }
 
             if (overlapping.HasValue) {
-                desc.SetAttr("overlapping", overlapping /* cstatus */);
+                desc.SetAttr("overlapping", overlapping);
             }
 
             if (deterministic.HasValue) {
-                desc.SetAttr("deterministic", deterministic /* cstatus */);
+                desc.SetAttr("deterministic", deterministic);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -20327,7 +20327,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (overlapping.HasValue) {
-                desc.SetAttr("overlapping", overlapping /* cstatus */);
+                desc.SetAttr("overlapping", overlapping);
             }
 
             using (var status = new Status()) {
@@ -20439,26 +20439,26 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("pooling_ratio", pooling_ratio /* cstatus */);
+            desc.SetAttr("pooling_ratio", pooling_ratio);
             
             if (pseudo_random.HasValue) {
-                desc.SetAttr("pseudo_random", pseudo_random /* cstatus */);
+                desc.SetAttr("pseudo_random", pseudo_random);
             }
 
             if (overlapping.HasValue) {
-                desc.SetAttr("overlapping", overlapping /* cstatus */);
+                desc.SetAttr("overlapping", overlapping);
             }
 
             if (deterministic.HasValue) {
-                desc.SetAttr("deterministic", deterministic /* cstatus */);
+                desc.SetAttr("deterministic", deterministic);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -20528,7 +20528,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (overlapping.HasValue) {
-                desc.SetAttr("overlapping", overlapping /* cstatus */);
+                desc.SetAttr("overlapping", overlapping);
             }
 
             using (var status = new Status()) {
@@ -20609,15 +20609,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (epsilon.HasValue) {
-                desc.SetAttr("epsilon", epsilon /* cstatus */);
+                desc.SetAttr("epsilon", epsilon);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -20705,15 +20705,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (epsilon.HasValue) {
-                desc.SetAttr("epsilon", epsilon /* cstatus */);
+                desc.SetAttr("epsilon", epsilon);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -20801,15 +20801,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (epsilon.HasValue) {
-                desc.SetAttr("epsilon", epsilon /* cstatus */);
+                desc.SetAttr("epsilon", epsilon);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -20903,15 +20903,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (epsilon.HasValue) {
-                desc.SetAttr("epsilon", epsilon /* cstatus */);
+                desc.SetAttr("epsilon", epsilon);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -20996,15 +20996,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (epsilon.HasValue) {
-                desc.SetAttr("epsilon", epsilon /* cstatus */);
+                desc.SetAttr("epsilon", epsilon);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -21091,15 +21091,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (epsilon.HasValue) {
-                desc.SetAttr("epsilon", epsilon /* cstatus */);
+                desc.SetAttr("epsilon", epsilon);
             }
 
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             if (is_training.HasValue) {
-                desc.SetAttr("is_training", is_training /* cstatus */);
+                desc.SetAttr("is_training", is_training);
             }
 
             using (var status = new Status()) {
@@ -21171,9 +21171,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("mode", mode /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("mode", mode);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -21248,12 +21248,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("mode", mode /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("mode", mode);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (resize_align_corners.HasValue) {
-                desc.SetAttr("resize_align_corners", resize_align_corners /* cstatus */);
+                desc.SetAttr("resize_align_corners", resize_align_corners);
             }
 
             using (var status = new Status()) {
@@ -21321,7 +21321,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (validate_indices.HasValue) {
-                desc.SetAttr("validate_indices", validate_indices /* cstatus */);
+                desc.SetAttr("validate_indices", validate_indices);
             }
 
             using (var status = new Status()) {
@@ -21545,7 +21545,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (batch_dims.HasValue) {
-                desc.SetAttr("batch_dims", batch_dims /* cstatus */);
+                desc.SetAttr("batch_dims", batch_dims);
             }
 
             using (var status = new Status()) {
@@ -21630,11 +21630,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("new_vocab_offset", new_vocab_offset /* cstatus */);
-            desc.SetAttr("num_new_vocab", num_new_vocab /* cstatus */);
+            desc.SetAttr("new_vocab_offset", new_vocab_offset);
+            desc.SetAttr("num_new_vocab", num_new_vocab);
             
             if (old_vocab_size.HasValue) {
-                desc.SetAttr("old_vocab_size", old_vocab_size /* cstatus */);
+                desc.SetAttr("old_vocab_size", old_vocab_size);
             }
 
             using (var status = new Status()) {
@@ -21742,7 +21742,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -22162,19 +22162,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_dtype", key_dtype /* cstatus */);
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("key_dtype", key_dtype);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             using (var status = new Status()) {
@@ -22232,19 +22232,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_dtype", key_dtype /* cstatus */);
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("key_dtype", key_dtype);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             using (var status = new Status()) {
@@ -22311,7 +22311,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -22391,8 +22391,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("value", value /* cstatus */);
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("value", value);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -22563,11 +22563,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -22614,11 +22614,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -22913,8 +22913,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -22964,7 +22964,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Tout.HasValue) {
-                desc.SetAttr("Tout", Tout /* cstatus */);
+                desc.SetAttr("Tout", Tout);
             }
 
             using (var status = new Status()) {
@@ -23049,11 +23049,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (max_images.HasValue) {
-                desc.SetAttr("max_images", max_images /* cstatus */);
+                desc.SetAttr("max_images", max_images);
             }
 
             if (bad_color != null) {
-                desc.SetAttr("bad_color", bad_color /* cstatus */);
+                desc.SetAttr("bad_color", bad_color);
             }
 
             using (var status = new Status()) {
@@ -23097,9 +23097,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
-            desc.SetAttr("memory_region_name", memory_region_name /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
+            desc.SetAttr("memory_region_name", memory_region_name);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -23136,8 +23136,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -23174,8 +23174,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
-            desc.SetAttr("shapes", shapes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
+            desc.SetAttr("shapes", shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -23232,15 +23232,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (shape != null) {
-                desc.SetAttr("shape", shape /* cstatus */);
+                desc.SetAttr("shape", shape);
             }
 
             if (layout != null) {
-                desc.SetAttr("layout", layout /* cstatus */);
+                desc.SetAttr("layout", layout);
             }
 
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             using (var status = new Status()) {
@@ -23279,7 +23279,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             using (var status = new Status()) {
@@ -23328,14 +23328,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shapes", shapes /* cstatus */);
+            desc.SetAttr("shapes", shapes);
             
             if (layouts != null) {
-                desc.SetAttr("layouts", layouts /* cstatus */);
+                desc.SetAttr("layouts", layouts);
             }
 
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             using (var status = new Status()) {
@@ -23437,15 +23437,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_index", key_index /* cstatus */);
-            desc.SetAttr("value_index", value_index /* cstatus */);
+            desc.SetAttr("key_index", key_index);
+            desc.SetAttr("value_index", value_index);
             
             if (vocab_size.HasValue) {
-                desc.SetAttr("vocab_size", vocab_size /* cstatus */);
+                desc.SetAttr("vocab_size", vocab_size);
             }
 
             if (delimiter != null) {
-                desc.SetAttr("delimiter", delimiter /* cstatus */);
+                desc.SetAttr("delimiter", delimiter);
             }
 
             using (var status = new Status()) {
@@ -23509,15 +23509,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_index", key_index /* cstatus */);
-            desc.SetAttr("value_index", value_index /* cstatus */);
+            desc.SetAttr("key_index", key_index);
+            desc.SetAttr("value_index", value_index);
             
             if (vocab_size.HasValue) {
-                desc.SetAttr("vocab_size", vocab_size /* cstatus */);
+                desc.SetAttr("vocab_size", vocab_size);
             }
 
             if (delimiter != null) {
-                desc.SetAttr("delimiter", delimiter /* cstatus */);
+                desc.SetAttr("delimiter", delimiter);
             }
 
             using (var status = new Status()) {
@@ -23741,7 +23741,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("k", k /* cstatus */);
+            desc.SetAttr("k", k);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -24420,10 +24420,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shared_name", shared_name /* cstatus */);
-            desc.SetAttr("container", container /* cstatus */);
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("shared_name", shared_name);
+            desc.SetAttr("container", container);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -24469,11 +24469,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_types != null) {
-                desc.SetAttr("output_types", output_types /* cstatus */);
+                desc.SetAttr("output_types", output_types);
             }
 
             if (output_shapes != null) {
-                desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+                desc.SetAttr("output_shapes", output_shapes);
             }
 
             using (var status = new Status()) {
@@ -24542,8 +24542,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -24586,8 +24586,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -24630,8 +24630,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -24846,8 +24846,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -24884,7 +24884,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (alpha.HasValue) {
-                desc.SetAttr("alpha", alpha /* cstatus */);
+                desc.SetAttr("alpha", alpha);
             }
 
             using (var status = new Status()) {
@@ -24929,7 +24929,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (alpha.HasValue) {
-                desc.SetAttr("alpha", alpha /* cstatus */);
+                desc.SetAttr("alpha", alpha);
             }
 
             using (var status = new Status()) {
@@ -25010,17 +25010,17 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_true", num_true /* cstatus */);
-            desc.SetAttr("num_sampled", num_sampled /* cstatus */);
-            desc.SetAttr("unique", unique /* cstatus */);
-            desc.SetAttr("range_max", range_max /* cstatus */);
+            desc.SetAttr("num_true", num_true);
+            desc.SetAttr("num_sampled", num_sampled);
+            desc.SetAttr("unique", unique);
+            desc.SetAttr("range_max", range_max);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -25317,7 +25317,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_idx.HasValue) {
-                desc.SetAttr("out_idx", out_idx /* cstatus */);
+                desc.SetAttr("out_idx", out_idx);
             }
 
             using (var status = new Status()) {
@@ -25361,11 +25361,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -25474,11 +25474,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_rows", num_rows /* cstatus */);
-            desc.SetAttr("num_cols", num_cols /* cstatus */);
+            desc.SetAttr("num_rows", num_rows);
+            desc.SetAttr("num_cols", num_cols);
             
             if (max_rows_in_memory.HasValue) {
-                desc.SetAttr("max_rows_in_memory", max_rows_in_memory /* cstatus */);
+                desc.SetAttr("max_rows_in_memory", max_rows_in_memory);
             }
 
             using (var status = new Status()) {
@@ -25538,15 +25538,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -25608,15 +25608,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -25670,15 +25670,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -25736,15 +25736,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -25802,15 +25802,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -25872,15 +25872,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -25942,15 +25942,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26008,15 +26008,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26078,15 +26078,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26148,15 +26148,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26210,15 +26210,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26276,15 +26276,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26338,15 +26338,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26404,15 +26404,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26470,15 +26470,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26540,15 +26540,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26598,15 +26598,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -26946,17 +26946,17 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_true", num_true /* cstatus */);
-            desc.SetAttr("num_sampled", num_sampled /* cstatus */);
-            desc.SetAttr("unique", unique /* cstatus */);
-            desc.SetAttr("range_max", range_max /* cstatus */);
+            desc.SetAttr("num_true", num_true);
+            desc.SetAttr("num_sampled", num_sampled);
+            desc.SetAttr("unique", unique);
+            desc.SetAttr("range_max", range_max);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -27000,8 +27000,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("Tkeys", Tkeys /* cstatus */);
-            desc.SetAttr("Tvalues", Tvalues /* cstatus */);
+            desc.SetAttr("Tkeys", Tkeys);
+            desc.SetAttr("Tvalues", Tvalues);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -27043,8 +27043,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("Tkeys", Tkeys /* cstatus */);
-            desc.SetAttr("Tvalues", Tvalues /* cstatus */);
+            desc.SetAttr("Tkeys", Tkeys);
+            desc.SetAttr("Tvalues", Tvalues);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -27515,7 +27515,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -27580,19 +27580,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (depth_radius.HasValue) {
-                desc.SetAttr("depth_radius", depth_radius /* cstatus */);
+                desc.SetAttr("depth_radius", depth_radius);
             }
 
             if (bias.HasValue) {
-                desc.SetAttr("bias", bias /* cstatus */);
+                desc.SetAttr("bias", bias);
             }
 
             if (alpha.HasValue) {
-                desc.SetAttr("alpha", alpha /* cstatus */);
+                desc.SetAttr("alpha", alpha);
             }
 
             if (beta.HasValue) {
-                desc.SetAttr("beta", beta /* cstatus */);
+                desc.SetAttr("beta", beta);
             }
 
             using (var status = new Status()) {
@@ -27653,19 +27653,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (depth_radius.HasValue) {
-                desc.SetAttr("depth_radius", depth_radius /* cstatus */);
+                desc.SetAttr("depth_radius", depth_radius);
             }
 
             if (bias.HasValue) {
-                desc.SetAttr("bias", bias /* cstatus */);
+                desc.SetAttr("bias", bias);
             }
 
             if (alpha.HasValue) {
-                desc.SetAttr("alpha", alpha /* cstatus */);
+                desc.SetAttr("alpha", alpha);
             }
 
             if (beta.HasValue) {
-                desc.SetAttr("beta", beta /* cstatus */);
+                desc.SetAttr("beta", beta);
             }
 
             using (var status = new Status()) {
@@ -27775,15 +27775,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (forget_bias.HasValue) {
-                desc.SetAttr("forget_bias", forget_bias /* cstatus */);
+                desc.SetAttr("forget_bias", forget_bias);
             }
 
             if (cell_clip.HasValue) {
-                desc.SetAttr("cell_clip", cell_clip /* cstatus */);
+                desc.SetAttr("cell_clip", cell_clip);
             }
 
             if (use_peephole.HasValue) {
-                desc.SetAttr("use_peephole", use_peephole /* cstatus */);
+                desc.SetAttr("use_peephole", use_peephole);
             }
 
             using (var status = new Status()) {
@@ -27896,7 +27896,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("use_peephole", use_peephole /* cstatus */);
+            desc.SetAttr("use_peephole", use_peephole);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -27970,7 +27970,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_idx_type.HasValue) {
-                desc.SetAttr("output_idx_type", output_idx_type /* cstatus */);
+                desc.SetAttr("output_idx_type", output_idx_type);
             }
 
             using (var status = new Status()) {
@@ -28052,22 +28052,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -28110,22 +28110,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -28180,22 +28180,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -28246,22 +28246,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -28323,22 +28323,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -28391,22 +28391,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -28467,22 +28467,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -28582,11 +28582,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (transpose_a.HasValue) {
-                desc.SetAttr("transpose_a", transpose_a /* cstatus */);
+                desc.SetAttr("transpose_a", transpose_a);
             }
 
             if (transpose_b.HasValue) {
-                desc.SetAttr("transpose_b", transpose_b /* cstatus */);
+                desc.SetAttr("transpose_b", transpose_b);
             }
 
             using (var status = new Status()) {
@@ -29182,7 +29182,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (adjoint.HasValue) {
-                desc.SetAttr("adjoint", adjoint /* cstatus */);
+                desc.SetAttr("adjoint", adjoint);
             }
 
             using (var status = new Status()) {
@@ -29459,7 +29459,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (adjoint.HasValue) {
-                desc.SetAttr("adjoint", adjoint /* cstatus */);
+                desc.SetAttr("adjoint", adjoint);
             }
 
             using (var status = new Status()) {
@@ -29547,7 +29547,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (fast.HasValue) {
-                desc.SetAttr("fast", fast /* cstatus */);
+                desc.SetAttr("fast", fast);
             }
 
             using (var status = new Status()) {
@@ -29702,11 +29702,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (lower.HasValue) {
-                desc.SetAttr("lower", lower /* cstatus */);
+                desc.SetAttr("lower", lower);
             }
 
             if (adjoint.HasValue) {
-                desc.SetAttr("adjoint", adjoint /* cstatus */);
+                desc.SetAttr("adjoint", adjoint);
             }
 
             using (var status = new Status()) {
@@ -29758,7 +29758,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -29838,8 +29838,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -29892,12 +29892,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -29952,12 +29952,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30019,12 +30019,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30087,12 +30087,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30154,12 +30154,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30221,12 +30221,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30290,10 +30290,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30352,12 +30352,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (include_batch_in_index.HasValue) {
-                desc.SetAttr("include_batch_in_index", include_batch_in_index /* cstatus */);
+                desc.SetAttr("include_batch_in_index", include_batch_in_index);
             }
 
             using (var status = new Status()) {
@@ -30421,10 +30421,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30483,12 +30483,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (include_batch_in_index.HasValue) {
-                desc.SetAttr("include_batch_in_index", include_batch_in_index /* cstatus */);
+                desc.SetAttr("include_batch_in_index", include_batch_in_index);
             }
 
             using (var status = new Status()) {
@@ -30544,10 +30544,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("padding", padding);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -30613,16 +30613,16 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (Targmax.HasValue) {
-                desc.SetAttr("Targmax", Targmax /* cstatus */);
+                desc.SetAttr("Targmax", Targmax);
             }
 
             if (include_batch_in_index.HasValue) {
-                desc.SetAttr("include_batch_in_index", include_batch_in_index /* cstatus */);
+                desc.SetAttr("include_batch_in_index", include_batch_in_index);
             }
 
             using (var status = new Status()) {
@@ -30675,7 +30675,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -30816,7 +30816,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (delete_old_dirs.HasValue) {
-                desc.SetAttr("delete_old_dirs", delete_old_dirs /* cstatus */);
+                desc.SetAttr("delete_old_dirs", delete_old_dirs);
             }
 
             using (var status = new Status()) {
@@ -30881,19 +30881,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (upper_frequency_limit.HasValue) {
-                desc.SetAttr("upper_frequency_limit", upper_frequency_limit /* cstatus */);
+                desc.SetAttr("upper_frequency_limit", upper_frequency_limit);
             }
 
             if (lower_frequency_limit.HasValue) {
-                desc.SetAttr("lower_frequency_limit", lower_frequency_limit /* cstatus */);
+                desc.SetAttr("lower_frequency_limit", lower_frequency_limit);
             }
 
             if (filterbank_channel_count.HasValue) {
-                desc.SetAttr("filterbank_channel_count", filterbank_channel_count /* cstatus */);
+                desc.SetAttr("filterbank_channel_count", filterbank_channel_count);
             }
 
             if (dct_coefficient_count.HasValue) {
-                desc.SetAttr("dct_coefficient_count", dct_coefficient_count /* cstatus */);
+                desc.SetAttr("dct_coefficient_count", dct_coefficient_count);
             }
 
             using (var status = new Status()) {
@@ -30945,7 +30945,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -31058,7 +31058,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("mode", mode /* cstatus */);
+            desc.SetAttr("mode", mode);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -31121,7 +31121,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("mode", mode /* cstatus */);
+            desc.SetAttr("mode", mode);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -31209,15 +31209,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (algorithm.HasValue) {
-                desc.SetAttr("algorithm", algorithm /* cstatus */);
+                desc.SetAttr("algorithm", algorithm);
             }
 
             if (cpu_budget.HasValue) {
-                desc.SetAttr("cpu_budget", cpu_budget /* cstatus */);
+                desc.SetAttr("cpu_budget", cpu_budget);
             }
 
             using (var status = new Status()) {
@@ -31342,11 +31342,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("devices", devices /* cstatus */);
-            desc.SetAttr("shared_name", shared_name /* cstatus */);
-            desc.SetAttr("container", container /* cstatus */);
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("devices", devices);
+            desc.SetAttr("shared_name", shared_name);
+            desc.SetAttr("container", container);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -31390,11 +31390,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_types != null) {
-                desc.SetAttr("output_types", output_types /* cstatus */);
+                desc.SetAttr("output_types", output_types);
             }
 
             if (output_shapes != null) {
-                desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+                desc.SetAttr("output_shapes", output_shapes);
             }
 
             using (var status = new Status()) {
@@ -31444,8 +31444,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -31580,15 +31580,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (output_dtype.HasValue) {
-                desc.SetAttr("output_dtype", output_dtype /* cstatus */);
+                desc.SetAttr("output_dtype", output_dtype);
             }
 
             using (var status = new Status()) {
@@ -31663,30 +31663,30 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             if (value_shape != null) {
-                desc.SetAttr("value_shape", value_shape /* cstatus */);
+                desc.SetAttr("value_shape", value_shape);
             }
 
             if (initial_num_buckets.HasValue) {
-                desc.SetAttr("initial_num_buckets", initial_num_buckets /* cstatus */);
+                desc.SetAttr("initial_num_buckets", initial_num_buckets);
             }
 
             if (max_load_factor.HasValue) {
-                desc.SetAttr("max_load_factor", max_load_factor /* cstatus */);
+                desc.SetAttr("max_load_factor", max_load_factor);
             }
 
             using (var status = new Status()) {
@@ -31764,30 +31764,30 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             if (value_shape != null) {
-                desc.SetAttr("value_shape", value_shape /* cstatus */);
+                desc.SetAttr("value_shape", value_shape);
             }
 
             if (initial_num_buckets.HasValue) {
-                desc.SetAttr("initial_num_buckets", initial_num_buckets /* cstatus */);
+                desc.SetAttr("initial_num_buckets", initial_num_buckets);
             }
 
             if (max_load_factor.HasValue) {
-                desc.SetAttr("max_load_factor", max_load_factor /* cstatus */);
+                desc.SetAttr("max_load_factor", max_load_factor);
             }
 
             using (var status = new Status()) {
@@ -31845,19 +31845,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_dtype", key_dtype /* cstatus */);
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("key_dtype", key_dtype);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             using (var status = new Status()) {
@@ -31916,23 +31916,23 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_dtype", key_dtype /* cstatus */);
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("key_dtype", key_dtype);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             if (value_shape != null) {
-                desc.SetAttr("value_shape", value_shape /* cstatus */);
+                desc.SetAttr("value_shape", value_shape);
             }
 
             using (var status = new Status()) {
@@ -31991,23 +31991,23 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_dtype", key_dtype /* cstatus */);
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("key_dtype", key_dtype);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             if (value_shape != null) {
-                desc.SetAttr("value_shape", value_shape /* cstatus */);
+                desc.SetAttr("value_shape", value_shape);
             }
 
             using (var status = new Status()) {
@@ -32065,19 +32065,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("key_dtype", key_dtype /* cstatus */);
-            desc.SetAttr("value_dtype", value_dtype /* cstatus */);
+            desc.SetAttr("key_dtype", key_dtype);
+            desc.SetAttr("value_dtype", value_dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (use_node_name_sharing.HasValue) {
-                desc.SetAttr("use_node_name_sharing", use_node_name_sharing /* cstatus */);
+                desc.SetAttr("use_node_name_sharing", use_node_name_sharing);
             }
 
             using (var status = new Status()) {
@@ -32195,11 +32195,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -32253,9 +32253,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("reduction", reduction /* cstatus */);
-            desc.SetAttr("num_devices", num_devices /* cstatus */);
-            desc.SetAttr("shared_name", shared_name /* cstatus */);
+            desc.SetAttr("reduction", reduction);
+            desc.SetAttr("num_devices", num_devices);
+            desc.SetAttr("shared_name", shared_name);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -32301,7 +32301,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -32346,7 +32346,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("reduction", reduction /* cstatus */);
+            desc.SetAttr("reduction", reduction);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -32487,8 +32487,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("vocab_count", vocab_count /* cstatus */);
-            desc.SetAttr("num_negative_samples", num_negative_samples /* cstatus */);
+            desc.SetAttr("vocab_count", vocab_count);
+            desc.SetAttr("num_negative_samples", num_negative_samples);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -32605,7 +32605,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -32676,7 +32676,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (iou_threshold.HasValue) {
-                desc.SetAttr("iou_threshold", iou_threshold /* cstatus */);
+                desc.SetAttr("iou_threshold", iou_threshold);
             }
 
             using (var status = new Status()) {
@@ -32903,7 +32903,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (pad_to_max_output_size.HasValue) {
-                desc.SetAttr("pad_to_max_output_size", pad_to_max_output_size /* cstatus */);
+                desc.SetAttr("pad_to_max_output_size", pad_to_max_output_size);
             }
 
             using (var status = new Status()) {
@@ -33004,7 +33004,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (pad_to_max_output_size.HasValue) {
-                desc.SetAttr("pad_to_max_output_size", pad_to_max_output_size /* cstatus */);
+                desc.SetAttr("pad_to_max_output_size", pad_to_max_output_size);
             }
 
             using (var status = new Status()) {
@@ -33148,7 +33148,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (incompatible_shape_error.HasValue) {
-                desc.SetAttr("incompatible_shape_error", incompatible_shape_error /* cstatus */);
+                desc.SetAttr("incompatible_shape_error", incompatible_shape_error);
             }
 
             using (var status = new Status()) {
@@ -33204,7 +33204,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (reverse.HasValue) {
-                desc.SetAttr("reverse", reverse /* cstatus */);
+                desc.SetAttr("reverse", reverse);
             }
 
             using (var status = new Status()) {
@@ -33346,7 +33346,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (axis.HasValue) {
-                desc.SetAttr("axis", axis /* cstatus */);
+                desc.SetAttr("axis", axis);
             }
 
             using (var status = new Status()) {
@@ -33428,11 +33428,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (optimization_configs != null) {
-                desc.SetAttr("optimization_configs", optimization_configs /* cstatus */);
+                desc.SetAttr("optimization_configs", optimization_configs);
             }
 
             using (var status = new Status()) {
@@ -33501,8 +33501,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -33611,22 +33611,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -33669,22 +33669,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -33740,22 +33740,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -33806,22 +33806,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -33886,22 +33886,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -33954,22 +33954,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -34030,22 +34030,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -34099,11 +34099,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             using (var status = new Status()) {
@@ -34151,11 +34151,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
-            desc.SetAttr("shapes", shapes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
+            desc.SetAttr("shapes", shapes);
             
             if (device_ordinal.HasValue) {
-                desc.SetAttr("device_ordinal", device_ordinal /* cstatus */);
+                desc.SetAttr("device_ordinal", device_ordinal);
             }
 
             using (var status = new Status()) {
@@ -34285,7 +34285,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (axis.HasValue) {
-                desc.SetAttr("axis", axis /* cstatus */);
+                desc.SetAttr("axis", axis);
             }
 
             using (var status = new Status()) {
@@ -34397,7 +34397,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -34457,10 +34457,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (parallel_copy.HasValue) {
-                desc.SetAttr("parallel_copy", parallel_copy /* cstatus */);
+                desc.SetAttr("parallel_copy", parallel_copy);
             }
 
             using (var status = new Status()) {
@@ -34526,22 +34526,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (shapes != null) {
-                desc.SetAttr("shapes", shapes /* cstatus */);
+                desc.SetAttr("shapes", shapes);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -34607,22 +34607,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (shapes != null) {
-                desc.SetAttr("shapes", shapes /* cstatus */);
+                desc.SetAttr("shapes", shapes);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -34744,7 +34744,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -34909,11 +34909,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -35007,8 +35007,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("sparse_types", sparse_types /* cstatus */);
-            desc.SetAttr("dense_shapes", dense_shapes /* cstatus */);
+            desc.SetAttr("sparse_types", sparse_types);
+            desc.SetAttr("dense_shapes", dense_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -35106,15 +35106,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("sparse_keys", sparse_keys /* cstatus */);
-            desc.SetAttr("dense_keys", dense_keys /* cstatus */);
-            desc.SetAttr("sparse_types", sparse_types /* cstatus */);
-            desc.SetAttr("dense_shapes", dense_shapes /* cstatus */);
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("sparse_keys", sparse_keys);
+            desc.SetAttr("dense_keys", dense_keys);
+            desc.SetAttr("sparse_types", sparse_types);
+            desc.SetAttr("dense_shapes", dense_shapes);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (sloppy.HasValue) {
-                desc.SetAttr("sloppy", sloppy /* cstatus */);
+                desc.SetAttr("sloppy", sloppy);
             }
 
             using (var status = new Status()) {
@@ -35249,46 +35249,46 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("feature_list_dense_missing_assumed_empty", feature_list_dense_missing_assumed_empty /* cstatus */);
-            desc.SetAttr("context_sparse_keys", context_sparse_keys /* cstatus */);
-            desc.SetAttr("context_dense_keys", context_dense_keys /* cstatus */);
-            desc.SetAttr("feature_list_sparse_keys", feature_list_sparse_keys /* cstatus */);
-            desc.SetAttr("feature_list_dense_keys", feature_list_dense_keys /* cstatus */);
+            desc.SetAttr("feature_list_dense_missing_assumed_empty", feature_list_dense_missing_assumed_empty);
+            desc.SetAttr("context_sparse_keys", context_sparse_keys);
+            desc.SetAttr("context_dense_keys", context_dense_keys);
+            desc.SetAttr("feature_list_sparse_keys", feature_list_sparse_keys);
+            desc.SetAttr("feature_list_dense_keys", feature_list_dense_keys);
             
             if (Ncontext_sparse.HasValue) {
-                desc.SetAttr("Ncontext_sparse", Ncontext_sparse /* cstatus */);
+                desc.SetAttr("Ncontext_sparse", Ncontext_sparse);
             }
 
             if (Ncontext_dense.HasValue) {
-                desc.SetAttr("Ncontext_dense", Ncontext_dense /* cstatus */);
+                desc.SetAttr("Ncontext_dense", Ncontext_dense);
             }
 
             if (Nfeature_list_sparse.HasValue) {
-                desc.SetAttr("Nfeature_list_sparse", Nfeature_list_sparse /* cstatus */);
+                desc.SetAttr("Nfeature_list_sparse", Nfeature_list_sparse);
             }
 
             if (Nfeature_list_dense.HasValue) {
-                desc.SetAttr("Nfeature_list_dense", Nfeature_list_dense /* cstatus */);
+                desc.SetAttr("Nfeature_list_dense", Nfeature_list_dense);
             }
 
             if (context_sparse_types != null) {
-                desc.SetAttr("context_sparse_types", context_sparse_types /* cstatus */);
+                desc.SetAttr("context_sparse_types", context_sparse_types);
             }
 
             if (feature_list_dense_types != null) {
-                desc.SetAttr("feature_list_dense_types", feature_list_dense_types /* cstatus */);
+                desc.SetAttr("feature_list_dense_types", feature_list_dense_types);
             }
 
             if (context_dense_shapes != null) {
-                desc.SetAttr("context_dense_shapes", context_dense_shapes /* cstatus */);
+                desc.SetAttr("context_dense_shapes", context_dense_shapes);
             }
 
             if (feature_list_sparse_types != null) {
-                desc.SetAttr("feature_list_sparse_types", feature_list_sparse_types /* cstatus */);
+                desc.SetAttr("feature_list_sparse_types", feature_list_sparse_types);
             }
 
             if (feature_list_dense_shapes != null) {
-                desc.SetAttr("feature_list_dense_shapes", feature_list_dense_shapes /* cstatus */);
+                desc.SetAttr("feature_list_dense_shapes", feature_list_dense_shapes);
             }
 
             using (var status = new Status()) {
@@ -35424,11 +35424,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_sparse", num_sparse /* cstatus */);
-            desc.SetAttr("sparse_keys", sparse_keys /* cstatus */);
-            desc.SetAttr("dense_keys", dense_keys /* cstatus */);
-            desc.SetAttr("sparse_types", sparse_types /* cstatus */);
-            desc.SetAttr("dense_shapes", dense_shapes /* cstatus */);
+            desc.SetAttr("num_sparse", num_sparse);
+            desc.SetAttr("sparse_keys", sparse_keys);
+            desc.SetAttr("dense_keys", dense_keys);
+            desc.SetAttr("sparse_types", sparse_types);
+            desc.SetAttr("dense_shapes", dense_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -35579,23 +35579,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (context_sparse_types != null) {
-                desc.SetAttr("context_sparse_types", context_sparse_types /* cstatus */);
+                desc.SetAttr("context_sparse_types", context_sparse_types);
             }
 
             if (feature_list_dense_types != null) {
-                desc.SetAttr("feature_list_dense_types", feature_list_dense_types /* cstatus */);
+                desc.SetAttr("feature_list_dense_types", feature_list_dense_types);
             }
 
             if (context_dense_shapes != null) {
-                desc.SetAttr("context_dense_shapes", context_dense_shapes /* cstatus */);
+                desc.SetAttr("context_dense_shapes", context_dense_shapes);
             }
 
             if (feature_list_sparse_types != null) {
-                desc.SetAttr("feature_list_sparse_types", feature_list_sparse_types /* cstatus */);
+                desc.SetAttr("feature_list_sparse_types", feature_list_sparse_types);
             }
 
             if (feature_list_dense_shapes != null) {
-                desc.SetAttr("feature_list_dense_shapes", feature_list_dense_shapes /* cstatus */);
+                desc.SetAttr("feature_list_dense_shapes", feature_list_dense_shapes);
             }
 
             using (var status = new Status()) {
@@ -35683,7 +35683,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("out_type", out_type /* cstatus */);
+            desc.SetAttr("out_type", out_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -35727,10 +35727,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (shape != null) {
-                desc.SetAttr("shape", shape /* cstatus */);
+                desc.SetAttr("shape", shape);
             }
 
             using (var status = new Status()) {
@@ -35774,8 +35774,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -35813,7 +35813,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("shape", shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -35987,15 +35987,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (slack_period.HasValue) {
-                desc.SetAttr("slack_period", slack_period /* cstatus */);
+                desc.SetAttr("slack_period", slack_period);
             }
 
             if (legacy_autotune.HasValue) {
-                desc.SetAttr("legacy_autotune", legacy_autotune /* cstatus */);
+                desc.SetAttr("legacy_autotune", legacy_autotune);
             }
 
             using (var status = new Status()) {
@@ -36041,11 +36041,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (shape != null) {
-                desc.SetAttr("shape", shape /* cstatus */);
+                desc.SetAttr("shape", shape);
             }
 
             if (layout != null) {
-                desc.SetAttr("layout", layout /* cstatus */);
+                desc.SetAttr("layout", layout);
             }
 
             using (var status = new Status()) {
@@ -36090,10 +36090,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shapes", shapes /* cstatus */);
+            desc.SetAttr("shapes", shapes);
             
             if (layouts != null) {
-                desc.SetAttr("layouts", layouts /* cstatus */);
+                desc.SetAttr("layouts", layouts);
             }
 
             using (var status = new Status()) {
@@ -36144,7 +36144,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (message != null) {
-                desc.SetAttr("message", message /* cstatus */);
+                desc.SetAttr("message", message);
             }
 
             using (var status = new Status()) {
@@ -36200,15 +36200,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (message != null) {
-                desc.SetAttr("message", message /* cstatus */);
+                desc.SetAttr("message", message);
             }
 
             if (first_n.HasValue) {
-                desc.SetAttr("first_n", first_n /* cstatus */);
+                desc.SetAttr("first_n", first_n);
             }
 
             if (summarize.HasValue) {
-                desc.SetAttr("summarize", summarize /* cstatus */);
+                desc.SetAttr("summarize", summarize);
             }
 
             using (var status = new Status()) {
@@ -36254,11 +36254,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_stream != null) {
-                desc.SetAttr("output_stream", output_stream /* cstatus */);
+                desc.SetAttr("output_stream", output_stream);
             }
 
             if (end != null) {
-                desc.SetAttr("end", end /* cstatus */);
+                desc.SetAttr("end", end);
             }
 
             using (var status = new Status()) {
@@ -36320,22 +36320,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shapes", shapes /* cstatus */);
+            desc.SetAttr("shapes", shapes);
             
             if (component_types != null) {
-                desc.SetAttr("component_types", component_types /* cstatus */);
+                desc.SetAttr("component_types", component_types);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -36399,22 +36399,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shapes", shapes /* cstatus */);
+            desc.SetAttr("shapes", shapes);
             
             if (component_types != null) {
-                desc.SetAttr("component_types", component_types /* cstatus */);
+                desc.SetAttr("component_types", component_types);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -36456,8 +36456,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -36508,7 +36508,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -36555,8 +36555,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("token", token /* cstatus */);
-            desc.SetAttr("Tout", Tout /* cstatus */);
+            desc.SetAttr("token", token);
+            desc.SetAttr("Tout", Tout);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -36599,8 +36599,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("token", token /* cstatus */);
-            desc.SetAttr("Tout", Tout /* cstatus */);
+            desc.SetAttr("token", token);
+            desc.SetAttr("Tout", Tout);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -36665,7 +36665,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (full_matrices.HasValue) {
-                desc.SetAttr("full_matrices", full_matrices /* cstatus */);
+                desc.SetAttr("full_matrices", full_matrices);
             }
 
             using (var status = new Status()) {
@@ -36716,23 +36716,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (signed_input.HasValue) {
-                desc.SetAttr("signed_input", signed_input /* cstatus */);
+                desc.SetAttr("signed_input", signed_input);
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (range_given.HasValue) {
-                desc.SetAttr("range_given", range_given /* cstatus */);
+                desc.SetAttr("range_given", range_given);
             }
 
             if (input_min.HasValue) {
-                desc.SetAttr("input_min", input_min /* cstatus */);
+                desc.SetAttr("input_min", input_min);
             }
 
             if (input_max.HasValue) {
-                desc.SetAttr("input_max", input_max /* cstatus */);
+                desc.SetAttr("input_max", input_max);
             }
 
             using (var status = new Status()) {
@@ -36864,23 +36864,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (signed_input.HasValue) {
-                desc.SetAttr("signed_input", signed_input /* cstatus */);
+                desc.SetAttr("signed_input", signed_input);
             }
 
             if (num_bits.HasValue) {
-                desc.SetAttr("num_bits", num_bits /* cstatus */);
+                desc.SetAttr("num_bits", num_bits);
             }
 
             if (range_given.HasValue) {
-                desc.SetAttr("range_given", range_given /* cstatus */);
+                desc.SetAttr("range_given", range_given);
             }
 
             if (round_mode != null) {
-                desc.SetAttr("round_mode", round_mode /* cstatus */);
+                desc.SetAttr("round_mode", round_mode);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -36937,15 +36937,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (signed_input.HasValue) {
-                desc.SetAttr("signed_input", signed_input /* cstatus */);
+                desc.SetAttr("signed_input", signed_input);
             }
 
             if (range_given.HasValue) {
-                desc.SetAttr("range_given", range_given /* cstatus */);
+                desc.SetAttr("range_given", range_given);
             }
 
             if (narrow_range.HasValue) {
-                desc.SetAttr("narrow_range", narrow_range /* cstatus */);
+                desc.SetAttr("narrow_range", narrow_range);
             }
 
             using (var status = new Status()) {
@@ -37009,7 +37009,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Toutput.HasValue) {
-                desc.SetAttr("Toutput", Toutput /* cstatus */);
+                desc.SetAttr("Toutput", Toutput);
             }
 
             using (var status = new Status()) {
@@ -37069,9 +37069,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -37187,9 +37187,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("out_type", out_type /* cstatus */);
-            desc.SetAttr("variance_epsilon", variance_epsilon /* cstatus */);
-            desc.SetAttr("scale_after_normalization", scale_after_normalization /* cstatus */);
+            desc.SetAttr("out_type", out_type);
+            desc.SetAttr("variance_epsilon", variance_epsilon);
+            desc.SetAttr("scale_after_normalization", scale_after_normalization);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -37253,7 +37253,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("out_type", out_type /* cstatus */);
+            desc.SetAttr("out_type", out_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -37390,15 +37390,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -37472,15 +37472,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -37554,15 +37554,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -37640,15 +37640,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -37726,15 +37726,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -37820,15 +37820,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             if (dilations != null) {
-                desc.SetAttr("dilations", dilations /* cstatus */);
+                desc.SetAttr("dilations", dilations);
             }
 
             using (var status = new Status()) {
@@ -37900,23 +37900,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_range_given.HasValue) {
-                desc.SetAttr("output_range_given", output_range_given /* cstatus */);
+                desc.SetAttr("output_range_given", output_range_given);
             }
 
             if (given_y_min.HasValue) {
-                desc.SetAttr("given_y_min", given_y_min /* cstatus */);
+                desc.SetAttr("given_y_min", given_y_min);
             }
 
             if (given_y_max.HasValue) {
-                desc.SetAttr("given_y_max", given_y_max /* cstatus */);
+                desc.SetAttr("given_y_max", given_y_max);
             }
 
             if (variance_epsilon.HasValue) {
-                desc.SetAttr("variance_epsilon", variance_epsilon /* cstatus */);
+                desc.SetAttr("variance_epsilon", variance_epsilon);
             }
 
             if (min_separation.HasValue) {
-                desc.SetAttr("min_separation", min_separation /* cstatus */);
+                desc.SetAttr("min_separation", min_separation);
             }
 
             using (var status = new Status()) {
@@ -38000,19 +38000,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Toutput.HasValue) {
-                desc.SetAttr("Toutput", Toutput /* cstatus */);
+                desc.SetAttr("Toutput", Toutput);
             }
 
             if (transpose_a.HasValue) {
-                desc.SetAttr("transpose_a", transpose_a /* cstatus */);
+                desc.SetAttr("transpose_a", transpose_a);
             }
 
             if (transpose_b.HasValue) {
-                desc.SetAttr("transpose_b", transpose_b /* cstatus */);
+                desc.SetAttr("transpose_b", transpose_b);
             }
 
             if (Tactivation.HasValue) {
-                desc.SetAttr("Tactivation", Tactivation /* cstatus */);
+                desc.SetAttr("Tactivation", Tactivation);
             }
 
             using (var status = new Status()) {
@@ -38102,19 +38102,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Toutput.HasValue) {
-                desc.SetAttr("Toutput", Toutput /* cstatus */);
+                desc.SetAttr("Toutput", Toutput);
             }
 
             if (transpose_a.HasValue) {
-                desc.SetAttr("transpose_a", transpose_a /* cstatus */);
+                desc.SetAttr("transpose_a", transpose_a);
             }
 
             if (transpose_b.HasValue) {
-                desc.SetAttr("transpose_b", transpose_b /* cstatus */);
+                desc.SetAttr("transpose_b", transpose_b);
             }
 
             if (input_quant_mode != null) {
-                desc.SetAttr("input_quant_mode", input_quant_mode /* cstatus */);
+                desc.SetAttr("input_quant_mode", input_quant_mode);
             }
 
             using (var status = new Status()) {
@@ -38205,19 +38205,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Toutput.HasValue) {
-                desc.SetAttr("Toutput", Toutput /* cstatus */);
+                desc.SetAttr("Toutput", Toutput);
             }
 
             if (transpose_a.HasValue) {
-                desc.SetAttr("transpose_a", transpose_a /* cstatus */);
+                desc.SetAttr("transpose_a", transpose_a);
             }
 
             if (transpose_b.HasValue) {
-                desc.SetAttr("transpose_b", transpose_b /* cstatus */);
+                desc.SetAttr("transpose_b", transpose_b);
             }
 
             if (input_quant_mode != null) {
-                desc.SetAttr("input_quant_mode", input_quant_mode /* cstatus */);
+                desc.SetAttr("input_quant_mode", input_quant_mode);
             }
 
             using (var status = new Status()) {
@@ -38316,19 +38316,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Toutput.HasValue) {
-                desc.SetAttr("Toutput", Toutput /* cstatus */);
+                desc.SetAttr("Toutput", Toutput);
             }
 
             if (transpose_a.HasValue) {
-                desc.SetAttr("transpose_a", transpose_a /* cstatus */);
+                desc.SetAttr("transpose_a", transpose_a);
             }
 
             if (transpose_b.HasValue) {
-                desc.SetAttr("transpose_b", transpose_b /* cstatus */);
+                desc.SetAttr("transpose_b", transpose_b);
             }
 
             if (input_quant_mode != null) {
-                desc.SetAttr("input_quant_mode", input_quant_mode /* cstatus */);
+                desc.SetAttr("input_quant_mode", input_quant_mode);
             }
 
             using (var status = new Status()) {
@@ -38388,9 +38388,9 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("ksize", ksize /* cstatus */);
-            desc.SetAttr("strides", strides /* cstatus */);
-            desc.SetAttr("padding", padding /* cstatus */);
+            desc.SetAttr("ksize", ksize);
+            desc.SetAttr("strides", strides);
+            desc.SetAttr("padding", padding);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -38455,7 +38455,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Toutput.HasValue) {
-                desc.SetAttr("Toutput", Toutput /* cstatus */);
+                desc.SetAttr("Toutput", Toutput);
             }
 
             using (var status = new Status()) {
@@ -38530,7 +38530,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("out_type", out_type /* cstatus */);
+            desc.SetAttr("out_type", out_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -38581,7 +38581,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -38633,7 +38633,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -38688,7 +38688,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -38805,11 +38805,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             if (half_pixel_centers.HasValue) {
-                desc.SetAttr("half_pixel_centers", half_pixel_centers /* cstatus */);
+                desc.SetAttr("half_pixel_centers", half_pixel_centers);
             }
 
             using (var status = new Status()) {
@@ -38965,14 +38965,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("T", T /* cstatus */);
+            desc.SetAttr("T", T);
             
             if (mode != null) {
-                desc.SetAttr("mode", mode /* cstatus */);
+                desc.SetAttr("mode", mode);
             }
 
             if (round_mode != null) {
-                desc.SetAttr("round_mode", round_mode /* cstatus */);
+                desc.SetAttr("round_mode", round_mode);
             }
 
             using (var status = new Status()) {
@@ -39022,7 +39022,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (cancel_pending_enqueues.HasValue) {
-                desc.SetAttr("cancel_pending_enqueues", cancel_pending_enqueues /* cstatus */);
+                desc.SetAttr("cancel_pending_enqueues", cancel_pending_enqueues);
             }
 
             using (var status = new Status()) {
@@ -39068,7 +39068,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (cancel_pending_enqueues.HasValue) {
-                desc.SetAttr("cancel_pending_enqueues", cancel_pending_enqueues /* cstatus */);
+                desc.SetAttr("cancel_pending_enqueues", cancel_pending_enqueues);
             }
 
             using (var status = new Status()) {
@@ -39119,10 +39119,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39192,10 +39192,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39265,10 +39265,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39342,10 +39342,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39419,10 +39419,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39481,10 +39481,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39543,7 +39543,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39599,7 +39599,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39655,7 +39655,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39706,7 +39706,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (timeout_ms.HasValue) {
-                desc.SetAttr("timeout_ms", timeout_ms /* cstatus */);
+                desc.SetAttr("timeout_ms", timeout_ms);
             }
 
             using (var status = new Status()) {
@@ -39923,7 +39923,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("OUTPUT_RAGGED_RANK", OUTPUT_RAGGED_RANK /* cstatus */);
+            desc.SetAttr("OUTPUT_RAGGED_RANK", OUTPUT_RAGGED_RANK);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -39999,7 +39999,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Tsplits.HasValue) {
-                desc.SetAttr("Tsplits", Tsplits /* cstatus */);
+                desc.SetAttr("Tsplits", Tsplits);
             }
 
             using (var status = new Status()) {
@@ -40065,10 +40065,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("input_ragged_rank", input_ragged_rank /* cstatus */);
-            desc.SetAttr("output_ragged_rank", output_ragged_rank /* cstatus */);
-            desc.SetAttr("Tvalues", Tvalues /* cstatus */);
-            desc.SetAttr("Tsplits", Tsplits /* cstatus */);
+            desc.SetAttr("input_ragged_rank", input_ragged_rank);
+            desc.SetAttr("output_ragged_rank", output_ragged_rank);
+            desc.SetAttr("Tvalues", Tvalues);
+            desc.SetAttr("Tsplits", Tsplits);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -40217,7 +40217,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("row_partition_types", row_partition_types /* cstatus */);
+            desc.SetAttr("row_partition_types", row_partition_types);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -40274,7 +40274,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("batched_input", batched_input /* cstatus */);
+            desc.SetAttr("batched_input", batched_input);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -40332,11 +40332,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -40393,8 +40393,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -40453,11 +40453,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -40535,11 +40535,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -40608,15 +40608,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -40675,11 +40675,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -40751,34 +40751,34 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (shapes != null) {
-                desc.SetAttr("shapes", shapes /* cstatus */);
+                desc.SetAttr("shapes", shapes);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (min_after_dequeue.HasValue) {
-                desc.SetAttr("min_after_dequeue", min_after_dequeue /* cstatus */);
+                desc.SetAttr("min_after_dequeue", min_after_dequeue);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -40850,34 +40850,34 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("component_types", component_types /* cstatus */);
+            desc.SetAttr("component_types", component_types);
             
             if (shapes != null) {
-                desc.SetAttr("shapes", shapes /* cstatus */);
+                desc.SetAttr("shapes", shapes);
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (min_after_dequeue.HasValue) {
-                desc.SetAttr("min_after_dequeue", min_after_dequeue /* cstatus */);
+                desc.SetAttr("min_after_dequeue", min_after_dequeue);
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -40929,14 +40929,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -40989,14 +40989,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -41060,11 +41060,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -41165,8 +41165,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -41824,7 +41824,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -41874,7 +41874,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (Tout.HasValue) {
-                desc.SetAttr("Tout", Tout /* cstatus */);
+                desc.SetAttr("Tout", Tout);
             }
 
             using (var status = new Status()) {
@@ -41966,11 +41966,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (use_fallback.HasValue) {
-                desc.SetAttr("use_fallback", use_fallback /* cstatus */);
+                desc.SetAttr("use_fallback", use_fallback);
             }
 
             using (var status = new Status()) {
@@ -42103,30 +42103,30 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("file_pattern", file_pattern /* cstatus */);
+            desc.SetAttr("file_pattern", file_pattern);
             
             if (file_random_seed.HasValue) {
-                desc.SetAttr("file_random_seed", file_random_seed /* cstatus */);
+                desc.SetAttr("file_random_seed", file_random_seed);
             }
 
             if (file_shuffle_shift_ratio.HasValue) {
-                desc.SetAttr("file_shuffle_shift_ratio", file_shuffle_shift_ratio /* cstatus */);
+                desc.SetAttr("file_shuffle_shift_ratio", file_shuffle_shift_ratio);
             }
 
             if (file_buffer_size.HasValue) {
-                desc.SetAttr("file_buffer_size", file_buffer_size /* cstatus */);
+                desc.SetAttr("file_buffer_size", file_buffer_size);
             }
 
             if (file_parallelism.HasValue) {
-                desc.SetAttr("file_parallelism", file_parallelism /* cstatus */);
+                desc.SetAttr("file_parallelism", file_parallelism);
             }
 
             if (batch_size.HasValue) {
-                desc.SetAttr("batch_size", batch_size /* cstatus */);
+                desc.SetAttr("batch_size", batch_size);
             }
 
             if (compression_type != null) {
-                desc.SetAttr("compression_type", compression_type /* cstatus */);
+                desc.SetAttr("compression_type", compression_type);
             }
 
             using (var status = new Status()) {
@@ -42174,8 +42174,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_outputs", num_outputs /* cstatus */);
-            desc.SetAttr("config", config /* cstatus */);
+            desc.SetAttr("num_outputs", num_outputs);
+            desc.SetAttr("config", config);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -42257,11 +42257,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             if (separator != null) {
-                desc.SetAttr("separator", separator /* cstatus */);
+                desc.SetAttr("separator", separator);
             }
 
             using (var status = new Status()) {
@@ -42314,14 +42314,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("frame_name", frame_name /* cstatus */);
+            desc.SetAttr("frame_name", frame_name);
             
             if (is_constant.HasValue) {
-                desc.SetAttr("is_constant", is_constant /* cstatus */);
+                desc.SetAttr("is_constant", is_constant);
             }
 
             if (parallel_iterations.HasValue) {
-                desc.SetAttr("parallel_iterations", parallel_iterations /* cstatus */);
+                desc.SetAttr("parallel_iterations", parallel_iterations);
             }
 
             using (var status = new Status()) {
@@ -42648,7 +42648,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (replace_global.HasValue) {
-                desc.SetAttr("replace_global", replace_global /* cstatus */);
+                desc.SetAttr("replace_global", replace_global);
             }
 
             using (var status = new Status()) {
@@ -42838,8 +42838,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("Toutputs", Toutputs /* cstatus */);
-            desc.SetAttr("serialized_remote_fused_graph_execute_info", serialized_remote_fused_graph_execute_info /* cstatus */);
+            desc.SetAttr("Toutputs", Toutputs);
+            desc.SetAttr("serialized_remote_fused_graph_execute_info", serialized_remote_fused_graph_execute_info);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -42887,8 +42887,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -42986,7 +42986,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("clip_value_max", clip_value_max /* cstatus */);
+            desc.SetAttr("clip_value_max", clip_value_max);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -43052,7 +43052,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("out_type", out_type /* cstatus */);
+            desc.SetAttr("out_type", out_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -43113,7 +43113,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -43269,7 +43269,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             using (var status = new Status()) {
@@ -43323,11 +43323,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             if (half_pixel_centers.HasValue) {
-                desc.SetAttr("half_pixel_centers", half_pixel_centers /* cstatus */);
+                desc.SetAttr("half_pixel_centers", half_pixel_centers);
             }
 
             using (var status = new Status()) {
@@ -43379,11 +43379,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             if (half_pixel_centers.HasValue) {
-                desc.SetAttr("half_pixel_centers", half_pixel_centers /* cstatus */);
+                desc.SetAttr("half_pixel_centers", half_pixel_centers);
             }
 
             using (var status = new Status()) {
@@ -43437,11 +43437,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             if (half_pixel_centers.HasValue) {
-                desc.SetAttr("half_pixel_centers", half_pixel_centers /* cstatus */);
+                desc.SetAttr("half_pixel_centers", half_pixel_centers);
             }
 
             using (var status = new Status()) {
@@ -43493,11 +43493,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             if (half_pixel_centers.HasValue) {
-                desc.SetAttr("half_pixel_centers", half_pixel_centers /* cstatus */);
+                desc.SetAttr("half_pixel_centers", half_pixel_centers);
             }
 
             using (var status = new Status()) {
@@ -43548,11 +43548,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             if (half_pixel_centers.HasValue) {
-                desc.SetAttr("half_pixel_centers", half_pixel_centers /* cstatus */);
+                desc.SetAttr("half_pixel_centers", half_pixel_centers);
             }
 
             using (var status = new Status()) {
@@ -43603,11 +43603,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (align_corners.HasValue) {
-                desc.SetAttr("align_corners", align_corners /* cstatus */);
+                desc.SetAttr("align_corners", align_corners);
             }
 
             if (half_pixel_centers.HasValue) {
-                desc.SetAttr("half_pixel_centers", half_pixel_centers /* cstatus */);
+                desc.SetAttr("half_pixel_centers", half_pixel_centers);
             }
 
             using (var status = new Status()) {
@@ -43770,7 +43770,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -43840,7 +43840,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -43899,11 +43899,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -43970,7 +43970,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44033,11 +44033,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -44123,11 +44123,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -44204,7 +44204,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44291,7 +44291,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44360,7 +44360,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44451,7 +44451,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44526,7 +44526,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44606,7 +44606,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44653,7 +44653,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44721,11 +44721,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -44793,11 +44793,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -44866,7 +44866,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44930,7 +44930,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -44989,7 +44989,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -45068,7 +45068,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -45127,19 +45127,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (reduction_type != null) {
-                desc.SetAttr("reduction_type", reduction_type /* cstatus */);
+                desc.SetAttr("reduction_type", reduction_type);
             }
 
             using (var status = new Status()) {
@@ -45182,8 +45182,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("limit", limit /* cstatus */);
-            desc.SetAttr("T", T /* cstatus */);
+            desc.SetAttr("limit", limit);
+            desc.SetAttr("T", T);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -45242,14 +45242,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (batch_dims.HasValue) {
-                desc.SetAttr("batch_dims", batch_dims /* cstatus */);
+                desc.SetAttr("batch_dims", batch_dims);
             }
 
             if (validate_indices.HasValue) {
-                desc.SetAttr("validate_indices", validate_indices /* cstatus */);
+                desc.SetAttr("validate_indices", validate_indices);
             }
 
             using (var status = new Status()) {
@@ -45631,7 +45631,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -45716,7 +45716,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -45803,7 +45803,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -45978,7 +45978,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46042,11 +46042,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -46117,7 +46117,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46185,11 +46185,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -46282,7 +46282,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46362,7 +46362,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46447,7 +46447,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46521,11 +46521,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -46599,11 +46599,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -46673,7 +46673,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46737,7 +46737,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46820,7 +46820,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -46888,23 +46888,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (begin_mask.HasValue) {
-                desc.SetAttr("begin_mask", begin_mask /* cstatus */);
+                desc.SetAttr("begin_mask", begin_mask);
             }
 
             if (end_mask.HasValue) {
-                desc.SetAttr("end_mask", end_mask /* cstatus */);
+                desc.SetAttr("end_mask", end_mask);
             }
 
             if (ellipsis_mask.HasValue) {
-                desc.SetAttr("ellipsis_mask", ellipsis_mask /* cstatus */);
+                desc.SetAttr("ellipsis_mask", ellipsis_mask);
             }
 
             if (new_axis_mask.HasValue) {
-                desc.SetAttr("new_axis_mask", new_axis_mask /* cstatus */);
+                desc.SetAttr("new_axis_mask", new_axis_mask);
             }
 
             if (shrink_axis_mask.HasValue) {
-                desc.SetAttr("shrink_axis_mask", shrink_axis_mask /* cstatus */);
+                desc.SetAttr("shrink_axis_mask", shrink_axis_mask);
             }
 
             using (var status = new Status()) {
@@ -46970,10 +46970,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dt", dt /* cstatus */);
+            desc.SetAttr("dt", dt);
             
             if (preferred_shard.HasValue) {
-                desc.SetAttr("preferred_shard", preferred_shard /* cstatus */);
+                desc.SetAttr("preferred_shard", preferred_shard);
             }
 
             using (var status = new Status()) {
@@ -47036,10 +47036,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dt", dt /* cstatus */);
+            desc.SetAttr("dt", dt);
             
             if (preferred_shard.HasValue) {
-                desc.SetAttr("preferred_shard", preferred_shard /* cstatus */);
+                desc.SetAttr("preferred_shard", preferred_shard);
             }
 
             using (var status = new Status()) {
@@ -47104,7 +47104,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -47160,15 +47160,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47222,15 +47222,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47283,15 +47283,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47343,15 +47343,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47404,15 +47404,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47466,15 +47466,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47529,15 +47529,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47591,15 +47591,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47653,15 +47653,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47716,15 +47716,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47777,15 +47777,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47837,15 +47837,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47897,15 +47897,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -47957,15 +47957,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -48018,15 +48018,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -48080,15 +48080,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -48139,15 +48139,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_shards", num_shards /* cstatus */);
-            desc.SetAttr("shard_id", shard_id /* cstatus */);
+            desc.SetAttr("num_shards", num_shards);
+            desc.SetAttr("shard_id", shard_id);
             
             if (table_id.HasValue) {
-                desc.SetAttr("table_id", table_id /* cstatus */);
+                desc.SetAttr("table_id", table_id);
             }
 
             if (table_name != null) {
-                desc.SetAttr("table_name", table_name /* cstatus */);
+                desc.SetAttr("table_name", table_name);
             }
 
             using (var status = new Status()) {
@@ -48334,10 +48334,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("seq_dim", seq_dim /* cstatus */);
+            desc.SetAttr("seq_dim", seq_dim);
             
             if (batch_dim.HasValue) {
-                desc.SetAttr("batch_dim", batch_dim /* cstatus */);
+                desc.SetAttr("batch_dim", batch_dim);
             }
 
             using (var status = new Status()) {
@@ -49012,15 +49012,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (protocol != null) {
-                desc.SetAttr("protocol", protocol /* cstatus */);
+                desc.SetAttr("protocol", protocol);
             }
 
             if (fail_fast.HasValue) {
-                desc.SetAttr("fail_fast", fail_fast /* cstatus */);
+                desc.SetAttr("fail_fast", fail_fast);
             }
 
             if (timeout_in_ms.HasValue) {
-                desc.SetAttr("timeout_in_ms", timeout_in_ms /* cstatus */);
+                desc.SetAttr("timeout_in_ms", timeout_in_ms);
             }
 
             using (var status = new Status()) {
@@ -49219,31 +49219,31 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (min_object_covered.HasValue) {
-                desc.SetAttr("min_object_covered", min_object_covered /* cstatus */);
+                desc.SetAttr("min_object_covered", min_object_covered);
             }
 
             if (aspect_ratio_range != null) {
-                desc.SetAttr("aspect_ratio_range", aspect_ratio_range /* cstatus */);
+                desc.SetAttr("aspect_ratio_range", aspect_ratio_range);
             }
 
             if (area_range != null) {
-                desc.SetAttr("area_range", area_range /* cstatus */);
+                desc.SetAttr("area_range", area_range);
             }
 
             if (max_attempts.HasValue) {
-                desc.SetAttr("max_attempts", max_attempts /* cstatus */);
+                desc.SetAttr("max_attempts", max_attempts);
             }
 
             if (use_image_if_no_bounding_boxes.HasValue) {
-                desc.SetAttr("use_image_if_no_bounding_boxes", use_image_if_no_bounding_boxes /* cstatus */);
+                desc.SetAttr("use_image_if_no_bounding_boxes", use_image_if_no_bounding_boxes);
             }
 
             using (var status = new Status()) {
@@ -49372,27 +49372,27 @@ namespace TensorFlow.Island.Classes
             }
 
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             if (aspect_ratio_range != null) {
-                desc.SetAttr("aspect_ratio_range", aspect_ratio_range /* cstatus */);
+                desc.SetAttr("aspect_ratio_range", aspect_ratio_range);
             }
 
             if (area_range != null) {
-                desc.SetAttr("area_range", area_range /* cstatus */);
+                desc.SetAttr("area_range", area_range);
             }
 
             if (max_attempts.HasValue) {
-                desc.SetAttr("max_attempts", max_attempts /* cstatus */);
+                desc.SetAttr("max_attempts", max_attempts);
             }
 
             if (use_image_if_no_bounding_boxes.HasValue) {
-                desc.SetAttr("use_image_if_no_bounding_boxes", use_image_if_no_bounding_boxes /* cstatus */);
+                desc.SetAttr("use_image_if_no_bounding_boxes", use_image_if_no_bounding_boxes);
             }
 
             using (var status = new Status()) {
@@ -49452,8 +49452,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -49729,7 +49729,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -49802,7 +49802,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -49877,7 +49877,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -49952,7 +49952,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -50025,7 +50025,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -50240,7 +50240,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -50410,7 +50410,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -50501,7 +50501,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -50576,7 +50576,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -50656,7 +50656,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -50814,14 +50814,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("loss_type", loss_type /* cstatus */);
-            desc.SetAttr("l1", l1 /* cstatus */);
-            desc.SetAttr("l2", l2 /* cstatus */);
-            desc.SetAttr("num_loss_partitions", num_loss_partitions /* cstatus */);
-            desc.SetAttr("num_inner_iterations", num_inner_iterations /* cstatus */);
+            desc.SetAttr("loss_type", loss_type);
+            desc.SetAttr("l1", l1);
+            desc.SetAttr("l2", l2);
+            desc.SetAttr("num_loss_partitions", num_loss_partitions);
+            desc.SetAttr("num_inner_iterations", num_inner_iterations);
             
             if (adaptative.HasValue) {
-                desc.SetAttr("adaptative", adaptative /* cstatus */);
+                desc.SetAttr("adaptative", adaptative);
             }
 
             using (var status = new Status()) {
@@ -50958,14 +50958,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("loss_type", loss_type /* cstatus */);
-            desc.SetAttr("l1", l1 /* cstatus */);
-            desc.SetAttr("l2", l2 /* cstatus */);
-            desc.SetAttr("num_loss_partitions", num_loss_partitions /* cstatus */);
-            desc.SetAttr("num_inner_iterations", num_inner_iterations /* cstatus */);
+            desc.SetAttr("loss_type", loss_type);
+            desc.SetAttr("l1", l1);
+            desc.SetAttr("l2", l2);
+            desc.SetAttr("num_loss_partitions", num_loss_partitions);
+            desc.SetAttr("num_inner_iterations", num_inner_iterations);
             
             if (adaptive.HasValue) {
-                desc.SetAttr("adaptive", adaptive /* cstatus */);
+                desc.SetAttr("adaptive", adaptive);
             }
 
             using (var status = new Status()) {
@@ -51020,8 +51020,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("l1", l1 /* cstatus */);
-            desc.SetAttr("l2", l2 /* cstatus */);
+            desc.SetAttr("l1", l1);
+            desc.SetAttr("l2", l2);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -51514,7 +51514,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (compute_v.HasValue) {
-                desc.SetAttr("compute_v", compute_v /* cstatus */);
+                desc.SetAttr("compute_v", compute_v);
             }
 
             using (var status = new Status()) {
@@ -51645,7 +51645,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("config", config /* cstatus */);
+            desc.SetAttr("config", config);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -51734,7 +51734,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -51783,7 +51783,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -51874,7 +51874,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (validate_indices.HasValue) {
-                desc.SetAttr("validate_indices", validate_indices /* cstatus */);
+                desc.SetAttr("validate_indices", validate_indices);
             }
 
             using (var status = new Status()) {
@@ -51922,7 +51922,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -51963,7 +51963,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -52018,11 +52018,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (require_non_empty.HasValue) {
-                desc.SetAttr("require_non_empty", require_non_empty /* cstatus */);
+                desc.SetAttr("require_non_empty", require_non_empty);
             }
 
             using (var status = new Status()) {
@@ -52158,8 +52158,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -52220,11 +52220,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (reshuffle_each_iteration.HasValue) {
-                desc.SetAttr("reshuffle_each_iteration", reshuffle_each_iteration /* cstatus */);
+                desc.SetAttr("reshuffle_each_iteration", reshuffle_each_iteration);
             }
 
             using (var status = new Status()) {
@@ -52492,7 +52492,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -52535,8 +52535,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -52594,19 +52594,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("filename", filename /* cstatus */);
-            desc.SetAttr("batch_size", batch_size /* cstatus */);
+            desc.SetAttr("filename", filename);
+            desc.SetAttr("batch_size", batch_size);
             
             if (window_size.HasValue) {
-                desc.SetAttr("window_size", window_size /* cstatus */);
+                desc.SetAttr("window_size", window_size);
             }
 
             if (min_count.HasValue) {
-                desc.SetAttr("min_count", min_count /* cstatus */);
+                desc.SetAttr("min_count", min_count);
             }
 
             if (subsample.HasValue) {
-                desc.SetAttr("subsample", subsample /* cstatus */);
+                desc.SetAttr("subsample", subsample);
             }
 
             using (var status = new Status()) {
@@ -52716,8 +52716,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -52823,43 +52823,43 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             if (compression != null) {
-                desc.SetAttr("compression", compression /* cstatus */);
+                desc.SetAttr("compression", compression);
             }
 
             if (reader_path_prefix != null) {
-                desc.SetAttr("reader_path_prefix", reader_path_prefix /* cstatus */);
+                desc.SetAttr("reader_path_prefix", reader_path_prefix);
             }
 
             if (writer_path_prefix != null) {
-                desc.SetAttr("writer_path_prefix", writer_path_prefix /* cstatus */);
+                desc.SetAttr("writer_path_prefix", writer_path_prefix);
             }
 
             if (shard_size_bytes.HasValue) {
-                desc.SetAttr("shard_size_bytes", shard_size_bytes /* cstatus */);
+                desc.SetAttr("shard_size_bytes", shard_size_bytes);
             }
 
             if (pending_snapshot_expiry_seconds.HasValue) {
-                desc.SetAttr("pending_snapshot_expiry_seconds", pending_snapshot_expiry_seconds /* cstatus */);
+                desc.SetAttr("pending_snapshot_expiry_seconds", pending_snapshot_expiry_seconds);
             }
 
             if (num_reader_threads.HasValue) {
-                desc.SetAttr("num_reader_threads", num_reader_threads /* cstatus */);
+                desc.SetAttr("num_reader_threads", num_reader_threads);
             }
 
             if (reader_buffer_size.HasValue) {
-                desc.SetAttr("reader_buffer_size", reader_buffer_size /* cstatus */);
+                desc.SetAttr("reader_buffer_size", reader_buffer_size);
             }
 
             if (num_writer_threads.HasValue) {
-                desc.SetAttr("num_writer_threads", num_writer_threads /* cstatus */);
+                desc.SetAttr("num_writer_threads", num_writer_threads);
             }
 
             if (writer_buffer_size.HasValue) {
-                desc.SetAttr("writer_buffer_size", writer_buffer_size /* cstatus */);
+                desc.SetAttr("writer_buffer_size", writer_buffer_size);
             }
 
             using (var status = new Status()) {
@@ -53212,7 +53212,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("block_size", block_size /* cstatus */);
+            desc.SetAttr("block_size", block_size);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -53494,10 +53494,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("block_size", block_size /* cstatus */);
+            desc.SetAttr("block_size", block_size);
             
             if (data_format != null) {
-                desc.SetAttr("data_format", data_format /* cstatus */);
+                desc.SetAttr("data_format", data_format);
             }
 
             using (var status = new Status()) {
@@ -53559,7 +53559,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("has_known_shape", has_known_shape /* cstatus */);
+            desc.SetAttr("has_known_shape", has_known_shape);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -53611,7 +53611,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -53817,7 +53817,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -53884,11 +53884,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -53962,7 +53962,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -54033,11 +54033,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (update_slots.HasValue) {
-                desc.SetAttr("update_slots", update_slots /* cstatus */);
+                desc.SetAttr("update_slots", update_slots);
             }
 
             using (var status = new Status()) {
@@ -54133,7 +54133,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -54216,7 +54216,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -54304,7 +54304,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -54381,11 +54381,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             if (use_nesterov.HasValue) {
-                desc.SetAttr("use_nesterov", use_nesterov /* cstatus */);
+                desc.SetAttr("use_nesterov", use_nesterov);
             }
 
             using (var status = new Status()) {
@@ -54458,7 +54458,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -54525,7 +54525,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -54611,7 +54611,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (use_locking.HasValue) {
-                desc.SetAttr("use_locking", use_locking /* cstatus */);
+                desc.SetAttr("use_locking", use_locking);
             }
 
             using (var status = new Status()) {
@@ -54705,7 +54705,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("concat_dim", concat_dim /* cstatus */);
+            desc.SetAttr("concat_dim", concat_dim);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -54765,19 +54765,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (reduction_type != null) {
-                desc.SetAttr("reduction_type", reduction_type /* cstatus */);
+                desc.SetAttr("reduction_type", reduction_type);
             }
 
             using (var status = new Status()) {
@@ -54883,11 +54883,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("hashed_output", hashed_output /* cstatus */);
-            desc.SetAttr("num_buckets", num_buckets /* cstatus */);
-            desc.SetAttr("hash_key", hash_key /* cstatus */);
-            desc.SetAttr("out_type", out_type /* cstatus */);
-            desc.SetAttr("internal_type", internal_type /* cstatus */);
+            desc.SetAttr("hashed_output", hashed_output);
+            desc.SetAttr("num_buckets", num_buckets);
+            desc.SetAttr("hash_key", hash_key);
+            desc.SetAttr("out_type", out_type);
+            desc.SetAttr("internal_type", internal_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -55252,19 +55252,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (transpose_a.HasValue) {
-                desc.SetAttr("transpose_a", transpose_a /* cstatus */);
+                desc.SetAttr("transpose_a", transpose_a);
             }
 
             if (transpose_b.HasValue) {
-                desc.SetAttr("transpose_b", transpose_b /* cstatus */);
+                desc.SetAttr("transpose_b", transpose_b);
             }
 
             if (a_is_sparse.HasValue) {
-                desc.SetAttr("a_is_sparse", a_is_sparse /* cstatus */);
+                desc.SetAttr("a_is_sparse", a_is_sparse);
             }
 
             if (b_is_sparse.HasValue) {
-                desc.SetAttr("b_is_sparse", b_is_sparse /* cstatus */);
+                desc.SetAttr("b_is_sparse", b_is_sparse);
             }
 
             using (var status = new Status()) {
@@ -55332,7 +55332,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -55403,7 +55403,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -55473,7 +55473,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -55544,7 +55544,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -56543,7 +56543,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_split", num_split /* cstatus */);
+            desc.SetAttr("num_split", num_split);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -56676,11 +56676,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (adjoint_a.HasValue) {
-                desc.SetAttr("adjoint_a", adjoint_a /* cstatus */);
+                desc.SetAttr("adjoint_a", adjoint_a);
             }
 
             if (adjoint_b.HasValue) {
-                desc.SetAttr("adjoint_b", adjoint_b /* cstatus */);
+                desc.SetAttr("adjoint_b", adjoint_b);
             }
 
             using (var status = new Status()) {
@@ -56795,7 +56795,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (validate_indices.HasValue) {
-                desc.SetAttr("validate_indices", validate_indices /* cstatus */);
+                desc.SetAttr("validate_indices", validate_indices);
             }
 
             using (var status = new Status()) {
@@ -56894,10 +56894,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("set_operation", set_operation /* cstatus */);
+            desc.SetAttr("set_operation", set_operation);
             
             if (validate_indices.HasValue) {
-                desc.SetAttr("validate_indices", validate_indices /* cstatus */);
+                desc.SetAttr("validate_indices", validate_indices);
             }
 
             using (var status = new Status()) {
@@ -56946,7 +56946,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_split", num_split /* cstatus */);
+            desc.SetAttr("num_split", num_split);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -57002,7 +57002,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_split", num_split /* cstatus */);
+            desc.SetAttr("num_split", num_split);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -57054,8 +57054,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -57262,7 +57262,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (squeeze_dims != null) {
-                desc.SetAttr("squeeze_dims", squeeze_dims /* cstatus */);
+                desc.SetAttr("squeeze_dims", squeeze_dims);
             }
 
             using (var status = new Status()) {
@@ -57298,10 +57298,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("elem_type", elem_type /* cstatus */);
+            desc.SetAttr("elem_type", elem_type);
             
             if (stack_name != null) {
-                desc.SetAttr("stack_name", stack_name /* cstatus */);
+                desc.SetAttr("stack_name", stack_name);
             }
 
             using (var status = new Status()) {
@@ -57396,7 +57396,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("elem_type", elem_type /* cstatus */);
+            desc.SetAttr("elem_type", elem_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -57434,7 +57434,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("elem_type", elem_type /* cstatus */);
+            desc.SetAttr("elem_type", elem_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -57474,7 +57474,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (swap_memory.HasValue) {
-                desc.SetAttr("swap_memory", swap_memory /* cstatus */);
+                desc.SetAttr("swap_memory", swap_memory);
             }
 
             using (var status = new Status()) {
@@ -57519,7 +57519,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (swap_memory.HasValue) {
-                desc.SetAttr("swap_memory", swap_memory /* cstatus */);
+                desc.SetAttr("swap_memory", swap_memory);
             }
 
             using (var status = new Status()) {
@@ -57564,10 +57564,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("elem_type", elem_type /* cstatus */);
+            desc.SetAttr("elem_type", elem_type);
             
             if (stack_name != null) {
-                desc.SetAttr("stack_name", stack_name /* cstatus */);
+                desc.SetAttr("stack_name", stack_name);
             }
 
             using (var status = new Status()) {
@@ -57627,19 +57627,19 @@ namespace TensorFlow.Island.Classes
             }
 
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -57682,22 +57682,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -57748,22 +57748,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -57814,22 +57814,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -57877,7 +57877,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -57929,7 +57929,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -57983,7 +57983,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -58036,7 +58036,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -58088,7 +58088,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -58196,7 +58196,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (output_dtype.HasValue) {
-                desc.SetAttr("output_dtype", output_dtype /* cstatus */);
+                desc.SetAttr("output_dtype", output_dtype);
             }
 
             using (var status = new Status()) {
@@ -58246,7 +58246,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -58297,7 +58297,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -58399,7 +58399,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (dtype.HasValue) {
-                desc.SetAttr("dtype", dtype /* cstatus */);
+                desc.SetAttr("dtype", dtype);
             }
 
             using (var status = new Status()) {
@@ -58446,7 +58446,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("pattern", pattern /* cstatus */);
+            desc.SetAttr("pattern", pattern);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -58495,11 +58495,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("pattern", pattern /* cstatus */);
-            desc.SetAttr("rewrite", rewrite /* cstatus */);
+            desc.SetAttr("pattern", pattern);
+            desc.SetAttr("rewrite", rewrite);
             
             if (replace_global.HasValue) {
-                desc.SetAttr("replace_global", replace_global /* cstatus */);
+                desc.SetAttr("replace_global", replace_global);
             }
 
             using (var status = new Status()) {
@@ -58537,11 +58537,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -58838,23 +58838,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (begin_mask.HasValue) {
-                desc.SetAttr("begin_mask", begin_mask /* cstatus */);
+                desc.SetAttr("begin_mask", begin_mask);
             }
 
             if (end_mask.HasValue) {
-                desc.SetAttr("end_mask", end_mask /* cstatus */);
+                desc.SetAttr("end_mask", end_mask);
             }
 
             if (ellipsis_mask.HasValue) {
-                desc.SetAttr("ellipsis_mask", ellipsis_mask /* cstatus */);
+                desc.SetAttr("ellipsis_mask", ellipsis_mask);
             }
 
             if (new_axis_mask.HasValue) {
-                desc.SetAttr("new_axis_mask", new_axis_mask /* cstatus */);
+                desc.SetAttr("new_axis_mask", new_axis_mask);
             }
 
             if (shrink_axis_mask.HasValue) {
-                desc.SetAttr("shrink_axis_mask", shrink_axis_mask /* cstatus */);
+                desc.SetAttr("shrink_axis_mask", shrink_axis_mask);
             }
 
             using (var status = new Status()) {
@@ -58924,23 +58924,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (begin_mask.HasValue) {
-                desc.SetAttr("begin_mask", begin_mask /* cstatus */);
+                desc.SetAttr("begin_mask", begin_mask);
             }
 
             if (end_mask.HasValue) {
-                desc.SetAttr("end_mask", end_mask /* cstatus */);
+                desc.SetAttr("end_mask", end_mask);
             }
 
             if (ellipsis_mask.HasValue) {
-                desc.SetAttr("ellipsis_mask", ellipsis_mask /* cstatus */);
+                desc.SetAttr("ellipsis_mask", ellipsis_mask);
             }
 
             if (new_axis_mask.HasValue) {
-                desc.SetAttr("new_axis_mask", new_axis_mask /* cstatus */);
+                desc.SetAttr("new_axis_mask", new_axis_mask);
             }
 
             if (shrink_axis_mask.HasValue) {
-                desc.SetAttr("shrink_axis_mask", shrink_axis_mask /* cstatus */);
+                desc.SetAttr("shrink_axis_mask", shrink_axis_mask);
             }
 
             using (var status = new Status()) {
@@ -59012,23 +59012,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (begin_mask.HasValue) {
-                desc.SetAttr("begin_mask", begin_mask /* cstatus */);
+                desc.SetAttr("begin_mask", begin_mask);
             }
 
             if (end_mask.HasValue) {
-                desc.SetAttr("end_mask", end_mask /* cstatus */);
+                desc.SetAttr("end_mask", end_mask);
             }
 
             if (ellipsis_mask.HasValue) {
-                desc.SetAttr("ellipsis_mask", ellipsis_mask /* cstatus */);
+                desc.SetAttr("ellipsis_mask", ellipsis_mask);
             }
 
             if (new_axis_mask.HasValue) {
-                desc.SetAttr("new_axis_mask", new_axis_mask /* cstatus */);
+                desc.SetAttr("new_axis_mask", new_axis_mask);
             }
 
             if (shrink_axis_mask.HasValue) {
-                desc.SetAttr("shrink_axis_mask", shrink_axis_mask /* cstatus */);
+                desc.SetAttr("shrink_axis_mask", shrink_axis_mask);
             }
 
             using (var status = new Status()) {
@@ -59080,15 +59080,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (template != null) {
-                desc.SetAttr("template", template /* cstatus */);
+                desc.SetAttr("template", template);
             }
 
             if (placeholder != null) {
-                desc.SetAttr("placeholder", placeholder /* cstatus */);
+                desc.SetAttr("placeholder", placeholder);
             }
 
             if (summarize.HasValue) {
-                desc.SetAttr("summarize", summarize /* cstatus */);
+                desc.SetAttr("summarize", summarize);
             }
 
             using (var status = new Status()) {
@@ -59133,7 +59133,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (separator != null) {
-                desc.SetAttr("separator", separator /* cstatus */);
+                desc.SetAttr("separator", separator);
             }
 
             using (var status = new Status()) {
@@ -59182,7 +59182,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (unit != null) {
-                desc.SetAttr("unit", unit /* cstatus */);
+                desc.SetAttr("unit", unit);
             }
 
             using (var status = new Status()) {
@@ -59252,12 +59252,12 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("separator", separator /* cstatus */);
-            desc.SetAttr("ngram_widths", ngram_widths /* cstatus */);
-            desc.SetAttr("left_pad", left_pad /* cstatus */);
-            desc.SetAttr("right_pad", right_pad /* cstatus */);
-            desc.SetAttr("pad_width", pad_width /* cstatus */);
-            desc.SetAttr("preserve_short_sequences", preserve_short_sequences /* cstatus */);
+            desc.SetAttr("separator", separator);
+            desc.SetAttr("ngram_widths", ngram_widths);
+            desc.SetAttr("left_pad", left_pad);
+            desc.SetAttr("right_pad", right_pad);
+            desc.SetAttr("pad_width", pad_width);
+            desc.SetAttr("preserve_short_sequences", preserve_short_sequences);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -59329,7 +59329,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (skip_empty.HasValue) {
-                desc.SetAttr("skip_empty", skip_empty /* cstatus */);
+                desc.SetAttr("skip_empty", skip_empty);
             }
 
             using (var status = new Status()) {
@@ -59405,7 +59405,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (maxsplit.HasValue) {
-                desc.SetAttr("maxsplit", maxsplit /* cstatus */);
+                desc.SetAttr("maxsplit", maxsplit);
             }
 
             using (var status = new Status()) {
@@ -59486,7 +59486,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_buckets", num_buckets /* cstatus */);
+            desc.SetAttr("num_buckets", num_buckets);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -59532,7 +59532,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_buckets", num_buckets /* cstatus */);
+            desc.SetAttr("num_buckets", num_buckets);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -59589,8 +59589,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_buckets", num_buckets /* cstatus */);
-            desc.SetAttr("key", key /* cstatus */);
+            desc.SetAttr("num_buckets", num_buckets);
+            desc.SetAttr("key", key);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -59633,7 +59633,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -59801,7 +59801,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (unit != null) {
-                desc.SetAttr("unit", unit /* cstatus */);
+                desc.SetAttr("unit", unit);
             }
 
             using (var status = new Status()) {
@@ -59853,7 +59853,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (keep_dims.HasValue) {
-                desc.SetAttr("keep_dims", keep_dims /* cstatus */);
+                desc.SetAttr("keep_dims", keep_dims);
             }
 
             using (var status = new Status()) {
@@ -59923,11 +59923,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (compute_uv.HasValue) {
-                desc.SetAttr("compute_uv", compute_uv /* cstatus */);
+                desc.SetAttr("compute_uv", compute_uv);
             }
 
             if (full_matrices.HasValue) {
-                desc.SetAttr("full_matrices", full_matrices /* cstatus */);
+                desc.SetAttr("full_matrices", full_matrices);
             }
 
             using (var status = new Status()) {
@@ -60019,8 +60019,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -60123,14 +60123,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -60312,11 +60312,11 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("shape", shape);
+            desc.SetAttr("dtype", dtype);
             
             if (var_name != null) {
-                desc.SetAttr("var_name", var_name /* cstatus */);
+                desc.SetAttr("var_name", var_name);
             }
 
             using (var status = new Status()) {
@@ -60424,10 +60424,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (element_shape_except0 != null) {
-                desc.SetAttr("element_shape_except0", element_shape_except0 /* cstatus */);
+                desc.SetAttr("element_shape_except0", element_shape_except0);
             }
 
             using (var status = new Status()) {
@@ -60498,10 +60498,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (element_shape_except0 != null) {
-                desc.SetAttr("element_shape_except0", element_shape_except0 /* cstatus */);
+                desc.SetAttr("element_shape_except0", element_shape_except0);
             }
 
             using (var status = new Status()) {
@@ -60547,10 +60547,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (element_shape != null) {
-                desc.SetAttr("element_shape", element_shape /* cstatus */);
+                desc.SetAttr("element_shape", element_shape);
             }
 
             using (var status = new Status()) {
@@ -60607,10 +60607,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (element_shape != null) {
-                desc.SetAttr("element_shape", element_shape /* cstatus */);
+                desc.SetAttr("element_shape", element_shape);
             }
 
             using (var status = new Status()) {
@@ -60649,7 +60649,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("source", source /* cstatus */);
+            desc.SetAttr("source", source);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -60732,7 +60732,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("source", source /* cstatus */);
+            desc.SetAttr("source", source);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -60790,7 +60790,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("source", source /* cstatus */);
+            desc.SetAttr("source", source);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -60832,7 +60832,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -60877,7 +60877,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -61195,22 +61195,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (element_shape != null) {
-                desc.SetAttr("element_shape", element_shape /* cstatus */);
+                desc.SetAttr("element_shape", element_shape);
             }
 
             if (dynamic_size.HasValue) {
-                desc.SetAttr("dynamic_size", dynamic_size /* cstatus */);
+                desc.SetAttr("dynamic_size", dynamic_size);
             }
 
             if (clear_after_read.HasValue) {
-                desc.SetAttr("clear_after_read", clear_after_read /* cstatus */);
+                desc.SetAttr("clear_after_read", clear_after_read);
             }
 
             if (tensor_array_name != null) {
-                desc.SetAttr("tensor_array_name", tensor_array_name /* cstatus */);
+                desc.SetAttr("tensor_array_name", tensor_array_name);
             }
 
             using (var status = new Status()) {
@@ -61286,26 +61286,26 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (element_shape != null) {
-                desc.SetAttr("element_shape", element_shape /* cstatus */);
+                desc.SetAttr("element_shape", element_shape);
             }
 
             if (dynamic_size.HasValue) {
-                desc.SetAttr("dynamic_size", dynamic_size /* cstatus */);
+                desc.SetAttr("dynamic_size", dynamic_size);
             }
 
             if (clear_after_read.HasValue) {
-                desc.SetAttr("clear_after_read", clear_after_read /* cstatus */);
+                desc.SetAttr("clear_after_read", clear_after_read);
             }
 
             if (identical_element_shapes.HasValue) {
-                desc.SetAttr("identical_element_shapes", identical_element_shapes /* cstatus */);
+                desc.SetAttr("identical_element_shapes", identical_element_shapes);
             }
 
             if (tensor_array_name != null) {
-                desc.SetAttr("tensor_array_name", tensor_array_name /* cstatus */);
+                desc.SetAttr("tensor_array_name", tensor_array_name);
             }
 
             using (var status = new Status()) {
@@ -61427,7 +61427,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -61570,7 +61570,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("logits_dimension", logits_dimension /* cstatus */);
+            desc.SetAttr("logits_dimension", logits_dimension);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -61607,11 +61607,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -61727,10 +61727,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             if (element_shape != null) {
-                desc.SetAttr("element_shape", element_shape /* cstatus */);
+                desc.SetAttr("element_shape", element_shape);
             }
 
             using (var status = new Status()) {
@@ -61790,7 +61790,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -61830,7 +61830,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape_type", shape_type /* cstatus */);
+            desc.SetAttr("shape_type", shape_type);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -61919,7 +61919,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -61967,7 +61967,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -62051,7 +62051,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -62137,7 +62137,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -62462,10 +62462,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("element_dtype", element_dtype /* cstatus */);
+            desc.SetAttr("element_dtype", element_dtype);
             
             if (num_elements.HasValue) {
-                desc.SetAttr("num_elements", num_elements /* cstatus */);
+                desc.SetAttr("num_elements", num_elements);
             }
 
             using (var status = new Status()) {
@@ -62834,7 +62834,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -62903,23 +62903,23 @@ namespace TensorFlow.Island.Classes
             }
 
             if (begin_mask.HasValue) {
-                desc.SetAttr("begin_mask", begin_mask /* cstatus */);
+                desc.SetAttr("begin_mask", begin_mask);
             }
 
             if (end_mask.HasValue) {
-                desc.SetAttr("end_mask", end_mask /* cstatus */);
+                desc.SetAttr("end_mask", end_mask);
             }
 
             if (ellipsis_mask.HasValue) {
-                desc.SetAttr("ellipsis_mask", ellipsis_mask /* cstatus */);
+                desc.SetAttr("ellipsis_mask", ellipsis_mask);
             }
 
             if (new_axis_mask.HasValue) {
-                desc.SetAttr("new_axis_mask", new_axis_mask /* cstatus */);
+                desc.SetAttr("new_axis_mask", new_axis_mask);
             }
 
             if (shrink_axis_mask.HasValue) {
-                desc.SetAttr("shrink_axis_mask", shrink_axis_mask /* cstatus */);
+                desc.SetAttr("shrink_axis_mask", shrink_axis_mask);
             }
 
             using (var status = new Status()) {
@@ -62972,15 +62972,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (description != null) {
-                desc.SetAttr("description", description /* cstatus */);
+                desc.SetAttr("description", description);
             }
 
             if (labels != null) {
-                desc.SetAttr("labels", labels /* cstatus */);
+                desc.SetAttr("labels", labels);
             }
 
             if (display_name != null) {
-                desc.SetAttr("display_name", display_name /* cstatus */);
+                desc.SetAttr("display_name", display_name);
             }
 
             using (var status = new Status()) {
@@ -63110,15 +63110,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (skip_header_lines.HasValue) {
-                desc.SetAttr("skip_header_lines", skip_header_lines /* cstatus */);
+                desc.SetAttr("skip_header_lines", skip_header_lines);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -63165,15 +63165,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (skip_header_lines.HasValue) {
-                desc.SetAttr("skip_header_lines", skip_header_lines /* cstatus */);
+                desc.SetAttr("skip_header_lines", skip_header_lines);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -63262,15 +63262,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (compression_type != null) {
-                desc.SetAttr("compression_type", compression_type /* cstatus */);
+                desc.SetAttr("compression_type", compression_type);
             }
 
             using (var status = new Status()) {
@@ -63316,15 +63316,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             if (compression_type != null) {
-                desc.SetAttr("compression_type", compression_type /* cstatus */);
+                desc.SetAttr("compression_type", compression_type);
             }
 
             using (var status = new Status()) {
@@ -63366,8 +63366,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -63418,19 +63418,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_threads", num_threads /* cstatus */);
-            desc.SetAttr("display_name", display_name /* cstatus */);
+            desc.SetAttr("num_threads", num_threads);
+            desc.SetAttr("display_name", display_name);
             
             if (max_intra_op_parallelism.HasValue) {
-                desc.SetAttr("max_intra_op_parallelism", max_intra_op_parallelism /* cstatus */);
+                desc.SetAttr("max_intra_op_parallelism", max_intra_op_parallelism);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -63511,17 +63511,17 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_true", num_true /* cstatus */);
-            desc.SetAttr("num_sampled", num_sampled /* cstatus */);
-            desc.SetAttr("unique", unique /* cstatus */);
-            desc.SetAttr("range_max", range_max /* cstatus */);
+            desc.SetAttr("num_true", num_true);
+            desc.SetAttr("num_sampled", num_sampled);
+            desc.SetAttr("unique", unique);
+            desc.SetAttr("range_max", range_max);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -63700,10 +63700,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("k", k /* cstatus */);
+            desc.SetAttr("k", k);
             
             if (sorted.HasValue) {
-                desc.SetAttr("sorted", sorted /* cstatus */);
+                desc.SetAttr("sorted", sorted);
             }
 
             using (var status = new Status()) {
@@ -63765,7 +63765,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (sorted.HasValue) {
-                desc.SetAttr("sorted", sorted /* cstatus */);
+                desc.SetAttr("sorted", sorted);
             }
 
             using (var status = new Status()) {
@@ -63848,8 +63848,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("table_id", table_id /* cstatus */);
-            desc.SetAttr("lookup_id", lookup_id /* cstatus */);
+            desc.SetAttr("table_id", table_id);
+            desc.SetAttr("lookup_id", lookup_id);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -63949,7 +63949,7 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_replicas", num_replicas /* cstatus */);
+            desc.SetAttr("num_replicas", num_replicas);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -64020,42 +64020,42 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_replicas", num_replicas /* cstatus */);
+            desc.SetAttr("num_replicas", num_replicas);
             
             if (num_cores_per_replica.HasValue) {
-                desc.SetAttr("num_cores_per_replica", num_cores_per_replica /* cstatus */);
+                desc.SetAttr("num_cores_per_replica", num_cores_per_replica);
             }
 
             if (topology != null) {
-                desc.SetAttr("topology", topology /* cstatus */);
+                desc.SetAttr("topology", topology);
             }
 
             if (use_tpu.HasValue) {
-                desc.SetAttr("use_tpu", use_tpu /* cstatus */);
+                desc.SetAttr("use_tpu", use_tpu);
             }
 
             if (device_assignment != null) {
-                desc.SetAttr("device_assignment", device_assignment /* cstatus */);
+                desc.SetAttr("device_assignment", device_assignment);
             }
 
             if (computation_shape != null) {
-                desc.SetAttr("computation_shape", computation_shape /* cstatus */);
+                desc.SetAttr("computation_shape", computation_shape);
             }
 
             if (host_compute_core != null) {
-                desc.SetAttr("host_compute_core", host_compute_core /* cstatus */);
+                desc.SetAttr("host_compute_core", host_compute_core);
             }
 
             if (padding_map != null) {
-                desc.SetAttr("padding_map", padding_map /* cstatus */);
+                desc.SetAttr("padding_map", padding_map);
             }
 
             if (step_marker_location != null) {
-                desc.SetAttr("step_marker_location", step_marker_location /* cstatus */);
+                desc.SetAttr("step_marker_location", step_marker_location);
             }
 
             if (allow_soft_placement.HasValue) {
-                desc.SetAttr("allow_soft_placement", allow_soft_placement /* cstatus */);
+                desc.SetAttr("allow_soft_placement", allow_soft_placement);
             }
 
             using (var status = new Status()) {
@@ -64201,7 +64201,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (partial_pivoting.HasValue) {
-                desc.SetAttr("partial_pivoting", partial_pivoting /* cstatus */);
+                desc.SetAttr("partial_pivoting", partial_pivoting);
             }
 
             using (var status = new Status()) {
@@ -64299,14 +64299,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("dtype", dtype);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -64470,15 +64470,15 @@ namespace TensorFlow.Island.Classes
             }
 
             if (protocol != null) {
-                desc.SetAttr("protocol", protocol /* cstatus */);
+                desc.SetAttr("protocol", protocol);
             }
 
             if (fail_fast.HasValue) {
-                desc.SetAttr("fail_fast", fail_fast /* cstatus */);
+                desc.SetAttr("fail_fast", fail_fast);
             }
 
             if (timeout_in_ms.HasValue) {
-                desc.SetAttr("timeout_in_ms", timeout_in_ms /* cstatus */);
+                desc.SetAttr("timeout_in_ms", timeout_in_ms);
             }
 
             using (var status = new Status()) {
@@ -64548,14 +64548,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("timeout_micros", timeout_micros /* cstatus */);
+            desc.SetAttr("timeout_micros", timeout_micros);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -64593,8 +64593,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -64659,11 +64659,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -64746,22 +64746,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("input_encoding", input_encoding /* cstatus */);
+            desc.SetAttr("input_encoding", input_encoding);
             
             if (errors != null) {
-                desc.SetAttr("errors", errors /* cstatus */);
+                desc.SetAttr("errors", errors);
             }
 
             if (replacement_char.HasValue) {
-                desc.SetAttr("replacement_char", replacement_char /* cstatus */);
+                desc.SetAttr("replacement_char", replacement_char);
             }
 
             if (replace_control_characters.HasValue) {
-                desc.SetAttr("replace_control_characters", replace_control_characters /* cstatus */);
+                desc.SetAttr("replace_control_characters", replace_control_characters);
             }
 
             if (Tsplits.HasValue) {
-                desc.SetAttr("Tsplits", Tsplits /* cstatus */);
+                desc.SetAttr("Tsplits", Tsplits);
             }
 
             using (var status = new Status()) {
@@ -64851,22 +64851,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("input_encoding", input_encoding /* cstatus */);
+            desc.SetAttr("input_encoding", input_encoding);
             
             if (errors != null) {
-                desc.SetAttr("errors", errors /* cstatus */);
+                desc.SetAttr("errors", errors);
             }
 
             if (replacement_char.HasValue) {
-                desc.SetAttr("replacement_char", replacement_char /* cstatus */);
+                desc.SetAttr("replacement_char", replacement_char);
             }
 
             if (replace_control_characters.HasValue) {
-                desc.SetAttr("replace_control_characters", replace_control_characters /* cstatus */);
+                desc.SetAttr("replace_control_characters", replace_control_characters);
             }
 
             if (Tsplits.HasValue) {
-                desc.SetAttr("Tsplits", Tsplits /* cstatus */);
+                desc.SetAttr("Tsplits", Tsplits);
             }
 
             using (var status = new Status()) {
@@ -64948,14 +64948,14 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_encoding", output_encoding /* cstatus */);
+            desc.SetAttr("output_encoding", output_encoding);
             
             if (errors != null) {
-                desc.SetAttr("errors", errors /* cstatus */);
+                desc.SetAttr("errors", errors);
             }
 
             if (replacement_char.HasValue) {
-                desc.SetAttr("replacement_char", replacement_char /* cstatus */);
+                desc.SetAttr("replacement_char", replacement_char);
             }
 
             using (var status = new Status()) {
@@ -65092,19 +65092,19 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("input_encoding", input_encoding /* cstatus */);
-            desc.SetAttr("output_encoding", output_encoding /* cstatus */);
+            desc.SetAttr("input_encoding", input_encoding);
+            desc.SetAttr("output_encoding", output_encoding);
             
             if (errors != null) {
-                desc.SetAttr("errors", errors /* cstatus */);
+                desc.SetAttr("errors", errors);
             }
 
             if (replacement_char.HasValue) {
-                desc.SetAttr("replacement_char", replacement_char /* cstatus */);
+                desc.SetAttr("replacement_char", replacement_char);
             }
 
             if (replace_control_characters.HasValue) {
-                desc.SetAttr("replace_control_characters", replace_control_characters /* cstatus */);
+                desc.SetAttr("replace_control_characters", replace_control_characters);
             }
 
             using (var status = new Status()) {
@@ -65185,17 +65185,17 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num_true", num_true /* cstatus */);
-            desc.SetAttr("num_sampled", num_sampled /* cstatus */);
-            desc.SetAttr("unique", unique /* cstatus */);
-            desc.SetAttr("range_max", range_max /* cstatus */);
+            desc.SetAttr("num_true", num_true);
+            desc.SetAttr("num_sampled", num_sampled);
+            desc.SetAttr("unique", unique);
+            desc.SetAttr("range_max", range_max);
             
             if (seed.HasValue) {
-                desc.SetAttr("seed", seed /* cstatus */);
+                desc.SetAttr("seed", seed);
             }
 
             if (seed2.HasValue) {
-                desc.SetAttr("seed2", seed2 /* cstatus */);
+                desc.SetAttr("seed2", seed2);
             }
 
             using (var status = new Status()) {
@@ -65256,7 +65256,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_idx.HasValue) {
-                desc.SetAttr("out_idx", out_idx /* cstatus */);
+                desc.SetAttr("out_idx", out_idx);
             }
 
             using (var status = new Status()) {
@@ -65295,8 +65295,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -65388,7 +65388,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_idx.HasValue) {
-                desc.SetAttr("out_idx", out_idx /* cstatus */);
+                desc.SetAttr("out_idx", out_idx);
             }
 
             using (var status = new Status()) {
@@ -65451,7 +65451,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_idx.HasValue) {
-                desc.SetAttr("out_idx", out_idx /* cstatus */);
+                desc.SetAttr("out_idx", out_idx);
             }
 
             using (var status = new Status()) {
@@ -65551,7 +65551,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_idx.HasValue) {
-                desc.SetAttr("out_idx", out_idx /* cstatus */);
+                desc.SetAttr("out_idx", out_idx);
             }
 
             using (var status = new Status()) {
@@ -65610,10 +65610,10 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("num", num /* cstatus */);
+            desc.SetAttr("num", num);
             
             if (axis.HasValue) {
-                desc.SetAttr("axis", axis /* cstatus */);
+                desc.SetAttr("axis", axis);
             }
 
             using (var status = new Status()) {
@@ -65758,7 +65758,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (separator != null) {
-                desc.SetAttr("separator", separator /* cstatus */);
+                desc.SetAttr("separator", separator);
             }
 
             using (var status = new Status()) {
@@ -66092,22 +66092,22 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtypes", dtypes /* cstatus */);
+            desc.SetAttr("dtypes", dtypes);
             
             if (capacity.HasValue) {
-                desc.SetAttr("capacity", capacity /* cstatus */);
+                desc.SetAttr("capacity", capacity);
             }
 
             if (memory_limit.HasValue) {
-                desc.SetAttr("memory_limit", memory_limit /* cstatus */);
+                desc.SetAttr("memory_limit", memory_limit);
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -66179,7 +66179,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -66225,15 +66225,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("dtype", dtype /* cstatus */);
-            desc.SetAttr("shape", shape /* cstatus */);
+            desc.SetAttr("dtype", dtype);
+            desc.SetAttr("shape", shape);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -66274,15 +66274,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("shape", shape);
+            desc.SetAttr("dtype", dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -66330,7 +66330,7 @@ namespace TensorFlow.Island.Classes
             }
 
             if (out_type.HasValue) {
-                desc.SetAttr("out_type", out_type /* cstatus */);
+                desc.SetAttr("out_type", out_type);
             }
 
             using (var status = new Status()) {
@@ -66383,15 +66383,15 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("shape", shape /* cstatus */);
-            desc.SetAttr("dtype", dtype /* cstatus */);
+            desc.SetAttr("shape", shape);
+            desc.SetAttr("dtype", dtype);
             
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -66564,11 +66564,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -66615,11 +66615,11 @@ namespace TensorFlow.Island.Classes
             }
 
             if (container != null) {
-                desc.SetAttr("container", container /* cstatus */);
+                desc.SetAttr("container", container);
             }
 
             if (shared_name != null) {
-                desc.SetAttr("shared_name", shared_name /* cstatus */);
+                desc.SetAttr("shared_name", shared_name);
             }
 
             using (var status = new Status()) {
@@ -66676,8 +66676,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
@@ -66929,8 +66929,8 @@ namespace TensorFlow.Island.Classes
                 desc.AddControlInput(control);
             }
 
-            desc.SetAttr("output_types", output_types /* cstatus */);
-            desc.SetAttr("output_shapes", output_shapes /* cstatus */);
+            desc.SetAttr("output_types", output_types);
+            desc.SetAttr("output_shapes", output_shapes);
             
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
