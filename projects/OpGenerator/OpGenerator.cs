@@ -650,7 +650,7 @@ namespace TensorFlow.Island.OpGenerator
         private void P(string fmt, params object[] args)
         {
             for (int i = 0; i < indent; i++) {
-                output.Write("\t");
+                output.Write("    ");
             }
 
             if (args.Length == 0) {
