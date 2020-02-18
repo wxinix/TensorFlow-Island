@@ -438,7 +438,7 @@ namespace TensorFlow.Island.OpGenerator
                 case "Shape[]":
                 case "Tensor":
                 case "Tensor[]":
-                    P($"desc.SetAttr(\"{attrName}\", {csAttrName} /* cstatus */);");
+                    P($"desc.SetAttr(\"{attrName}\", {csAttrName});");
                     break;
                 default:
                     throw new Exception("Unexpected type: " + cstype);
