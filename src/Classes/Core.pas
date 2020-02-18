@@ -1326,6 +1326,11 @@ type
         end;
       end;
 
+    property IsFullySpecified: Boolean
+      read begin
+        result := (fNumDims = 0) or (fSize < 0); // fSize < 0 means some dim = -1.
+      end;
+
     property NumDims: Int32
       read begin
         result := fNumDims;
@@ -2684,13 +2689,21 @@ type
     method RestoreTensor(const aFileName: NotNull<String>; const aTensor: NotNull<String>;
       aDataType: DataType): Output;
     begin
-      // To-do
+      var file_pattern := Graph.Const(aFileName);
+      var tensor_name := Graph.Const(aTensor);
+      exit Graph.Restore(file_pattern, tensor_name, aDataType);
     end;
 
-    method SaveTensors(const aFileName: NotNull<String>; aTensors: array of Tuple of (String, Output))
-      : array of Tensor;
+    method SaveTensors(const aFileName: NotNull<String>; aTensors: array of Tuple of 
+      (NotNull<String>, NotNull<Output>)): TensorList;
     begin
-      // To-do
+      var filename := Graph.Const(aFileName);
+      var concat_dim := Graph.Const(0);
+      var concat_values := aTensors.Select(T->Graph.Const(T[0])).ToArray;
+      var tensor_names := Graph.Concat(concat_dim, concat_values);
+      var data := aTensors.Select(d->d[1]).ToArray;
+      var target := Graph.Save(filename, tensor_names, data);
+      result := Runner.AddTarget(target).Run;
     end;
 
     property &Graph: Graph
