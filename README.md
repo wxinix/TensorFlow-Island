@@ -7,11 +7,15 @@ Note - these supported languages (Swift, Oxygene, Java, Go and C#) are all compi
 
 TensorFlow-Island is initially inspired by TensorFlow4Delphi (https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is also infuenced by TensorFlowSharp https://github.com/migueldeicaza/TensorFlowSharp,  with our own insights, adjustments, and enhancements.
 
+The following diagram  illustrates the TensorFlow-Island architecture.
+![TensorFlow-Island Diagram](https://github.com/wxinix/TensorFlow-Island/tree/master/Images/TensorFlow-Island-Diagram.png)
+
 # Difference with other TensorFlow bindings
 The difference between TensorFlow-Island and other wellknown TensorFlow bindings, for example, TensorFlow.NET (https://github.com/SciSharp/TensorFlow.NET) is:
 - Multiple programming language support, including Oxygene, Swift, Java, Go, and C#, thanks to RemObjects LLVM-based Island platform compilers;
-- Compiled code runs directly on CPU/GPU, without the dependency on JVM, .NET CLR, or Python/CPython intepreter;
-- TensorFlow-Island itself is a light-weigth abstraction. Unlike TensorFlow.NET, TensorFlow-Island does not intend for a direct translation of existing Python-based TensorFlow code. Rather, the design is to have a CPU/GPU native bindings with modern language features (e.g., the Dispose Pattern, Lamda Expression, LinQ) to help manage resources, streamline model development, and efficient run time performance, all in one package.
+- Compiled code runs directly on CPU, without the dependency on JVM, .NET CLR, or Python/CPython intepreter. 
+- Direct acces to TensorFlow C API; no .NET P-Invoke involved;
+- TensorFlow-Island itself is a light-weigth abstraction. Unlike TensorFlow.NET, TensorFlow-Island does not intend for a direct translation of existing Python-based TensorFlow code. Rather, the design is to have a CPU native bindings of TensorFlow C API with modern language features (e.g., the Dispose Pattern, Lamda Expression, LinQ) to help manage resources, streamline model development, and efficient run time performance, all in one package.
 
 # Design Objectives
  - A higher level abstraction of TensorFlow C-API,  cross-platform (Windows, Linux and MacOS), and CPU/GPU native machine code;
