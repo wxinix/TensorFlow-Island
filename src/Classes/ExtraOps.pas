@@ -25,19 +25,32 @@ uses
   TensorFlow.Island.Api;
 
 type
+
+  /// <summary>
+  /// The Variable class holds Output nodes and Operation node that are used to initialize,
+  /// read and assign a value to a variable.   
+  /// </summary>
+  /// <remarks>
+  /// A variable maintains state in the graph across calls to `run()`. Add a variable to
+  /// the graph by calling the MakeVariable method.
+  /// </remarks>
   Variable = public class
   private
     fResource: Output;
-		fReadHandle: Output;
-		fAssignOp: Operation;  
-  public
-    constructor withResource(aResource: NotNull<Output>) ReadHandle(aReadHandle: NotNull<Output>) AssignOp(aAssignOp: NotNull<Operation>);
+    fReadHandle: Output;
+    fAssignOp: Operation; 
+  assembly
+    constructor withResource(aResource: NotNull<Output>) ReadHandle(aReadHandle: NotNull<Output>)
+      AssignOp(aAssignOp: NotNull<Operation>);
     begin
       fAssignOp := aAssignOp;
       fReadHandle:= aReadHandle;
       fResource := aResource; // VariableHandle
     end;
-
+  public
+    /// <summary>
+    /// Returns the ReadVariableOp that is used to fetch the value of the variable.
+    /// </summary>
     method ReadAfter(aDependencies: NotNull<List<Operation>>): Output;
     begin
       if (aDependencies.Count > 0) then begin
@@ -48,6 +61,11 @@ type
       end else begin
          result := fReadHandle;
       end;
+    end;
+
+    operator Implicit(aVar: NotNull<Variable>): Output;
+    begin
+      result := aVar.Resource;
     end;
     
     property AssignOp: Operation read fAssignOp;
@@ -61,7 +79,23 @@ type
     begin
       exit self.Const (aValue, aValue.Data.Type, aOperName);
     end;
- 
+
+    method ConvertShapeToOutput(aShape: NotNull<Shape>): Output;
+    begin
+      if aShape.NumDims = 0 then begin
+        result := &Const(0);
+      end else begin
+        result := &Const(NotNull<array of Int64>(aShape.ToArray));
+      end;
+    end;
+
+    method GetRandomSeeds(aOperationSeed: nullable Integer): Tuple of (GraphSeed: Integer, LocalSeed: Integer);
+    begin
+      var graphSeed: Integer := if assigned(Seed) then Seed else 1987;
+      var localSeed: Integer := if assigned(aOperationSeed) then aOperationSeed else 1976;
+      result := (graphSeed, localSeed);
+    end;
+
     method ReduceDims(aInput: NotNull<Output>; aAxis: Output := nil): Output;
     begin
       if assigned(aAxis) then exit aAxis;
@@ -74,7 +108,7 @@ type
             for I: Integer := 0 to shp.NumDims - 1 do arr[I] := I;
             result := &Const(arr, DataType.Int32);
           end else begin
-            result := Range(&Const(0), &Const(0), &Const(1));
+            result := Range(&Const(0), &Const(0), &Const(1)); // start, limit, delta
           end;
         end else begin
           raise new OpCreateException withOpType('ReduceDims') Message(lStatus.Message)
@@ -135,5 +169,14 @@ type
         end;
       end;
     end;
+
+    /// <summary>
+    /// Gets or sets the graph random seed.
+    /// </summary>
+    /// <remarks>
+    /// Operations that rely on a random seed actually derive it from two seeds:
+    /// the graph-level and operation-level seeds.This sets the graph-level seed.
+    /// </remarks>
+    property Seed: nullable Integer read write;
   end;
 end.
