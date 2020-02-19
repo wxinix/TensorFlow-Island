@@ -1422,6 +1422,7 @@ type
     fDeviceName: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
     fPendingInitVars: OperationList := new OperationList;
+    fTrainableVars: List<Variable> := new List<Variable>;
     fDisposed: Boolean := false;
 
     method MakeUniqueName(const aName: NotNull<String>): String;
@@ -1565,6 +1566,15 @@ type
       end;
 
       fPendingInitVars.Add(aOp);
+    end;
+
+    method AddTrainableVariable(aVar: NotNull<Variable>);
+    begin
+      for each el in fTrainableVars do begin
+        if el.Equals(aVar) then exit;
+      end;
+
+      fTrainableVars.Add(aVar);
     end;
 
     method GetFunctions(aStatus: Status := nil): tuple of (Boolean, FunctionList);
@@ -1901,9 +1911,17 @@ type
         result := fDeviceName;
       end;
 
-    property GlobalVariableInitializer: array of ^TF_Operation
+    property GlobalVariablesInitializer: array of ^TF_Operation
       read begin
         result := fPendingInitVars.Handles;
+        fPendingInitVars.Dispose;
+        fPendingInitVars := new OperationList;
+      end;
+
+    property TrainableVariables: array of Variable
+      read begin
+        result := fTrainableVars.ToArray;
+        // Shall we clear, and when? Here?
       end;
 
     property NumFunctions: Integer
