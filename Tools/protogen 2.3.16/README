@@ -1,0 +1,3 @@
+protogen source : https://github.com/protobuf-net/protobuf-net/tree/master/src/protogen
+protogen nuget  : https://www.nuget.org/packages/protobuf-net.Protogen/2.3.17
+Github Project  : https://github.com/protobuf-net/protobuf-net
