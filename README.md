@@ -7,8 +7,8 @@ Note - these supported languages (Swift, Oxygene, Java, Go and C#) are all compi
 
 TensorFlow-Island is initially inspired by TensorFlow4Delphi (https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is also infuenced by TensorFlowSharp https://github.com/migueldeicaza/TensorFlowSharp,  with our own insights, adjustments, and enhancements.
 
-The following diagram  illustrates the TensorFlow-Island architecture.
-![TensorFlow-Island Diagram](https://github.com/wxinix/TensorFlow-Island/tree/master/Images/TensorFlow-Island-Diagram.png)
+![TensorFlow-Island Diagram](../master/Images/TensorFlow-Island-Diagram.png) illustrates the TensorFlow-Island architecture.
+
 
 # Difference with other TensorFlow bindings
 The difference between TensorFlow-Island and other wellknown TensorFlow bindings, for example, TensorFlow.NET (https://github.com/SciSharp/TensorFlow.NET) is:
