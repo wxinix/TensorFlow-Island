@@ -51,7 +51,7 @@ type
     /// <summary>
     /// Returns the ReadVariableOp that is used to fetch the value of the variable.
     /// </summary>
-    method ReadAfter(aDependencies: NotNull<List<Operation>>): Output;
+    method ReadAfter(aDependencies: NotNull<array of Operation>): Output;
     begin
       if (aDependencies.Count > 0) then begin
         var lGraph := aDependencies[0].Graph;
@@ -75,9 +75,31 @@ type
 
   Graph = public partial class
   public
+    method Cond(aPred: NotNull<Output>; aTrueFunc: Func<Output>; aFalseFunc: Func<Output>; 
+      aOperName: String := nil): Output;
+    begin
+      using WithScope(MakeName('cond', aOperName)) do begin
+        var (p_2, p_1) := Switch(aPred, aPred);
+        var pivot_t := Identity(p_1, 'switch_t');
+        var pivot_f := Identity(p_2, 'switch_f');
+        aPred := NotNull<Output>(Identity(aPred, 'pred_id')); // No use?
+        var res_t, res_f: Output;
+
+        using WithDependencies([pivot_t.Oper]) do begin
+          res_t := aTrueFunc();
+        end;
+
+        using WithDependencies([pivot_f.Oper]) do begin
+          res_f := aFalseFunc();
+        end;
+
+        (result, nil) := Merge([NotNull<Output>(res_f), NotNull<Output>(res_t)]);
+      end;
+    end;
+    
     method &Const(aValue: NotNull<Tensor>; aOperName: String := nil): Output;
     begin
-      exit self.Const (aValue, aValue.Data.Type, aOperName);
+      result := &Const (aValue, aValue.Data.Type, aOperName);
     end;
 
     method ConvertShapeToOutput(aShape: NotNull<Shape>): Output;
@@ -92,7 +114,7 @@ type
     method ClipByNorm(x: NotNull<Output>; aClipNorm: NotNull<Output>; aAxes: Output := nil;
       aOperName: String := nil): Output;
     begin
-      using newScope := WithScope(MakeName('ClipByNorm', aOperName)) do begin
+      using WithScope(MakeName('ClipByNorm', aOperName)) do begin
         var l2norm_inv := Rsqrt(ReduceSum(Mul(x, x), aAxes, true)); // reciprocal sqrt
         var intermediate := Mul(x, aClipNorm);
         
@@ -110,7 +132,7 @@ type
     method ClipByAverageNorm(x: NotNull<Output>; aClipNorm: NotNull<Output>; 
       aOperName: String := nil): Output;
     begin
-      using newScope := WithScope(MakeName('ClipByAverageNorm', aOperName)) do begin
+      using WithScope(MakeName('ClipByAverageNorm', aOperName)) do begin
         var n_element := Cast(Size(x), DataType.Float);
         var l2norm_inv := Rsqrt(ReduceSum(Mul(x, x), Range(Rank(x))));
         
@@ -128,17 +150,17 @@ type
     method Dropout(x: NotNull<Output>; aKeepProb: NotNull<Output>; aNoiseShape: Shape := nil; 
       aSeed: nullable Integer := nil; aOperName: String := nil): Tuple of (Boolean, Output);
     begin
-      using newScope := WithScope(MakeName('dropout', aOperName)) do begin
+      using WithScope(MakeName('dropout', aOperName)) do begin
         var success: Boolean;
         if not assigned(aNoiseShape) then (success, aNoiseShape) := GetTensorShape(x);
         if not success then exit (false, nil);
 
-        var shape_ := ConvertShapeToOutput(NotNull<Shape>(aNoiseShape));
+        var shp_as_output := ConvertShapeToOutput(NotNull<Shape>(aNoiseShape));
         // uniform [keep_prob, 1.0 + keep_prob]
-        var random_tensor := &Add(aKeepProb, RandomUniform(shape_, x.OutputType, aSeed));
+        var random_tensor := &Add(aKeepProb, RandomUniform(shp_as_output, x.OutputType, aSeed));
         var binary_tensor := Floor(random_tensor);
         result := (true, Mul(&Div(x, aKeepProb), binary_tensor));
-        // SetTensorShape(result, GetTensorShape(x)); // No need to call this ?
+        SetTensorShape(NotNull<Output>(result[1]), NotNull<Shape>(GetTensorShape(x)[1])); // No need to call this ?
       end;
     end;
 
@@ -151,29 +173,28 @@ type
 
       if aKeepProb.Equals(1) then exit (true, x);
       var keep_prob: Output;
-      using newScope := WithScope(MakeName('dropout', aOperName)) do begin
+      using WithScope(MakeName('dropout', aOperName)) do begin
         keep_prob := &Const(aKeepProb);       
       end;
+
+      // result should be outside the above using statement.
       result := Dropout(x, keep_prob, aNoiseShape, aSeed, aOperName);
     end;
 
     method GetRandomSeeds(aOpSeed: nullable Integer): Tuple of (GraphSeed: Integer, LocalSeed: Integer);
     begin
       var graphSeed: Integer := if assigned(Seed) then Seed else 1987;
-      var localSeed: Integer := if assigned(aOpSeed) then aOperationSeed else 1976;
+      var localSeed: Integer := if assigned(aOpSeed) then aOpSeed else 1976;
       result := (graphSeed, localSeed);
     end;
 
     method GlobalNorm(aTensors: NotNull<array of Output>; aOperName: String := nil): Output;
     begin
-      using newScope := WithScope(MakeName('GlobalNorm', aOperName)) do begin
+      using WithScope(MakeName('GlobalNorm', aOperName)) do begin
         var half_squared_norms := new Output[aTensors.Length];
         for t in aTensors index i do half_squared_norms[i] := L2Loss(t);
-        var half_squared_norm := ReduceSum(Stack(half_squared_norms));
-        
-        result := Sqrt(
-          Mul(half_squared_norm, &Const(2.0)), // * 2 because L2Loss
-          if assigned(aOperName) then aOperName else 'global_norm');
+        var half_squared_norm := ReduceSum(Stack(half_squared_norms));        
+        result := Sqrt(Mul(half_squared_norm, &Const(2.0)), 'global_norm');
       end;
     end;
 
@@ -183,7 +204,7 @@ type
       var assignOp: Operation;
       var readHandle, resource: Output;
 
-      using variableScope := WithScope(MakeName('Variable', aOpName)) do begin
+      using WithScope(MakeName('Variable', aOpName)) do begin
         using lStatus := new Status do begin
           var (success, shp) := GetTensorShape(aIniValue, lStatus);
 
@@ -252,19 +273,6 @@ type
       result := Mean(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOperName);
     end;
 
-    method Stack(aValues: NotNull<array of Output>; aAxis: Integer := 0; 
-      aOperName: String := nil): Output;
-    begin
-      var num_dims := GetTensorNumDims(aValues[0]);
-      var expanded_num_dims := num_dims + 1;
-      
-      if not (-expanded_num_dims <= aAxis < expanded_num_dims) then begin
-        raise new ArgumentException(
-          $'axis={aAxis} not in range [{-expanded_num_dims},{expanded_num_dims}).');
-      end;
-      result := Pack(aValues, aAxis, aOperName);
-    end;
-
     method Range(aStart: NotNull<Output>; aLimit: Output := nil; aDelta: Output := nil; 
       aDataType: nullable DataType := nil; aOperName: String := nil): Output;
     begin
@@ -277,7 +285,7 @@ type
         aDelta := Cast(&Const(1.0), aStart.OutputType);
       end;
 
-      using newScope := WithScope(MakeName('Range', aOperName)) do begin
+      using WithScope(MakeName('Range', aOperName)) do begin
         if not assigned(aDataType) then begin
           var dtype_hierarchy: array of DataType :=
             [DataType.Int32, DataType.Int64, DataType.Float, DataType.Double];
@@ -301,6 +309,39 @@ type
         end;
 
         result := Range(aStart, aLimit, aDelta, aOperName);
+      end;
+    end;
+
+    method Stack(aValues: NotNull<array of Output>; aAxis: Integer := 0; 
+      aOperName: String := nil): Output;
+    begin
+      var num_dims := GetTensorNumDims(aValues[0]);
+      var expanded_num_dims := num_dims + 1;
+      
+      if not (-expanded_num_dims <= aAxis < expanded_num_dims) then begin
+        raise new ArgumentException(
+          $'axis={aAxis} not in range [{-expanded_num_dims},{expanded_num_dims}).');
+      end;
+      result := Pack(aValues, aAxis, aOperName);
+    end;
+
+    method Transpose(x: NotNull<Output>; aOperName: String := nil): Output;
+    begin
+      var r := Rank(x);
+      var perm := Sub(Sub(r, &Const(1)), Range(&Const(0), r, &Const(1)));
+      result := Transpose(x, perm, aOperName);
+    end;
+
+    method &Where(aCondition: NotNull<Output>; x, y: Output; aOperName: String := nil): Output;
+    begin
+      if (not assigned(x)) and (not assigned(y)) then begin
+        result := &Where(aCondition, aOperName);
+      end else begin
+        if (assigned(x) and assigned(y)) then begin
+          result := &Select(aCondition, x, y, aOperName);
+        end else begin
+          raise new ArgumentException('Where op: x and y must both be null or non-null.');
+        end;
       end;
     end;
 
