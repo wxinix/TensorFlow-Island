@@ -56,7 +56,7 @@ type
       if (aDependencies.Count > 0) then begin
         var lGraph := aDependencies[0].Graph;
         using lGraph.WithDependencies(aDependencies) do begin
-          result := lGraph.ReadVariableOp(fResource, fReadHandle.Type);
+          result := lGraph.ReadVariableOp(fResource, fReadHandle.OutputType);
         end;
       end else begin
          result := fReadHandle;
@@ -89,11 +89,125 @@ type
       end;
     end;
 
-    method GetRandomSeeds(aOperationSeed: nullable Integer): Tuple of (GraphSeed: Integer, LocalSeed: Integer);
+    method ClipByNorm(x: NotNull<Output>; aClipNorm: NotNull<Output>; aAxes: Output := nil;
+      aOperName: String := nil): Output;
+    begin
+      using newScope := WithScope(MakeName('ClipByNorm', aOperName)) do begin
+        var l2norm_inv := Rsqrt(ReduceSum(Mul(x, x), aAxes, true)); // reciprocal sqrt
+        var intermediate := Mul(x, aClipNorm);
+        
+        result := Identity(
+          Mul(
+            intermediate, 
+            Minimum(
+              l2norm_inv, 
+              &Div(&Const(1.0), aClipNorm))),
+          aOperName
+        );
+      end;
+    end;
+
+    method ClipByAverageNorm(x: NotNull<Output>; aClipNorm: NotNull<Output>; 
+      aOperName: String := nil): Output;
+    begin
+      using newScope := WithScope(MakeName('ClipByAverageNorm', aOperName)) do begin
+        var n_element := Cast(Size(x), DataType.Float);
+        var l2norm_inv := Rsqrt(ReduceSum(Mul(x, x), Range(Rank(x))));
+        
+        result := Identity(
+          Mul(
+            Mul(x, aClipNorm), 
+            Minimum(
+              Mul(l2norm_inv, n_element), 
+              &Div(&Const(1.0), aClipNorm))), 
+          aOperName        
+        );
+      end;
+    end;
+
+    method Dropout(x: NotNull<Output>; aKeepProb: NotNull<Output>; aNoiseShape: Shape := nil; 
+      aSeed: nullable Integer := nil; aOperName: String := nil): Tuple of (Boolean, Output);
+    begin
+      using newScope := WithScope(MakeName('dropout', aOperName)) do begin
+        var success: Boolean;
+        if not assigned(aNoiseShape) then (success, aNoiseShape) := GetTensorShape(x);
+        if not success then exit (false, nil);
+
+        var shape_ := ConvertShapeToOutput(NotNull<Shape>(aNoiseShape));
+        // uniform [keep_prob, 1.0 + keep_prob]
+        var random_tensor := &Add(aKeepProb, RandomUniform(shape_, x.OutputType, aSeed));
+        var binary_tensor := Floor(random_tensor);
+        result := (true, Mul(&Div(x, aKeepProb), binary_tensor));
+        // SetTensorShape(result, GetTensorShape(x)); // No need to call this ?
+      end;
+    end;
+
+    method Dropout(x: NotNull<Output>; aKeepProb: Double; aNoiseShape: Shape := nil; 
+      aSeed: nullable Integer := nil; aOperName: String := nil): Tuple of (Boolean, Output);
+    begin
+      if not (0 <= aKeepProb <= 1) then begin
+        raise new ArgumentOutOfRangeException('keep_prob must be a scalar in the range [0,1].');
+      end;
+
+      if aKeepProb.Equals(1) then exit (true, x);
+      var keep_prob: Output;
+      using newScope := WithScope(MakeName('dropout', aOperName)) do begin
+        keep_prob := &Const(aKeepProb);       
+      end;
+      result := Dropout(x, keep_prob, aNoiseShape, aSeed, aOperName);
+    end;
+
+    method GetRandomSeeds(aOpSeed: nullable Integer): Tuple of (GraphSeed: Integer, LocalSeed: Integer);
     begin
       var graphSeed: Integer := if assigned(Seed) then Seed else 1987;
-      var localSeed: Integer := if assigned(aOperationSeed) then aOperationSeed else 1976;
+      var localSeed: Integer := if assigned(aOpSeed) then aOperationSeed else 1976;
       result := (graphSeed, localSeed);
+    end;
+
+    method GlobalNorm(aTensors: NotNull<array of Output>; aOperName: String := nil): Output;
+    begin
+      using newScope := WithScope(MakeName('GlobalNorm', aOperName)) do begin
+        var half_squared_norms := new Output[aTensors.Length];
+        for t in aTensors index i do half_squared_norms[i] := L2Loss(t);
+        var half_squared_norm := ReduceSum(Stack(half_squared_norms));
+        
+        result := Sqrt(
+          Mul(half_squared_norm, &Const(2.0)), // * 2 because L2Loss
+          if assigned(aOperName) then aOperName else 'global_norm');
+      end;
+    end;
+
+    method MakeVariable(aIniValue: NotNull<Output>; aTrainable: Boolean := false; 
+      aOpName: NotNull<String> := ''): Variable;
+    begin
+      var assignOp: Operation;
+      var readHandle, resource: Output;
+
+      using variableScope := WithScope(MakeName('Variable', aOpName)) do begin
+        using lStatus := new Status do begin
+          var (success, shp) := GetTensorShape(aIniValue, lStatus);
+
+          if not success then begin
+            raise new OpCreateException withOpType('Variable') Message(lStatus.Message);
+          end;
+
+          using shp do begin
+            resource := VarHandleOp(aIniValue.OutputType, shp);
+          end;
+
+          using assignScope := WithScope('Assign') do begin
+            assignOp := AssignVariableOp(resource, aIniValue);
+            using readScope := WithScope('Read') do begin
+              readHandle := ReadVariableOp(resource, aIniValue.OutputType);
+            end;
+          end;
+
+          AddInitVariable(assignOp);          
+          result := new Variable withResource(resource) ReadHandle(readHandle) 
+            AssignOp(assignOp);
+          if aTrainable then AddTrainableVariable(result);
+        end;
+      end;
     end;
 
     method ReduceDims(aInput: NotNull<Output>; aAxis: Output := nil): Output;
@@ -131,42 +245,62 @@ type
     method ReduceMean(aInput: NotNull<Output>; aAxis: Output := nil; aKeepDims: Boolean := false; 
       aOperName: String := nil): Output;
     begin
-      if (aInput.Type = DataType.Bool) then begin
+      if (aInput.OutputType = DataType.Bool) then begin
         aInput := NotNull<Output> (Cast(aInput, DataType.Int8));
       end;
 
       result := Mean(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOperName);
     end;
-  
-    method MakeVariable(aIniValue: NotNull<Output>; aTrainable: Boolean := false; 
-      aOpName: NotNull<String> := ''): Variable;
+
+    method Stack(aValues: NotNull<array of Output>; aAxis: Integer := 0; 
+      aOperName: String := nil): Output;
     begin
-      var assignOp: Operation;
-      var readHandle, resource: Output;
+      var num_dims := GetTensorNumDims(aValues[0]);
+      var expanded_num_dims := num_dims + 1;
+      
+      if not (-expanded_num_dims <= aAxis < expanded_num_dims) then begin
+        raise new ArgumentException(
+          $'axis={aAxis} not in range [{-expanded_num_dims},{expanded_num_dims}).');
+      end;
+      result := Pack(aValues, aAxis, aOperName);
+    end;
 
-      using variableScope := WithScope(MakeName('Variable', aOpName)) do begin
-        using lStatus := new Status do begin
-          var (success, shp) := GetTensorShape(aIniValue, lStatus);
+    method Range(aStart: NotNull<Output>; aLimit: Output := nil; aDelta: Output := nil; 
+      aDataType: nullable DataType := nil; aOperName: String := nil): Output;
+    begin
+      if not assigned(aLimit) then begin
+        aLimit := aStart;
+        aStart := NotNull<Output>(Cast(&Const(0.0), aStart.OutputType));
+      end;
 
-          if not success then begin
-            raise new OpCreateException withOpType('Variable') Message(lStatus.Message);
+      if not assigned(aDelta) then begin
+        aDelta := Cast(&Const(1.0), aStart.OutputType);
+      end;
+
+      using newScope := WithScope(MakeName('Range', aOperName)) do begin
+        if not assigned(aDataType) then begin
+          var dtype_hierarchy: array of DataType :=
+            [DataType.Int32, DataType.Int64, DataType.Float, DataType.Double];
+          
+          if ((not dtype_hierarchy.Contains(aStart.OutputType)) or
+              (not dtype_hierarchy.Contains(aLimit.OutputType)) or
+              (not dtype_hierarchy.Contains(aDelta.OutputType)) )
+          then begin
+            raise new ArgumentException('Range() invocation with unexpected type.');
           end;
 
-          using shp do begin
-            resource := VarHandleOp(aIniValue.Type, shp);
-          end;
-
-          using assignScope := WithScope('Assign') do begin
-            assignOp := AssignVariableOp(resource, aIniValue);
-            using readScope := WithScope('Read') do begin
-              readHandle := ReadVariableOp(resource, aIniValue.Type);
-            end;
-          end;
-
-          AddInitVariable(assignOp);          
-          result := new Variable withResource(resource) ReadHandle(readHandle) AssignOp(assignOp);
-          if aTrainable then AddTrainableVariable(result);
+          var dtypes: array of DataType := 
+            [aStart.OutputType, aLimit.OutputType, aDelta.OutputType];
+          
+          var i_max := dtypes.Select(dtype->dtype_hierarchy.ToList.IndexOf(dtype)).Max;
+          var inferred_dtype := dtype_hierarchy[i_max];
+          
+          aStart := NotNull<Output>(Cast(aStart, inferred_dtype));
+          aLimit := Cast(aLimit, inferred_dtype);
+          aDelta := Cast(aDelta, inferred_dtype);
         end;
+
+        result := Range(aStart, aLimit, aDelta, aOperName);
       end;
     end;
 
