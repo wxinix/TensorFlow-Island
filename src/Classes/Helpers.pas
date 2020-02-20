@@ -158,5 +158,10 @@ type
         end;
       end;
     end;
+  
+    method GetDataTypeSize(aDataType: DataType): UInt64;
+    begin
+      result := TF_DataTypeSize(TF_DataType(ord(aDataType)));
+    end;
   end;
 end.
