@@ -1383,7 +1383,7 @@ type
         result := fOper;
       end;
 
-    property &Type: DataType
+    property OutputType: DataType
       read begin
         result := DataType(ord(TF_OperationOutputType(AsTFOutput)));
       end;
@@ -2629,7 +2629,7 @@ type
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Handle));
           result := $'Tensor ("{name}: {aOutput.Index}", ' +
                     $'shape={shp.ToString}, '+
-                    $'dtype={aOutput.Type.ToString} )';
+                    $'dtype={aOutput.OutputType.ToString} )';
         end else begin
           result := '';
         end;
