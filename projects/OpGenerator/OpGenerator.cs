@@ -592,10 +592,11 @@ namespace TensorFlow.Island.OpGenerator
 
         private void Run(string[] dirs)
         {
-            output = File.CreateText("../../../Src/Classes/GeneratedOps.cs");
+            output = File.CreateText("../../../Src/Classes/OpsGenerated.cs");
             var operations = Serializer.Deserialize<List<OpDef>>(GetOpsList());
             UpdateApis(dirs);
             WriteLicense();
+            P("");
             P("using RemObjects.Elements.System;");
             P("using TensorFlow.Island.Api;\n");
 
