@@ -1743,14 +1743,15 @@ type
       end;
     end;
 
-    method WithDependencies(aNewDependencies: NotNull<List<Operation>>): Dependencies;
+    method WithDependencies(aNewDependencies: NotNull<array of Operation>): Dependencies;
     begin
+      var newDependencies: List<Operation> := aNewDependencies.ToList;
       result := new Dependencies withOperations(fCurrentDependencies)
         OnRestore(aDependencies->begin
           fCurrentDependencies := aDependencies as List<Operation>
         end);
 
-      fCurrentDependencies := fCurrentDependencies.Concat(aNewDependencies).Distinct.ToList;
+      fCurrentDependencies := fCurrentDependencies.Concat(newDependencies).Distinct.ToList;
     end;
 
     method ToFunction(aName, aDesc: NotNull<String>; aOps: NotNull<OperationList>;
@@ -2057,7 +2058,7 @@ type
     end;
 
     constructor (aBytes: ^Void; aDataType: DataType; aNumBytes: Int64;
-      aShp: NotNull<Shape>; aManaged: Boolean); private;
+      aShp: NotNull<Shape>; aManaged: Boolean); assembly;
     begin
       fBytes := aBytes;
       fType := aDataType;
@@ -2208,6 +2209,44 @@ type
       result := new Tensor withData(data.Move); // Moved data for Tensor's ownership.
     end;
 
+    // Object is a scalar constant value.
+    class method ObjectToTensor<T>(aValue: NotNull<Object>; aShape: NotNull<Shape>): Tensor;
+    begin
+      var is_value_str := aValue.GetType = typeOf(String);
+      var is_value_valid := aValue.GetType.IsIntegerOrFloat or (is_value_str);      
+      if not is_value_valid then begin // Check if the object contains valid value
+        raise new ArgumentException($'ObjectToTensor has invalid object value type={aValue.GetType.Name}.');
+      end;
+
+      // The object container contains type as set by compiler.  Figure out the value 
+      // from the object container type, together with T which is based DataType set by
+     //  the caller.
+      var val: T; 
+      if typeOf(T).IsIntegerOrFloat then begin
+        if aValue.GetType.IsInteger then val := T(aValue as Int64 );       
+        if aValue.GetType.IsFloat   then val := T(aValue as Double);
+        
+        if is_value_str then begin
+          if typeOf(T).IsInteger then val := T(Convert.ToInt64 (aValue as String));
+          if typeOf(T).IsFloat   then val := T(Convert.ToDouble(aValue as String));
+        end;
+      end else begin
+        if aValue.GetType.IsInteger then
+          val := T((aValue as Int64).ToString);
+        
+        if aValue.GetType.IsFloat then
+          val := T((aValue as Double).ToString);
+        
+        if (aValue.GetType = typeOf(String)) then
+          val := T(aValue as String);
+      end;  
+
+      var values := new T[aShape.Size];
+      for I: Integer := 0 to aShape.Size - 1 do values[I] := val;
+      var tensor_data := new TensorData<T> withValues(values) Dims(aShape.ToArray);
+      result := new Tensor withData(tensor_data);
+    end;
+
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -2245,6 +2284,27 @@ type
     begin
       var lData: TensorData := new TensorData withTensorHandle(aHandle);
       constructor withData(lData);
+    end;
+
+    // aValue is always a scalar.
+    class method ObjectToTensor(aValue: Object; aShape: NotNull<Shape>; aDataType: DataType): Tensor;
+    begin
+      case aDataType of
+        DataType.Bool   : ObjectToTensor<Boolean>(aValue, aShape);       
+        DataType.Double : ObjectToTensor<Double> (aValue, aShape);          
+        DataType.Float  : ObjectToTensor<Single> (aValue, aShape);
+        DataType.Int16  : ObjectToTensor<Int16>  (aValue, aShape);         
+        DataType.Int32  : ObjectToTensor<Int32>  (aValue, aShape);             
+        DataType.Int64  : ObjectToTensor<Int64>  (aValue, aShape);            
+        DataType.Int8   : ObjectToTensor<Int8>   (aValue, aShape);              
+        DataType.String : ObjectToTensor<String> (aValue, aShape);    
+        DataType.UInt16 : ObjectToTensor<UInt16> (aValue, aShape);            
+        DataType.UInt32 : ObjectToTensor<UInt32> (aValue, aShape);          
+        DataType.UInt64 : ObjectToTensor<UInt64> (aValue, aShape);   
+        DataType.UInt8  : ObjectToTensor<UInt8>  (aValue, aShape);                    
+      else
+        result := nil;
+      end;
     end;
 
     operator Implicit(aValue: Boolean): Tensor;
