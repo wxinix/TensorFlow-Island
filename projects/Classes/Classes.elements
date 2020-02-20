@@ -75,13 +75,17 @@
       <SubType>Code</SubType>
       <Link>..\..\Src\Classes\Queue.pas</Link>
     </Compile>
-    <Compile Include="..\..\Src\Classes\GeneratedOps.cs">
+    <Compile Include="..\..\Src\Classes\OpsArray.cs">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Classes\GeneratedOps.cs</Link>
     </Compile>
-    <Compile Include="..\..\Src\Classes\ExtraOps.pas">
+    <Compile Include="..\..\Src\Classes\OpsExtra.pas">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Classes\ExtraOps.pas</Link>
+    </Compile>
+    <Compile Include="..\..\Src\Classes\OpsGenerated.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\..\Src\Classes\OpsRandom.cs">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
