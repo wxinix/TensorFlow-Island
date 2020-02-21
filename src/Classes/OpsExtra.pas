@@ -168,7 +168,8 @@ type
       aSeed: nullable Integer := nil; aOperName: String := nil): Tuple of (Boolean, Output);
     begin
       if not (0 <= aKeepProb <= 1) then begin
-        raise new ArgumentOutOfRangeException('keep_prob must be a scalar in the range [0,1].');
+        raise new ArgumentOutOfRangeException(
+          'Dropout: keep_prob must be a scalar in the range [0,1].');
       end;
 
       if aKeepProb.Equals(1) then exit (true, x);
@@ -294,7 +295,7 @@ type
               (not dtype_hierarchy.Contains(aLimit.OutputType)) or
               (not dtype_hierarchy.Contains(aDelta.OutputType)) )
           then begin
-            raise new ArgumentException('Range() invocation with unexpected type.');
+            raise new ArgumentException('Range: invalid argument type.');
           end;
 
           var dtypes: array of DataType := 
@@ -319,8 +320,8 @@ type
       var expanded_num_dims := num_dims + 1;
       
       if not (-expanded_num_dims <= aAxis < expanded_num_dims) then begin
-        raise new ArgumentException(
-          $'axis={aAxis} not in range [{-expanded_num_dims},{expanded_num_dims}).');
+        raise new ArgumentOutOfRangeException(
+          $'Stack: axis={aAxis} out of range [{-expanded_num_dims},{expanded_num_dims}).');
       end;
       result := Pack(aValues, aAxis, aOperName);
     end;
@@ -340,7 +341,7 @@ type
         if (assigned(x) and assigned(y)) then begin
           result := &Select(aCondition, x, y, aOperName);
         end else begin
-          raise new ArgumentException('Where op: x and y must both be null or non-null.');
+          raise new ArgumentException('Where: x and y must both be null or non-null.');
         end;
       end;
     end;
