@@ -26,14 +26,6 @@ uses
   TensorFlow.Island.Api;
 
 type
-  BufferFileMissingException = public class(Exception)
-  public
-    constructor(aFile: String);
-    begin
-      inherited constructor($'Error locating buffer file "{aFile}".');
-    end;
-  end;
-
   DeviceNameAlreadySetException = public class(Exception)
   public
     constructor withExistingName(aName: String);
@@ -46,7 +38,7 @@ type
   public
     constructor;
     begin
-      inherited constructor($'Trying to set an empty device name.');
+      inherited constructor('Trying to set device with an empty name.');
     end;
   end;
 
@@ -63,7 +55,7 @@ type
   public
     constructor withDetectedOsBitSize(aSize: Integer);
     begin
-      inherited constructor($'{aSize}bit detected. Support 64bit only.');
+      inherited constructor($'The system support 64bit only. {aSize}bit detected.');
     end;
   end;
 
@@ -137,7 +129,7 @@ type
   public
     constructor withTensorType(aType: DataType);
     begin
-      var msg := $'Error creating tensor[type={aType.ToString}].';
+      var msg := $'Fail creating tensor[dtype={aType.ToString}].';
       inherited constructor(msg);
     end;
   end;
