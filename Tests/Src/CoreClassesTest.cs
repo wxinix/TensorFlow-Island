@@ -20,11 +20,13 @@
 // SOFTWARE.
 
 using RemObjects.Elements.EUnit;
+using RemObjects.Elements.RTL;
+using RemObjects.Elements.System;
 using TensorFlow.Island.Classes;
 
 namespace TensorFlow.Island.Tests
 {
-    public class TensorFlowObjectsTest: Test
+    public class CoreClassesTest: Test
     {
         // Called before each test method.
         public override void Setup()
@@ -64,7 +66,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(shp.Dim[0], 1);
             Assert.AreEqual(shp.Dim[1], 5);
             Assert.AreEqual(shp.Dim[2], 10);
-            Assert.Throws(()=>shp.Dim[5], typeof(InvalidShapeDimIndexException));
+            Assert.Throws(()=>shp.Dim[5], typeof(ArgumentOutOfRangeException));
         }
 
         public void When_CreatingTensorWith2DArray_Expect_Created()
@@ -101,18 +103,18 @@ namespace TensorFlow.Island.Tests
         public void When_GettingTensorInfo_Expect_Success()
         {
             var lSession = new Session(); 
-            var lOutput = lSession.Graph.OpConst(1);
+            var lOutput = lSession.Graph.Const(1);
             var str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_0: 0\", shape=TensorShape([]), dtype=Int32 )");
 
-            lOutput = lSession.Graph.OpConst({1, 2});
+            lOutput = lSession.Graph.Const({1, 2});
             str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_1: 0\", shape=TensorShape([Dimension(2)]), dtype=Int32 )");   
 
-            lOutput = lSession.Graph.OpConst({{1, 2}});
+            lOutput = lSession.Graph.Const({{1, 2}});
             str = lSession.GetTensorInfo(lOutput);
             Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32 )"); 
-        }
+       }
 
         public void When_PrintingTensorWithInt32Values_Expect_Success()
         {

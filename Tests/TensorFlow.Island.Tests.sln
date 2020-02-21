@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "CoreClassesTest", "CoreClassesTest.elements", "{49DBEAD5-5983-42D8-B7E2-2FE215653756}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Classes", "..\Island\Projects\Classes\Classes.elements", "{93B81566-E004-4BD8-9525-336A904B0F64}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.ActiveCfg = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.Build.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|Default.Deploy.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.ActiveCfg = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Build.0 = Release
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.ActiveCfg = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.Build.0 = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.ActiveCfg = Release
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB522E9B-AF2A-4B43-B49E-68B309A6C33F}
+	EndGlobalSection
+EndGlobal

@@ -592,7 +592,7 @@ namespace TensorFlow.Island.OpGenerator
 
         private void Run(string[] dirs)
         {
-            output = File.CreateText("../../../Src/Classes/OpsGenerated.cs");
+            output = File.CreateText("../Src/Classes/OpsGenerated.cs");
             var operations = Serializer.Deserialize<List<OpDef>>(GetOpsList());
             UpdateApis(dirs);
             WriteLicense();
@@ -671,7 +671,7 @@ namespace TensorFlow.Island.OpGenerator
             };
 
             if (args.Length == 0) {
-                var apiDefDir = $"../../../TensorFlow/tensorflow-r{ver}/tensorflow/core/api_def/base_api";
+                var apiDefDir = $"../../TensorFlow/tensorflow-r{ver}/tensorflow/core/api_def/base_api";
                 args = new string[] { apiDefDir };
             }
 

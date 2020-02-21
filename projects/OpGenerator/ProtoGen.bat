@@ -1,1 +1,0 @@
-protogen.exe --proto_path=.\ProtoBufs\r1.15\ --csharp_out=.\ProtoGenFiles\  *.proto

@@ -8,8 +8,6 @@ Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Aspects", "Projects\Aspects
 EndProject
 Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Classes", "Projects\Classes\Classes.elements", "{93B81566-E004-4BD8-9525-336A904B0F64}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Tests", "Projects\Tests\Tests.elements", "{49DBEAD5-5983-42D8-B7E2-2FE215653756}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpGenerator", "Projects\OpGenerator\OpGenerator.csproj", "{700E5928-3D5D-4B54-AD4D-BC48E79E389E}"
 EndProject
 Global
@@ -36,12 +34,6 @@ Global
 		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|AnyCPU.ActiveCfg = Release
 		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|AnyCPU.Build.0 = Release
 		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|AnyCPU.Deploy.0 = Release
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.ActiveCfg = Debug
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.Build.0 = Debug
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.Deploy.0 = Debug
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.ActiveCfg = Release
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.Build.0 = Release
-		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.Deploy.0 = Release
 		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
 		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Release|AnyCPU.ActiveCfg = Release|Any CPU

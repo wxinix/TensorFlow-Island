@@ -36,11 +36,11 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow">
-      <HintPath>..\..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <HintPath>..\..\..\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TensorFlow.Island.ApiUtils">
-      <HintPath>..\..\..\Libs\Windows\x86_64\TensorFlow.Island.ApiUtils.fx</HintPath>
+      <HintPath>..\..\..\Island\Libs\Windows\x86_64\TensorFlow.Island.ApiUtils.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

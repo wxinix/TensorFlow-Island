@@ -81,7 +81,7 @@ type
   public
     constructor withOpType(aOpType: String) Error(aErr: String);
     begin
-      inherited constructor($'Error creating Op[type={aOpType}]: {aErr}');
+      inherited constructor($'Error creating Op[type={aOpType}]: {aErr}.');
     end;
   end;
 
@@ -121,7 +121,7 @@ type
   public
     constructor withString(aValue: String) Error(aErr: String);
     begin
-      inherited constructor($'Error encoding "{aValue}": {aErr}');
+      inherited constructor($'Error encoding "{aValue}": {aErr}.');
     end;
   end;
 

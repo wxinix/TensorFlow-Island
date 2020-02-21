@@ -30,7 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\</OutputPath>
+    <OutputPath>..\..\Bin\</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,7 +40,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
-    <OutputPath>Bin\</OutputPath>
+    <OutputPath>..\..\Bin\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
@@ -54,32 +54,32 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProtoGenFiles\allocation_description.cs" />
-    <Compile Include="ProtoGenFiles\api_def.cs" />
-    <Compile Include="ProtoGenFiles\attr_value.cs" />
-    <Compile Include="ProtoGenFiles\cost_graph.cs" />
-    <Compile Include="ProtoGenFiles\device_attributes.cs" />
-    <Compile Include="ProtoGenFiles\function.cs" />
-    <Compile Include="ProtoGenFiles\graph.cs" />
-    <Compile Include="ProtoGenFiles\graph_transfer_info.cs" />
-    <Compile Include="ProtoGenFiles\kernel_def.cs" />
-    <Compile Include="ProtoGenFiles\log_memory.cs" />
-    <Compile Include="ProtoGenFiles\node_def.cs" />
     <Compile Include="OpGenerator.cs" />
-    <Compile Include="ProtoGenFiles\op_def.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProtoGenFiles\reader_base.cs" />
-    <Compile Include="ProtoGenFiles\remote_fused_graph_execute_info.cs" />
-    <Compile Include="ProtoGenFiles\resource_handle.cs" />
-    <Compile Include="ProtoGenFiles\step_stats.cs" />
-    <Compile Include="ProtoGenFiles\summary.cs" />
-    <Compile Include="ProtoGenFiles\tensor.cs" />
-    <Compile Include="ProtoGenFiles\tensor_description.cs" />
-    <Compile Include="ProtoGenFiles\tensor_shape.cs" />
-    <Compile Include="ProtoGenFiles\tensor_slice.cs" />
-    <Compile Include="ProtoGenFiles\types.cs" />
-    <Compile Include="ProtoGenFiles\variable.cs" />
-    <Compile Include="ProtoGenFiles\versions.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\allocation_description.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\api_def.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\attr_value.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\cost_graph.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\device_attributes.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\function.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\graph.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\graph_transfer_info.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\kernel_def.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\log_memory.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\node_def.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\op_def.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\reader_base.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\remote_fused_graph_execute_info.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\resource_handle.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\step_stats.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\summary.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\tensor.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\tensor_description.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\tensor_shape.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\tensor_slice.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\types.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\variable.cs" />
+    <Compile Include="ProtoGenFiles\r1.15.0\versions.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

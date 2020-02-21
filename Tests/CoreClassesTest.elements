@@ -4,9 +4,9 @@
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <ProjectGuid>{49dbead5-5983-42d8-b7e2-2fe215653756}</ProjectGuid>
     <OutputType>Executable</OutputType>
-    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <AssemblyName>CoreClassesTest</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>Tests</Name>
+    <Name>CoreClassesTest</Name>
     <Architecture>x86_64</Architecture>
     <OutputPath>..\Bin\$(Configuration)</OutputPath>
   </PropertyGroup>
@@ -19,7 +19,7 @@
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <AssemblyName>CoreClassesTest</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
     <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
     <EnableInlining>False</EnableInlining>
@@ -30,7 +30,7 @@
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <AssemblyName>CoreClassesTest</AssemblyName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
@@ -46,30 +46,29 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="TensorFlow.Island.Classes">
-      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
+      <HintPath>C:\DEVLIBS\TensorFlow-Island\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\..\Src\Tests\" />
+    <Folder Include="Src" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Src\Tests\GraphOperationsTest.cs">
+    <Compile Include="Src\Program.cs">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Tests\GraphOperationsTest.cs</Link>
     </Compile>
-    <Compile Include="..\..\Src\Tests\Program.cs">
+    <Compile Include="Src\CoreClassesTest.cs">
       <SubType>Code</SubType>
-      <Link>..\..\Src\Tests\Program.cs</Link>
     </Compile>
-    <Compile Include="..\..\Src\Tests\TensorFlowObjectsTest.cs">
-      <SubType>Code</SubType>
-      <Link>..\..\Src\Tests\TensorFlowObjects.cs</Link>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Island\Projects\Classes\Classes.elements">
+      <Name>Classes</Name>
+      <Project>{93b81566-e004-4bd8-9525-336a904b0f64}</Project>
+      <Private>True</Private>
+      <HintPath>..\..\..\Users\WXIN\AppData\Local\RemObjects Software\EBuild\Obj\Classes-952073B0B681A270F5D22C15113922FD356BF344\Debug\Island-Windows\x86_64\TensorFlow.Island.Classes.lib</HintPath>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>
