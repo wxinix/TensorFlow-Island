@@ -50,39 +50,21 @@ type
     end;
   end;
 
-  InvalidTensorDataSizeException = public class(Exception)
+  TensorDataSizeException = public class(Exception)
   public
-    constructor withDataSize(aDataSize: Integer) ShapeSize(aShpSize: Integer);
+    constructor withTensorDataSize(aTensorDataSize: Integer) ShapeSize(aShapeSize: Integer);
     begin
-      inherited constructor($'Data[size={aDataSize}] inconsistent with shape[size={aShpSize}].');
+      inherited constructor(
+        $'Tensor data[size={aTensorDataSize}] inconsistent ' +
+        $'with shape[size={aShapeSize}].');
     end;
   end;
 
-  InvalidAttrTypeException = public class(Exception)
-  end;
-
-  InvalidOsBitSizeException = public class(Exception)
+  OsBitSizeException = public class(Exception)
   public
     constructor withDetectedOsBitSize(aSize: Integer);
     begin
       inherited constructor($'Invalid OS bit size {aSize}. Support 64bit only.');
-    end;
-  end;
-
-  InvalidRectangularTensorData = public class(Exception)
-  public
-    constructor(aMsg: not nullable String);
-    begin
-      inherited constructor(aMsg);
-    end;
-  end;
-
-  InvalidShapeDimIndexException = public class(Exception)
-  public
-    constructor (aIndex: Int32; aNumDims: Int32);
-    begin
-      var msg := $'Invalid dim index {aIndex}, NumDims = {aNumDims}.';
-      inherited constructor(msg);
     end;
   end;
 
@@ -106,10 +88,9 @@ type
 
   OpCreateException = public class(Exception)
   public
-    constructor withOpType(aOpType: not nullable String)
-      Message(aMsg: not nullable String := '');
+    constructor withOpType(aOpType: not nullable String) Error(aErr: NotNull<String> := '');
     begin
-      inherited constructor($'Fail creating {aOpType}. {aMsg}');
+      inherited constructor($'Fail creating Op[type={aOpType}]. {aErr}');
     end;
   end;
 
@@ -117,7 +98,7 @@ type
   public
     constructor withError(aErr: String);
     begin
-      inherited constructor($'Fail to set up partial run with error {aErr}');
+      inherited constructor($'Fail setting up partial run with error "{aErr}".');
     end;
   end;
 
@@ -131,17 +112,17 @@ type
 
   SessionCreateException = public class(Exception)
   public
-    constructor withMessage(aMsg: not nullable String);
+    constructor withError(aErr: NotNull<String>);
     begin
-      inherited constructor(aMsg);
+      inherited constructor(aErr);
     end;
   end;
 
   StringDecodeException = public class(Exception)
   public
-    constructor withError(aErrMsg: String);
+    constructor withError(aErr: String);
     begin
-      inherited constructor(aErrMsg);
+      inherited constructor(aErr);
     end;
   end;
 
@@ -149,24 +130,15 @@ type
   public
     constructor withString(aValue: String) Error(aErrMsg: String);
     begin
-      inherited constructor($'"{aValue}" cannot be encoded. {aErrMsg}');
+      inherited constructor($'Fail encoding "{aValue}". {aErrMsg}');
     end;
   end;
 
   TensorCreateException = class(Exception)
   public
-    constructor(aType: DataType);
+    constructor withTensorType(aType: DataType);
     begin
-      var msg := $'Cannot create tensor for type {aType.ToString}';
-      inherited constructor(msg);
-    end;
-  end;
-
-  UnSupportedTypeException = public class(Exception)
-  public
-    constructor(aType: &Type);
-    begin
-      var msg := $'Cannot convert {aType.ToString} to TensorFlow DataType.';
+      var msg := $'Fail creating tensor[type={aType.ToString}].';
       inherited constructor(msg);
     end;
   end;
