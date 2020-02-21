@@ -152,7 +152,7 @@ type
         TypeCodes.String : result := DataType.String;
       else
         if aFlag then begin
-          raise new UnSupportedTypeException(aType);
+          raise new ArgumentException($'ToDataType cannot convert {aType.Name} to TensorFlow datatype.');
         end else begin
           result := -1;
         end;
