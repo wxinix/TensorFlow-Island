@@ -209,7 +209,7 @@ type
           var (success, shp) := GetTensorShape(aIniValue, lStatus);
 
           if not success then begin
-            raise new OpCreateException withOpType('Variable') Message(lStatus.Message);
+            raise new OpCreateException withOpType('Variable') Error(lStatus.Message);
           end;
 
           using shp do begin
@@ -246,7 +246,7 @@ type
             result := Range(&Const(0), &Const(0), &Const(1)); // start, limit, delta
           end;
         end else begin
-          raise new OpCreateException withOpType('ReduceDims') Message(lStatus.Message)
+          raise new OpCreateException withOpType('ReduceDims') Error(lStatus.Message)
         end;
       end;
     end;
