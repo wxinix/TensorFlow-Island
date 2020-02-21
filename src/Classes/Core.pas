@@ -405,7 +405,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -415,7 +415,7 @@ type
       using lStatus := new Status do begin
         var (success, attr_meta) := GetAttrMetaData(aAttrName, lStatus);
         if not success then begin
-          if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+          if assigned(aStatus) then aStatus.Assign(lStatus);
           exit (false, nil);
         end;
 
@@ -511,7 +511,7 @@ type
             $'for attr[attr_name={aAttrName}].');
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -807,7 +807,7 @@ type
     begin
       using lStatus := new Status do begin
         result := TF_OperationOutputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -815,7 +815,7 @@ type
     begin
       using lStatus := new Status do begin
         result := TF_OperationInputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -955,7 +955,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1091,7 +1091,7 @@ type
     begin
       using lStatus := new Status do begin
         TF_SetAttrTensor(Handle, aName.ToAnsiChars(true), aTensor.Handle, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1101,7 +1101,7 @@ type
       using lStatus := new Status do begin
         TF_SetAttrTensorList(Handle, aName.ToAnsiChars(true), aTensorList.Handles,
           aTensorList.Count, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1111,7 +1111,7 @@ type
       using lStatus := new Status do begin
         TF_SetAttrTensorShapeProto(Handle, aName.ToAnsiChars(true), aProto,
           aProto.Length, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1121,7 +1121,7 @@ type
       using lStatus := new Status do begin
         TF_SetAttrTensorShapeProtoList(Handle, aName.ToAnsiChars(true), ^^Void(aProtos),
           aProtoLens, aProtoLens.Length, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1130,7 +1130,7 @@ type
     begin
       using lStatus := new Status do begin
         TF_SetAttrValueProto(Handle, aName.ToAnsiChars(true), aProto, aProto.Length, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1150,6 +1150,11 @@ type
     begin
       var hnd := TF_NewStatus();
       inherited constructor withHandle(hnd) OnDispose(aHandle->TF_DeleteStatus(aHandle));
+    end;
+
+    method Assign(aStatus: NotNull<Status>);
+    begin
+      self.SetCode(aStatus.Code) Message(aStatus.Message);
     end;
 
     method SetCode(aCode: TensorFlowCode) Message(const aMsg: String);
@@ -1395,18 +1400,18 @@ type
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   InputList = public sealed class(TensorFlowDisposableList<Output>)
   assembly
-    method ToInputArray: array of TF_Output;
+    method ToTFInputs: array of TF_Output;
     begin
-      result := Helper.ToArray(self.ToArray);
+      result := Helper.ToTFOutputs(self.ToArray);
     end;
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
   OutputList = public sealed class(TensorFlowDisposableList<Output>)
   assembly
-    method ToOutputArray: array of TF_Output;
+    method ToTFOutputs: array of TF_Output;
     begin
-      result := Helper.ToArray(self.ToArray);
+      result := Helper.ToTFOutputs(self.ToArray);
     end;
   end;
 
@@ -1491,15 +1496,15 @@ type
       aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
-        var msg := $'AddGradient y [size={y.Count}] and dx [size={dx.Count}] must have the same size.';
-        raise new ArgumentException(msg);
+        var s := $'AddGradient: y[size={y.Count} dx[size={dx.Count}] must be of same size.';
+        raise new ArgumentException(s);
       end;
 
       using lStatus := new Status do begin
         var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
 
-        TF_AddGradients(Handle, y.ToOutputArray, y.Count, x.ToOutputArray, x.Count,
-          dx.ToOutputArray, lStatus.Handle, dy);
+        TF_AddGradients(Handle, y.ToTFOutputs, y.Count, x.ToTFOutputs, x.Count,
+          dx.ToTFOutputs, lStatus.Handle, dy);
 
         if not lStatus.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
@@ -1512,7 +1517,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1537,15 +1542,15 @@ type
       : Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
-        var msg := $'AddGradient y[size={y.Count}] and dx[size={dx.Count}] must have same size.';
+        var msg := $'AddGradient: y[size={y.Count}] dx[size={dx.Count}] must be of same size.';
         raise new ArgumentException(msg);
       end;
 
       using lStatus := new Status do begin
         var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
 
-        TF_AddGradientsWithPrefix(Handle, aPrefix.ToAnsiChars(true), y.ToOutputArray,
-          y.Count, x.ToOutputArray, x.Count, dx.ToOutputArray, lStatus.Handle, dy);
+        TF_AddGradientsWithPrefix(Handle, aPrefix.ToAnsiChars(true), y.ToTFOutputs,
+          y.Count, x.ToTFOutputs, x.Count, dx.ToTFOutputs, lStatus.Handle, dy);
 
         if not lStatus.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
@@ -1558,7 +1563,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1595,7 +1600,7 @@ type
         end else begin
           result := (false, nil);
         end;
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1615,7 +1620,7 @@ type
     begin
       using lStatus := new Status do begin
         result := TF_GraphGetTensorNumDims(Handle, aOutput.AsTFOutput, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1641,7 +1646,7 @@ type
           end;
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1668,7 +1673,7 @@ type
       using lStatus := new Status do begin
         var graph_def := ^TF_Buffer(aGraphDef.Handle);
         TF_GraphImportGraphDef(Handle, graph_def, aOpts.Handle, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1723,7 +1728,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1742,7 +1747,7 @@ type
       using lStatus := new Status do begin
         TF_GraphSetTensorShape(Handle, aOutput.AsTFOutput, aShape.ToArray,
           aShape.NumDims, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1767,9 +1772,9 @@ type
         var num_opers := aOps.Count;
         var opers := aOps.Handles;
         var ninputs := aInputs.Count;
-        var inputs := aInputs.ToInputArray;
+        var inputs := aInputs.ToTFInputs;
         var noutputs := aOutputs.Count;
-        var outputs := aOutputs.ToOutputArray;
+        var outputs := aOutputs.ToTFOutputs;
         var output_names := aOutputNames.ToAnsiCharPtrs;
         var opts: ^TF_FunctionOptions := nil;
 
@@ -1783,7 +1788,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1799,7 +1804,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1808,14 +1813,16 @@ type
     begin
       using lStatus := new Status do begin
         var hnd: ^TF_Tensor;
-        var success := TF_TryEvaluateConstant(Handle, aOutput.AsTFOutput, @hnd, lStatus.Handle) <> 0;
+        var bt := TF_TryEvaluateConstant(Handle, aOutput.AsTFOutput, @hnd, lStatus.Handle);
+        var success := bt <> 0; // bt is a byte.
 
         if success then begin
           result := (true, new Tensor withHandle(hnd));
         end else begin
           result := (false, nil);
         end;
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1831,7 +1838,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1842,7 +1849,7 @@ type
         var while_params: TF_WhileParams;
         try
           try
-            while_params := TF_NewWhile(Handle, aInputs.ToInputArray, aInputs.Count, lStatus.Handle);
+            while_params := TF_NewWhile(Handle, aInputs.ToTFInputs, aInputs.Count, lStatus.Handle);
             if not lStatus.Ok then exit (false, nil);
             // No need to set while_params.name inside this callback. It will be
             // overwritten anyway.
@@ -1865,7 +1872,7 @@ type
             TF_AbortWhile(@while_params);
           end;
         finally
-          if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+          if assigned(aStatus) then aStatus.Assign(lStatus);
         end;
       end;
     end;
@@ -2218,7 +2225,7 @@ type
       var is_value_str := aValue.GetType = typeOf(String);
       var is_value_valid := aValue.GetType.IsIntegerOrFloat or (is_value_str);      
       if not is_value_valid then begin // Check if the object contains valid value
-        raise new ArgumentException($'ObjectToTensor has invalid object value type={aValue.GetType.Name}.');
+        raise new ArgumentException($'ObjectToTensor: invalid T={aValue.GetType.Name}.');
       end;
 
       // The object container contains type as set by compiler.  Figure out the value 
@@ -2678,7 +2685,7 @@ type
     begin
       using lStatus := new Status do begin
         TF_CloseSession(Handle, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -2686,7 +2693,7 @@ type
     begin
       using lStatus := new Status do begin
         var (success, shp) := fGraph.GetTensorShape(aOutput, lStatus);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
 
         if success then begin
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Handle));
@@ -2726,7 +2733,7 @@ type
 
           result := (true, devlist);
         finally
-          if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+          if assigned(aStatus) then aStatus.Assign(lStatus);
         end;
       end;
     end;
@@ -2763,7 +2770,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -2815,7 +2822,7 @@ type
     begin
       using lStatus := new Status do begin
         TF_SetConfig(Handle, aProtoData, aProtoData.Length, lStatus.Handle);
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -2950,9 +2957,9 @@ type
     method SetupPartialRun(aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
-        var inputs       := fContext.Inputs.ToInputArray;
+        var inputs       := fContext.Inputs.ToTFInputs;
         var ninputs      := fContext.Inputs.Count;
-        var outputs      := fContext.Outputs.ToOutputArray;
+        var outputs      := fContext.Outputs.ToTFOutputs;
         var noutputs     := fContext.Outputs.Count;
         var target_opers := fContext.Targets.Handles;
         var ntargets     := fContext.Targets.Count;
@@ -2967,7 +2974,7 @@ type
           raise new PartialRunSetupException withError(lStatus.Message);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -2982,10 +2989,10 @@ type
     begin
       using lStatus := new Status do begin
         var run_options   := ^TF_Buffer(aOpts: Handle);
-        var inputs        := fContext.Inputs.ToInputArray;
+        var inputs        := fContext.Inputs.ToTFInputs;
         var input_values  := fContext.InputValues.Handles;
         var ninputs       := fContext.Inputs.Count;
-        var outputs       := fContext.Outputs.ToOutputArray;
+        var outputs       := fContext.Outputs.ToTFOutputs;
         var noutputs      := fContext.Outputs.Count;
         var output_values := new ^TF_Tensor[noutputs];
         var target_opers  := fContext.Targets.Handles;
@@ -3000,11 +3007,11 @@ type
           result := new TensorList withCapacity(noutputs);
           for v in output_values do result.Add(new Tensor withHandle(v));
         end else begin
-          writeLn($'SessionRunner.Run failed, Code={lStatus.Code.ToString}, {lStatus.Message}');
+          writeLn($'Error invoking SessionRunner.Run, {lStatus.ToString}');
           result := nil;
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -3015,10 +3022,10 @@ type
       end;
 
       using lStatus := new Status do begin
-        var inputs        := fContext.Inputs.ToInputArray;
+        var inputs        := fContext.Inputs.ToTFInputs;
         var input_values  := fContext.InputValues.Handles;
         var ninputs       := fContext.Inputs.Count;
-        var outputs       := fContext.Outputs.ToOutputArray;
+        var outputs       := fContext.Outputs.ToTFOutputs;
         var noutputs      := fContext.Outputs.Count;
         var output_values := new ^TF_Tensor[noutputs];
         var target_opers  := fContext.Targets.Handles;
@@ -3033,11 +3040,11 @@ type
           result := new TensorList withCapacity(noutputs);
           for v in output_values do result.Add(new Tensor withHandle(v));
         end else begin
-          writeLn($'SessionRunner.PartialRun failed. Code={lStatus.Code.ToString}. {lStatus.Message}');
+          writeLn($'Error invoking SessionRunner.PartialRun, {lStatus.ToString}');
           result := nil;
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
   end;
@@ -3067,7 +3074,7 @@ type
       using lStatus := new Status do begin
         var hnd := TF_GetAllRegisteredKernels(lStatus.Handle);
         result := if lStatus.Ok then new Buffer withHandle(hnd) else nil;
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -3076,7 +3083,7 @@ type
       using lStatus := new Status do begin
         var hnd := TF_GetRegisteredKernelsForOp(aOpName.ToAnsiChars(true), lStatus.Handle);
         result := if lStatus.Ok then new Buffer withHandle(hnd) else nil;
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -3130,7 +3137,7 @@ type
           TF_DeleteBuffer(output_func_def);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
@@ -3146,7 +3153,7 @@ type
           result := (false, nil);
         end;
 
-        if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
+        if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
