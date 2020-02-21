@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 using RemObjects.Elements.System;
 using TensorFlow.Island.Api;
 
@@ -70,7 +71,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Abort") Message(status.Message);
+                    throw new OpCreateException withOpType("Abort") Error(status.Message);
                 }
                 return op;
             }
@@ -104,7 +105,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Abs") Message(status.Message);
+                    throw new OpCreateException withOpType("Abs") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -151,7 +152,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AccumulateNV2") Message(status.Message);
+                    throw new OpCreateException withOpType("AccumulateNV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var sum = new Output withOp(op) Index(_idx++);
@@ -194,7 +195,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AccumulatorApplyGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("AccumulatorApplyGradient") Error(status.Message);
                 }
                 return op;
             }
@@ -225,7 +226,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AccumulatorNumAccumulated") Message(status.Message);
+                    throw new OpCreateException withOpType("AccumulatorNumAccumulated") Error(status.Message);
                 }
                 int _idx = 0;
                 var num_accumulated = new Output withOp(op) Index(_idx++);
@@ -265,7 +266,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AccumulatorSetGlobalStep") Message(status.Message);
+                    throw new OpCreateException withOpType("AccumulatorSetGlobalStep") Error(status.Message);
                 }
                 return op;
             }
@@ -313,7 +314,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AccumulatorTakeGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("AccumulatorTakeGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var average = new Output withOp(op) Index(_idx++);
@@ -344,7 +345,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Acos") Message(status.Message);
+                    throw new OpCreateException withOpType("Acos") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -384,7 +385,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Acosh") Message(status.Message);
+                    throw new OpCreateException withOpType("Acosh") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -422,7 +423,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Add") Message(status.Message);
+                    throw new OpCreateException withOpType("Add") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -509,7 +510,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AddManySparseToTensorsMap") Message(status.Message);
+                    throw new OpCreateException withOpType("AddManySparseToTensorsMap") Error(status.Message);
                 }
                 int _idx = 0;
                 var sparse_handles = new Output withOp(op) Index(_idx++);
@@ -548,7 +549,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AddN") Message(status.Message);
+                    throw new OpCreateException withOpType("AddN") Error(status.Message);
                 }
                 int _idx = 0;
                 var sum = new Output withOp(op) Index(_idx++);
@@ -623,7 +624,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AddSparseToTensorsMap") Message(status.Message);
+                    throw new OpCreateException withOpType("AddSparseToTensorsMap") Error(status.Message);
                 }
                 int _idx = 0;
                 var sparse_handle = new Output withOp(op) Index(_idx++);
@@ -661,7 +662,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AddV2") Message(status.Message);
+                    throw new OpCreateException withOpType("AddV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -701,7 +702,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AdjustContrast") Message(status.Message);
+                    throw new OpCreateException withOpType("AdjustContrast") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -749,7 +750,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AdjustContrastv2") Message(status.Message);
+                    throw new OpCreateException withOpType("AdjustContrastv2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -794,7 +795,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AdjustHue") Message(status.Message);
+                    throw new OpCreateException withOpType("AdjustHue") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -839,7 +840,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AdjustSaturation") Message(status.Message);
+                    throw new OpCreateException withOpType("AdjustSaturation") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -891,7 +892,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("All") Message(status.Message);
+                    throw new OpCreateException withOpType("All") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -978,7 +979,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AllCandidateSampler") Message(status.Message);
+                    throw new OpCreateException withOpType("AllCandidateSampler") Error(status.Message);
                 }
                 int _idx = 0;
                 var sampled_candidates = new Output withOp(op) Index(_idx++);
@@ -1051,7 +1052,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AllToAll") Message(status.Message);
+                    throw new OpCreateException withOpType("AllToAll") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1108,7 +1109,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Angle") Message(status.Message);
+                    throw new OpCreateException withOpType("Angle") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1147,7 +1148,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AnonymousIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("AnonymousIterator") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -1188,7 +1189,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AnonymousIteratorV2") Message(status.Message);
+                    throw new OpCreateException withOpType("AnonymousIteratorV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -1233,7 +1234,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AnonymousMultiDeviceIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("AnonymousMultiDeviceIterator") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -1286,7 +1287,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Any") Message(status.Message);
+                    throw new OpCreateException withOpType("Any") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1358,7 +1359,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyAdadelta") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyAdadelta") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1424,7 +1425,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyAdagrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1494,7 +1495,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyAdagradDA") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyAdagradDA") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1564,7 +1565,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyAdagradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyAdagradV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1657,7 +1658,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyAdam") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyAdam") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1737,7 +1738,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyAdaMax") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyAdaMax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1809,7 +1810,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyAddSign") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyAddSign") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1903,7 +1904,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyCenteredRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyCenteredRMSProp") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -1981,7 +1982,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyFtrl") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyFtrl") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2064,7 +2065,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyFtrlV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyFtrlV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2114,7 +2115,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyGradientDescent") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyGradientDescent") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2189,7 +2190,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyMomentum") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyMomentum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2261,7 +2262,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyPowerSign") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyPowerSign") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2328,7 +2329,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyProximalAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyProximalAdagrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2390,7 +2391,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyProximalGradientDescent") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyProximalGradientDescent") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2472,7 +2473,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApplyRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("ApplyRMSProp") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2513,7 +2514,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ApproximateEqual") Message(status.Message);
+                    throw new OpCreateException withOpType("ApproximateEqual") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -2570,7 +2571,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ArgMax") Message(status.Message);
+                    throw new OpCreateException withOpType("ArgMax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2627,7 +2628,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ArgMin") Message(status.Message);
+                    throw new OpCreateException withOpType("ArgMin") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -2676,7 +2677,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Asin") Message(status.Message);
+                    throw new OpCreateException withOpType("Asin") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -2717,7 +2718,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Asinh") Message(status.Message);
+                    throw new OpCreateException withOpType("Asinh") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -2765,7 +2766,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Assert") Message(status.Message);
+                    throw new OpCreateException withOpType("Assert") Error(status.Message);
                 }
                 return op;
             }
@@ -2818,7 +2819,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AssertNextDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("AssertNextDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -2879,7 +2880,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Assign") Message(status.Message);
+                    throw new OpCreateException withOpType("Assign") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -2930,7 +2931,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AssignAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("AssignAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -2970,7 +2971,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AssignAddVariableOp") Message(status.Message);
+                    throw new OpCreateException withOpType("AssignAddVariableOp") Error(status.Message);
                 }
                 return op;
             }
@@ -3019,7 +3020,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AssignSub") Message(status.Message);
+                    throw new OpCreateException withOpType("AssignSub") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -3059,7 +3060,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AssignSubVariableOp") Message(status.Message);
+                    throw new OpCreateException withOpType("AssignSubVariableOp") Error(status.Message);
                 }
                 return op;
             }
@@ -3097,7 +3098,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AssignVariableOp") Message(status.Message);
+                    throw new OpCreateException withOpType("AssignVariableOp") Error(status.Message);
                 }
                 return op;
             }
@@ -3178,7 +3179,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AsString") Message(status.Message);
+                    throw new OpCreateException withOpType("AsString") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -3227,7 +3228,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Atan") Message(status.Message);
+                    throw new OpCreateException withOpType("Atan") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -3268,7 +3269,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Atan2") Message(status.Message);
+                    throw new OpCreateException withOpType("Atan2") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -3311,7 +3312,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Atanh") Message(status.Message);
+                    throw new OpCreateException withOpType("Atanh") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -3390,7 +3391,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AudioSpectrogram") Message(status.Message);
+                    throw new OpCreateException withOpType("AudioSpectrogram") Error(status.Message);
                 }
                 int _idx = 0;
                 var spectrogram = new Output withOp(op) Index(_idx++);
@@ -3453,7 +3454,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AudioSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("AudioSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -3515,7 +3516,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AudioSummaryV2") Message(status.Message);
+                    throw new OpCreateException withOpType("AudioSummaryV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -3571,7 +3572,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AutoShardDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("AutoShardDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -3633,7 +3634,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AvgPool") Message(status.Message);
+                    throw new OpCreateException withOpType("AvgPool") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -3693,7 +3694,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AvgPool3D") Message(status.Message);
+                    throw new OpCreateException withOpType("AvgPool3D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -3757,7 +3758,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AvgPool3DGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("AvgPool3DGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -3820,7 +3821,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("AvgPoolGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("AvgPoolGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -3901,7 +3902,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Barrier") Message(status.Message);
+                    throw new OpCreateException withOpType("Barrier") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -3951,7 +3952,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BarrierClose") Message(status.Message);
+                    throw new OpCreateException withOpType("BarrierClose") Error(status.Message);
                 }
                 return op;
             }
@@ -3983,7 +3984,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BarrierIncompleteSize") Message(status.Message);
+                    throw new OpCreateException withOpType("BarrierIncompleteSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -4035,7 +4036,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BarrierInsertMany") Message(status.Message);
+                    throw new OpCreateException withOpType("BarrierInsertMany") Error(status.Message);
                 }
                 return op;
             }
@@ -4067,7 +4068,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BarrierReadySize") Message(status.Message);
+                    throw new OpCreateException withOpType("BarrierReadySize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -4151,7 +4152,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BarrierTakeMany") Message(status.Message);
+                    throw new OpCreateException withOpType("BarrierTakeMany") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -4280,7 +4281,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Batch") Message(status.Message);
+                    throw new OpCreateException withOpType("Batch") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -4331,7 +4332,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -4385,7 +4386,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchDatasetV2") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchDatasetV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -4458,7 +4459,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchMatMul") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchMatMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -4536,7 +4537,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchMatMulV2") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchMatMulV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -4604,7 +4605,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchNormWithGlobalNormalization") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchNormWithGlobalNormalization") Error(status.Message);
                 }
                 int _idx = 0;
                 var result = new Output withOp(op) Index(_idx++);
@@ -4677,7 +4678,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchNormWithGlobalNormalizationGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchNormWithGlobalNormalizationGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var dx = new Output withOp(op) Index(_idx++);
@@ -4804,7 +4805,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchToSpace") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchToSpace") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -4961,7 +4962,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BatchToSpaceND") Message(status.Message);
+                    throw new OpCreateException withOpType("BatchToSpaceND") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -4998,7 +4999,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BesselI0e") Message(status.Message);
+                    throw new OpCreateException withOpType("BesselI0e") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -5035,7 +5036,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BesselI1e") Message(status.Message);
+                    throw new OpCreateException withOpType("BesselI1e") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -5087,7 +5088,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Betainc") Message(status.Message);
+                    throw new OpCreateException withOpType("Betainc") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -5142,7 +5143,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BiasAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("BiasAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -5194,7 +5195,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BiasAddGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("BiasAddGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -5237,7 +5238,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BiasAddV1") Message(status.Message);
+                    throw new OpCreateException withOpType("BiasAddV1") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -5290,7 +5291,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Bincount") Message(status.Message);
+                    throw new OpCreateException withOpType("Bincount") Error(status.Message);
                 }
                 int _idx = 0;
                 var bins = new Output withOp(op) Index(_idx++);
@@ -5376,7 +5377,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Bitcast") Message(status.Message);
+                    throw new OpCreateException withOpType("Bitcast") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -5432,7 +5433,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BitwiseAnd") Message(status.Message);
+                    throw new OpCreateException withOpType("BitwiseAnd") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -5488,7 +5489,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BitwiseOr") Message(status.Message);
+                    throw new OpCreateException withOpType("BitwiseOr") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -5544,7 +5545,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BitwiseXor") Message(status.Message);
+                    throw new OpCreateException withOpType("BitwiseXor") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -5660,7 +5661,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BlockLSTM") Message(status.Message);
+                    throw new OpCreateException withOpType("BlockLSTM") Error(status.Message);
                 }
                 int _idx = 0;
                 var i = new Output withOp(op) Index(_idx++);
@@ -5784,7 +5785,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BlockLSTMGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("BlockLSTMGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var x_grad = new Output withOp(op) Index(_idx++);
@@ -5909,7 +5910,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BlockLSTMGradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("BlockLSTMGradV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var x_grad = new Output withOp(op) Index(_idx++);
@@ -6028,7 +6029,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BlockLSTMV2") Message(status.Message);
+                    throw new OpCreateException withOpType("BlockLSTMV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var i = new Output withOp(op) Index(_idx++);
@@ -6092,7 +6093,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesAggregateStats") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesAggregateStats") Error(status.Message);
                 }
                 int _idx = 0;
                 var stats_summary = new Output withOp(op) Index(_idx++);
@@ -6134,7 +6135,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesBucketize") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesBucketize") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -6224,7 +6225,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesCalculateBestFeatureSplit") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesCalculateBestFeatureSplit") Error(status.Message);
                 }
                 int _idx = 0;
                 var node_ids = new Output withOp(op) Index(_idx++);
@@ -6303,7 +6304,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesCalculateBestGainsPerFeature") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesCalculateBestGainsPerFeature") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -6382,7 +6383,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesCenterBias") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesCenterBias") Error(status.Message);
                 }
                 int _idx = 0;
                 var continue_centering = new Output withOp(op) Index(_idx++);
@@ -6422,7 +6423,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesCreateEnsemble") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesCreateEnsemble") Error(status.Message);
                 }
                 return op;
             }
@@ -6468,7 +6469,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesCreateQuantileStreamResource") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesCreateQuantileStreamResource") Error(status.Message);
                 }
                 return op;
             }
@@ -6509,7 +6510,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesDeserializeEnsemble") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesDeserializeEnsemble") Error(status.Message);
                 }
                 return op;
             }
@@ -6549,7 +6550,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesEnsembleResourceHandleOp") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesEnsembleResourceHandleOp") Error(status.Message);
                 }
                 int _idx = 0;
                 var resource = new Output withOp(op) Index(_idx++);
@@ -6597,7 +6598,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesExampleDebugOutputs") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesExampleDebugOutputs") Error(status.Message);
                 }
                 int _idx = 0;
                 var examples_debug_outputs_serialized = new Output withOp(op) Index(_idx++);
@@ -6638,7 +6639,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesFlushQuantileSummaries") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesFlushQuantileSummaries") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -6683,7 +6684,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesGetEnsembleStates") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesGetEnsembleStates") Error(status.Message);
                 }
                 int _idx = 0;
                 var stamp_token = new Output withOp(op) Index(_idx++);
@@ -6733,7 +6734,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesMakeQuantileSummaries") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesMakeQuantileSummaries") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -6796,7 +6797,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesMakeStatsSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesMakeStatsSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var stats_summary = new Output withOp(op) Index(_idx++);
@@ -6843,7 +6844,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesPredict") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesPredict") Error(status.Message);
                 }
                 int _idx = 0;
                 var logits = new Output withOp(op) Index(_idx++);
@@ -6884,7 +6885,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceAddSummaries") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceAddSummaries") Error(status.Message);
                 }
                 return op;
             }
@@ -6921,7 +6922,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceDeserialize") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceDeserialize") Error(status.Message);
                 }
                 return op;
             }
@@ -6971,7 +6972,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceFlush") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceFlush") Error(status.Message);
                 }
                 return op;
             }
@@ -7011,7 +7012,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceGetBucketBoundaries") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceGetBucketBoundaries") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -7059,7 +7060,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceHandleOp") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesQuantileStreamResourceHandleOp") Error(status.Message);
                 }
                 int _idx = 0;
                 var resource = new Output withOp(op) Index(_idx++);
@@ -7094,7 +7095,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesSerializeEnsemble") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesSerializeEnsemble") Error(status.Message);
                 }
                 int _idx = 0;
                 var stamp_token = new Output withOp(op) Index(_idx++);
@@ -7176,7 +7177,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesSparseAggregateStats") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesSparseAggregateStats") Error(status.Message);
                 }
                 int _idx = 0;
                 var stats_summary_indices = new Output withOp(op) Index(_idx++);
@@ -7271,7 +7272,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesSparseCalculateBestFeatureSplit") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesSparseCalculateBestFeatureSplit") Error(status.Message);
                 }
                 int _idx = 0;
                 var node_ids = new Output withOp(op) Index(_idx++);
@@ -7339,7 +7340,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesTrainingPredict") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesTrainingPredict") Error(status.Message);
                 }
                 int _idx = 0;
                 var partial_logits = new Output withOp(op) Index(_idx++);
@@ -7421,7 +7422,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesUpdateEnsemble") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesUpdateEnsemble") Error(status.Message);
                 }
                 return op;
             }
@@ -7506,7 +7507,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BoostedTreesUpdateEnsembleV2") Message(status.Message);
+                    throw new OpCreateException withOpType("BoostedTreesUpdateEnsembleV2") Error(status.Message);
                 }
                 return op;
             }
@@ -7542,7 +7543,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BroadcastArgs") Message(status.Message);
+                    throw new OpCreateException withOpType("BroadcastArgs") Error(status.Message);
                 }
                 int _idx = 0;
                 var r0 = new Output withOp(op) Index(_idx++);
@@ -7582,7 +7583,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BroadcastGradientArgs") Message(status.Message);
+                    throw new OpCreateException withOpType("BroadcastGradientArgs") Error(status.Message);
                 }
                 int _idx = 0;
                 var r0 = new Output withOp(op) Index(_idx++);
@@ -7641,7 +7642,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BroadcastTo") Message(status.Message);
+                    throw new OpCreateException withOpType("BroadcastTo") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -7695,7 +7696,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Bucketize") Message(status.Message);
+                    throw new OpCreateException withOpType("Bucketize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -7736,7 +7737,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("BytesProducedStatsDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("BytesProducedStatsDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -7785,7 +7786,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CacheDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("CacheDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -7827,7 +7828,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Cast") Message(status.Message);
+                    throw new OpCreateException withOpType("Cast") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -7858,7 +7859,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Ceil") Message(status.Message);
+                    throw new OpCreateException withOpType("Ceil") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -7898,7 +7899,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CheckNumerics") Message(status.Message);
+                    throw new OpCreateException withOpType("CheckNumerics") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -7946,7 +7947,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Cholesky") Message(status.Message);
+                    throw new OpCreateException withOpType("Cholesky") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -7991,7 +7992,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CholeskyGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("CholeskyGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -8040,7 +8041,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ClipByValue") Message(status.Message);
+                    throw new OpCreateException withOpType("ClipByValue") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -8091,7 +8092,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CollectiveBcastRecv") Message(status.Message);
+                    throw new OpCreateException withOpType("CollectiveBcastRecv") Error(status.Message);
                 }
                 int _idx = 0;
                 var data = new Output withOp(op) Index(_idx++);
@@ -8142,7 +8143,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CollectiveBcastSend") Message(status.Message);
+                    throw new OpCreateException withOpType("CollectiveBcastSend") Error(status.Message);
                 }
                 int _idx = 0;
                 var data = new Output withOp(op) Index(_idx++);
@@ -8193,7 +8194,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CollectiveGather") Message(status.Message);
+                    throw new OpCreateException withOpType("CollectiveGather") Error(status.Message);
                 }
                 int _idx = 0;
                 var data = new Output withOp(op) Index(_idx++);
@@ -8238,7 +8239,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CollectivePermute") Message(status.Message);
+                    throw new OpCreateException withOpType("CollectivePermute") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -8302,7 +8303,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CollectiveReduce") Message(status.Message);
+                    throw new OpCreateException withOpType("CollectiveReduce") Error(status.Message);
                 }
                 int _idx = 0;
                 var data = new Output withOp(op) Index(_idx++);
@@ -8408,7 +8409,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CombinedNonMaxSuppression") Message(status.Message);
+                    throw new OpCreateException withOpType("CombinedNonMaxSuppression") Error(status.Message);
                 }
                 int _idx = 0;
                 var nmsed_boxes = new Output withOp(op) Index(_idx++);
@@ -8473,7 +8474,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CompareAndBitpack") Message(status.Message);
+                    throw new OpCreateException withOpType("CompareAndBitpack") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -8530,7 +8531,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Complex") Message(status.Message);
+                    throw new OpCreateException withOpType("Complex") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -8574,7 +8575,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ComplexAbs") Message(status.Message);
+                    throw new OpCreateException withOpType("ComplexAbs") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -8645,7 +8646,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ComputeAccidentalHits") Message(status.Message);
+                    throw new OpCreateException withOpType("ComputeAccidentalHits") Error(status.Message);
                 }
                 int _idx = 0;
                 var indices = new Output withOp(op) Index(_idx++);
@@ -8688,7 +8689,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Concat") Message(status.Message);
+                    throw new OpCreateException withOpType("Concat") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -8729,7 +8730,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConcatenateDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ConcatenateDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -8779,7 +8780,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConcatOffset") Message(status.Message);
+                    throw new OpCreateException withOpType("ConcatOffset") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -8826,7 +8827,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConcatV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ConcatV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -8897,7 +8898,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConditionalAccumulator") Message(status.Message);
+                    throw new OpCreateException withOpType("ConditionalAccumulator") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -8952,7 +8953,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConfigureDistributedTPU") Message(status.Message);
+                    throw new OpCreateException withOpType("ConfigureDistributedTPU") Error(status.Message);
                 }
                 int _idx = 0;
                 var topology = new Output withOp(op) Index(_idx++);
@@ -8986,7 +8987,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConfigureTPUEmbedding") Message(status.Message);
+                    throw new OpCreateException withOpType("ConfigureTPUEmbedding") Error(status.Message);
                 }
                 return op;
             }
@@ -9030,7 +9031,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conj") Message(status.Message);
+                    throw new OpCreateException withOpType("Conj") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9069,7 +9070,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConjugateTranspose") Message(status.Message);
+                    throw new OpCreateException withOpType("ConjugateTranspose") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -9105,7 +9106,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Const") Message(status.Message);
+                    throw new OpCreateException withOpType("Const") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9146,7 +9147,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ConsumeMutexLock") Message(status.Message);
+                    throw new OpCreateException withOpType("ConsumeMutexLock") Error(status.Message);
                 }
                 return op;
             }
@@ -9175,7 +9176,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ControlTrigger") Message(status.Message);
+                    throw new OpCreateException withOpType("ControlTrigger") Error(status.Message);
                 }
                 return op;
             }
@@ -9289,7 +9290,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv2D") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9388,7 +9389,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv2DBackpropFilter") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv2DBackpropFilter") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9486,7 +9487,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv2DBackpropInput") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv2DBackpropInput") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9564,7 +9565,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv3D") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv3D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9623,7 +9624,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv3DBackpropFilter") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv3DBackpropFilter") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9701,7 +9702,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv3DBackpropFilterV2") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv3DBackpropFilterV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9760,7 +9761,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv3DBackpropInput") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv3DBackpropInput") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9838,7 +9839,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Conv3DBackpropInputV2") Message(status.Message);
+                    throw new OpCreateException withOpType("Conv3DBackpropInputV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9901,7 +9902,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Copy") Message(status.Message);
+                    throw new OpCreateException withOpType("Copy") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -9962,7 +9963,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CopyHost") Message(status.Message);
+                    throw new OpCreateException withOpType("CopyHost") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -10004,7 +10005,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Cos") Message(status.Message);
+                    throw new OpCreateException withOpType("Cos") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -10045,7 +10046,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Cosh") Message(status.Message);
+                    throw new OpCreateException withOpType("Cosh") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -10085,7 +10086,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CountUpTo") Message(status.Message);
+                    throw new OpCreateException withOpType("CountUpTo") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -10179,7 +10180,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CropAndResize") Message(status.Message);
+                    throw new OpCreateException withOpType("CropAndResize") Error(status.Message);
                 }
                 int _idx = 0;
                 var crops = new Output withOp(op) Index(_idx++);
@@ -10244,7 +10245,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CropAndResizeGradBoxes") Message(status.Message);
+                    throw new OpCreateException withOpType("CropAndResizeGradBoxes") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -10314,7 +10315,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CropAndResizeGradImage") Message(status.Message);
+                    throw new OpCreateException withOpType("CropAndResizeGradImage") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -10356,7 +10357,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Cross") Message(status.Message);
+                    throw new OpCreateException withOpType("Cross") Error(status.Message);
                 }
                 int _idx = 0;
                 var product = new Output withOp(op) Index(_idx++);
@@ -10403,7 +10404,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CrossReplicaSum") Message(status.Message);
+                    throw new OpCreateException withOpType("CrossReplicaSum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -10475,7 +10476,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CTCBeamSearchDecoder") Message(status.Message);
+                    throw new OpCreateException withOpType("CTCBeamSearchDecoder") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -10558,7 +10559,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CTCGreedyDecoder") Message(status.Message);
+                    throw new OpCreateException withOpType("CTCGreedyDecoder") Error(status.Message);
                 }
                 int _idx = 0;
                 var decoded_indices = new Output withOp(op) Index(_idx++);
@@ -10644,7 +10645,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CTCLoss") Message(status.Message);
+                    throw new OpCreateException withOpType("CTCLoss") Error(status.Message);
                 }
                 int _idx = 0;
                 var loss = new Output withOp(op) Index(_idx++);
@@ -10771,7 +10772,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNN") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNN") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -10923,7 +10924,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNBackprop") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNBackprop") Error(status.Message);
                 }
                 int _idx = 0;
                 var input_backprop = new Output withOp(op) Index(_idx++);
@@ -11081,7 +11082,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNBackpropV2") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNBackpropV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var input_backprop = new Output withOp(op) Index(_idx++);
@@ -11261,7 +11262,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNBackpropV3") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNBackpropV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var input_backprop = new Output withOp(op) Index(_idx++);
@@ -11380,7 +11381,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNCanonicalToParams") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNCanonicalToParams") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -11504,7 +11505,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNCanonicalToParamsV2") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNCanonicalToParamsV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -11620,7 +11621,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNParamsSize") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNParamsSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var params_size = new Output withOp(op) Index(_idx++);
@@ -11740,7 +11741,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNParamsToCanonical") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNParamsToCanonical") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -11883,7 +11884,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNParamsToCanonicalV2") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNParamsToCanonicalV2") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -12025,7 +12026,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNV2") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12180,7 +12181,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CudnnRNNV3") Message(status.Message);
+                    throw new OpCreateException withOpType("CudnnRNNV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12269,7 +12270,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Cumprod") Message(status.Message);
+                    throw new OpCreateException withOpType("Cumprod") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12354,7 +12355,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Cumsum") Message(status.Message);
+                    throw new OpCreateException withOpType("Cumsum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12427,7 +12428,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("CumulativeLogsumexp") Message(status.Message);
+                    throw new OpCreateException withOpType("CumulativeLogsumexp") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12480,7 +12481,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DataFormatDimMap") Message(status.Message);
+                    throw new OpCreateException withOpType("DataFormatDimMap") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -12532,7 +12533,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DataFormatVecPermute") Message(status.Message);
+                    throw new OpCreateException withOpType("DataFormatVecPermute") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -12569,7 +12570,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DatasetCardinality") Message(status.Message);
+                    throw new OpCreateException withOpType("DatasetCardinality") Error(status.Message);
                 }
                 int _idx = 0;
                 var cardinality = new Output withOp(op) Index(_idx++);
@@ -12605,7 +12606,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DatasetFromGraph") Message(status.Message);
+                    throw new OpCreateException withOpType("DatasetFromGraph") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -12648,7 +12649,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DatasetToGraph") Message(status.Message);
+                    throw new OpCreateException withOpType("DatasetToGraph") Error(status.Message);
                 }
                 int _idx = 0;
                 var graph = new Output withOp(op) Index(_idx++);
@@ -12688,7 +12689,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DatasetToSingleElement") Message(status.Message);
+                    throw new OpCreateException withOpType("DatasetToSingleElement") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -12735,7 +12736,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DatasetToTFRecord") Message(status.Message);
+                    throw new OpCreateException withOpType("DatasetToTFRecord") Error(status.Message);
                 }
                 return op;
             }
@@ -12769,7 +12770,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DebugGradientIdentity") Message(status.Message);
+                    throw new OpCreateException withOpType("DebugGradientIdentity") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12805,7 +12806,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DebugGradientRefIdentity") Message(status.Message);
+                    throw new OpCreateException withOpType("DebugGradientRefIdentity") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12878,7 +12879,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DebugIdentity") Message(status.Message);
+                    throw new OpCreateException withOpType("DebugIdentity") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -12951,7 +12952,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DebugNanCount") Message(status.Message);
+                    throw new OpCreateException withOpType("DebugNanCount") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -13078,7 +13079,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DebugNumericSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("DebugNumericSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -13191,7 +13192,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeAndCropJpeg") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeAndCropJpeg") Error(status.Message);
                 }
                 int _idx = 0;
                 var image = new Output withOp(op) Index(_idx++);
@@ -13228,7 +13229,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeBase64") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeBase64") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -13278,7 +13279,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeBmp") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeBmp") Error(status.Message);
                 }
                 int _idx = 0;
                 var image = new Output withOp(op) Index(_idx++);
@@ -13329,7 +13330,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeCompressed") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeCompressed") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -13407,7 +13408,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeCSV") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeCSV") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -13456,7 +13457,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeGif") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeGif") Error(status.Message);
                 }
                 int _idx = 0;
                 var image = new Output withOp(op) Index(_idx++);
@@ -13565,7 +13566,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeJpeg") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeJpeg") Error(status.Message);
                 }
                 int _idx = 0;
                 var image = new Output withOp(op) Index(_idx++);
@@ -13608,7 +13609,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeJSONExample") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeJSONExample") Error(status.Message);
                 }
                 int _idx = 0;
                 var binary_examples = new Output withOp(op) Index(_idx++);
@@ -13661,7 +13662,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodePaddedRaw") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodePaddedRaw") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -13726,7 +13727,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodePng") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodePng") Error(status.Message);
                 }
                 int _idx = 0;
                 var image = new Output withOp(op) Index(_idx++);
@@ -13853,7 +13854,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeProtoV2") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeProtoV2") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -13909,7 +13910,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeRaw") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeRaw") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -13976,7 +13977,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DecodeWav") Message(status.Message);
+                    throw new OpCreateException withOpType("DecodeWav") Error(status.Message);
                 }
                 int _idx = 0;
                 var audio = new Output withOp(op) Index(_idx++);
@@ -14011,7 +14012,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DeepCopy") Message(status.Message);
+                    throw new OpCreateException withOpType("DeepCopy") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -14047,7 +14048,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DeleteIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("DeleteIterator") Error(status.Message);
                 }
                 return op;
             }
@@ -14085,7 +14086,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DeleteMultiDeviceIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("DeleteMultiDeviceIterator") Error(status.Message);
                 }
                 return op;
             }
@@ -14115,7 +14116,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DeleteSessionTensor") Message(status.Message);
+                    throw new OpCreateException withOpType("DeleteSessionTensor") Error(status.Message);
                 }
                 return op;
             }
@@ -14177,7 +14178,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DenseToDenseSetOperation") Message(status.Message);
+                    throw new OpCreateException withOpType("DenseToDenseSetOperation") Error(status.Message);
                 }
                 int _idx = 0;
                 var result_indices = new Output withOp(op) Index(_idx++);
@@ -14229,7 +14230,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DenseToSparseBatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("DenseToSparseBatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -14312,7 +14313,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DenseToSparseSetOperation") Message(status.Message);
+                    throw new OpCreateException withOpType("DenseToSparseSetOperation") Error(status.Message);
                 }
                 int _idx = 0;
                 var result_indices = new Output withOp(op) Index(_idx++);
@@ -14448,7 +14449,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DepthToSpace") Message(status.Message);
+                    throw new OpCreateException withOpType("DepthToSpace") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -14536,7 +14537,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DepthwiseConv2dNative") Message(status.Message);
+                    throw new OpCreateException withOpType("DepthwiseConv2dNative") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -14620,7 +14621,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DepthwiseConv2dNativeBackpropFilter") Message(status.Message);
+                    throw new OpCreateException withOpType("DepthwiseConv2dNativeBackpropFilter") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -14704,7 +14705,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DepthwiseConv2dNativeBackpropInput") Message(status.Message);
+                    throw new OpCreateException withOpType("DepthwiseConv2dNativeBackpropInput") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -14825,7 +14826,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Dequantize") Message(status.Message);
+                    throw new OpCreateException withOpType("Dequantize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -14862,7 +14863,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DeserializeIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("DeserializeIterator") Error(status.Message);
                 }
                 return op;
             }
@@ -14945,7 +14946,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DeserializeManySparse") Message(status.Message);
+                    throw new OpCreateException withOpType("DeserializeManySparse") Error(status.Message);
                 }
                 int _idx = 0;
                 var sparse_indices = new Output withOp(op) Index(_idx++);
@@ -15032,7 +15033,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DeserializeSparse") Message(status.Message);
+                    throw new OpCreateException withOpType("DeserializeSparse") Error(status.Message);
                 }
                 int _idx = 0;
                 var sparse_indices = new Output withOp(op) Index(_idx++);
@@ -15079,7 +15080,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DestroyResourceOp") Message(status.Message);
+                    throw new OpCreateException withOpType("DestroyResourceOp") Error(status.Message);
                 }
                 return op;
             }
@@ -15124,7 +15125,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DestroyTemporaryVariable") Message(status.Message);
+                    throw new OpCreateException withOpType("DestroyTemporaryVariable") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -15175,7 +15176,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Diag") Message(status.Message);
+                    throw new OpCreateException withOpType("Diag") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -15228,7 +15229,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DiagPart") Message(status.Message);
+                    throw new OpCreateException withOpType("DiagPart") Error(status.Message);
                 }
                 int _idx = 0;
                 var diagonal = new Output withOp(op) Index(_idx++);
@@ -15262,7 +15263,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Digamma") Message(status.Message);
+                    throw new OpCreateException withOpType("Digamma") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -15339,7 +15340,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Dilation2D") Message(status.Message);
+                    throw new OpCreateException withOpType("Dilation2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -15395,7 +15396,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Dilation2DBackpropFilter") Message(status.Message);
+                    throw new OpCreateException withOpType("Dilation2DBackpropFilter") Error(status.Message);
                 }
                 int _idx = 0;
                 var filter_backprop = new Output withOp(op) Index(_idx++);
@@ -15451,7 +15452,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Dilation2DBackpropInput") Message(status.Message);
+                    throw new OpCreateException withOpType("Dilation2DBackpropInput") Error(status.Message);
                 }
                 int _idx = 0;
                 var in_backprop = new Output withOp(op) Index(_idx++);
@@ -15496,7 +15497,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DirectedInterleaveDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("DirectedInterleaveDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -15534,7 +15535,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Div") Message(status.Message);
+                    throw new OpCreateException withOpType("Div") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -15573,7 +15574,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DivNoNan") Message(status.Message);
+                    throw new OpCreateException withOpType("DivNoNan") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -15625,7 +15626,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DrawBoundingBoxes") Message(status.Message);
+                    throw new OpCreateException withOpType("DrawBoundingBoxes") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -15681,7 +15682,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DrawBoundingBoxesV2") Message(status.Message);
+                    throw new OpCreateException withOpType("DrawBoundingBoxesV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -15760,7 +15761,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DynamicPartition") Message(status.Message);
+                    throw new OpCreateException withOpType("DynamicPartition") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -15864,7 +15865,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("DynamicStitch") Message(status.Message);
+                    throw new OpCreateException withOpType("DynamicStitch") Error(status.Message);
                 }
                 int _idx = 0;
                 var merged = new Output withOp(op) Index(_idx++);
@@ -15913,7 +15914,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EagerPyFunc") Message(status.Message);
+                    throw new OpCreateException withOpType("EagerPyFunc") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -16024,7 +16025,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EditDistance") Message(status.Message);
+                    throw new OpCreateException withOpType("EditDistance") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -16140,7 +16141,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Einsum") Message(status.Message);
+                    throw new OpCreateException withOpType("Einsum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -16175,7 +16176,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Elu") Message(status.Message);
+                    throw new OpCreateException withOpType("Elu") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -16213,7 +16214,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EluGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("EluGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -16260,7 +16261,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Empty") Message(status.Message);
+                    throw new OpCreateException withOpType("Empty") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -16306,7 +16307,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EmptyTensorList") Message(status.Message);
+                    throw new OpCreateException withOpType("EmptyTensorList") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -16355,7 +16356,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EncodeBase64") Message(status.Message);
+                    throw new OpCreateException withOpType("EncodeBase64") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -16479,7 +16480,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EncodeJpeg") Message(status.Message);
+                    throw new OpCreateException withOpType("EncodeJpeg") Error(status.Message);
                 }
                 int _idx = 0;
                 var contents = new Output withOp(op) Index(_idx++);
@@ -16521,7 +16522,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EncodeJpegVariableQuality") Message(status.Message);
+                    throw new OpCreateException withOpType("EncodeJpegVariableQuality") Error(status.Message);
                 }
                 int _idx = 0;
                 var contents = new Output withOp(op) Index(_idx++);
@@ -16575,7 +16576,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EncodePng") Message(status.Message);
+                    throw new OpCreateException withOpType("EncodePng") Error(status.Message);
                 }
                 int _idx = 0;
                 var contents = new Output withOp(op) Index(_idx++);
@@ -16670,7 +16671,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EncodeProto") Message(status.Message);
+                    throw new OpCreateException withOpType("EncodeProto") Error(status.Message);
                 }
                 int _idx = 0;
                 var bytes = new Output withOp(op) Index(_idx++);
@@ -16716,7 +16717,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EncodeWav") Message(status.Message);
+                    throw new OpCreateException withOpType("EncodeWav") Error(status.Message);
                 }
                 int _idx = 0;
                 var contents = new Output withOp(op) Index(_idx++);
@@ -16765,7 +16766,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EnqueueTPUEmbeddingIntegerBatch") Message(status.Message);
+                    throw new OpCreateException withOpType("EnqueueTPUEmbeddingIntegerBatch") Error(status.Message);
                 }
                 return op;
             }
@@ -16848,7 +16849,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EnqueueTPUEmbeddingSparseBatch") Message(status.Message);
+                    throw new OpCreateException withOpType("EnqueueTPUEmbeddingSparseBatch") Error(status.Message);
                 }
                 return op;
             }
@@ -16946,7 +16947,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EnqueueTPUEmbeddingSparseTensorBatch") Message(status.Message);
+                    throw new OpCreateException withOpType("EnqueueTPUEmbeddingSparseTensorBatch") Error(status.Message);
                 }
                 return op;
             }
@@ -16986,7 +16987,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EnsureShape") Message(status.Message);
+                    throw new OpCreateException withOpType("EnsureShape") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -17047,7 +17048,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Enter") Message(status.Message);
+                    throw new OpCreateException withOpType("Enter") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -17102,7 +17103,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Equal") Message(status.Message);
+                    throw new OpCreateException withOpType("Equal") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -17133,7 +17134,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Erf") Message(status.Message);
+                    throw new OpCreateException withOpType("Erf") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -17164,7 +17165,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Erfc") Message(status.Message);
+                    throw new OpCreateException withOpType("Erfc") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -17216,7 +17217,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("EuclideanNorm") Message(status.Message);
+                    throw new OpCreateException withOpType("EuclideanNorm") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -17252,7 +17253,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Exit") Message(status.Message);
+                    throw new OpCreateException withOpType("Exit") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -17311,7 +17312,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Exp") Message(status.Message);
+                    throw new OpCreateException withOpType("Exp") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -17382,7 +17383,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExpandDims") Message(status.Message);
+                    throw new OpCreateException withOpType("ExpandDims") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -17438,7 +17439,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalAutoShardDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalAutoShardDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17479,7 +17480,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalBytesProducedStatsDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalBytesProducedStatsDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17516,7 +17517,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalDatasetCardinality") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalDatasetCardinality") Error(status.Message);
                 }
                 int _idx = 0;
                 var cardinality = new Output withOp(op) Index(_idx++);
@@ -17557,7 +17558,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalDatasetToTFRecord") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalDatasetToTFRecord") Error(status.Message);
                 }
                 return op;
             }
@@ -17605,7 +17606,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalDenseToSparseBatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalDenseToSparseBatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17650,7 +17651,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalDirectedInterleaveDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalDirectedInterleaveDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17688,7 +17689,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalIgnoreErrorsDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalIgnoreErrorsDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17719,7 +17720,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalIteratorGetDevice") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalIteratorGetDevice") Error(status.Message);
                 }
                 int _idx = 0;
                 var device = new Output withOp(op) Index(_idx++);
@@ -17760,7 +17761,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalLatencyStatsDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalLatencyStatsDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17802,7 +17803,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalMaxIntraOpParallelismDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalMaxIntraOpParallelismDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17885,7 +17886,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalParseExampleDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalParseExampleDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17927,7 +17928,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalPrivateThreadPoolDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalPrivateThreadPoolDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -17972,7 +17973,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalRandomDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalRandomDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18028,7 +18029,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalRebatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalRebatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18081,7 +18082,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalSlidingWindowDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalSlidingWindowDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18128,7 +18129,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalSqlDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalSqlDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18170,7 +18171,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalStatsAggregatorHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalStatsAggregatorHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18201,7 +18202,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalStatsAggregatorSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalStatsAggregatorSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -18243,7 +18244,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalThreadPoolDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalThreadPoolDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18307,7 +18308,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalThreadPoolHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalThreadPoolHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18345,7 +18346,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalUnbatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalUnbatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18383,7 +18384,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExperimentalUniqueDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ExperimentalUniqueDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -18429,7 +18430,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Expm1") Message(status.Message);
+                    throw new OpCreateException withOpType("Expm1") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -18535,7 +18536,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExtractGlimpse") Message(status.Message);
+                    throw new OpCreateException withOpType("ExtractGlimpse") Error(status.Message);
                 }
                 int _idx = 0;
                 var glimpse = new Output withOp(op) Index(_idx++);
@@ -18594,7 +18595,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExtractImagePatches") Message(status.Message);
+                    throw new OpCreateException withOpType("ExtractImagePatches") Error(status.Message);
                 }
                 int _idx = 0;
                 var patches = new Output withOp(op) Index(_idx++);
@@ -18639,7 +18640,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExtractJpegShape") Message(status.Message);
+                    throw new OpCreateException withOpType("ExtractJpegShape") Error(status.Message);
                 }
                 int _idx = 0;
                 var image_shape = new Output withOp(op) Index(_idx++);
@@ -18697,7 +18698,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ExtractVolumePatches") Message(status.Message);
+                    throw new OpCreateException withOpType("ExtractVolumePatches") Error(status.Message);
                 }
                 int _idx = 0;
                 var patches = new Output withOp(op) Index(_idx++);
@@ -18725,7 +18726,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Fact") Message(status.Message);
+                    throw new OpCreateException withOpType("Fact") Error(status.Message);
                 }
                 int _idx = 0;
                 var fact = new Output withOp(op) Index(_idx++);
@@ -18767,7 +18768,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeParam") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeParam") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -18844,7 +18845,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeQuantWithMinMaxArgs") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeQuantWithMinMaxArgs") Error(status.Message);
                 }
                 int _idx = 0;
                 var outputs = new Output withOp(op) Index(_idx++);
@@ -18910,7 +18911,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeQuantWithMinMaxArgsGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeQuantWithMinMaxArgsGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -18982,7 +18983,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVars") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVars") Error(status.Message);
                 }
                 int _idx = 0;
                 var outputs = new Output withOp(op) Index(_idx++);
@@ -19048,7 +19049,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVarsGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVarsGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops_wrt_input = new Output withOp(op) Index(_idx++);
@@ -19123,7 +19124,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVarsPerChannel") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVarsPerChannel") Error(status.Message);
                 }
                 int _idx = 0;
                 var outputs = new Output withOp(op) Index(_idx++);
@@ -19192,7 +19193,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVarsPerChannelGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeQuantWithMinMaxVarsPerChannelGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops_wrt_input = new Output withOp(op) Index(_idx++);
@@ -19225,7 +19226,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FakeQueue") Message(status.Message);
+                    throw new OpCreateException withOpType("FakeQueue") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -19267,7 +19268,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FFT") Message(status.Message);
+                    throw new OpCreateException withOpType("FFT") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -19309,7 +19310,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FFT2D") Message(status.Message);
+                    throw new OpCreateException withOpType("FFT2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -19351,7 +19352,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FFT3D") Message(status.Message);
+                    throw new OpCreateException withOpType("FFT3D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -19423,7 +19424,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FIFOQueue") Message(status.Message);
+                    throw new OpCreateException withOpType("FIFOQueue") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -19495,7 +19496,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FIFOQueueV2") Message(status.Message);
+                    throw new OpCreateException withOpType("FIFOQueueV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -19556,7 +19557,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Fill") Message(status.Message);
+                    throw new OpCreateException withOpType("Fill") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -19594,7 +19595,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FilterByLastComponentDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("FilterByLastComponentDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -19666,7 +19667,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Fingerprint") Message(status.Message);
+                    throw new OpCreateException withOpType("Fingerprint") Error(status.Message);
                 }
                 int _idx = 0;
                 var fingerprint = new Output withOp(op) Index(_idx++);
@@ -19717,7 +19718,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FixedLengthRecordDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("FixedLengthRecordDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -19794,7 +19795,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FixedLengthRecordReader") Message(status.Message);
+                    throw new OpCreateException withOpType("FixedLengthRecordReader") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -19880,7 +19881,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FixedLengthRecordReaderV2") Message(status.Message);
+                    throw new OpCreateException withOpType("FixedLengthRecordReaderV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -20041,7 +20042,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FixedUnigramCandidateSampler") Message(status.Message);
+                    throw new OpCreateException withOpType("FixedUnigramCandidateSampler") Error(status.Message);
                 }
                 int _idx = 0;
                 var sampled_candidates = new Output withOp(op) Index(_idx++);
@@ -20074,7 +20075,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Floor") Message(status.Message);
+                    throw new OpCreateException withOpType("Floor") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -20112,7 +20113,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FloorDiv") Message(status.Message);
+                    throw new OpCreateException withOpType("FloorDiv") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -20153,7 +20154,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FloorMod") Message(status.Message);
+                    throw new OpCreateException withOpType("FloorMod") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -20260,7 +20261,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FractionalAvgPool") Message(status.Message);
+                    throw new OpCreateException withOpType("FractionalAvgPool") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -20333,7 +20334,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FractionalAvgPoolGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("FractionalAvgPoolGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -20464,7 +20465,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FractionalMaxPool") Message(status.Message);
+                    throw new OpCreateException withOpType("FractionalMaxPool") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -20534,7 +20535,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FractionalMaxPoolGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("FractionalMaxPoolGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -20623,7 +20624,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedBatchNorm") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedBatchNorm") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -20719,7 +20720,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedBatchNormGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedBatchNormGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var x_backprop = new Output withOp(op) Index(_idx++);
@@ -20815,7 +20816,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedBatchNormGradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedBatchNormGradV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var x_backprop = new Output withOp(op) Index(_idx++);
@@ -20917,7 +20918,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedBatchNormGradV3") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedBatchNormGradV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var x_backprop = new Output withOp(op) Index(_idx++);
@@ -21010,7 +21011,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedBatchNormV2") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedBatchNormV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -21105,7 +21106,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedBatchNormV3") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedBatchNormV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -21178,7 +21179,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedPadConv2D") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedPadConv2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -21259,7 +21260,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("FusedResizeAndPadConv2D") Message(status.Message);
+                    throw new OpCreateException withOpType("FusedResizeAndPadConv2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -21327,7 +21328,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Gather") Message(status.Message);
+                    throw new OpCreateException withOpType("Gather") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -21471,7 +21472,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GatherNd") Message(status.Message);
+                    throw new OpCreateException withOpType("GatherNd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -21551,7 +21552,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GatherV2") Message(status.Message);
+                    throw new OpCreateException withOpType("GatherV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -21640,7 +21641,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GenerateVocabRemapping") Message(status.Message);
+                    throw new OpCreateException withOpType("GenerateVocabRemapping") Error(status.Message);
                 }
                 int _idx = 0;
                 var remapping = new Output withOp(op) Index(_idx++);
@@ -21675,7 +21676,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GetSessionHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("GetSessionHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -21709,7 +21710,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GetSessionHandleV2") Message(status.Message);
+                    throw new OpCreateException withOpType("GetSessionHandleV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -21747,7 +21748,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GetSessionTensor") Message(status.Message);
+                    throw new OpCreateException withOpType("GetSessionTensor") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -21785,7 +21786,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Greater") Message(status.Message);
+                    throw new OpCreateException withOpType("Greater") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -21823,7 +21824,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GreaterEqual") Message(status.Message);
+                    throw new OpCreateException withOpType("GreaterEqual") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -21920,7 +21921,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GRUBlockCell") Message(status.Message);
+                    throw new OpCreateException withOpType("GRUBlockCell") Error(status.Message);
                 }
                 int _idx = 0;
                 var r = new Output withOp(op) Index(_idx++);
@@ -22068,7 +22069,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GRUBlockCellGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("GRUBlockCellGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var d_x = new Output withOp(op) Index(_idx++);
@@ -22110,7 +22111,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("GuaranteeConst") Message(status.Message);
+                    throw new OpCreateException withOpType("GuaranteeConst") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22180,7 +22181,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("HashTable") Message(status.Message);
+                    throw new OpCreateException withOpType("HashTable") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -22250,7 +22251,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("HashTableV2") Message(status.Message);
+                    throw new OpCreateException withOpType("HashTableV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -22317,7 +22318,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("HistogramFixedWidth") Message(status.Message);
+                    throw new OpCreateException withOpType("HistogramFixedWidth") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22361,7 +22362,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("HistogramSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("HistogramSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -22397,7 +22398,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("HostConst") Message(status.Message);
+                    throw new OpCreateException withOpType("HostConst") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22437,7 +22438,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("HSVToRGB") Message(status.Message);
+                    throw new OpCreateException withOpType("HSVToRGB") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22468,7 +22469,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Identity") Message(status.Message);
+                    throw new OpCreateException withOpType("Identity") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22516,7 +22517,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IdentityN") Message(status.Message);
+                    throw new OpCreateException withOpType("IdentityN") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -22573,7 +22574,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IdentityReader") Message(status.Message);
+                    throw new OpCreateException withOpType("IdentityReader") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -22624,7 +22625,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IdentityReaderV2") Message(status.Message);
+                    throw new OpCreateException withOpType("IdentityReaderV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -22666,7 +22667,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IFFT") Message(status.Message);
+                    throw new OpCreateException withOpType("IFFT") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22708,7 +22709,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IFFT2D") Message(status.Message);
+                    throw new OpCreateException withOpType("IFFT2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22750,7 +22751,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IFFT3D") Message(status.Message);
+                    throw new OpCreateException withOpType("IFFT3D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -22799,7 +22800,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Igamma") Message(status.Message);
+                    throw new OpCreateException withOpType("Igamma") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -22847,7 +22848,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Igammac") Message(status.Message);
+                    throw new OpCreateException withOpType("Igammac") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -22881,7 +22882,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IgammaGradA") Message(status.Message);
+                    throw new OpCreateException withOpType("IgammaGradA") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -22919,7 +22920,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IgnoreErrorsDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("IgnoreErrorsDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -22970,7 +22971,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Imag") Message(status.Message);
+                    throw new OpCreateException withOpType("Imag") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -23059,7 +23060,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ImageSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("ImageSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -23104,7 +23105,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ImmutableConst") Message(status.Message);
+                    throw new OpCreateException withOpType("ImmutableConst") Error(status.Message);
                 }
                 int _idx = 0;
                 var tensor = new Output withOp(op) Index(_idx++);
@@ -23142,7 +23143,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InfeedDequeue") Message(status.Message);
+                    throw new OpCreateException withOpType("InfeedDequeue") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -23180,7 +23181,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InfeedDequeueTuple") Message(status.Message);
+                    throw new OpCreateException withOpType("InfeedDequeueTuple") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -23246,7 +23247,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InfeedEnqueue") Message(status.Message);
+                    throw new OpCreateException withOpType("InfeedEnqueue") Error(status.Message);
                 }
                 return op;
             }
@@ -23285,7 +23286,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InfeedEnqueuePrelinearizedBuffer") Message(status.Message);
+                    throw new OpCreateException withOpType("InfeedEnqueuePrelinearizedBuffer") Error(status.Message);
                 }
                 return op;
             }
@@ -23341,7 +23342,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InfeedEnqueueTuple") Message(status.Message);
+                    throw new OpCreateException withOpType("InfeedEnqueueTuple") Error(status.Message);
                 }
                 return op;
             }
@@ -23379,7 +23380,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InitializeTable") Message(status.Message);
+                    throw new OpCreateException withOpType("InitializeTable") Error(status.Message);
                 }
                 return op;
             }
@@ -23451,7 +23452,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InitializeTableFromTextFile") Message(status.Message);
+                    throw new OpCreateException withOpType("InitializeTableFromTextFile") Error(status.Message);
                 }
                 return op;
             }
@@ -23523,7 +23524,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InitializeTableFromTextFileV2") Message(status.Message);
+                    throw new OpCreateException withOpType("InitializeTableFromTextFileV2") Error(status.Message);
                 }
                 return op;
             }
@@ -23561,7 +23562,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InitializeTableV2") Message(status.Message);
+                    throw new OpCreateException withOpType("InitializeTableV2") Error(status.Message);
                 }
                 return op;
             }
@@ -23602,7 +23603,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InplaceAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("InplaceAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -23645,7 +23646,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InplaceSub") Message(status.Message);
+                    throw new OpCreateException withOpType("InplaceSub") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -23688,7 +23689,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InplaceUpdate") Message(status.Message);
+                    throw new OpCreateException withOpType("InplaceUpdate") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -23746,7 +23747,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InTopK") Message(status.Message);
+                    throw new OpCreateException withOpType("InTopK") Error(status.Message);
                 }
                 int _idx = 0;
                 var precision = new Output withOp(op) Index(_idx++);
@@ -23803,7 +23804,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InTopKV2") Message(status.Message);
+                    throw new OpCreateException withOpType("InTopKV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var precision = new Output withOp(op) Index(_idx++);
@@ -23837,7 +23838,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Inv") Message(status.Message);
+                    throw new OpCreateException withOpType("Inv") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -23909,7 +23910,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Invert") Message(status.Message);
+                    throw new OpCreateException withOpType("Invert") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -23959,7 +23960,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InvertPermutation") Message(status.Message);
+                    throw new OpCreateException withOpType("InvertPermutation") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -23997,7 +23998,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("InvGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("InvGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -24055,7 +24056,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IRFFT") Message(status.Message);
+                    throw new OpCreateException withOpType("IRFFT") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -24114,7 +24115,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IRFFT2D") Message(status.Message);
+                    throw new OpCreateException withOpType("IRFFT2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -24173,7 +24174,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IRFFT3D") Message(status.Message);
+                    throw new OpCreateException withOpType("IRFFT3D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -24206,7 +24207,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IsBoostedTreesEnsembleInitialized") Message(status.Message);
+                    throw new OpCreateException withOpType("IsBoostedTreesEnsembleInitialized") Error(status.Message);
                 }
                 int _idx = 0;
                 var is_initialized = new Output withOp(op) Index(_idx++);
@@ -24242,7 +24243,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IsBoostedTreesQuantileStreamResourceInitialized") Message(status.Message);
+                    throw new OpCreateException withOpType("IsBoostedTreesQuantileStreamResourceInitialized") Error(status.Message);
                 }
                 int _idx = 0;
                 var is_initialized = new Output withOp(op) Index(_idx++);
@@ -24278,7 +24279,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IsFinite") Message(status.Message);
+                    throw new OpCreateException withOpType("IsFinite") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -24314,7 +24315,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IsInf") Message(status.Message);
+                    throw new OpCreateException withOpType("IsInf") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -24350,7 +24351,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IsNan") Message(status.Message);
+                    throw new OpCreateException withOpType("IsNan") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -24385,7 +24386,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IsVariableInitialized") Message(status.Message);
+                    throw new OpCreateException withOpType("IsVariableInitialized") Error(status.Message);
                 }
                 int _idx = 0;
                 var is_initialized = new Output withOp(op) Index(_idx++);
@@ -24428,7 +24429,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Iterator") Message(status.Message);
+                    throw new OpCreateException withOpType("Iterator") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -24479,7 +24480,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IteratorFromStringHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("IteratorFromStringHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var resource_handle = new Output withOp(op) Index(_idx++);
@@ -24510,7 +24511,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IteratorGetDevice") Message(status.Message);
+                    throw new OpCreateException withOpType("IteratorGetDevice") Error(status.Message);
                 }
                 int _idx = 0;
                 var device = new Output withOp(op) Index(_idx++);
@@ -24548,7 +24549,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IteratorGetNext") Message(status.Message);
+                    throw new OpCreateException withOpType("IteratorGetNext") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -24592,7 +24593,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IteratorGetNextAsOptional") Message(status.Message);
+                    throw new OpCreateException withOpType("IteratorGetNextAsOptional") Error(status.Message);
                 }
                 int _idx = 0;
                 var optional = new Output withOp(op) Index(_idx++);
@@ -24636,7 +24637,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IteratorGetNextSync") Message(status.Message);
+                    throw new OpCreateException withOpType("IteratorGetNextSync") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -24675,7 +24676,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("IteratorToStringHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("IteratorToStringHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var string_handle = new Output withOp(op) Index(_idx++);
@@ -24719,7 +24720,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("KMC2ChainInitialization") Message(status.Message);
+                    throw new OpCreateException withOpType("KMC2ChainInitialization") Error(status.Message);
                 }
                 int _idx = 0;
                 var index = new Output withOp(op) Index(_idx++);
@@ -24773,7 +24774,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("KmeansPlusPlusInitialization") Message(status.Message);
+                    throw new OpCreateException withOpType("KmeansPlusPlusInitialization") Error(status.Message);
                 }
                 int _idx = 0;
                 var samples = new Output withOp(op) Index(_idx++);
@@ -24811,7 +24812,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("L2Loss") Message(status.Message);
+                    throw new OpCreateException withOpType("L2Loss") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -24852,7 +24853,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LatencyStatsDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("LatencyStatsDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -24890,7 +24891,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LeakyRelu") Message(status.Message);
+                    throw new OpCreateException withOpType("LeakyRelu") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -24935,7 +24936,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LeakyReluGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("LeakyReluGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -25026,7 +25027,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LearnedUnigramCandidateSampler") Message(status.Message);
+                    throw new OpCreateException withOpType("LearnedUnigramCandidateSampler") Error(status.Message);
                 }
                 int _idx = 0;
                 var sampled_candidates = new Output withOp(op) Index(_idx++);
@@ -25095,7 +25096,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LeftShift") Message(status.Message);
+                    throw new OpCreateException withOpType("LeftShift") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -25133,7 +25134,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Less") Message(status.Message);
+                    throw new OpCreateException withOpType("Less") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -25171,7 +25172,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LessEqual") Message(status.Message);
+                    throw new OpCreateException withOpType("LessEqual") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -25202,7 +25203,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Lgamma") Message(status.Message);
+                    throw new OpCreateException withOpType("Lgamma") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -25254,7 +25255,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LinSpace") Message(status.Message);
+                    throw new OpCreateException withOpType("LinSpace") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -25323,7 +25324,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ListDiff") Message(status.Message);
+                    throw new OpCreateException withOpType("ListDiff") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -25371,7 +25372,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LMDBReader") Message(status.Message);
+                    throw new OpCreateException withOpType("LMDBReader") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -25484,7 +25485,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadAndRemapMatrix") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadAndRemapMatrix") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_matrix = new Output withOp(op) Index(_idx++);
@@ -25552,7 +25553,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdadeltaParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdadeltaParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -25622,7 +25623,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdadeltaParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdadeltaParametersGradAccumDebug") Error(status.Message);
                 }
                 return op;
             }
@@ -25684,7 +25685,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdagradParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdagradParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -25750,7 +25751,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdagradParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingAdagradParametersGradAccumDebug") Error(status.Message);
                 }
                 return op;
             }
@@ -25816,7 +25817,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingADAMParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingADAMParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -25886,7 +25887,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingADAMParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingADAMParametersGradAccumDebug") Error(status.Message);
                 }
                 return op;
             }
@@ -25956,7 +25957,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingCenteredRMSPropParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingCenteredRMSPropParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -26022,7 +26023,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingFTRLParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingFTRLParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -26092,7 +26093,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingFTRLParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingFTRLParametersGradAccumDebug") Error(status.Message);
                 }
                 return op;
             }
@@ -26162,7 +26163,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingMDLAdagradLightParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingMDLAdagradLightParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -26224,7 +26225,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingMomentumParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingMomentumParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -26290,7 +26291,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingMomentumParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingMomentumParametersGradAccumDebug") Error(status.Message);
                 }
                 return op;
             }
@@ -26352,7 +26353,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingProximalAdagradParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingProximalAdagradParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -26418,7 +26419,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingProximalAdagradParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingProximalAdagradParametersGradAccumDebug") Error(status.Message);
                 }
                 return op;
             }
@@ -26484,7 +26485,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingRMSPropParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingRMSPropParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -26554,7 +26555,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingRMSPropParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingRMSPropParametersGradAccumDebug") Error(status.Message);
                 }
                 return op;
             }
@@ -26612,7 +26613,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoadTPUEmbeddingStochasticGradientDescentParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("LoadTPUEmbeddingStochasticGradientDescentParameters") Error(status.Message);
                 }
                 return op;
             }
@@ -26644,7 +26645,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Log") Message(status.Message);
+                    throw new OpCreateException withOpType("Log") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -26678,7 +26679,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Log1p") Message(status.Message);
+                    throw new OpCreateException withOpType("Log1p") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -26716,7 +26717,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LogicalAnd") Message(status.Message);
+                    throw new OpCreateException withOpType("LogicalAnd") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -26747,7 +26748,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LogicalNot") Message(status.Message);
+                    throw new OpCreateException withOpType("LogicalNot") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -26785,7 +26786,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LogicalOr") Message(status.Message);
+                    throw new OpCreateException withOpType("LogicalOr") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -26832,7 +26833,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LogMatrixDeterminant") Message(status.Message);
+                    throw new OpCreateException withOpType("LogMatrixDeterminant") Error(status.Message);
                 }
                 int _idx = 0;
                 var sign = new Output withOp(op) Index(_idx++);
@@ -26871,7 +26872,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LogSoftmax") Message(status.Message);
+                    throw new OpCreateException withOpType("LogSoftmax") Error(status.Message);
                 }
                 int _idx = 0;
                 var logsoftmax = new Output withOp(op) Index(_idx++);
@@ -26962,7 +26963,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LogUniformCandidateSampler") Message(status.Message);
+                    throw new OpCreateException withOpType("LogUniformCandidateSampler") Error(status.Message);
                 }
                 int _idx = 0;
                 var sampled_candidates = new Output withOp(op) Index(_idx++);
@@ -27006,7 +27007,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableExport") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableExport") Error(status.Message);
                 }
                 int _idx = 0;
                 var keys = new Output withOp(op) Index(_idx++);
@@ -27049,7 +27050,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableExportV2") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableExportV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var keys = new Output withOp(op) Index(_idx++);
@@ -27098,7 +27099,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableFind") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableFind") Error(status.Message);
                 }
                 int _idx = 0;
                 var values = new Output withOp(op) Index(_idx++);
@@ -27146,7 +27147,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableFindV2") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableFindV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var values = new Output withOp(op) Index(_idx++);
@@ -27190,7 +27191,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableImport") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableImport") Error(status.Message);
                 }
                 return op;
             }
@@ -27232,7 +27233,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableImportV2") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableImportV2") Error(status.Message);
                 }
                 return op;
             }
@@ -27274,7 +27275,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableInsert") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableInsert") Error(status.Message);
                 }
                 return op;
             }
@@ -27316,7 +27317,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableInsertV2") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableInsertV2") Error(status.Message);
                 }
                 return op;
             }
@@ -27354,7 +27355,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableRemoveV2") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableRemoveV2") Error(status.Message);
                 }
                 return op;
             }
@@ -27385,7 +27386,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableSize") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -27418,7 +27419,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LookupTableSizeV2") Message(status.Message);
+                    throw new OpCreateException withOpType("LookupTableSizeV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -27455,7 +27456,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LoopCond") Message(status.Message);
+                    throw new OpCreateException withOpType("LoopCond") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -27521,7 +27522,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LowerBound") Message(status.Message);
+                    throw new OpCreateException withOpType("LowerBound") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -27598,7 +27599,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LRN") Message(status.Message);
+                    throw new OpCreateException withOpType("LRN") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -27671,7 +27672,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LRNGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("LRNGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -27789,7 +27790,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LSTMBlockCell") Message(status.Message);
+                    throw new OpCreateException withOpType("LSTMBlockCell") Error(status.Message);
                 }
                 int _idx = 0;
                 var i = new Output withOp(op) Index(_idx++);
@@ -27901,7 +27902,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("LSTMBlockCellGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("LSTMBlockCellGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var cs_prev_grad = new Output withOp(op) Index(_idx++);
@@ -27976,7 +27977,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Lu") Message(status.Message);
+                    throw new OpCreateException withOpType("Lu") Error(status.Message);
                 }
                 int _idx = 0;
                 var lu = new Output withOp(op) Index(_idx++);
@@ -28015,7 +28016,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MakeIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("MakeIterator") Error(status.Message);
                 }
                 return op;
             }
@@ -28073,7 +28074,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MapClear") Message(status.Message);
+                    throw new OpCreateException withOpType("MapClear") Error(status.Message);
                 }
                 return op;
             }
@@ -28131,7 +28132,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MapIncompleteSize") Message(status.Message);
+                    throw new OpCreateException withOpType("MapIncompleteSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -28201,7 +28202,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MapPeek") Message(status.Message);
+                    throw new OpCreateException withOpType("MapPeek") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -28267,7 +28268,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MapSize") Message(status.Message);
+                    throw new OpCreateException withOpType("MapSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -28344,7 +28345,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MapStage") Message(status.Message);
+                    throw new OpCreateException withOpType("MapStage") Error(status.Message);
                 }
                 return op;
             }
@@ -28412,7 +28413,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MapUnstage") Message(status.Message);
+                    throw new OpCreateException withOpType("MapUnstage") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -28488,7 +28489,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MapUnstageNoKey") Message(status.Message);
+                    throw new OpCreateException withOpType("MapUnstageNoKey") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -28533,7 +28534,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatchingFiles") Message(status.Message);
+                    throw new OpCreateException withOpType("MatchingFiles") Error(status.Message);
                 }
                 int _idx = 0;
                 var filenames = new Output withOp(op) Index(_idx++);
@@ -28592,7 +28593,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatMul") Message(status.Message);
+                    throw new OpCreateException withOpType("MatMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var product = new Output withOp(op) Index(_idx++);
@@ -28676,7 +28677,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixBandPart") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixBandPart") Error(status.Message);
                 }
                 int _idx = 0;
                 var band = new Output withOp(op) Index(_idx++);
@@ -28714,7 +28715,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixDeterminant") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixDeterminant") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -28775,7 +28776,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixDiag") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixDiag") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -28839,7 +28840,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixDiagPart") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixDiagPart") Error(status.Message);
                 }
                 int _idx = 0;
                 var diagonal = new Output withOp(op) Index(_idx++);
@@ -28954,7 +28955,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixDiagPartV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixDiagPartV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var diagonal = new Output withOp(op) Index(_idx++);
@@ -29100,7 +29101,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixDiagV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixDiagV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29131,7 +29132,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixExponential") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixExponential") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29188,7 +29189,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixInverse") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixInverse") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29242,7 +29243,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixLogarithm") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixLogarithm") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29293,7 +29294,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixSetDiag") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixSetDiag") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29411,7 +29412,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixSetDiagV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixSetDiagV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29465,7 +29466,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixSolve") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixSolve") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29553,7 +29554,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixSolveLs") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixSolveLs") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29607,7 +29608,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixSquareRoot") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixSquareRoot") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29712,7 +29713,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MatrixTriangularSolve") Message(status.Message);
+                    throw new OpCreateException withOpType("MatrixTriangularSolve") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29764,7 +29765,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Max") Message(status.Message);
+                    throw new OpCreateException withOpType("Max") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29802,7 +29803,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Maximum") Message(status.Message);
+                    throw new OpCreateException withOpType("Maximum") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -29844,7 +29845,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxIntraOpParallelismDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxIntraOpParallelismDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -29903,7 +29904,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPool") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPool") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -29963,7 +29964,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPool3D") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPool3D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30030,7 +30031,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPool3DGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPool3DGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30098,7 +30099,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPool3DGradGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPool3DGradGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30165,7 +30166,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30232,7 +30233,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolGradGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolGradGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30299,7 +30300,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolGradGradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolGradGradV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30363,7 +30364,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolGradGradWithArgmax") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolGradGradWithArgmax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30430,7 +30431,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolGradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolGradV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30494,7 +30495,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolGradWithArgmax") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolGradWithArgmax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30553,7 +30554,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30628,7 +30629,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MaxPoolWithArgmax") Message(status.Message);
+                    throw new OpCreateException withOpType("MaxPoolWithArgmax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30681,7 +30682,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Mean") Message(status.Message);
+                    throw new OpCreateException withOpType("Mean") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30723,7 +30724,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Merge") Message(status.Message);
+                    throw new OpCreateException withOpType("Merge") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30767,7 +30768,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MergeSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("MergeSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -30822,7 +30823,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MergeV2Checkpoints") Message(status.Message);
+                    throw new OpCreateException withOpType("MergeV2Checkpoints") Error(status.Message);
                 }
                 return op;
             }
@@ -30899,7 +30900,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Mfcc") Message(status.Message);
+                    throw new OpCreateException withOpType("Mfcc") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30951,7 +30952,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Min") Message(status.Message);
+                    throw new OpCreateException withOpType("Min") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -30989,7 +30990,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Minimum") Message(status.Message);
+                    throw new OpCreateException withOpType("Minimum") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -31063,7 +31064,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MirrorPad") Message(status.Message);
+                    throw new OpCreateException withOpType("MirrorPad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -31126,7 +31127,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MirrorPadGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("MirrorPadGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -31167,7 +31168,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Mod") Message(status.Message);
+                    throw new OpCreateException withOpType("Mod") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -31223,7 +31224,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ModelDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ModelDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -31261,7 +31262,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Mul") Message(status.Message);
+                    throw new OpCreateException withOpType("Mul") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -31299,7 +31300,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MulNoNan") Message(status.Message);
+                    throw new OpCreateException withOpType("MulNoNan") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -31351,7 +31352,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MultiDeviceIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("MultiDeviceIterator") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -31400,7 +31401,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MultiDeviceIteratorFromStringHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("MultiDeviceIteratorFromStringHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var multi_device_iterator = new Output withOp(op) Index(_idx++);
@@ -31450,7 +31451,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MultiDeviceIteratorGetNextFromShard") Message(status.Message);
+                    throw new OpCreateException withOpType("MultiDeviceIteratorGetNextFromShard") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -31498,7 +31499,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MultiDeviceIteratorInit") Message(status.Message);
+                    throw new OpCreateException withOpType("MultiDeviceIteratorInit") Error(status.Message);
                 }
                 int _idx = 0;
                 var incarnation_id = new Output withOp(op) Index(_idx++);
@@ -31531,7 +31532,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MultiDeviceIteratorToStringHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("MultiDeviceIteratorToStringHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var string_handle = new Output withOp(op) Index(_idx++);
@@ -31594,7 +31595,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Multinomial") Message(status.Message);
+                    throw new OpCreateException withOpType("Multinomial") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -31692,7 +31693,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutableDenseHashTable") Message(status.Message);
+                    throw new OpCreateException withOpType("MutableDenseHashTable") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -31793,7 +31794,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutableDenseHashTableV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MutableDenseHashTableV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -31863,7 +31864,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutableHashTable") Message(status.Message);
+                    throw new OpCreateException withOpType("MutableHashTable") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -31938,7 +31939,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutableHashTableOfTensors") Message(status.Message);
+                    throw new OpCreateException withOpType("MutableHashTableOfTensors") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -32013,7 +32014,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutableHashTableOfTensorsV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MutableHashTableOfTensorsV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -32083,7 +32084,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutableHashTableV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MutableHashTableV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var table_handle = new Output withOp(op) Index(_idx++);
@@ -32158,7 +32159,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutexLock") Message(status.Message);
+                    throw new OpCreateException withOpType("MutexLock") Error(status.Message);
                 }
                 int _idx = 0;
                 var mutex_lock = new Output withOp(op) Index(_idx++);
@@ -32205,7 +32206,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("MutexV2") Message(status.Message);
+                    throw new OpCreateException withOpType("MutexV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var resource = new Output withOp(op) Index(_idx++);
@@ -32260,7 +32261,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NcclAllReduce") Message(status.Message);
+                    throw new OpCreateException withOpType("NcclAllReduce") Error(status.Message);
                 }
                 int _idx = 0;
                 var data = new Output withOp(op) Index(_idx++);
@@ -32306,7 +32307,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NcclBroadcast") Message(status.Message);
+                    throw new OpCreateException withOpType("NcclBroadcast") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -32351,7 +32352,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NcclReduce") Message(status.Message);
+                    throw new OpCreateException withOpType("NcclReduce") Error(status.Message);
                 }
                 int _idx = 0;
                 var data = new Output withOp(op) Index(_idx++);
@@ -32402,7 +32403,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NearestNeighbors") Message(status.Message);
+                    throw new OpCreateException withOpType("NearestNeighbors") Error(status.Message);
                 }
                 int _idx = 0;
                 var nearest_center_indices = new Output withOp(op) Index(_idx++);
@@ -32437,7 +32438,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Neg") Message(status.Message);
+                    throw new OpCreateException withOpType("Neg") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -32493,7 +32494,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NegTrain") Message(status.Message);
+                    throw new OpCreateException withOpType("NegTrain") Error(status.Message);
                 }
                 return op;
             }
@@ -32534,7 +32535,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NextAfter") Message(status.Message);
+                    throw new OpCreateException withOpType("NextAfter") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -32567,7 +32568,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NextIteration") Message(status.Message);
+                    throw new OpCreateException withOpType("NextIteration") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -32611,7 +32612,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NonDeterministicInts") Message(status.Message);
+                    throw new OpCreateException withOpType("NonDeterministicInts") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -32682,7 +32683,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NonMaxSuppression") Message(status.Message);
+                    throw new OpCreateException withOpType("NonMaxSuppression") Error(status.Message);
                 }
                 int _idx = 0;
                 var selected_indices = new Output withOp(op) Index(_idx++);
@@ -32751,7 +32752,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NonMaxSuppressionV2") Message(status.Message);
+                    throw new OpCreateException withOpType("NonMaxSuppressionV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var selected_indices = new Output withOp(op) Index(_idx++);
@@ -32824,7 +32825,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NonMaxSuppressionV3") Message(status.Message);
+                    throw new OpCreateException withOpType("NonMaxSuppressionV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var selected_indices = new Output withOp(op) Index(_idx++);
@@ -32909,7 +32910,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NonMaxSuppressionV4") Message(status.Message);
+                    throw new OpCreateException withOpType("NonMaxSuppressionV4") Error(status.Message);
                 }
                 int _idx = 0;
                 var selected_indices = new Output withOp(op) Index(_idx++);
@@ -33010,7 +33011,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NonMaxSuppressionV5") Message(status.Message);
+                    throw new OpCreateException withOpType("NonMaxSuppressionV5") Error(status.Message);
                 }
                 int _idx = 0;
                 var selected_indices = new Output withOp(op) Index(_idx++);
@@ -33083,7 +33084,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NonMaxSuppressionWithOverlaps") Message(status.Message);
+                    throw new OpCreateException withOpType("NonMaxSuppressionWithOverlaps") Error(status.Message);
                 }
                 int _idx = 0;
                 var selected_indices = new Output withOp(op) Index(_idx++);
@@ -33111,7 +33112,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NoOp") Message(status.Message);
+                    throw new OpCreateException withOpType("NoOp") Error(status.Message);
                 }
                 return op;
             }
@@ -33154,7 +33155,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NotEqual") Message(status.Message);
+                    throw new OpCreateException withOpType("NotEqual") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -33210,7 +33211,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("NthElement") Message(status.Message);
+                    throw new OpCreateException withOpType("NthElement") Error(status.Message);
                 }
                 int _idx = 0;
                 var values = new Output withOp(op) Index(_idx++);
@@ -33352,7 +33353,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OneHot") Message(status.Message);
+                    throw new OpCreateException withOpType("OneHot") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -33385,7 +33386,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OnesLike") Message(status.Message);
+                    throw new OpCreateException withOpType("OnesLike") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -33438,7 +33439,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OptimizeDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("OptimizeDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -33469,7 +33470,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OptionalFromValue") Message(status.Message);
+                    throw new OpCreateException withOpType("OptionalFromValue") Error(status.Message);
                 }
                 int _idx = 0;
                 var optional = new Output withOp(op) Index(_idx++);
@@ -33507,7 +33508,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OptionalGetValue") Message(status.Message);
+                    throw new OpCreateException withOpType("OptionalGetValue") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -33544,7 +33545,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OptionalHasValue") Message(status.Message);
+                    throw new OpCreateException withOpType("OptionalHasValue") Error(status.Message);
                 }
                 int _idx = 0;
                 var has_value = new Output withOp(op) Index(_idx++);
@@ -33572,7 +33573,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OptionalNone") Message(status.Message);
+                    throw new OpCreateException withOpType("OptionalNone") Error(status.Message);
                 }
                 int _idx = 0;
                 var optional = new Output withOp(op) Index(_idx++);
@@ -33632,7 +33633,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OrderedMapClear") Message(status.Message);
+                    throw new OpCreateException withOpType("OrderedMapClear") Error(status.Message);
                 }
                 return op;
             }
@@ -33690,7 +33691,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OrderedMapIncompleteSize") Message(status.Message);
+                    throw new OpCreateException withOpType("OrderedMapIncompleteSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -33761,7 +33762,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OrderedMapPeek") Message(status.Message);
+                    throw new OpCreateException withOpType("OrderedMapPeek") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -33827,7 +33828,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OrderedMapSize") Message(status.Message);
+                    throw new OpCreateException withOpType("OrderedMapSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -33907,7 +33908,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OrderedMapStage") Message(status.Message);
+                    throw new OpCreateException withOpType("OrderedMapStage") Error(status.Message);
                 }
                 return op;
             }
@@ -33975,7 +33976,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OrderedMapUnstage") Message(status.Message);
+                    throw new OpCreateException withOpType("OrderedMapUnstage") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -34051,7 +34052,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OrderedMapUnstageNoKey") Message(status.Message);
+                    throw new OpCreateException withOpType("OrderedMapUnstageNoKey") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -34109,7 +34110,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OutfeedDequeue") Message(status.Message);
+                    throw new OpCreateException withOpType("OutfeedDequeue") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -34161,7 +34162,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OutfeedDequeueTuple") Message(status.Message);
+                    throw new OpCreateException withOpType("OutfeedDequeueTuple") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -34199,7 +34200,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OutfeedEnqueue") Message(status.Message);
+                    throw new OpCreateException withOpType("OutfeedEnqueue") Error(status.Message);
                 }
                 return op;
             }
@@ -34230,7 +34231,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("OutfeedEnqueueTuple") Message(status.Message);
+                    throw new OpCreateException withOpType("OutfeedEnqueueTuple") Error(status.Message);
                 }
                 return op;
             }
@@ -34291,7 +34292,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Pack") Message(status.Message);
+                    throw new OpCreateException withOpType("Pack") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -34350,7 +34351,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Pad") Message(status.Message);
+                    throw new OpCreateException withOpType("Pad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -34402,7 +34403,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PaddedBatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("PaddedBatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -34466,7 +34467,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PaddedBatchDatasetV2") Message(status.Message);
+                    throw new OpCreateException withOpType("PaddedBatchDatasetV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -34547,7 +34548,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PaddingFIFOQueue") Message(status.Message);
+                    throw new OpCreateException withOpType("PaddingFIFOQueue") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -34628,7 +34629,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PaddingFIFOQueueV2") Message(status.Message);
+                    throw new OpCreateException withOpType("PaddingFIFOQueueV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -34691,7 +34692,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PadV2") Message(status.Message);
+                    throw new OpCreateException withOpType("PadV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -34749,7 +34750,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParallelConcat") Message(status.Message);
+                    throw new OpCreateException withOpType("ParallelConcat") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -34846,7 +34847,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParallelDynamicStitch") Message(status.Message);
+                    throw new OpCreateException withOpType("ParallelDynamicStitch") Error(status.Message);
                 }
                 int _idx = 0;
                 var merged = new Output withOp(op) Index(_idx++);
@@ -34919,7 +34920,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParameterizedTruncatedNormal") Message(status.Message);
+                    throw new OpCreateException withOpType("ParameterizedTruncatedNormal") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -35013,7 +35014,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParseExample") Message(status.Message);
+                    throw new OpCreateException withOpType("ParseExample") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -35120,7 +35121,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParseExampleDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ParseExampleDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -35294,7 +35295,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParseSequenceExample") Message(status.Message);
+                    throw new OpCreateException withOpType("ParseSequenceExample") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -35433,7 +35434,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParseSingleExample") Message(status.Message);
+                    throw new OpCreateException withOpType("ParseSingleExample") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -35601,7 +35602,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParseSingleSequenceExample") Message(status.Message);
+                    throw new OpCreateException withOpType("ParseSingleSequenceExample") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -35688,7 +35689,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ParseTensor") Message(status.Message);
+                    throw new OpCreateException withOpType("ParseTensor") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -35736,7 +35737,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Placeholder") Message(status.Message);
+                    throw new OpCreateException withOpType("Placeholder") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -35780,7 +35781,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PlaceholderV2") Message(status.Message);
+                    throw new OpCreateException withOpType("PlaceholderV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -35818,7 +35819,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PlaceholderWithDefault") Message(status.Message);
+                    throw new OpCreateException withOpType("PlaceholderWithDefault") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -35861,7 +35862,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Polygamma") Message(status.Message);
+                    throw new OpCreateException withOpType("Polygamma") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -35900,7 +35901,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PopulationCount") Message(status.Message);
+                    throw new OpCreateException withOpType("PopulationCount") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -35944,7 +35945,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Pow") Message(status.Message);
+                    throw new OpCreateException withOpType("Pow") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -36001,7 +36002,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PrefetchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("PrefetchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -36051,7 +36052,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Prelinearize") Message(status.Message);
+                    throw new OpCreateException withOpType("Prelinearize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -36099,7 +36100,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PrelinearizeTuple") Message(status.Message);
+                    throw new OpCreateException withOpType("PrelinearizeTuple") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -36150,7 +36151,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PreventGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("PreventGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -36214,7 +36215,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Print") Message(status.Message);
+                    throw new OpCreateException withOpType("Print") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -36264,7 +36265,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PrintV2") Message(status.Message);
+                    throw new OpCreateException withOpType("PrintV2") Error(status.Message);
                 }
                 return op;
             }
@@ -36341,7 +36342,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PriorityQueue") Message(status.Message);
+                    throw new OpCreateException withOpType("PriorityQueue") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -36420,7 +36421,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PriorityQueueV2") Message(status.Message);
+                    throw new OpCreateException withOpType("PriorityQueueV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -36462,7 +36463,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PrivateThreadPoolDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("PrivateThreadPoolDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -36514,7 +36515,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Prod") Message(status.Message);
+                    throw new OpCreateException withOpType("Prod") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -36561,7 +36562,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PyFunc") Message(status.Message);
+                    throw new OpCreateException withOpType("PyFunc") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -36605,7 +36606,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("PyFuncStateless") Message(status.Message);
+                    throw new OpCreateException withOpType("PyFuncStateless") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -36671,7 +36672,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Qr") Message(status.Message);
+                    throw new OpCreateException withOpType("Qr") Error(status.Message);
                 }
                 int _idx = 0;
                 var q = new Output withOp(op) Index(_idx++);
@@ -36738,7 +36739,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizeAndDequantize") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizeAndDequantize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -36886,7 +36887,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizeAndDequantizeV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizeAndDequantizeV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -36951,7 +36952,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizeAndDequantizeV3") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizeAndDequantizeV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37015,7 +37016,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -37076,7 +37077,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedAvgPool") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedAvgPool") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37194,7 +37195,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedBatchNormWithGlobalNormalization") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedBatchNormWithGlobalNormalization") Error(status.Message);
                 }
                 int _idx = 0;
                 var result = new Output withOp(op) Index(_idx++);
@@ -37258,7 +37259,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedBiasAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedBiasAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37312,7 +37313,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedConcat") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedConcat") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37404,7 +37405,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedConv2D") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedConv2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37486,7 +37487,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedConv2DPerChannel") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedConv2DPerChannel") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37568,7 +37569,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2D") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37654,7 +37655,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2DWithBias") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2DWithBias") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37740,7 +37741,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2DWithBiasAndRelu") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2DWithBiasAndRelu") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37834,7 +37835,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -37922,7 +37923,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedInstanceNorm") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedInstanceNorm") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -38018,7 +38019,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedMatMul") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedMatMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -38120,7 +38121,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedMatMulWithBias") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedMatMulWithBias") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -38223,7 +38224,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedMatMulWithBiasAndRelu") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedMatMulWithBiasAndRelu") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -38334,7 +38335,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedMatMulWithBiasAndReluAndRequantize") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedMatMulWithBiasAndReluAndRequantize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -38395,7 +38396,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedMaxPool") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedMaxPool") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -38461,7 +38462,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedMul") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -38535,7 +38536,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizeDownAndShrinkRange") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizeDownAndShrinkRange") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -38587,7 +38588,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedRelu") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedRelu") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -38639,7 +38640,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedRelu6") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedRelu6") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -38694,7 +38695,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedReluX") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedReluX") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -38746,7 +38747,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedReshape") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedReshape") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -38815,7 +38816,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizedResizeBilinear") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizedResizeBilinear") Error(status.Message);
                 }
                 int _idx = 0;
                 var resized_images = new Output withOp(op) Index(_idx++);
@@ -38978,7 +38979,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QuantizeV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QuantizeV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -39028,7 +39029,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueClose") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueClose") Error(status.Message);
                 }
                 return op;
             }
@@ -39074,7 +39075,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueCloseV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueCloseV2") Error(status.Message);
                 }
                 return op;
             }
@@ -39128,7 +39129,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueDequeue") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueDequeue") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -39201,7 +39202,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueDequeueMany") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueDequeueMany") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -39274,7 +39275,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueDequeueManyV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueDequeueManyV2") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -39351,7 +39352,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueDequeueUpTo") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueDequeueUpTo") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -39428,7 +39429,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueDequeueUpToV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueDequeueUpToV2") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -39490,7 +39491,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueDequeueV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueDequeueV2") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -39549,7 +39550,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueEnqueue") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueEnqueue") Error(status.Message);
                 }
                 return op;
             }
@@ -39605,7 +39606,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueEnqueueMany") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueEnqueueMany") Error(status.Message);
                 }
                 return op;
             }
@@ -39661,7 +39662,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueEnqueueManyV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueEnqueueManyV2") Error(status.Message);
                 }
                 return op;
             }
@@ -39712,7 +39713,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueEnqueueV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueEnqueueV2") Error(status.Message);
                 }
                 return op;
             }
@@ -39746,7 +39747,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueIsClosed") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueIsClosed") Error(status.Message);
                 }
                 int _idx = 0;
                 var is_closed = new Output withOp(op) Index(_idx++);
@@ -39782,7 +39783,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueIsClosedV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueIsClosedV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var is_closed = new Output withOp(op) Index(_idx++);
@@ -39815,7 +39816,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueSize") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -39848,7 +39849,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("QueueSizeV2") Message(status.Message);
+                    throw new OpCreateException withOpType("QueueSizeV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -39928,7 +39929,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RaggedGather") Message(status.Message);
+                    throw new OpCreateException withOpType("RaggedGather") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -40005,7 +40006,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RaggedRange") Message(status.Message);
+                    throw new OpCreateException withOpType("RaggedRange") Error(status.Message);
                 }
                 int _idx = 0;
                 var rt_nested_splits = new Output withOp(op) Index(_idx++);
@@ -40073,7 +40074,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RaggedTensorFromVariant") Message(status.Message);
+                    throw new OpCreateException withOpType("RaggedTensorFromVariant") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -40125,7 +40126,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RaggedTensorToSparse") Message(status.Message);
+                    throw new OpCreateException withOpType("RaggedTensorToSparse") Error(status.Message);
                 }
                 int _idx = 0;
                 var sparse_indices = new Output withOp(op) Index(_idx++);
@@ -40222,7 +40223,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RaggedTensorToTensor") Message(status.Message);
+                    throw new OpCreateException withOpType("RaggedTensorToTensor") Error(status.Message);
                 }
                 int _idx = 0;
                 var result = new Output withOp(op) Index(_idx++);
@@ -40279,7 +40280,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RaggedTensorToVariant") Message(status.Message);
+                    throw new OpCreateException withOpType("RaggedTensorToVariant") Error(status.Message);
                 }
                 int _idx = 0;
                 var encoded_ragged = new Output withOp(op) Index(_idx++);
@@ -40342,7 +40343,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomCrop") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomCrop") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -40399,7 +40400,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -40463,7 +40464,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomGamma") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomGamma") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -40497,7 +40498,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomGammaGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomGammaGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -40545,7 +40546,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomPoisson") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomPoisson") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -40622,7 +40623,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomPoissonV2") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomPoissonV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -40685,7 +40686,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomShuffle") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomShuffle") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -40784,7 +40785,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomShuffleQueue") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomShuffleQueue") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -40883,7 +40884,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomShuffleQueueV2") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomShuffleQueueV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -40942,7 +40943,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomStandardNormal") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomStandardNormal") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -41002,7 +41003,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomUniform") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomUniform") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -41070,7 +41071,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RandomUniformInt") Message(status.Message);
+                    throw new OpCreateException withOpType("RandomUniformInt") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -41124,7 +41125,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Range") Message(status.Message);
+                    throw new OpCreateException withOpType("Range") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -41171,7 +41172,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RangeDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("RangeDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -41217,7 +41218,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Rank") Message(status.Message);
+                    throw new OpCreateException withOpType("Rank") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -41253,7 +41254,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderNumRecordsProduced") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderNumRecordsProduced") Error(status.Message);
                 }
                 int _idx = 0;
                 var records_produced = new Output withOp(op) Index(_idx++);
@@ -41289,7 +41290,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderNumRecordsProducedV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderNumRecordsProducedV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var records_produced = new Output withOp(op) Index(_idx++);
@@ -41321,7 +41322,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderNumWorkUnitsCompleted") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderNumWorkUnitsCompleted") Error(status.Message);
                 }
                 int _idx = 0;
                 var units_completed = new Output withOp(op) Index(_idx++);
@@ -41353,7 +41354,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderNumWorkUnitsCompletedV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderNumWorkUnitsCompletedV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var units_completed = new Output withOp(op) Index(_idx++);
@@ -41397,7 +41398,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderRead") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderRead") Error(status.Message);
                 }
                 int _idx = 0;
                 var key = new Output withOp(op) Index(_idx++);
@@ -41447,7 +41448,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderReadUpTo") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderReadUpTo") Error(status.Message);
                 }
                 int _idx = 0;
                 var keys = new Output withOp(op) Index(_idx++);
@@ -41497,7 +41498,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderReadUpToV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderReadUpToV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var keys = new Output withOp(op) Index(_idx++);
@@ -41542,7 +41543,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderReadV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderReadV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var key = new Output withOp(op) Index(_idx++);
@@ -41575,7 +41576,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderReset") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderReset") Error(status.Message);
                 }
                 return op;
             }
@@ -41605,7 +41606,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderResetV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderResetV2") Error(status.Message);
                 }
                 return op;
             }
@@ -41644,7 +41645,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderRestoreState") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderRestoreState") Error(status.Message);
                 }
                 return op;
             }
@@ -41683,7 +41684,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderRestoreStateV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderRestoreStateV2") Error(status.Message);
                 }
                 return op;
             }
@@ -41717,7 +41718,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderSerializeState") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderSerializeState") Error(status.Message);
                 }
                 int _idx = 0;
                 var state = new Output withOp(op) Index(_idx++);
@@ -41753,7 +41754,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReaderSerializeStateV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReaderSerializeStateV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var state = new Output withOp(op) Index(_idx++);
@@ -41784,7 +41785,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReadFile") Message(status.Message);
+                    throw new OpCreateException withOpType("ReadFile") Error(status.Message);
                 }
                 int _idx = 0;
                 var contents = new Output withOp(op) Index(_idx++);
@@ -41829,7 +41830,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReadVariableOp") Message(status.Message);
+                    throw new OpCreateException withOpType("ReadVariableOp") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -41880,7 +41881,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Real") Message(status.Message);
+                    throw new OpCreateException withOpType("Real") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -41920,7 +41921,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RealDiv") Message(status.Message);
+                    throw new OpCreateException withOpType("RealDiv") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -41976,7 +41977,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RebatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("RebatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -42010,7 +42011,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Reciprocal") Message(status.Message);
+                    throw new OpCreateException withOpType("Reciprocal") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -42048,7 +42049,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReciprocalGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ReciprocalGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -42132,7 +42133,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RecordInput") Message(status.Message);
+                    throw new OpCreateException withOpType("RecordInput") Error(status.Message);
                 }
                 int _idx = 0;
                 var records = new Output withOp(op) Index(_idx++);
@@ -42180,7 +42181,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RecvTPUEmbeddingActivations") Message(status.Message);
+                    throw new OpCreateException withOpType("RecvTPUEmbeddingActivations") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -42267,7 +42268,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReduceJoin") Message(status.Message);
+                    throw new OpCreateException withOpType("ReduceJoin") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42327,7 +42328,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RefEnter") Message(status.Message);
+                    throw new OpCreateException withOpType("RefEnter") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42363,7 +42364,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RefExit") Message(status.Message);
+                    throw new OpCreateException withOpType("RefExit") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42394,7 +42395,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RefIdentity") Message(status.Message);
+                    throw new OpCreateException withOpType("RefIdentity") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42436,7 +42437,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RefMerge") Message(status.Message);
+                    throw new OpCreateException withOpType("RefMerge") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42470,7 +42471,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RefNextIteration") Message(status.Message);
+                    throw new OpCreateException withOpType("RefNextIteration") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42507,7 +42508,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RefSelect") Message(status.Message);
+                    throw new OpCreateException withOpType("RefSelect") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42552,7 +42553,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RefSwitch") Message(status.Message);
+                    throw new OpCreateException withOpType("RefSwitch") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_false = new Output withOp(op) Index(_idx++);
@@ -42598,7 +42599,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RegexFullMatch") Message(status.Message);
+                    throw new OpCreateException withOpType("RegexFullMatch") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42654,7 +42655,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RegexReplace") Message(status.Message);
+                    throw new OpCreateException withOpType("RegexReplace") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -42685,7 +42686,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Relu") Message(status.Message);
+                    throw new OpCreateException withOpType("Relu") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -42716,7 +42717,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Relu6") Message(status.Message);
+                    throw new OpCreateException withOpType("Relu6") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -42755,7 +42756,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Relu6Grad") Message(status.Message);
+                    throw new OpCreateException withOpType("Relu6Grad") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -42793,7 +42794,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReluGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ReluGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -42844,7 +42845,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RemoteFusedGraphExecute") Message(status.Message);
+                    throw new OpCreateException withOpType("RemoteFusedGraphExecute") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -42893,7 +42894,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RepeatDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("RepeatDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -42941,7 +42942,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RequantizationRange") Message(status.Message);
+                    throw new OpCreateException withOpType("RequantizationRange") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_min = new Output withOp(op) Index(_idx++);
@@ -42991,7 +42992,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RequantizationRangePerChannel") Message(status.Message);
+                    throw new OpCreateException withOpType("RequantizationRangePerChannel") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_min = new Output withOp(op) Index(_idx++);
@@ -43057,7 +43058,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Requantize") Message(status.Message);
+                    throw new OpCreateException withOpType("Requantize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -43119,7 +43120,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RequantizePerChannel") Message(status.Message);
+                    throw new OpCreateException withOpType("RequantizePerChannel") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -43214,7 +43215,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Reshape") Message(status.Message);
+                    throw new OpCreateException withOpType("Reshape") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -43275,7 +43276,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResizeArea") Message(status.Message);
+                    throw new OpCreateException withOpType("ResizeArea") Error(status.Message);
                 }
                 int _idx = 0;
                 var resized_images = new Output withOp(op) Index(_idx++);
@@ -43333,7 +43334,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResizeBicubic") Message(status.Message);
+                    throw new OpCreateException withOpType("ResizeBicubic") Error(status.Message);
                 }
                 int _idx = 0;
                 var resized_images = new Output withOp(op) Index(_idx++);
@@ -43389,7 +43390,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResizeBicubicGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResizeBicubicGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -43447,7 +43448,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResizeBilinear") Message(status.Message);
+                    throw new OpCreateException withOpType("ResizeBilinear") Error(status.Message);
                 }
                 int _idx = 0;
                 var resized_images = new Output withOp(op) Index(_idx++);
@@ -43503,7 +43504,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResizeBilinearGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResizeBilinearGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -43558,7 +43559,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResizeNearestNeighbor") Message(status.Message);
+                    throw new OpCreateException withOpType("ResizeNearestNeighbor") Error(status.Message);
                 }
                 int _idx = 0;
                 var resized_images = new Output withOp(op) Index(_idx++);
@@ -43613,7 +43614,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResizeNearestNeighborGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResizeNearestNeighborGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -43656,7 +43657,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceAccumulatorApplyGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceAccumulatorApplyGradient") Error(status.Message);
                 }
                 return op;
             }
@@ -43687,7 +43688,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceAccumulatorNumAccumulated") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceAccumulatorNumAccumulated") Error(status.Message);
                 }
                 int _idx = 0;
                 var num_accumulated = new Output withOp(op) Index(_idx++);
@@ -43727,7 +43728,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceAccumulatorSetGlobalStep") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceAccumulatorSetGlobalStep") Error(status.Message);
                 }
                 return op;
             }
@@ -43775,7 +43776,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceAccumulatorTakeGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceAccumulatorTakeGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var average = new Output withOp(op) Index(_idx++);
@@ -43846,7 +43847,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAdadelta") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAdadelta") Error(status.Message);
                 }
                 return op;
             }
@@ -43909,7 +43910,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAdagrad") Error(status.Message);
                 }
                 return op;
             }
@@ -43976,7 +43977,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAdagradDA") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAdagradDA") Error(status.Message);
                 }
                 return op;
             }
@@ -44043,7 +44044,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAdagradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAdagradV2") Error(status.Message);
                 }
                 return op;
             }
@@ -44133,7 +44134,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAdam") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAdam") Error(status.Message);
                 }
                 return op;
             }
@@ -44210,7 +44211,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAdaMax") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAdaMax") Error(status.Message);
                 }
                 return op;
             }
@@ -44297,7 +44298,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAdamWithAmsgrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAdamWithAmsgrad") Error(status.Message);
                 }
                 return op;
             }
@@ -44366,7 +44367,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyAddSign") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyAddSign") Error(status.Message);
                 }
                 return op;
             }
@@ -44457,7 +44458,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyCenteredRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyCenteredRMSProp") Error(status.Message);
                 }
                 return op;
             }
@@ -44532,7 +44533,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyFtrl") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyFtrl") Error(status.Message);
                 }
                 return op;
             }
@@ -44612,7 +44613,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyFtrlV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyFtrlV2") Error(status.Message);
                 }
                 return op;
             }
@@ -44659,7 +44660,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyGradientDescent") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyGradientDescent") Error(status.Message);
                 }
                 return op;
             }
@@ -44731,7 +44732,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyKerasMomentum") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyKerasMomentum") Error(status.Message);
                 }
                 return op;
             }
@@ -44803,7 +44804,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyMomentum") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyMomentum") Error(status.Message);
                 }
                 return op;
             }
@@ -44872,7 +44873,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyPowerSign") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyPowerSign") Error(status.Message);
                 }
                 return op;
             }
@@ -44936,7 +44937,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyProximalAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyProximalAdagrad") Error(status.Message);
                 }
                 return op;
             }
@@ -44995,7 +44996,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyProximalGradientDescent") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyProximalGradientDescent") Error(status.Message);
                 }
                 return op;
             }
@@ -45074,7 +45075,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceApplyRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceApplyRMSProp") Error(status.Message);
                 }
                 return op;
             }
@@ -45145,7 +45146,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceConditionalAccumulator") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceConditionalAccumulator") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -45188,7 +45189,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceCountUpTo") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceCountUpTo") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -45255,7 +45256,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceGather") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceGather") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -45316,7 +45317,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterAdd") Error(status.Message);
                 }
                 return op;
             }
@@ -45375,7 +45376,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterDiv") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterDiv") Error(status.Message);
                 }
                 return op;
             }
@@ -45434,7 +45435,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterMax") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterMax") Error(status.Message);
                 }
                 return op;
             }
@@ -45493,7 +45494,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterMin") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterMin") Error(status.Message);
                 }
                 return op;
             }
@@ -45552,7 +45553,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterMul") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterMul") Error(status.Message);
                 }
                 return op;
             }
@@ -45637,7 +45638,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterNdAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterNdAdd") Error(status.Message);
                 }
                 return op;
             }
@@ -45722,7 +45723,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterNdSub") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterNdSub") Error(status.Message);
                 }
                 return op;
             }
@@ -45809,7 +45810,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterNdUpdate") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterNdUpdate") Error(status.Message);
                 }
                 return op;
             }
@@ -45868,7 +45869,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterSub") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterSub") Error(status.Message);
                 }
                 return op;
             }
@@ -45918,7 +45919,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceScatterUpdate") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceScatterUpdate") Error(status.Message);
                 }
                 return op;
             }
@@ -45984,7 +45985,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyAdadelta") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyAdadelta") Error(status.Message);
                 }
                 return op;
             }
@@ -46052,7 +46053,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyAdagrad") Error(status.Message);
                 }
                 return op;
             }
@@ -46123,7 +46124,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyAdagradDA") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyAdagradDA") Error(status.Message);
                 }
                 return op;
             }
@@ -46195,7 +46196,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyAdagradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyAdagradV2") Error(status.Message);
                 }
                 return op;
             }
@@ -46288,7 +46289,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyCenteredRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyCenteredRMSProp") Error(status.Message);
                 }
                 return op;
             }
@@ -46368,7 +46369,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyFtrl") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyFtrl") Error(status.Message);
                 }
                 return op;
             }
@@ -46453,7 +46454,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyFtrlV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyFtrlV2") Error(status.Message);
                 }
                 return op;
             }
@@ -46531,7 +46532,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyKerasMomentum") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyKerasMomentum") Error(status.Message);
                 }
                 return op;
             }
@@ -46609,7 +46610,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyMomentum") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyMomentum") Error(status.Message);
                 }
                 return op;
             }
@@ -46679,7 +46680,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyProximalAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyProximalAdagrad") Error(status.Message);
                 }
                 return op;
             }
@@ -46743,7 +46744,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyProximalGradientDescent") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyProximalGradientDescent") Error(status.Message);
                 }
                 return op;
             }
@@ -46826,7 +46827,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceSparseApplyRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceSparseApplyRMSProp") Error(status.Message);
                 }
                 return op;
             }
@@ -46910,7 +46911,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ResourceStridedSliceAssign") Message(status.Message);
+                    throw new OpCreateException withOpType("ResourceStridedSliceAssign") Error(status.Message);
                 }
                 return op;
             }
@@ -46979,7 +46980,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Restore") Message(status.Message);
+                    throw new OpCreateException withOpType("Restore") Error(status.Message);
                 }
                 int _idx = 0;
                 var tensor = new Output withOp(op) Index(_idx++);
@@ -47045,7 +47046,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RestoreSlice") Message(status.Message);
+                    throw new OpCreateException withOpType("RestoreSlice") Error(status.Message);
                 }
                 int _idx = 0;
                 var tensor = new Output withOp(op) Index(_idx++);
@@ -47109,7 +47110,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RestoreV2") Message(status.Message);
+                    throw new OpCreateException withOpType("RestoreV2") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -47174,7 +47175,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdadeltaParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdadeltaParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47236,7 +47237,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdadeltaParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdadeltaParametersGradAccumDebug") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47297,7 +47298,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdagradParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdagradParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47357,7 +47358,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdagradParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingAdagradParametersGradAccumDebug") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47418,7 +47419,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingADAMParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingADAMParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47480,7 +47481,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingADAMParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingADAMParametersGradAccumDebug") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47543,7 +47544,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingCenteredRMSPropParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingCenteredRMSPropParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47605,7 +47606,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingFTRLParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingFTRLParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47667,7 +47668,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingFTRLParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingFTRLParametersGradAccumDebug") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47730,7 +47731,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingMDLAdagradLightParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingMDLAdagradLightParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47791,7 +47792,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingMomentumParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingMomentumParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47851,7 +47852,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingMomentumParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingMomentumParametersGradAccumDebug") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47911,7 +47912,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingProximalAdagradParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingProximalAdagradParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -47971,7 +47972,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingProximalAdagradParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingProximalAdagradParametersGradAccumDebug") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -48032,7 +48033,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingRMSPropParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingRMSPropParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -48094,7 +48095,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingRMSPropParametersGradAccumDebug") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingRMSPropParametersGradAccumDebug") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -48153,7 +48154,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingStochasticGradientDescentParameters") Message(status.Message);
+                    throw new OpCreateException withOpType("RetrieveTPUEmbeddingStochasticGradientDescentParameters") Error(status.Message);
                 }
                 int _idx = 0;
                 var parameters = new Output withOp(op) Index(_idx++);
@@ -48236,7 +48237,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Reverse") Message(status.Message);
+                    throw new OpCreateException withOpType("Reverse") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48343,7 +48344,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReverseSequence") Message(status.Message);
+                    throw new OpCreateException withOpType("ReverseSequence") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48429,7 +48430,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ReverseV2") Message(status.Message);
+                    throw new OpCreateException withOpType("ReverseV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48484,7 +48485,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RFFT") Message(status.Message);
+                    throw new OpCreateException withOpType("RFFT") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48541,7 +48542,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RFFT2D") Message(status.Message);
+                    throw new OpCreateException withOpType("RFFT2D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48598,7 +48599,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RFFT3D") Message(status.Message);
+                    throw new OpCreateException withOpType("RFFT3D") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48640,7 +48641,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RGBToHSV") Message(status.Message);
+                    throw new OpCreateException withOpType("RGBToHSV") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48710,7 +48711,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RightShift") Message(status.Message);
+                    throw new OpCreateException withOpType("RightShift") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -48752,7 +48753,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Rint") Message(status.Message);
+                    throw new OpCreateException withOpType("Rint") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -48798,7 +48799,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RngSkip") Message(status.Message);
+                    throw new OpCreateException withOpType("RngSkip") Error(status.Message);
                 }
                 return op;
             }
@@ -48866,7 +48867,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Roll") Message(status.Message);
+                    throw new OpCreateException withOpType("Roll") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -48901,7 +48902,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Round") Message(status.Message);
+                    throw new OpCreateException withOpType("Round") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -49026,7 +49027,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Rpc") Message(status.Message);
+                    throw new OpCreateException withOpType("Rpc") Error(status.Message);
                 }
                 int _idx = 0;
                 var response = new Output withOp(op) Index(_idx++);
@@ -49060,7 +49061,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Rsqrt") Message(status.Message);
+                    throw new OpCreateException withOpType("Rsqrt") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -49098,7 +49099,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("RsqrtGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("RsqrtGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -49249,7 +49250,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SampleDistortedBoundingBox") Message(status.Message);
+                    throw new OpCreateException withOpType("SampleDistortedBoundingBox") Error(status.Message);
                 }
                 int _idx = 0;
                 var begin = new Output withOp(op) Index(_idx++);
@@ -49398,7 +49399,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SampleDistortedBoundingBoxV2") Message(status.Message);
+                    throw new OpCreateException withOpType("SampleDistortedBoundingBoxV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var begin = new Output withOp(op) Index(_idx++);
@@ -49458,7 +49459,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SamplingDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("SamplingDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -49505,7 +49506,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Save") Message(status.Message);
+                    throw new OpCreateException withOpType("Save") Error(status.Message);
                 }
                 return op;
             }
@@ -49572,7 +49573,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SaveSlices") Message(status.Message);
+                    throw new OpCreateException withOpType("SaveSlices") Error(status.Message);
                 }
                 return op;
             }
@@ -49621,7 +49622,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SaveV2") Message(status.Message);
+                    throw new OpCreateException withOpType("SaveV2") Error(status.Message);
                 }
                 return op;
             }
@@ -49660,7 +49661,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScalarSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("ScalarSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -49735,7 +49736,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -49808,7 +49809,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterDiv") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterDiv") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -49883,7 +49884,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterMax") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterMax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -49958,7 +49959,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterMin") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterMin") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -50031,7 +50032,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterMul") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -50157,7 +50158,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterNd") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterNd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -50246,7 +50247,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterNdAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterNdAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -50325,7 +50326,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterNdNonAliasingAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterNdNonAliasingAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -50416,7 +50417,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterNdSub") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterNdSub") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -50507,7 +50508,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterNdUpdate") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterNdUpdate") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -50582,7 +50583,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterSub") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterSub") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -50662,7 +50663,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ScatterUpdate") Message(status.Message);
+                    throw new OpCreateException withOpType("ScatterUpdate") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -50696,7 +50697,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SdcaFprint") Message(status.Message);
+                    throw new OpCreateException withOpType("SdcaFprint") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -50827,7 +50828,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SdcaOptimizer") Message(status.Message);
+                    throw new OpCreateException withOpType("SdcaOptimizer") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -50971,7 +50972,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SdcaOptimizerV2") Message(status.Message);
+                    throw new OpCreateException withOpType("SdcaOptimizerV2") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -51026,7 +51027,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SdcaShrinkL1") Message(status.Message);
+                    throw new OpCreateException withOpType("SdcaShrinkL1") Error(status.Message);
                 }
                 return op;
             }
@@ -51087,7 +51088,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SegmentMax") Message(status.Message);
+                    throw new OpCreateException withOpType("SegmentMax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51151,7 +51152,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SegmentMean") Message(status.Message);
+                    throw new OpCreateException withOpType("SegmentMean") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51213,7 +51214,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SegmentMin") Message(status.Message);
+                    throw new OpCreateException withOpType("SegmentMin") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51276,7 +51277,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SegmentProd") Message(status.Message);
+                    throw new OpCreateException withOpType("SegmentProd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51339,7 +51340,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SegmentSum") Message(status.Message);
+                    throw new OpCreateException withOpType("SegmentSum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51421,7 +51422,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Select") Message(status.Message);
+                    throw new OpCreateException withOpType("Select") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51463,7 +51464,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SelfAdjointEig") Message(status.Message);
+                    throw new OpCreateException withOpType("SelfAdjointEig") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51520,7 +51521,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SelfAdjointEigV2") Message(status.Message);
+                    throw new OpCreateException withOpType("SelfAdjointEigV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var e = new Output withOp(op) Index(_idx++);
@@ -51561,7 +51562,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Selu") Message(status.Message);
+                    throw new OpCreateException withOpType("Selu") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -51599,7 +51600,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SeluGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SeluGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -51650,7 +51651,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SendTPUEmbeddingGradients") Message(status.Message);
+                    throw new OpCreateException withOpType("SendTPUEmbeddingGradients") Error(status.Message);
                 }
                 return op;
             }
@@ -51682,7 +51683,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SerializeIterator") Message(status.Message);
+                    throw new OpCreateException withOpType("SerializeIterator") Error(status.Message);
                 }
                 int _idx = 0;
                 var serialized = new Output withOp(op) Index(_idx++);
@@ -51740,7 +51741,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SerializeManySparse") Message(status.Message);
+                    throw new OpCreateException withOpType("SerializeManySparse") Error(status.Message);
                 }
                 int _idx = 0;
                 var serialized_sparse = new Output withOp(op) Index(_idx++);
@@ -51789,7 +51790,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SerializeSparse") Message(status.Message);
+                    throw new OpCreateException withOpType("SerializeSparse") Error(status.Message);
                 }
                 int _idx = 0;
                 var serialized_sparse = new Output withOp(op) Index(_idx++);
@@ -51822,7 +51823,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SerializeTensor") Message(status.Message);
+                    throw new OpCreateException withOpType("SerializeTensor") Error(status.Message);
                 }
                 int _idx = 0;
                 var serialized = new Output withOp(op) Index(_idx++);
@@ -51880,7 +51881,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SetSize") Message(status.Message);
+                    throw new OpCreateException withOpType("SetSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -51928,7 +51929,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Shape") Message(status.Message);
+                    throw new OpCreateException withOpType("Shape") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -51969,7 +51970,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ShapeN") Message(status.Message);
+                    throw new OpCreateException withOpType("ShapeN") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -52028,7 +52029,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ShardDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ShardDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -52068,7 +52069,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ShardedFilename") Message(status.Message);
+                    throw new OpCreateException withOpType("ShardedFilename") Error(status.Message);
                 }
                 int _idx = 0;
                 var filename = new Output withOp(op) Index(_idx++);
@@ -52102,7 +52103,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ShardedFilespec") Message(status.Message);
+                    throw new OpCreateException withOpType("ShardedFilespec") Error(status.Message);
                 }
                 int _idx = 0;
                 var filename = new Output withOp(op) Index(_idx++);
@@ -52164,7 +52165,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ShuffleAndRepeatDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ShuffleAndRepeatDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -52230,7 +52231,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ShuffleDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ShuffleDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -52261,7 +52262,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ShutdownDistributedTPU") Message(status.Message);
+                    throw new OpCreateException withOpType("ShutdownDistributedTPU") Error(status.Message);
                 }
                 return op;
             }
@@ -52293,7 +52294,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Sigmoid") Message(status.Message);
+                    throw new OpCreateException withOpType("Sigmoid") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -52331,7 +52332,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SigmoidGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SigmoidGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -52367,7 +52368,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Sign") Message(status.Message);
+                    throw new OpCreateException withOpType("Sign") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -52408,7 +52409,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Sin") Message(status.Message);
+                    throw new OpCreateException withOpType("Sin") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -52449,7 +52450,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Sinh") Message(status.Message);
+                    throw new OpCreateException withOpType("Sinh") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -52498,7 +52499,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Size") Message(status.Message);
+                    throw new OpCreateException withOpType("Size") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -52541,7 +52542,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SkipDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("SkipDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -52612,7 +52613,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Skipgram") Message(status.Message);
+                    throw new OpCreateException withOpType("Skipgram") Error(status.Message);
                 }
                 int _idx = 0;
                 var vocab_word = new Output withOp(op) Index(_idx++);
@@ -52669,7 +52670,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Slice") Message(status.Message);
+                    throw new OpCreateException withOpType("Slice") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -52722,7 +52723,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SlidingWindowDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("SlidingWindowDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -52753,7 +52754,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Snapshot") Message(status.Message);
+                    throw new OpCreateException withOpType("Snapshot") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -52865,7 +52866,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SnapshotDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("SnapshotDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -52903,7 +52904,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Softmax") Message(status.Message);
+                    throw new OpCreateException withOpType("Softmax") Error(status.Message);
                 }
                 int _idx = 0;
                 var softmax = new Output withOp(op) Index(_idx++);
@@ -52947,7 +52948,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SoftmaxCrossEntropyWithLogits") Message(status.Message);
+                    throw new OpCreateException withOpType("SoftmaxCrossEntropyWithLogits") Error(status.Message);
                 }
                 int _idx = 0;
                 var loss = new Output withOp(op) Index(_idx++);
@@ -52979,7 +52980,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Softplus") Message(status.Message);
+                    throw new OpCreateException withOpType("Softplus") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -53016,7 +53017,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SoftplusGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SoftplusGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -53047,7 +53048,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Softsign") Message(status.Message);
+                    throw new OpCreateException withOpType("Softsign") Error(status.Message);
                 }
                 int _idx = 0;
                 var activations = new Output withOp(op) Index(_idx++);
@@ -53084,7 +53085,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SoftsignGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SoftsignGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var backprops = new Output withOp(op) Index(_idx++);
@@ -53217,7 +53218,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SpaceToBatch") Message(status.Message);
+                    throw new OpCreateException withOpType("SpaceToBatch") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -53375,7 +53376,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SpaceToBatchND") Message(status.Message);
+                    throw new OpCreateException withOpType("SpaceToBatchND") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -53503,7 +53504,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SpaceToDepth") Message(status.Message);
+                    throw new OpCreateException withOpType("SpaceToDepth") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -53564,7 +53565,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseAccumulatorApplyGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseAccumulatorApplyGradient") Error(status.Message);
                 }
                 return op;
             }
@@ -53616,7 +53617,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseAccumulatorTakeGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseAccumulatorTakeGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var indices = new Output withOp(op) Index(_idx++);
@@ -53694,7 +53695,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var sum_indices = new Output withOp(op) Index(_idx++);
@@ -53753,7 +53754,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseAddGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseAddGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var a_val_grad = new Output withOp(op) Index(_idx++);
@@ -53823,7 +53824,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyAdadelta") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyAdadelta") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -53894,7 +53895,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyAdagrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -53968,7 +53969,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyAdagradDA") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyAdagradDA") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54043,7 +54044,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyAdagradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyAdagradV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54139,7 +54140,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyCenteredRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyCenteredRMSProp") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54222,7 +54223,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyFtrl") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyFtrl") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54310,7 +54311,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyFtrlV2") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyFtrlV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54391,7 +54392,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyMomentum") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyMomentum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54464,7 +54465,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyProximalAdagrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyProximalAdagrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54531,7 +54532,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyProximalGradientDescent") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyProximalGradientDescent") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54617,7 +54618,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseApplyRMSProp") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseApplyRMSProp") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -54710,7 +54711,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseConcat") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseConcat") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -54783,7 +54784,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseConditionalAccumulator") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseConditionalAccumulator") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -54892,7 +54893,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseCross") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseCross") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -54950,7 +54951,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseDenseCwiseAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseDenseCwiseAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55000,7 +55001,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseDenseCwiseDiv") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseDenseCwiseDiv") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55054,7 +55055,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseDenseCwiseMul") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseDenseCwiseMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55144,7 +55145,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseFillEmptyRows") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseFillEmptyRows") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -55196,7 +55197,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseFillEmptyRowsGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseFillEmptyRowsGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var d_values = new Output withOp(op) Index(_idx++);
@@ -55270,7 +55271,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseMatMul") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseMatMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var product = new Output withOp(op) Index(_idx++);
@@ -55338,7 +55339,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseReduceMax") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseReduceMax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55409,7 +55410,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseReduceMaxSparse") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseReduceMaxSparse") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -55479,7 +55480,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseReduceSum") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseReduceSum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55550,7 +55551,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseReduceSumSparse") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseReduceSumSparse") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -55607,7 +55608,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseReorder") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseReorder") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -55672,7 +55673,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseReshape") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseReshape") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -55720,7 +55721,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentMean") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentMean") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55768,7 +55769,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentMeanGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentMeanGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55821,7 +55822,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentMeanWithNumSegments") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentMeanWithNumSegments") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55868,7 +55869,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentSqrtN") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentSqrtN") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55916,7 +55917,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentSqrtNGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentSqrtNGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -55971,7 +55972,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentSqrtNWithNumSegments") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentSqrtNWithNumSegments") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -56043,7 +56044,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentSum") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentSum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -56117,7 +56118,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSegmentSumWithNumSegments") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSegmentSumWithNumSegments") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -56190,7 +56191,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSlice") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSlice") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -56243,7 +56244,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSliceGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSliceGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var val_grad = new Output withOp(op) Index(_idx++);
@@ -56302,7 +56303,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSoftmax") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSoftmax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -56350,7 +56351,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSoftmaxCrossEntropyWithLogits") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSoftmaxCrossEntropyWithLogits") Error(status.Message);
                 }
                 int _idx = 0;
                 var loss = new Output withOp(op) Index(_idx++);
@@ -56410,7 +56411,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSparseMaximum") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSparseMaximum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -56470,7 +56471,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSparseMinimum") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSparseMinimum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_indices = new Output withOp(op) Index(_idx++);
@@ -56548,7 +56549,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseSplit") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseSplit") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -56613,7 +56614,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseTensorDenseAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseTensorDenseAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -56686,7 +56687,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseTensorDenseMatMul") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseTensorDenseMatMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var product = new Output withOp(op) Index(_idx++);
@@ -56723,7 +56724,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseTensorSliceDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseTensorSliceDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -56801,7 +56802,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseToDense") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseToDense") Error(status.Message);
                 }
                 int _idx = 0;
                 var dense = new Output withOp(op) Index(_idx++);
@@ -56903,7 +56904,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SparseToSparseSetOperation") Message(status.Message);
+                    throw new OpCreateException withOpType("SparseToSparseSetOperation") Error(status.Message);
                 }
                 int _idx = 0;
                 var result_indices = new Output withOp(op) Index(_idx++);
@@ -56951,7 +56952,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Split") Message(status.Message);
+                    throw new OpCreateException withOpType("Split") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -57007,7 +57008,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SplitV") Message(status.Message);
+                    throw new OpCreateException withOpType("SplitV") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -57060,7 +57061,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SqlDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("SqlDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -57094,7 +57095,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Sqrt") Message(status.Message);
+                    throw new OpCreateException withOpType("Sqrt") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -57132,7 +57133,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SqrtGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("SqrtGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -57166,7 +57167,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Square") Message(status.Message);
+                    throw new OpCreateException withOpType("Square") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -57204,7 +57205,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("SquaredDifference") Message(status.Message);
+                    throw new OpCreateException withOpType("SquaredDifference") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -57268,7 +57269,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Squeeze") Message(status.Message);
+                    throw new OpCreateException withOpType("Squeeze") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -57307,7 +57308,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Stack") Message(status.Message);
+                    throw new OpCreateException withOpType("Stack") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -57338,7 +57339,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StackClose") Message(status.Message);
+                    throw new OpCreateException withOpType("StackClose") Error(status.Message);
                 }
                 return op;
             }
@@ -57368,7 +57369,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StackCloseV2") Message(status.Message);
+                    throw new OpCreateException withOpType("StackCloseV2") Error(status.Message);
                 }
                 return op;
             }
@@ -57401,7 +57402,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StackPop") Message(status.Message);
+                    throw new OpCreateException withOpType("StackPop") Error(status.Message);
                 }
                 int _idx = 0;
                 var elem = new Output withOp(op) Index(_idx++);
@@ -57439,7 +57440,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StackPopV2") Message(status.Message);
+                    throw new OpCreateException withOpType("StackPopV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var elem = new Output withOp(op) Index(_idx++);
@@ -57480,7 +57481,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StackPush") Message(status.Message);
+                    throw new OpCreateException withOpType("StackPush") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -57525,7 +57526,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StackPushV2") Message(status.Message);
+                    throw new OpCreateException withOpType("StackPushV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -57573,7 +57574,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StackV2") Message(status.Message);
+                    throw new OpCreateException withOpType("StackV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -57645,7 +57646,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Stage") Message(status.Message);
+                    throw new OpCreateException withOpType("Stage") Error(status.Message);
                 }
                 return op;
             }
@@ -57703,7 +57704,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StageClear") Message(status.Message);
+                    throw new OpCreateException withOpType("StageClear") Error(status.Message);
                 }
                 return op;
             }
@@ -57769,7 +57770,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StagePeek") Message(status.Message);
+                    throw new OpCreateException withOpType("StagePeek") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -57835,7 +57836,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StageSize") Message(status.Message);
+                    throw new OpCreateException withOpType("StageSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -57883,7 +57884,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatefulStandardNormal") Message(status.Message);
+                    throw new OpCreateException withOpType("StatefulStandardNormal") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -57935,7 +57936,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatefulStandardNormalV2") Message(status.Message);
+                    throw new OpCreateException withOpType("StatefulStandardNormalV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -57989,7 +57990,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatefulTruncatedNormal") Message(status.Message);
+                    throw new OpCreateException withOpType("StatefulTruncatedNormal") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58042,7 +58043,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatefulUniform") Message(status.Message);
+                    throw new OpCreateException withOpType("StatefulUniform") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58094,7 +58095,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatefulUniformFullInt") Message(status.Message);
+                    throw new OpCreateException withOpType("StatefulUniformFullInt") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58152,7 +58153,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatefulUniformInt") Message(status.Message);
+                    throw new OpCreateException withOpType("StatefulUniformInt") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58202,7 +58203,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatelessMultinomial") Message(status.Message);
+                    throw new OpCreateException withOpType("StatelessMultinomial") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58252,7 +58253,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatelessRandomNormal") Message(status.Message);
+                    throw new OpCreateException withOpType("StatelessRandomNormal") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58303,7 +58304,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatelessRandomUniform") Message(status.Message);
+                    throw new OpCreateException withOpType("StatelessRandomUniform") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58353,7 +58354,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatelessRandomUniformInt") Message(status.Message);
+                    throw new OpCreateException withOpType("StatelessRandomUniformInt") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58405,7 +58406,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatelessTruncatedNormal") Message(status.Message);
+                    throw new OpCreateException withOpType("StatelessTruncatedNormal") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58451,7 +58452,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StaticRegexFullMatch") Message(status.Message);
+                    throw new OpCreateException withOpType("StaticRegexFullMatch") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58505,7 +58506,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StaticRegexReplace") Message(status.Message);
+                    throw new OpCreateException withOpType("StaticRegexReplace") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58547,7 +58548,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatsAggregatorHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("StatsAggregatorHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -58581,7 +58582,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatsAggregatorSetSummaryWriter") Message(status.Message);
+                    throw new OpCreateException withOpType("StatsAggregatorSetSummaryWriter") Error(status.Message);
                 }
                 return op;
             }
@@ -58610,7 +58611,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StatsAggregatorSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("StatsAggregatorSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -58662,7 +58663,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StopGradient") Message(status.Message);
+                    throw new OpCreateException withOpType("StopGradient") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58860,7 +58861,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StridedSlice") Message(status.Message);
+                    throw new OpCreateException withOpType("StridedSlice") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -58946,7 +58947,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StridedSliceAssign") Message(status.Message);
+                    throw new OpCreateException withOpType("StridedSliceAssign") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_ref = new Output withOp(op) Index(_idx++);
@@ -59034,7 +59035,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StridedSliceGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("StridedSliceGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59094,7 +59095,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringFormat") Message(status.Message);
+                    throw new OpCreateException withOpType("StringFormat") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59139,7 +59140,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringJoin") Message(status.Message);
+                    throw new OpCreateException withOpType("StringJoin") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59188,7 +59189,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringLength") Message(status.Message);
+                    throw new OpCreateException withOpType("StringLength") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59262,7 +59263,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringNGrams") Message(status.Message);
+                    throw new OpCreateException withOpType("StringNGrams") Error(status.Message);
                 }
                 int _idx = 0;
                 var ngrams = new Output withOp(op) Index(_idx++);
@@ -59335,7 +59336,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringSplit") Message(status.Message);
+                    throw new OpCreateException withOpType("StringSplit") Error(status.Message);
                 }
                 int _idx = 0;
                 var indices = new Output withOp(op) Index(_idx++);
@@ -59411,7 +59412,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringSplitV2") Message(status.Message);
+                    throw new OpCreateException withOpType("StringSplitV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var indices = new Output withOp(op) Index(_idx++);
@@ -59446,7 +59447,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringStrip") Message(status.Message);
+                    throw new OpCreateException withOpType("StringStrip") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59491,7 +59492,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringToHashBucket") Message(status.Message);
+                    throw new OpCreateException withOpType("StringToHashBucket") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59537,7 +59538,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringToHashBucketFast") Message(status.Message);
+                    throw new OpCreateException withOpType("StringToHashBucketFast") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59595,7 +59596,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringToHashBucketStrong") Message(status.Message);
+                    throw new OpCreateException withOpType("StringToHashBucketStrong") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59639,7 +59640,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("StringToNumber") Message(status.Message);
+                    throw new OpCreateException withOpType("StringToNumber") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59677,7 +59678,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Sub") Message(status.Message);
+                    throw new OpCreateException withOpType("Sub") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -59807,7 +59808,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Substr") Message(status.Message);
+                    throw new OpCreateException withOpType("Substr") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59859,7 +59860,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Sum") Message(status.Message);
+                    throw new OpCreateException withOpType("Sum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -59933,7 +59934,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Svd") Message(status.Message);
+                    throw new OpCreateException withOpType("Svd") Error(status.Message);
                 }
                 int _idx = 0;
                 var s = new Output withOp(op) Index(_idx++);
@@ -59980,7 +59981,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Switch") Message(status.Message);
+                    throw new OpCreateException withOpType("Switch") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_false = new Output withOp(op) Index(_idx++);
@@ -60025,7 +60026,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TakeDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("TakeDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -60136,7 +60137,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TakeManySparseFromTensorsMap") Message(status.Message);
+                    throw new OpCreateException withOpType("TakeManySparseFromTensorsMap") Error(status.Message);
                 }
                 int _idx = 0;
                 var sparse_indices = new Output withOp(op) Index(_idx++);
@@ -60180,7 +60181,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Tan") Message(status.Message);
+                    throw new OpCreateException withOpType("Tan") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -60221,7 +60222,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Tanh") Message(status.Message);
+                    throw new OpCreateException withOpType("Tanh") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -60259,7 +60260,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TanhGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("TanhGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -60322,7 +60323,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TemporaryVariable") Message(status.Message);
+                    throw new OpCreateException withOpType("TemporaryVariable") Error(status.Message);
                 }
                 int _idx = 0;
                 var reference = new Output withOp(op) Index(_idx++);
@@ -60353,7 +60354,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayCloseV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayCloseV2") Error(status.Message);
                 }
                 return op;
             }
@@ -60387,7 +60388,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayCloseV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayCloseV3") Error(status.Message);
                 }
                 return op;
             }
@@ -60433,7 +60434,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayConcatV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayConcatV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -60507,7 +60508,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayConcatV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayConcatV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -60556,7 +60557,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayGatherV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayGatherV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -60616,7 +60617,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayGatherV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayGatherV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -60654,7 +60655,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayGradV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayGradV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var grad_handle = new Output withOp(op) Index(_idx++);
@@ -60737,7 +60738,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayGradV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayGradV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var grad_handle = new Output withOp(op) Index(_idx++);
@@ -60795,7 +60796,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayGradWithShape") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayGradWithShape") Error(status.Message);
                 }
                 int _idx = 0;
                 var grad_handle = new Output withOp(op) Index(_idx++);
@@ -60837,7 +60838,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayReadV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayReadV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -60882,7 +60883,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayReadV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayReadV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var value = new Output withOp(op) Index(_idx++);
@@ -60922,7 +60923,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayScatterV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayScatterV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var flow_out = new Output withOp(op) Index(_idx++);
@@ -60970,7 +60971,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayScatterV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayScatterV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var flow_out = new Output withOp(op) Index(_idx++);
@@ -61004,7 +61005,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArraySizeV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArraySizeV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -61041,7 +61042,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArraySizeV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArraySizeV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var size = new Output withOp(op) Index(_idx++);
@@ -61081,7 +61082,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArraySplitV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArraySplitV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var flow_out = new Output withOp(op) Index(_idx++);
@@ -61153,7 +61154,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArraySplitV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArraySplitV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var flow_out = new Output withOp(op) Index(_idx++);
@@ -61216,7 +61217,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -61311,7 +61312,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -61352,7 +61353,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayWriteV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayWriteV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var flow_out = new Output withOp(op) Index(_idx++);
@@ -61397,7 +61398,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorArrayWriteV3") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorArrayWriteV3") Error(status.Message);
                 }
                 int _idx = 0;
                 var flow_out = new Output withOp(op) Index(_idx++);
@@ -61432,7 +61433,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -61468,7 +61469,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorForestCreateTreeVariable") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorForestCreateTreeVariable") Error(status.Message);
                 }
                 return op;
             }
@@ -61502,7 +61503,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorForestTreeDeserialize") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorForestTreeDeserialize") Error(status.Message);
                 }
                 return op;
             }
@@ -61533,7 +61534,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorForestTreeIsInitializedOp") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorForestTreeIsInitializedOp") Error(status.Message);
                 }
                 int _idx = 0;
                 var is_initialized = new Output withOp(op) Index(_idx++);
@@ -61575,7 +61576,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorForestTreePredict") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorForestTreePredict") Error(status.Message);
                 }
                 int _idx = 0;
                 var logits = new Output withOp(op) Index(_idx++);
@@ -61617,7 +61618,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorForestTreeResourceHandleOp") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorForestTreeResourceHandleOp") Error(status.Message);
                 }
                 int _idx = 0;
                 var resource = new Output withOp(op) Index(_idx++);
@@ -61650,7 +61651,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorForestTreeSerialize") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorForestTreeSerialize") Error(status.Message);
                 }
                 int _idx = 0;
                 var tree_config = new Output withOp(op) Index(_idx++);
@@ -61683,7 +61684,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorForestTreeSize") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorForestTreeSize") Error(status.Message);
                 }
                 int _idx = 0;
                 var tree_size = new Output withOp(op) Index(_idx++);
@@ -61736,7 +61737,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListConcat") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListConcat") Error(status.Message);
                 }
                 int _idx = 0;
                 var tensor = new Output withOp(op) Index(_idx++);
@@ -61795,7 +61796,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListConcatV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListConcatV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var tensor = new Output withOp(op) Index(_idx++);
@@ -61835,7 +61836,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListElementShape") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListElementShape") Error(status.Message);
                 }
                 int _idx = 0;
                 var element_shape = new Output withOp(op) Index(_idx++);
@@ -61875,7 +61876,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListFromTensor") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListFromTensor") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -61924,7 +61925,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListGather") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListGather") Error(status.Message);
                 }
                 int _idx = 0;
                 var values = new Output withOp(op) Index(_idx++);
@@ -61972,7 +61973,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListGetItem") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListGetItem") Error(status.Message);
                 }
                 int _idx = 0;
                 var item = new Output withOp(op) Index(_idx++);
@@ -62007,7 +62008,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListLength") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListLength") Error(status.Message);
                 }
                 int _idx = 0;
                 var length = new Output withOp(op) Index(_idx++);
@@ -62056,7 +62057,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListPopBack") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListPopBack") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62098,7 +62099,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListPushBack") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListPushBack") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62142,7 +62143,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListReserve") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListReserve") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -62182,7 +62183,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListResize") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListResize") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62229,7 +62230,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListScatter") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListScatter") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62275,7 +62276,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListScatterIntoExistingList") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListScatterIntoExistingList") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62328,7 +62329,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListScatterV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListScatterV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62372,7 +62373,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListSetItem") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListSetItem") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62418,7 +62419,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListSplit") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListSplit") Error(status.Message);
                 }
                 int _idx = 0;
                 var output_handle = new Output withOp(op) Index(_idx++);
@@ -62471,7 +62472,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorListStack") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorListStack") Error(status.Message);
                 }
                 int _idx = 0;
                 var tensor = new Output withOp(op) Index(_idx++);
@@ -62578,7 +62579,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorScatterAdd") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorScatterAdd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -62685,7 +62686,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorScatterSub") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorScatterSub") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -62804,7 +62805,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorScatterUpdate") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorScatterUpdate") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -62839,7 +62840,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorSliceDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorSliceDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -62925,7 +62926,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorStridedSliceUpdate") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorStridedSliceUpdate") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -62986,7 +62987,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorSummary") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorSummary") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -63027,7 +63028,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TensorSummaryV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TensorSummaryV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var summary = new Output withOp(op) Index(_idx++);
@@ -63069,7 +63070,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TextLineDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("TextLineDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -63124,7 +63125,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TextLineReader") Message(status.Message);
+                    throw new OpCreateException withOpType("TextLineReader") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -63179,7 +63180,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TextLineReaderV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TextLineReaderV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -63222,7 +63223,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TFRecordDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("TFRecordDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -63276,7 +63277,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TFRecordReader") Message(status.Message);
+                    throw new OpCreateException withOpType("TFRecordReader") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -63330,7 +63331,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TFRecordReaderV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TFRecordReaderV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -63372,7 +63373,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ThreadPoolDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ThreadPoolDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -63436,7 +63437,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ThreadPoolHandle") Message(status.Message);
+                    throw new OpCreateException withOpType("ThreadPoolHandle") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -63527,7 +63528,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ThreadUnsafeUnigramCandidateSampler") Message(status.Message);
+                    throw new OpCreateException withOpType("ThreadUnsafeUnigramCandidateSampler") Error(status.Message);
                 }
                 int _idx = 0;
                 var sampled_candidates = new Output withOp(op) Index(_idx++);
@@ -63572,7 +63573,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Tile") Message(status.Message);
+                    throw new OpCreateException withOpType("Tile") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -63611,7 +63612,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TileGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("TileGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -63645,7 +63646,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Timestamp") Message(status.Message);
+                    throw new OpCreateException withOpType("Timestamp") Error(status.Message);
                 }
                 int _idx = 0;
                 var ts = new Output withOp(op) Index(_idx++);
@@ -63709,7 +63710,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TopK") Message(status.Message);
+                    throw new OpCreateException withOpType("TopK") Error(status.Message);
                 }
                 int _idx = 0;
                 var values = new Output withOp(op) Index(_idx++);
@@ -63771,7 +63772,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TopKV2") Message(status.Message);
+                    throw new OpCreateException withOpType("TopKV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var values = new Output withOp(op) Index(_idx++);
@@ -63800,7 +63801,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TPUCompilationResult") Message(status.Message);
+                    throw new OpCreateException withOpType("TPUCompilationResult") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -63854,7 +63855,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TPUEmbeddingActivations") Message(status.Message);
+                    throw new OpCreateException withOpType("TPUEmbeddingActivations") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -63888,7 +63889,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TPUOrdinalSelector") Message(status.Message);
+                    throw new OpCreateException withOpType("TPUOrdinalSelector") Error(status.Message);
                 }
                 int _idx = 0;
                 var device_ordinals = new Output withOp(op) Index(_idx++);
@@ -63919,7 +63920,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TPUReplicatedInput") Message(status.Message);
+                    throw new OpCreateException withOpType("TPUReplicatedInput") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -63954,7 +63955,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TPUReplicatedOutput") Message(status.Message);
+                    throw new OpCreateException withOpType("TPUReplicatedOutput") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -64061,7 +64062,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TPUReplicateMetadata") Message(status.Message);
+                    throw new OpCreateException withOpType("TPUReplicateMetadata") Error(status.Message);
                 }
                 return op;
             }
@@ -64097,7 +64098,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Transpose") Message(status.Message);
+                    throw new OpCreateException withOpType("Transpose") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -64149,7 +64150,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TridiagonalMatMul") Message(status.Message);
+                    throw new OpCreateException withOpType("TridiagonalMatMul") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -64207,7 +64208,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TridiagonalSolve") Message(status.Message);
+                    throw new OpCreateException withOpType("TridiagonalSolve") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -64250,7 +64251,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TruncateDiv") Message(status.Message);
+                    throw new OpCreateException withOpType("TruncateDiv") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -64312,7 +64313,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TruncatedNormal") Message(status.Message);
+                    throw new OpCreateException withOpType("TruncatedNormal") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -64353,7 +64354,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TruncateMod") Message(status.Message);
+                    throw new OpCreateException withOpType("TruncateMod") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -64484,7 +64485,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("TryRpc") Message(status.Message);
+                    throw new OpCreateException withOpType("TryRpc") Error(status.Message);
                 }
                 int _idx = 0;
                 var response = new Output withOp(op) Index(_idx++);
@@ -64561,7 +64562,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Unbatch") Message(status.Message);
+                    throw new OpCreateException withOpType("Unbatch") Error(status.Message);
                 }
                 int _idx = 0;
                 var unbatched_tensor = new Output withOp(op) Index(_idx++);
@@ -64599,7 +64600,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnbatchDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("UnbatchDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -64669,7 +64670,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnbatchGrad") Message(status.Message);
+                    throw new OpCreateException withOpType("UnbatchGrad") Error(status.Message);
                 }
                 int _idx = 0;
                 var batched_grad = new Output withOp(op) Index(_idx++);
@@ -64767,7 +64768,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnicodeDecode") Message(status.Message);
+                    throw new OpCreateException withOpType("UnicodeDecode") Error(status.Message);
                 }
                 int _idx = 0;
                 var row_splits = new Output withOp(op) Index(_idx++);
@@ -64872,7 +64873,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnicodeDecodeWithOffsets") Message(status.Message);
+                    throw new OpCreateException withOpType("UnicodeDecodeWithOffsets") Error(status.Message);
                 }
                 int _idx = 0;
                 var row_splits = new Output withOp(op) Index(_idx++);
@@ -64961,7 +64962,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnicodeEncode") Message(status.Message);
+                    throw new OpCreateException withOpType("UnicodeEncode") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -65001,7 +65002,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnicodeScript") Message(status.Message);
+                    throw new OpCreateException withOpType("UnicodeScript") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -65110,7 +65111,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnicodeTranscode") Message(status.Message);
+                    throw new OpCreateException withOpType("UnicodeTranscode") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -65201,7 +65202,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UniformCandidateSampler") Message(status.Message);
+                    throw new OpCreateException withOpType("UniformCandidateSampler") Error(status.Message);
                 }
                 int _idx = 0;
                 var sampled_candidates = new Output withOp(op) Index(_idx++);
@@ -65262,7 +65263,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Unique") Message(status.Message);
+                    throw new OpCreateException withOpType("Unique") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -65301,7 +65302,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UniqueDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("UniqueDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -65394,7 +65395,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UniqueV2") Message(status.Message);
+                    throw new OpCreateException withOpType("UniqueV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -65457,7 +65458,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UniqueWithCounts") Message(status.Message);
+                    throw new OpCreateException withOpType("UniqueWithCounts") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -65557,7 +65558,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UniqueWithCountsV2") Message(status.Message);
+                    throw new OpCreateException withOpType("UniqueWithCountsV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -65619,7 +65620,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Unpack") Message(status.Message);
+                    throw new OpCreateException withOpType("Unpack") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -65687,7 +65688,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnravelIndex") Message(status.Message);
+                    throw new OpCreateException withOpType("UnravelIndex") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -65764,7 +65765,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnsortedSegmentJoin") Message(status.Message);
+                    throw new OpCreateException withOpType("UnsortedSegmentJoin") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -65839,7 +65840,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnsortedSegmentMax") Message(status.Message);
+                    throw new OpCreateException withOpType("UnsortedSegmentMax") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -65909,7 +65910,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnsortedSegmentMin") Message(status.Message);
+                    throw new OpCreateException withOpType("UnsortedSegmentMin") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -65978,7 +65979,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnsortedSegmentProd") Message(status.Message);
+                    throw new OpCreateException withOpType("UnsortedSegmentProd") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -66049,7 +66050,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UnsortedSegmentSum") Message(status.Message);
+                    throw new OpCreateException withOpType("UnsortedSegmentSum") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -66113,7 +66114,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Unstage") Message(status.Message);
+                    throw new OpCreateException withOpType("Unstage") Error(status.Message);
                 }
                 int _idx = 0;
                 int _n = 0;
@@ -66185,7 +66186,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("UpperBound") Message(status.Message);
+                    throw new OpCreateException withOpType("UpperBound") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -66239,7 +66240,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("VarHandleOp") Message(status.Message);
+                    throw new OpCreateException withOpType("VarHandleOp") Error(status.Message);
                 }
                 int _idx = 0;
                 var resource = new Output withOp(op) Index(_idx++);
@@ -66288,7 +66289,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Variable") Message(status.Message);
+                    throw new OpCreateException withOpType("Variable") Error(status.Message);
                 }
                 int _idx = 0;
                 var reference = new Output withOp(op) Index(_idx++);
@@ -66336,7 +66337,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("VariableShape") Message(status.Message);
+                    throw new OpCreateException withOpType("VariableShape") Error(status.Message);
                 }
                 int _idx = 0;
                 var output = new Output withOp(op) Index(_idx++);
@@ -66397,7 +66398,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("VariableV2") Message(status.Message);
+                    throw new OpCreateException withOpType("VariableV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var reference = new Output withOp(op) Index(_idx++);
@@ -66431,7 +66432,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("VarIsInitializedOp") Message(status.Message);
+                    throw new OpCreateException withOpType("VarIsInitializedOp") Error(status.Message);
                 }
                 int _idx = 0;
                 var is_initialized = new Output withOp(op) Index(_idx++);
@@ -66523,7 +66524,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Where") Message(status.Message);
+                    throw new OpCreateException withOpType("Where") Error(status.Message);
                 }
                 int _idx = 0;
                 var index = new Output withOp(op) Index(_idx++);
@@ -66574,7 +66575,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("WholeFileReader") Message(status.Message);
+                    throw new OpCreateException withOpType("WholeFileReader") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -66625,7 +66626,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("WholeFileReaderV2") Message(status.Message);
+                    throw new OpCreateException withOpType("WholeFileReaderV2") Error(status.Message);
                 }
                 int _idx = 0;
                 var reader_handle = new Output withOp(op) Index(_idx++);
@@ -66682,7 +66683,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("WindowDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("WindowDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
@@ -66719,7 +66720,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("WorkerHeartbeat") Message(status.Message);
+                    throw new OpCreateException withOpType("WorkerHeartbeat") Error(status.Message);
                 }
                 int _idx = 0;
                 var response = new Output withOp(op) Index(_idx++);
@@ -66758,7 +66759,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("WriteFile") Message(status.Message);
+                    throw new OpCreateException withOpType("WriteFile") Error(status.Message);
                 }
                 return op;
             }
@@ -66790,7 +66791,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Xdivy") Message(status.Message);
+                    throw new OpCreateException withOpType("Xdivy") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -66824,7 +66825,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Xlogy") Message(status.Message);
+                    throw new OpCreateException withOpType("Xlogy") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -66857,7 +66858,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ZerosLike") Message(status.Message);
+                    throw new OpCreateException withOpType("ZerosLike") Error(status.Message);
                 }
                 int _idx = 0;
                 var y = new Output withOp(op) Index(_idx++);
@@ -66897,7 +66898,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("Zeta") Message(status.Message);
+                    throw new OpCreateException withOpType("Zeta") Error(status.Message);
                 }
                 int _idx = 0;
                 var z = new Output withOp(op) Index(_idx++);
@@ -66935,7 +66936,7 @@ namespace TensorFlow.Island.Classes
             using (var status = new Status()) {
                 var (success, op) = desc.FinishOperation(status);
                 if(!success) {
-                    throw new OpCreateException withOpType("ZipDataset") Message(status.Message);
+                    throw new OpCreateException withOpType("ZipDataset") Error(status.Message);
                 }
                 int _idx = 0;
                 var handle = new Output withOp(op) Index(_idx++);
