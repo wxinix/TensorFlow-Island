@@ -26,11 +26,11 @@ uses
   TensorFlow.Island.Api;
 
 type
-  BufferFileNotExistException = public class(Exception)
+  BufferFileMissingException = public class(Exception)
   public
-    constructor(aFile: not nullable String);
+    constructor(aFile: String);
     begin
-      inherited constructor($'Buffer file {aFile} not existing.');
+      inherited constructor($'Error locating buffer file "{aFile}".');
     end;
   end;
 
@@ -38,7 +38,7 @@ type
   public
     constructor withExistingName(aName: String);
     begin
-      inherited constructor($'Device name already set, existing name {aName}.');
+      inherited constructor($'Device name already set with name {aName}.');
     end;
   end;
 
@@ -52,11 +52,10 @@ type
 
   TensorDataSizeException = public class(Exception)
   public
-    constructor withTensorDataSize(aTensorDataSize: Integer) ShapeSize(aShapeSize: Integer);
+    constructor withTensorDataSize(aDataSize: Integer) ShapeSize(aShapeSize: Integer);
     begin
       inherited constructor(
-        $'Tensor data[size={aTensorDataSize}] inconsistent ' +
-        $'with shape[size={aShapeSize}].');
+        $'Tensor data[size={aDataSize}] inconsistent with shape[size={aShapeSize}].');
     end;
   end;
 
@@ -64,15 +63,15 @@ type
   public
     constructor withDetectedOsBitSize(aSize: Integer);
     begin
-      inherited constructor($'Invalid OS bit size {aSize}. Support 64bit only.');
+      inherited constructor($'{aSize}bit detected. Support 64bit only.');
     end;
   end;
 
   LibraryLoadException = public class(Exception)
   public
-    constructor withLibName(aName: NotNull<String>) Error(aMsg: NotNull<String>);
+    constructor withLibName(aName: String) Error(aErr: String);
     begin
-      inherited constructor($'Cannot load TensorFlow library "{aName}". {aMsg}');
+      inherited constructor($'Error loading TensorFlow library "{aName}": {aErr}');
     end; 
   end;
 
@@ -88,9 +87,9 @@ type
 
   OpCreateException = public class(Exception)
   public
-    constructor withOpType(aOpType: not nullable String) Error(aErr: NotNull<String> := '');
+    constructor withOpType(aOpType: String) Error(aErr: String);
     begin
-      inherited constructor($'Fail creating Op[type={aOpType}]. {aErr}');
+      inherited constructor($'Error creating Op[type={aOpType}]: {aErr}');
     end;
   end;
 
@@ -98,7 +97,7 @@ type
   public
     constructor withError(aErr: String);
     begin
-      inherited constructor($'Fail setting up partial run with error "{aErr}".');
+      inherited constructor($'Error setting up partial run: {aErr}.');
     end;
   end;
 
@@ -106,13 +105,13 @@ type
   public
     constructor;
     begin
-      inherited constructor('Cannot invoke PartialRun with uninitialized token.');
+      inherited constructor('Error invoking partial run: uninitialized token.');
     end;
   end;
 
   SessionCreateException = public class(Exception)
   public
-    constructor withError(aErr: NotNull<String>);
+    constructor withError(aErr: String);
     begin
       inherited constructor(aErr);
     end;
@@ -130,7 +129,7 @@ type
   public
     constructor withString(aValue: String) Error(aErr: String);
     begin
-      inherited constructor($'Fail encoding "{aValue}". {aErrMsg}');
+      inherited constructor($'Error encoding "{aValue}": {aErr}');
     end;
   end;
 
@@ -138,7 +137,7 @@ type
   public
     constructor withTensorType(aType: DataType);
     begin
-      var msg := $'Fail creating tensor[type={aType.ToString}].';
+      var msg := $'Error creating tensor[type={aType.ToString}].';
       inherited constructor(msg);
     end;
   end;
