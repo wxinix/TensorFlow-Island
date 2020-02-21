@@ -506,7 +506,9 @@ type
             result := (s, T(v));
           end;
         else
-          raise new InvalidAttrTypeException($'Invalid operation attr type {typeOf(T).Name}');
+          raise new ArgumentException(
+            $'GetAttrValue<T> has invalid T[type_name={typeOf(T).Name}] ' + 
+            $'for attr[attr_name={aAttrName}].');
         end;
 
         if assigned(aStatus) then aStatus.SetCode(lStatus.Code) Message(lStatus.Message);
@@ -1322,7 +1324,8 @@ type
         if (fNumDims > 0) and (0 <= aIndex < fNumDims) then begin
           result := fDims[aIndex]
         end else begin
-          raise new InvalidShapeDimIndexException(aIndex, fNumDims);
+          raise new ArgumentOutOfRangeException(
+            $'Accessing a Shape[num_dims={fNumDims}] dimension with invalid index {aIndex}.');
         end;
       end;
 
@@ -2125,7 +2128,7 @@ type
       fManaged := true;
 
       if aVals.Length <> fShape.Size then begin
-        raise new InvalidTensorDataSizeException withDataSize(aVals.Length) ShapeSize(fShape.Size);
+        raise new TensorDataSizeException withTensorDataSize(aVals.Length) ShapeSize(fShape.Size);
       end;
 
       if fType <> DataType.String then begin
@@ -2187,9 +2190,9 @@ type
 
       for I: Integer := 0 to height - 1 do begin
         if aVals[I].Length <> width then begin
-          raise new InvalidRectangularTensorData(
-            $'Array [Rectangular array height={height} width={width}].' +
-            $'Invalid row {I} width={aVals[I].Length}.'
+          raise new ArgumentException(
+            $'ConvertToTensor<T> has rectangular array[height={height} width={width}].' +
+            $'Row[{I}] has invalid width={aVals[I].Length}.'
           );
         end;
       end;
@@ -2274,7 +2277,7 @@ type
       var deallocator_arg: ^Void := nil;
 
       var hnd := TF_NewTensor(dtype, dims, num_dims, data_, len, deallocator, deallocator_arg);
-      if not assigned(hnd) then raise new TensorCreateException(aData.Type);
+      if not assigned(hnd) then raise new TensorCreateException withTensorType(aData.Type);
 
       fData := aData;
       inherited constructor withHandle(hnd) OnDispose(aHandle->TF_DeleteTensor(aHandle));
@@ -2638,7 +2641,7 @@ type
 
       var create_session := CreateSession;
       if not create_session.Ok then begin
-        raise new SessionCreateException withMessage(create_session.Msg);
+        raise new SessionCreateException withError(create_session.Msg);
       end;
 
       inherited constructor withHandle(create_session.Handle) OnDispose(fOnDispose);
@@ -2660,7 +2663,7 @@ type
 
       var create_session := CreateSession(aOpts);
       if not create_session.Ok then begin
-        raise new SessionCreateException withMessage(create_session.Msg);
+        raise new SessionCreateException withError(create_session.Msg);
       end;
 
       inherited constructor withHandle(create_session.Handle) OnDispose(fOnDispose);
@@ -3045,7 +3048,7 @@ type
     begin
       var os_bit := sizeOf(NativeUInt);
       if os_bit <> sizeOf(UInt64) then begin
-        raise new InvalidOsBitSizeException withDetectedOsBitSize(os_bit * sizeOf(Byte));
+        raise new OsBitSizeException withDetectedOsBitSize(os_bit * sizeOf(Byte));
       end;
     end;
   public
