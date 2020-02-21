@@ -52,7 +52,7 @@ type
 
     method ToAnsiCharPtrs: array of ^AnsiChar;
     begin
-      result := Helper.ToArray(self.ToArray);
+      result := Helper.ToAnsiCharPtrs(self.ToArray);
     end;
   end;
 
@@ -101,10 +101,10 @@ type
       end;
     end;
 
-    method ReadBytesFromFile(aFile: not nullable String): array of Byte;
+    method ReadBytesFromFile(aFile: NotNull<String>): array of Byte;
     begin
       if not File.Exists(aFile) then begin
-        raise new BufferFileNotExistException(aFile);
+        raise new BufferFileMissingException(aFile);
       end;
 
       using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
@@ -117,7 +117,7 @@ type
       end;
     end;
 
-    method ToArray(aList: not nullable array of Output): array of TF_Output;
+    method ToTFOutputs(aList: NotNull<array of NotNull<Output>>): array of TF_Output;
     begin
       if aList.Length = 0 then exit nil;
       result := new TF_Output[aList.Length];
@@ -126,7 +126,7 @@ type
       end;
     end;
 
-    method ToArray(aList: not nullable array of String): array of ^AnsiChar;
+    method ToAnsiCharPtrs(aList: NotNull<array of NotNull<String>>): array of ^AnsiChar;
     begin
       if aList.Length = 0 then exit nil;
       result := new ^AnsiChar[aList.Length];
@@ -152,7 +152,8 @@ type
         TypeCodes.String : result := DataType.String;
       else
         if aFlag then begin
-          raise new ArgumentException($'ToDataType cannot convert {aType.Name} to TensorFlow datatype.');
+          raise new ArgumentException(
+            $'ToDataType cannot convert {aType.Name} to TensorFlow datatype.');
         end else begin
           result := -1;
         end;
