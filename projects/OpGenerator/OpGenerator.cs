@@ -518,7 +518,7 @@ namespace TensorFlow.Island.OpGenerator
             PI("using (var status = new Status()) {");
             P("var (success, op) = desc.FinishOperation(status);");
             PI("if(!success) {");
-            P($"throw new OpCreateException withOpType(\"{oper.Name}\") Message(status.Message);");
+            P($"throw new OpCreateException withOpType(\"{oper.Name}\") Error(status.Message);");
             PD("}");            
  
             if (oper.OutputArgs.Count() > 0) {
