@@ -22,6 +22,8 @@
 namespace TensorFlow.Island.Classes;
 
 uses
+  RemObjects.Elements.RTL,
+  RemObjects.Elements.System,
   TensorFlow.Island.Api;
 
 type
@@ -101,13 +103,13 @@ type
       end;
     end;
 
-    method ReadBytesFromFile(aFile: NotNull<String>): array of Byte;
+    method ReadBytesFromFile(aFileName: NotNull<String>): array of Byte;
     begin
-      if not File.Exists(aFile) then begin
-        raise new BufferFileMissingException(aFile);
+      if not File.Exists(aFileName) then begin
+        raise new FileNotFoundException(aFileName);
       end;
 
-      using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
+      using fs := new FileStream(aFileName, FileMode.Open, FileAccess.Read) do begin
         if fs.Length > 0 then begin
           result := new Byte[fs.Length];
           fs.Read(result, fs.Length);
