@@ -128,7 +128,7 @@ type
 
   StringEncodeException = public class(Exception)
   public
-    constructor withString(aValue: String) Error(aErrMsg: String);
+    constructor withString(aValue: String) Error(aErr: String);
     begin
       inherited constructor($'Fail encoding "{aValue}". {aErrMsg}');
     end;
