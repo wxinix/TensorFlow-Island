@@ -5,14 +5,14 @@ TensorFlow-Island is a high-level abstraction of TensorFlow C-APIs, in several m
 
 Note - these supported languages (Swift, Oxygene, Java, Go and C#) are all compiled into CPU native code, without any dependency on .NET CLR, JVM, or any virtual machine environment. This is a unique capability of RemObjects Elements compiler toolchain. This particularly fits the design objective and goal of TenorFlow-Island, hence we select this toolchain.
 
-TensorFlow-Island is initially inspired by TensorFlow4Delphi (https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is also infuenced by TensorFlowSharp https://github.com/migueldeicaza/TensorFlowSharp,  with our own insights, adjustments, and enhancements.
+TensorFlow-Island is initially inspired by [TensorFlow4Delphi](https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is also infuenced by [TensorFlowSharp](https://github.com/migueldeicaza/TensorFlowSharp),  with our own insights, adjustments, and enhancements.
 
 The following diagram illustrates the TensorFlow-Island architecture.
 
 ![TensorFlow-Island Diagram](../master/Images/TensorFlow-Island-Diagram.png) 
 
 # Difference with other TensorFlow bindings
-The difference between TensorFlow-Island and other wellknown TensorFlow bindings, for example, TensorFlow.NET (https://github.com/SciSharp/TensorFlow.NET) is:
+The difference between TensorFlow-Island and other wellknown TensorFlow bindings, for example, [TensorFlow.NET](https://github.com/SciSharp/TensorFlow.NET) is:
 - Multiple programming language support, including Oxygene, Swift, Java, Go, and C#, thanks to RemObjects LLVM-based Island platform compilers;
 - Compiled code runs directly on CPU, without the dependency on JVM, .NET CLR, or Python/CPython intepreter. 
 - Direct acces to TensorFlow C API; no .NET P-Invoke involved;
@@ -26,7 +26,7 @@ The difference between TensorFlow-Island and other wellknown TensorFlow bindings
  - Provides a foundational Computational Graph framework to be integrated in PTV Vissim Microscopic Traffic Simulator, enabling GPU computing for External Driver Model, and Signal Control API modules.
 
 # Compilers Toolchain Requirements
-TensorFlow Island requires RemObjects Elements Compilers. For commmercial, open-source, or academic applications, please contact RemObjects (https://www.elementscompiler.com/elements/) for different licensing options.
+TensorFlow Island requires RemObjects Elements Compilers. For commmercial, open-source, or academic applications, please contact [RemObjects](https://www.elementscompiler.com/elements/) for different licensing options.
 
 # License
-MIT License (c) 2019-2020. Copywright Wuping Xin and KLD Engineering, P. C. 
+MIT License (c) 2019-2020. Copywright [Wuping Xin](wupingxin.net) and [KLD Engineering, P. C.](www.kldcompanies.com) 
