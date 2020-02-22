@@ -44,9 +44,17 @@
     </Reference>
     <Reference Include="gc" />
     <Reference Include="Island" />
+    <Reference Include="RemObjects.Elements.Cirrus">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Echoes\NET\RemObjects.Elements.Cirrus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
       <HintPath>..\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TensorFlow.Island.Classes">
+      <HintPath>C:\DEVLIBS\TensorFlow-Island\Island\Libs\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -57,14 +65,6 @@
     <Compile Include="Src\CoreClassesTest.cs">
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Island\Projects\Classes\Classes.elements">
-      <Name>Classes</Name>
-      <Project>{93b81566-e004-4bd8-9525-336a904b0f64}</Project>
-      <Private>True</Private>
-      <HintPath>..\..\..\Users\WXIN\AppData\Local\RemObjects Software\EBuild\Obj\Classes-952073B0B681A270F5D22C15113922FD356BF344\Debug\Island-Windows\x86_64\TensorFlow.Island.Classes.lib</HintPath>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src\" />
