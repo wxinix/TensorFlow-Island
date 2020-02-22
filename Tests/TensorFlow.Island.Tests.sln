@@ -20,6 +20,7 @@ Global
 		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|Default.Build.0 = Release
 		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.ActiveCfg = Debug
 		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.Build.0 = Debug
+		{93B81566-E004-4BD8-9525-336A904B0F64}.Debug|Default.Deploy.0 = Debug
 		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.ActiveCfg = Release
 		{93B81566-E004-4BD8-9525-336A904B0F64}.Release|Default.Build.0 = Release
 	EndGlobalSection

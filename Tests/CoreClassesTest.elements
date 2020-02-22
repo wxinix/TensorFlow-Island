@@ -46,13 +46,9 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <HintPath>..\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="..\..\Src\Tests\" />
-    <Folder Include="Src" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Src\Program.cs">
@@ -69,6 +65,9 @@
       <Private>True</Private>
       <HintPath>..\..\..\Users\WXIN\AppData\Local\RemObjects Software\EBuild\Obj\Classes-952073B0B681A270F5D22C15113922FD356BF344\Debug\Island-Windows\x86_64\TensorFlow.Island.Classes.lib</HintPath>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Src\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>
