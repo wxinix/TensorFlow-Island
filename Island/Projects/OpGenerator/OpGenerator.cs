@@ -23,13 +23,13 @@ of this software and associated documentation files (the "Software"), to deal
 
  This is the driver for the operation generator, using the information provided
  by the Tensorflow run-time to produce strongly-typed and high level methods on
- the TensorFlow.Island.Graph class.  The output is a partial class that is in 
+ the TensorFlow.Island.Graph class.  The output is a partial class that is in
  line with TensorFlow.Island library
 
- Inspired by: 
+ Inspired by:
     Miguel de Icaza, Author of TensorFlowSharp
     Copyright 2017.
- 
+
  Adapted by:
     Wuping Xin
     Copyright 2020.
@@ -471,7 +471,7 @@ namespace TensorFlow.Island.OpGenerator
                 retType = "Operation";
             }
 
-            P($"public {retType} {name} ({FillArguments(oper)}string operName = null)");
+            P($"public {retType} {name}({FillArguments(oper)}string operName = null)");
             PI("{");
             bool needStatus = _requiredAttrs.Concat(_optionalAttrs).Any(attr => attr.Type.Contains("Tensor"));
             P($"var desc = new OperationDescription withGraph(this) OpType(\"{oper.Name}\") OpName(MakeName(\"{oper.Name}\", operName));");
@@ -487,7 +487,7 @@ namespace TensorFlow.Island.OpGenerator
             P(" ");
             PI("foreach (Operation control in CurrentDependencies) {");
             P("desc.AddControlInput(control);");
-            PD("}\n");            
+            PD("}\n");       
 
             // If we have attributes
             if (_requiredAttrs.Count > 0 || _optionalAttrs.Count > 0) {
@@ -501,9 +501,9 @@ namespace TensorFlow.Island.OpGenerator
 
                 foreach (var attr in _optionalAttrs) {
                     var reftype = IsReferenceType(attr.Type);
-                    var csattr = ParamMap(attr.Name);                    
+                    var csattr = ParamMap(attr.Name);               
 
-                    if (reftype) {                        
+                    if (reftype) {                   
                         PI($"if ({csattr} != null) {{");
                     } else {
                         PI($"if ({csattr}.HasValue) {{");
@@ -519,8 +519,8 @@ namespace TensorFlow.Island.OpGenerator
             P("var (success, op) = desc.FinishOperation(status);");
             PI("if(!success) {");
             P($"throw new OpCreateException withOpType(\"{oper.Name}\") Error(status.Message);");
-            PD("}");            
- 
+            PD("}");       
+
             if (oper.OutputArgs.Count() > 0) {
                 P("int _idx = 0;");
             }
