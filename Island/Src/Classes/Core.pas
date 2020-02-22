@@ -1650,7 +1650,7 @@ type
       end;
     end;
 
-    method MakeName(const aOpType, aOpName: NotNull<String>): String;
+    method MakeName(const aOpType: NotNull<String>; aOpName: String): String;
     begin
       var lOpName :=
         if String.IsNullOrEmpty(aOpName) then
@@ -2068,7 +2068,7 @@ type
     end;
 
     constructor (aBytes: ^Void; aDataType: DataType; aNumBytes: Int64;
-      aShp: NotNull<Shape>; aManaged: Boolean); assembly;
+      aShp: NotNull<Shape>; aManaged: Boolean); private;
     begin
       fBytes := aBytes;
       fType := aDataType;
@@ -2187,7 +2187,7 @@ type
     class method ConvertToTensor<T>(aVals: NotNull<array of T>): Tensor; overload;
     begin
       var data := new TensorData<T> withValues(aVals) Dims([aVals.Length]);
-      result := new Tensor withData(data.Move); // Moved data for Tensor's ownership.
+      result := new Tensor withData(data);
     end;
 
     class method ConvertToTensor<T>(aVals: NotNull<array of NotNull<array of T>>): Tensor; overload;
@@ -2210,13 +2210,13 @@ type
       end;
 
       var data := new TensorData<T> withValues(arr) Dims([height, width]);
-      result := new Tensor withData(data.Move); // Moved data for Tensor's ownership.
+      result := new Tensor withData(data);
     end;
 
     class method ConvertToTensor<T>(aValue: T): Tensor; overload;
     begin
       var data := new TensorData<T> withValues([aValue]) Dims(nil);
-      result := new Tensor withData(data.Move); // Moved data for Tensor's ownership.
+      result := new Tensor withData(data);
     end;
 
     // Object is a scalar constant value.
