@@ -224,6 +224,13 @@ type
       fList.Add(aItem);
     end;
 
+    // Explicitly clearing the list, so we must dispose elements explicitly.
+    method Clear; assembly;
+    begin
+      for el in fList do el.Dispose();
+      fList.Clear;
+    end;
+
     method ToArray: array of T;
     begin
       result := fList.ToArray;
@@ -2936,6 +2943,20 @@ type
       result := self;
     end;
 
+    method AddInputs(aInputs: NotNull<array of Output>; aValues: NotNull<array of Tensor>)
+      : SessionRunner;
+    begin
+      for i in aInputs do fContext.Inputs.Add(i);
+      for v in aValues do fContext.InputValues.Add(v);
+      result := self;
+    end;
+
+    method Fetch(aOutputs: NotNull<array of Output>): SessionRunner;
+    begin
+      for o in aOutputs do fContext.Outputs.Add(o);
+      result := self;
+    end;
+
     method Fetch(aOutput: NotNull<Output>): SessionRunner;
     begin
       fContext.Outputs.Add(aOutput);
@@ -2980,8 +3001,16 @@ type
 
     method Run(aOp: NotNull<Output>; aStatus: Status := nil): Tensor;
     begin
+      fContext.Outputs.Clear; // Clear, so only fetch the specified.
       Fetch(aOp);
       result := Run(aStatus):Item[0]; // May return nil.
+    end;
+
+    method Run(aOps: NotNull<array of Output>; aStatus: Status := nil): TensorList;
+    begin
+      fContext.Outputs.Clear; // Clear, so only fetch the specified.
+      Fetch(aOps);
+      result := Run(aStatus); // May return nil.
     end;
 
     method Run(aStatus: Status := nil) MetaData(aMetaData: Buffer := nil)
