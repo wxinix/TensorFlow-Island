@@ -1,38 +1,35 @@
 ﻿/*
-MIT License
- Copyright(c) 2019-2020 Wuping Xin.
+MIT License Copyright(c) 2019-2020 Wuping Xin.
 
-Permission is hereby granted, free of charge, to any  person obtaining a copy
+Permission is hereby granted, free of charge, to  any  person obtaining a copy
+of this software and associated documentation files (the "Software"), to  deal
+in the Software  without restriction,  including without limitation the rights
+to use, copy, modify,  merge,  publish,  distribute, sublicense,  and/or  sell
+copies   of   the  Software, and  to permit persons to  whom  the Software  is
+furnished to do so, subject to the following conditions:
 
-of this software and associated documentation files (the "Software"), to deal
- in the Software  without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of  the Software, and  to permit persons to  whom the Software  is
- furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
+THE SOFTWARE  IS PROVIDED "AS  IS", WITHOUT WARRANTY  OF ANY KIND,  EXPRESS OR
+IMPLIED, INCLUDING BUT  NOT  LIMITED TO THE   WARRANTIES OF  MERCHANTABILITY,
+FITNESS FOR  A PARTICULAR PURPOSE AND  NONINFRINGEMENT. IN NO  EVENT SHALL THE
+AUTHORS  OR COPYRIGHT  HOLDERS BE  LIABLE  FOR  ANY CLAIM,  DAMAGES OR   OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING  FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
- THE SOFTWARE  IS PROVIDED "AS  IS", WITHOUT WARRANTY  OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT  NOT LIMITED TO THE  WARRANTIES OF  MERCHANTABILITY,
- FITNESS FOR  A PARTICULAR PURPOSE AND  NONINFRINGEMENT.IN NO EVENT SHALL THE
- AUTHORS  OR COPYRIGHT  HOLDERS BE  LIABLE FOR  ANY CLAIM, DAMAGES OR  OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
+This is the driver for the operation generator, using the information provided
+by the Tensorflow run-time to produce strongly-typed and high level methods on
+the TensorFlow.Island.Graph class.  The  output is a  partial class that is in
+line with TensorFlow.Island library.
 
- This is the driver for the operation generator, using the information provided
- by the Tensorflow run-time to produce strongly-typed and high level methods on
- the TensorFlow.Island.Graph class.  The output is a partial class that is in
- line with TensorFlow.Island library
+Originally Developed by:
+   Miguel de Icaza, Author of TensorFlowSharp, Copyright 2017, Microsoft.
 
- Inspired by:
-    Miguel de Icaza, Author of TensorFlowSharp
-    Copyright 2017.
+Adapted for TensorFlow.Island by:
+   Wuping Xin, Copyright 2020, KLD Engineering, P. C.
 
- Adapted by:
-    Wuping Xin
-    Copyright 2020.
  */
 
 // Warns when a culture-aware 'StartsWith' call is used by default.
@@ -671,7 +668,7 @@ namespace TensorFlow.Island.OpGenerator
             };
 
             if (args.Length == 0) {
-                var apiDefDir = $"../../TensorFlow/tensorflow-r{ver}/tensorflow/core/api_def/base_api";
+                var apiDefDir = $"../../TensorFlow/r{ver}/tensorflow/core/api_def/base_api";
                 args = new string[] { apiDefDir };
             }
 
