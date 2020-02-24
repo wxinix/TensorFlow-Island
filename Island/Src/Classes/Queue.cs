@@ -29,105 +29,98 @@ using RemObjects.Elements.System;
 
 namespace TensorFlow.Island.Classes
 {
-	/// <summary>
-	/// Base class for queue implementations. Python implementation
+    /// <summary>
+    /// Base class for queue implementations. Python implementation
     ///  ../../../TensorFlow/r1.15.0/tensorflow/python/ops/data_flow_ops.py
-	/// </summary>
-	public abstract class QueueBase
-	{
-		public QueueBase(Session! session)
-		{
-			Session = session;
-		}
+    /// </summary>
+    public abstract class QueueBase
+    {
+        public QueueBase(Session! session) => Session = session;
 
-		protected Session Session { get; private set; }
-		
-        public abstract Operation Enqueue(
-            Output[] components, 
-            long? timeout_ms = null, 
-            string operName = null);
-		
+        public abstract Operation Enqueue(Output[] components, long? timeout_ms = null, string operName = null);
         public abstract Output[] Dequeue(long? timeout_ms = null, string operName = null);
-		public abstract Output GetSize(string operName = null);
-	}
+        public abstract Output GetSize(string operName = null);
+        
+        protected Session Session { get; private set; }
+    }
 
-	/// <summary>
-	/// A first-in-first-out queue that supports batching variable-sized tensors by padding.
-	/// </summary>
-	public class PaddingFIFOQueue : QueueBase
-	{
-		private Output _handle;
-		private DataType [] _componentTypes;
+    /// <summary>
+    /// A first-in-first-out queue that supports batching variable-sized tensors by padding.
+    /// </summary>
+    public class PaddingFIFOQueue : QueueBase
+    {
+        private Output _handle;
+        private DataType [] _componentTypes;
 
-		public PaddingFIFOQueue(Session! session, DataType[]! componentTypes, Shape[]! shapes, int? capacity = null, string container = null, string operName = null) : base (session)
-		{
-			_componentTypes = componentTypes;
-			_handle = Session.Graph.PaddingFIFOQueueV2(
+        public PaddingFIFOQueue(Session! session, DataType[]! componentTypes, Shape[]! shapes, int? capacity = null, string container = null, string operName = null) : base (session)
+        {
+            _componentTypes = componentTypes;
+            _handle = Session.Graph.PaddingFIFOQueueV2(
                componentTypes, 
                shapes, 
                capacity, 
                container, 
                operName);
-		}
+        }
 
-		public override Operation Enqueue(Output[] components, long? timeout_ms = null, string operName = null)
-		{
-			return Session.Graph.QueueEnqueueV2(
+        public override Operation Enqueue(Output[] components, long? timeout_ms = null, string operName = null)
+        {
+            return Session.Graph.QueueEnqueueV2(
               _handle,
               components, 
               timeout_ms, 
               operName);
-		}
+        }
 
-		public Tensor[] EnqueueExecute(Output[] components, Tensor[] inputValues, long? timeout_ms = null, string operName = null)
-		{
-			Operation enqueueOp = Enqueue(components, timeout_ms, operName);
-			return Session
+        public Tensor[] EnqueueExecute(Output[] components, Tensor[] inputValues, long? timeout_ms = null, string operName = null)
+        {
+            Operation enqueueOp = Enqueue(components, timeout_ms, operName);
+            return Session
                .Runner
                .AddInputs(components, inputValues)
                .AddTarget(enqueueOp).Run()?.ToArray();
-		}
+        }
 
-		public override Output[] Dequeue(long? timeout_ms = null, string operName = null)
-		{
-			return Session.Graph.QueueDequeueV2(
+        public override Output[] Dequeue(long? timeout_ms = null, string operName = null)
+        {
+            return Session.Graph.QueueDequeueV2(
               _handle, 
               _componentTypes, 
               timeout_ms, 
               operName);
-		}
+        }
 
-		public Tensor[] DequeueExecute(long? timeout_ms = null, string operName = null)
-		{
-			Output[] values = Session.Graph.QueueDequeueV2 (
+        public Tensor[] DequeueExecute(long? timeout_ms = null, string operName = null)
+        {
+            Output[] values = Session.Graph.QueueDequeueV2 (
               _handle, 
               _componentTypes, 
               timeout_ms, 
               operName);
 
-		    return Session.Runner.Run(values)?.ToArray();
-		}
+            return Session.Runner.Run(values)?.ToArray();
+        }
 
-		public T[] DequeueExecute<T>(long? timeout_ms = null, string operName = null)
-		{
-			var vals = DequeueExecute(timeout_ms, operName).Select(x => x.AsScalar<T>().Item2).ToArray();
-			T[] result = new T[vals.Length];
-			for (int i = 0; i < vals.Length - 1; i++) {
-				result[i] = vals[i];
+        public T[] DequeueExecute<T>(long? timeout_ms = null, string operName = null)
+        {
+            var vals = DequeueExecute(timeout_ms, operName).Select(x => x.AsScalar<T>().Item2).ToArray();
+            T[] result = new T[vals.Length];
+            for (int i = 0; i < vals.Length - 1; i++) {
+                result[i] = vals[i];
             }
-			return result;
-		}
+            return result;
+        }
 
-		/// <param name="operName">If not specified, 'QueueSizeV2'. Otherwise, specified.</param>
-		public override Output GetSize(string operName = null)
-		{
-			return Session.Graph.QueueSizeV2(_handle, operName);
-		}
+        /// <param name="operName">If not specified, 'QueueSizeV2'. Otherwise, specified.</param>
+        public override Output GetSize(string operName = null)
+        {
+            return Session.Graph.QueueSizeV2(_handle, operName);
+        }
 
-		public int? GetSizeExecute(string operName = null)
-		{
-			Output sizeOutput = GetSize(operName);
-			return Session.Runner.Run(sizeOutput)?.AsScalar<int>().Item2;
-		}
-	}
+        public int? GetSizeExecute(string operName = null)
+        {
+            Output sizeOutput = GetSize(operName);
+            return Session.Runner.Run(sizeOutput)?.AsScalar<int>().Item2;
+        }
+    }
 }
