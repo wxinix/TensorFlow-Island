@@ -71,7 +71,7 @@
       <SubType>Code</SubType>
       <Link>..\..\Src\Classes\Optimizer.pas</Link>
     </Compile>
-    <Compile Include="..\..\Src\Classes\Queue.pas">
+    <Compile Include="..\..\Src\Classes\Queue.cs">
       <SubType>Code</SubType>
       <Link>..\..\Src\Classes\Queue.pas</Link>
     </Compile>
