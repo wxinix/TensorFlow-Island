@@ -40,7 +40,7 @@ namespace TensorFlow.Island.Classes
         public abstract Operation Enqueue(Output[] components, long? timeout_ms = null, string operName = null);
         public abstract Output[] Dequeue(long? timeout_ms = null, string operName = null);
         public abstract Output GetSize(string operName = null);
-        
+   
         protected Session Session { get; private set; }
     }
 
@@ -56,10 +56,10 @@ namespace TensorFlow.Island.Classes
         {
             _componentTypes = componentTypes;
             _handle = Session.Graph.PaddingFIFOQueueV2(
-               componentTypes, 
-               shapes, 
-               capacity, 
-               container, 
+               componentTypes,
+               shapes,
+               capacity,
+               container,
                operName);
         }
 
@@ -67,8 +67,8 @@ namespace TensorFlow.Island.Classes
         {
             return Session.Graph.QueueEnqueueV2(
               _handle,
-              components, 
-              timeout_ms, 
+              components,
+              timeout_ms,
               operName);
         }
 
@@ -84,18 +84,18 @@ namespace TensorFlow.Island.Classes
         public override Output[] Dequeue(long? timeout_ms = null, string operName = null)
         {
             return Session.Graph.QueueDequeueV2(
-              _handle, 
-              _componentTypes, 
-              timeout_ms, 
+              _handle,
+              _componentTypes,
+              timeout_ms,
               operName);
         }
 
         public Tensor[] DequeueExecute(long? timeout_ms = null, string operName = null)
         {
             Output[] values = Session.Graph.QueueDequeueV2 (
-              _handle, 
-              _componentTypes, 
-              timeout_ms, 
+              _handle,
+              _componentTypes,
+              timeout_ms,
               operName);
 
             return Session.Runner.Run(values)?.ToArray();
