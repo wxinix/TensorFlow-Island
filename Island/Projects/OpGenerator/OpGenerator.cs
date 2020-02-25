@@ -98,12 +98,10 @@ namespace TensorFlow.Island.OpGenerator
         private static extern unsafe void TF_DeleteApiDefMap(IntPtr apiDefMap);
 
         [DllImport("tensorflow")]
-        private static extern unsafe void TF_ApiDefMapPut(IntPtr apiDefMap, string text,
-            UInt64 textLen, IntPtr status);
+        private static extern unsafe void TF_ApiDefMapPut(IntPtr apiDefMap, string text, UInt64 textLen, IntPtr status);
 
         [DllImport("tensorflow")]
-        private static extern unsafe Buffer* TF_ApiDefMapGet(IntPtr apiDefMap,
-            string name, UInt64 nameLen, IntPtr status);
+        private static extern unsafe Buffer* TF_ApiDefMapGet(IntPtr apiDefMap, string name, UInt64 nameLen, IntPtr status);
 
         public unsafe ApiDefMap(Buffer* buffer)
         {
@@ -361,7 +359,7 @@ namespace TensorFlow.Island.OpGenerator
 
         private void GenDocs(OpDef oper)
         {
-            var api = apimap.Get(oper.Name);
+            var api = _apimap.Get(oper.Name);
             P("/// <summary>");
             Comment(api.Summary);
             P("/// </summary>");
@@ -556,13 +554,13 @@ namespace TensorFlow.Island.OpGenerator
         [DllImport("tensorflow")]
         private unsafe extern static Buffer* TF_GetAllOpList();
 
-        private ApiDefMap apimap;
+        private ApiDefMap _apimap;
 
         private MemoryStream GetOpsList()
         {
             unsafe {
                 Buffer* buffer = TF_GetAllOpList();
-                apimap = new ApiDefMap(buffer);
+                _apimap = new ApiDefMap(buffer);
                 var ret = new byte[(int)buffer->length];
                 Marshal.Copy(buffer->data, ret, 0, (int)buffer->length);
                 return new MemoryStream(ret);
@@ -574,7 +572,7 @@ namespace TensorFlow.Island.OpGenerator
             foreach (var dir in dirs) {
                 foreach (var f in Directory.GetFiles(dir)) {
                     var s = File.ReadAllText(f);
-                    apimap.Put(s);
+                    _apimap.Put(s);
                 }
             }
         }
@@ -616,7 +614,7 @@ namespace TensorFlow.Island.OpGenerator
                     continue;
                 }
 
-                var def = apimap.Get(oper.Name);
+                var def = _apimap.Get(oper.Name);
 
                 // Undocumented operation, perhaps we should not surface
                 if (def.Summary == "") {
