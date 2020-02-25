@@ -45,19 +45,6 @@ const
   ];
 
 type
-  StringList = public sealed class(List<String>)
-  public
-    constructor withCapacity(aCapacity: Integer);
-    begin
-      inherited constructor(aCapacity);
-    end;
-
-    method ToAnsiCharPtrs: array of ^AnsiChar;
-    begin
-      result := Helper.ToAnsiCharPtrs(self.ToArray);
-    end;
-  end;
-
   Helper = assembly static class
   public
     method AsEnum<T>(const aStr: NotNull<String>): Tuple of (Boolean, nullable T); 
@@ -167,4 +154,26 @@ type
       result := TF_DataTypeSize(TF_DataType(ord(aDataType)));
     end;
   end;
+
+  StringList = public sealed class(List<String>)
+  public
+    constructor withCapacity(aCapacity: Integer);
+    begin
+      inherited constructor(aCapacity);
+    end;
+
+    method ToAnsiCharPtrs: array of ^AnsiChar;
+    begin
+      result := Helper.ToAnsiCharPtrs(self.ToArray);
+    end;
+  end;
+
+  TypeHelper = public extension class(&Type)
+  public
+    method &Is<T>: Boolean;
+    begin
+      result := self = typeOf(T);
+    end;
+  end;
+
 end.
