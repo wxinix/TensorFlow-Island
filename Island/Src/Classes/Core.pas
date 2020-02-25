@@ -2211,14 +2211,17 @@ type
         raise new ArgumentException($'ObjectToTensor: input dtype={targetType.Name} does not match valuetype={objType.Name}.');
       end;
 
-      // The object container contains type as set by compiler.  Figure out the value
-      // from the object container type, together with T which is based DataType set by
-     //  the caller.
       var targetVal: T;
   
-      if targetType.IsIntegerOrFloat then targetVal := T(Convert.ToDouble(aValue));
-      if targetType.Is<String>       then targetVal := T(aValue.ToString);
-      if targetType.Is<Boolean>      then targetVal := T(Convert.ToBoolean(aValue));
+      if targetType.IsIntegerOrFloat then begin
+        targetVal := T(Convert.ToDouble(aValue));
+      end else begin
+        if targetType.Is<String> then begin
+          targetVal := T(aValue.ToString());
+        end else begin
+          (^Boolean(@targetVal))^ := Convert.ToBoolean(aValue);
+        end;
+      end;
 
       var values := new T[aShape.Size];
       for I: Integer := 0 to aShape.Size - 1 do values[I] := targetVal;
