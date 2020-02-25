@@ -43,8 +43,7 @@ type
     fType: DeviceType;
     fMemoryLimit: UInt64;
   public
-    constructor withName(aName: NotNull<String>) &Type(aType: DeviceType)
-      MemoryLimit(aLimit: UInt64); assembly;
+    constructor withName(aName: NotNull<String>) &Type(aType: DeviceType) MemoryLimit(aLimit: UInt64); assembly;
     begin
       fName := aName;
       fType := aType;
