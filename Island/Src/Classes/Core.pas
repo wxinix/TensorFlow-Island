@@ -654,9 +654,7 @@ type
 
       if aStatus.Ok then begin
         var _values := new DataType[max_values];
-        for I: Integer := 0 to max_values - 1 do begin
-          _values[I] := DataType(ord(values[I]));
-        end;
+        for I: Integer := 0 to max_values - 1 do _values[I] := DataType(ord(values[I]));
         result := (true, _values);
       end else begin
         result := (false, nil);
@@ -819,10 +817,7 @@ type
         var num_control_outputs := NumControlOutputs;
         var hnds := new ^TF_Operation[num_control_outputs];
         TF_OperationGetControlOutputs(Handle, hnds, num_control_outputs);
-
-        for h in hnds do begin
-          result.Add(new Operation withHandle(h) Graph(fGraph));
-        end;
+        for h in hnds do result.Add(new Operation withHandle(h) Graph(fGraph));
       end;
 
     property &Graph: Graph
@@ -909,10 +904,7 @@ type
     begin
       var num_inputs := aInputList.Length;
       var inputs := new TF_Output[num_inputs];
-      for I: Integer := 0 to aInputList.Length - 1 do begin
-        inputs[I] := aInputList[I].AsTFOutput;
-      end;
-
+      for I: Integer := 0 to aInputList.Length - 1 do inputs[I] := aInputList[I].AsTFOutput;
       TF_AddInputList(Handle, inputs, num_inputs);
     end;
 
@@ -976,10 +968,7 @@ type
     method SetAttrBoolList(const aName: NotNull<String>; aList: NotNull<array of Boolean>);
     begin
       var values := new Byte[aList.Length];
-      for I: Integer := 0 to aList.Length - 1 do begin
-        values[I] := if aList[I] then 1 else 0;
-      end;
-
+      for I: Integer := 0 to aList.Length - 1 do values[I] := if aList[I] then 1 else 0;
       TF_SetAttrBoolList(Handle, aName.ToAnsiChars(true), values, values.Length);
     end;
 
@@ -1026,8 +1015,7 @@ type
         lengths[I] := aList[I].Length;
       end;
 
-      TF_SetAttrStringList(Handle, aName.ToAnsiChars(true), ^^Void(values),
-        lengths, num_values);
+      TF_SetAttrStringList(Handle, aName.ToAnsiChars(true), ^^Void(values), lengths, num_values);
     end;
 
     method SetAttrType(const aName: NotNull<String>; aType: TF_DataType);
@@ -1588,15 +1576,15 @@ type
         var max_func := NumFunctions;
         var hnds := new ^TF_Function[max_func];
         TF_GraphGetFunctions(Handle, hnds, max_func, lStatus.Handle);
+    
         if lStatus.Ok then begin
           var result_list := new FunctionList withCapacity(max_func);
-          for h in hnds do begin
-            result_list.Add(new TensorFlowFunction withHandle(h));
-          end;
+          for h in hnds do result_list.Add(new TensorFlowFunction withHandle(h));
           result := (true, result_list);
         end else begin
           result := (false, nil);
         end;
+
         if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
@@ -1606,8 +1594,7 @@ type
       var hnd:= TF_GraphOperationByName(Handle, aOpName.ToAnsiChars(true));
 
       if assigned(hnd) then begin
-        result := (true,
-          new Operation withHandle(hnd) Graph(self));
+        result := (true, new Operation withHandle(hnd) Graph(self));
       end else begin
         result := (false, nil);
       end;
@@ -1649,18 +1636,8 @@ type
 
     method MakeName(const aOpType: NotNull<String>; aOpName: String): String;
     begin
-      var lOpName :=
-        if String.IsNullOrEmpty(aOpName) then
-          aOpType
-        else
-          aOpName;
-
-      var name :=
-        if String.IsNullOrEmpty(CurrentNameScope) then
-          $'{lOpName}'
-        else
-          $'{CurrentNameScope}/{lOpName}';
-
+      var opName := if String.IsNullOrEmpty(aOpName) then aOpType else aOpName;
+      var name := if String.IsNullOrEmpty(CurrentNameScope) then $'{opName}' else $'{CurrentNameScope}/{opName}';
       result := MakeUniqueName(name);
     end;
 
@@ -2059,9 +2036,7 @@ type
       var dims: array of Int64;
       if num_dims > 0 then begin
         dims := new Int64[num_dims];
-        for I: Integer := 0 to num_dims - 1 do begin
-          dims[I] := TF_Dim(aTensorHandle, I);
-        end;
+        for I: Integer := 0 to num_dims - 1 do dims[I] := TF_Dim(aTensorHandle, I);
       end else begin
         dims := nil;
       end;
@@ -2164,8 +2139,7 @@ type
 
         for I: Integer := 0 to aVals.Length - 1 do begin
           offsets[I] := offsets_region_size + nbytes;
-          memcpy(^Void(^Byte(fBytes) + offsets[I]), String(aVals[I]).ToAnsiChars,
-            String(aVals[I]).Length);
+          memcpy(^Void(^Byte(fBytes) + offsets[I]), String(aVals[I]).ToAnsiChars, String(aVals[I]).Length);
           nbytes := nbytes + String(aVals[I]).Length;
         end;
 
@@ -2223,37 +2197,31 @@ type
     // Object is a scalar constant value.
     class method ObjectToTensor<T>(aValue: NotNull<Object>; aShape: NotNull<Shape>): Tensor;
     begin
-      var is_value_str := aValue.GetType = typeOf(String);
-      var is_value_valid := aValue.GetType.IsIntegerOrFloat or (is_value_str);
-      if not is_value_valid then begin // Check if the object contains valid value
-        raise new ArgumentException($'ObjectToTensor: invalid T={aValue.GetType.Name}.');
+      var objType := aValue.GetType;  
+      var isObjTypeValid := objType.IsIntegerOrFloat or objType.Is<String> or objType.Is<Boolean>;  
+  
+      if not isObjTypeValid then begin // Check if the object contains valid value
+        raise new ArgumentException($'ObjectToTensor: invalid input type={objType.Name}.');
+      end;
+
+      var targetType := typeOf(T);
+      var isTargetTypeValid := (targetType.IsIntegerOrFloat and objType.IsIntegerOrFloat) or (targetType.Is<String> and objType.Is<String>) or (targetType.Is<Boolean> and objType.Is<Boolean>);
+
+      if not isTargetTypeValid then begin // Check if the object contains valid value
+        raise new ArgumentException($'ObjectToTensor: input dtype={targetType.Name} does not match valuetype={objType.Name}.');
       end;
 
       // The object container contains type as set by compiler.  Figure out the value
       // from the object container type, together with T which is based DataType set by
      //  the caller.
-      var val: T;
-      if typeOf(T).IsIntegerOrFloat then begin
-        if aValue.GetType.IsInteger then val := T(aValue as Int64 ); 
-        if aValue.GetType.IsFloat   then val := T(aValue as Double);
+      var targetVal: T;
   
-        if is_value_str then begin
-          if typeOf(T).IsInteger then val := T(Convert.ToInt64 (aValue as String));
-          if typeOf(T).IsFloat   then val := T(Convert.ToDouble(aValue as String));
-        end;
-      end else begin
-        if aValue.GetType.IsInteger then
-          val := T((aValue as Int64).ToString);
-  
-        if aValue.GetType.IsFloat then
-          val := T((aValue as Double).ToString);
-  
-        if (aValue.GetType = typeOf(String)) then
-          val := T(aValue as String);
-      end;
+      if targetType.IsIntegerOrFloat then targetVal := T(Convert.ToDouble(aValue));
+      if targetType.Is<String>       then targetVal := T(aValue.ToString);
+      if targetType.Is<Boolean>      then targetVal := T(Convert.ToBoolean(aValue));
 
       var values := new T[aShape.Size];
-      for I: Integer := 0 to aShape.Size - 1 do values[I] := val;
+      for I: Integer := 0 to aShape.Size - 1 do values[I] := targetVal;
       var tensor_data := new TensorData<T> withValues(values) Dims(aShape.ToArray);
       result := new Tensor withData(tensor_data);
     end;
@@ -2301,18 +2269,18 @@ type
     class method ObjectToTensor(aValue: Object; aShape: NotNull<Shape>; aDataType: DataType): Tensor;
     begin
       case aDataType of
-        DataType.Bool   : ObjectToTensor<Boolean>(aValue, aShape); 
-        DataType.Double : ObjectToTensor<Double> (aValue, aShape);    
+        DataType.Bool   : ObjectToTensor<Boolean>(aValue, aShape);
+        DataType.Double : ObjectToTensor<Double> (aValue, aShape);
         DataType.Float  : ObjectToTensor<Single> (aValue, aShape);
-        DataType.Int16  : ObjectToTensor<Int16>  (aValue, aShape);   
-        DataType.Int32  : ObjectToTensor<Int32>  (aValue, aShape);       
-        DataType.Int64  : ObjectToTensor<Int64>  (aValue, aShape);      
-        DataType.Int8   : ObjectToTensor<Int8>   (aValue, aShape);        
+        DataType.Int16  : ObjectToTensor<Int16>  (aValue, aShape);
+        DataType.Int32  : ObjectToTensor<Int32>  (aValue, aShape);   
+        DataType.Int64  : ObjectToTensor<Int64>  (aValue, aShape);  
+        DataType.Int8   : ObjectToTensor<Int8>   (aValue, aShape);    
         DataType.String : ObjectToTensor<String> (aValue, aShape);
-        DataType.UInt16 : ObjectToTensor<UInt16> (aValue, aShape);      
-        DataType.UInt32 : ObjectToTensor<UInt32> (aValue, aShape);    
+        DataType.UInt16 : ObjectToTensor<UInt16> (aValue, aShape);  
+        DataType.UInt32 : ObjectToTensor<UInt32> (aValue, aShape);
         DataType.UInt64 : ObjectToTensor<UInt64> (aValue, aShape);
-        DataType.UInt8  : ObjectToTensor<UInt8>  (aValue, aShape);              
+        DataType.UInt8  : ObjectToTensor<UInt8>  (aValue, aShape);          
       else
         result := nil;
       end;
@@ -2445,8 +2413,7 @@ type
         result := (false, nil);
       end else begin
         if (fData.Type = DataType.String) then begin
-          var str: String := Helper.DecodeString(String.FromPAnsiChars(
-            ^AnsiChar(^Byte(fData.Bytes) + sizeOf(UInt64)), fData.NumBytes - sizeOf(UInt64)));
+          var str: String := Helper.DecodeString(String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + sizeOf(UInt64)), fData.NumBytes - sizeOf(UInt64)));
           result := (true, T(str));
         end else begin
           var value: T := (^T(fData.Bytes))^;
@@ -2485,9 +2452,7 @@ type
 
           // From String List to array of String. This is to hush compiler.
           var str_arr: array of T := new T[str_list.Count];
-          for I: Integer := 0 to str_list.Count - 1 do begin
-            str_arr[I] := T(str_list[I]);
-          end;
+          for I: Integer := 0 to str_list.Count - 1 do str_arr[I] := T(str_list[I]);
           result := (true, str_arr);
         end else begin
           var values: array of T := new T[fData.Shape.Size];
@@ -2544,11 +2509,10 @@ type
     begin
       const cMaxBytes = 1000; // Tensor cannot exceed this limit in order to print.
       const cAllowedTypes = NumericalTypes + [DataType.String, DataType.Bool];
+  
       // Validate max bytes and allowed types.
-      if fData.NumBytes > cMaxBytes then
-        exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
-      if not (fData.Type in cAllowedTypes) then
-        exit $'Tensor (dtype={fData.Type.ToString}) cannot print.';
+      if fData.NumBytes > cMaxBytes then exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
+      if not (fData.Type in cAllowedTypes) then exit $'Tensor (dtype={fData.Type.ToString}) cannot print.';
 
       // Convert the tensor data to str_arr. Numerical type will be cast based on aDecimalDigits.
       var (success, str_arr) := ConvertDataToStrings(aDecimalDigits);
@@ -2559,10 +2523,9 @@ type
       var high_dim := fData.Shape.Dim[fData.Shape.NumDims - 1];
       var str_list := new List<String>(fData.Shape.Size/high_dim);
       var str: String := '';
+  
       for I: Integer := 0 to str_arr.Length - 1 do begin
-        if str_arr[I].Length >= aMaxWidth then begin
-          exit $'Data item {str_arr[I]} exceeds max width {aMaxWidth}';
-        end;
+        if str_arr[I].Length >= aMaxWidth then exit $'Data item {str_arr[I]} exceeds max width {aMaxWidth}';
         str := str + str_arr[I].PadStart(aMaxWidth, ' ');
         if ((I + 1) mod high_dim = 0) then begin // At each "high-dim" check point
           str_list.Add($'[{str}]'); // Prefix [ and suffix ], then insert into a seperate str_list
