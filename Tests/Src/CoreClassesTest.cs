@@ -103,23 +103,23 @@ namespace TensorFlow.Island.Tests
         public void When_GettingTensorInfo_Expect_Success()
         {
             var lSession = new Session(); 
-            var lOutput = lSession.Graph.Const(1);
+            var lOutput = lSession.Graph.Const(1L);
             var str = lSession.GetTensorInfo(lOutput);
-            Assert.AreEqual(str, "Tensor (\"Const_0: 0\", shape=TensorShape([]), dtype=Int32 )");
+            Assert.AreEqual(str, "Tensor (\"Const_0: 0\", shape=TensorShape([]), dtype=Int64)");
 
             lOutput = lSession.Graph.Const({1, 2});
             str = lSession.GetTensorInfo(lOutput);
-            Assert.AreEqual(str, "Tensor (\"Const_1: 0\", shape=TensorShape([Dimension(2)]), dtype=Int32 )");   
+            Assert.AreEqual(str, "Tensor (\"Const_1: 0\", shape=TensorShape([Dimension(2)]), dtype=Int32)");   
 
             lOutput = lSession.Graph.Const({{1, 2}});
             str = lSession.GetTensorInfo(lOutput);
-            Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32 )"); 
+            Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32)"); 
        }
 
         public void When_PrintingTensorWithInt32Values_Expect_Success()
         {
             Tensor tensor = {{1,2,3},{4,5,6},{7,8,9}};
-            var print_str = tensor.Print(1, 6);
+            var print_str = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
             const string validation_str =
                 "[ [     1     2     3]  " + '\n' +
                 "  [     4     5     6]  " + '\n' +
@@ -130,7 +130,7 @@ namespace TensorFlow.Island.Tests
         public void When_PrintingTensorWithBoolValues_Expect_Success()
         {
             Tensor tensor = {{true,false,true},{false,false,false},{true,true,true}};
-            var print_str = tensor.Print(1, 6);
+            var print_str = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
             const string validation_str =
                 "[ [  True False  True]  " + '\n' +
                 "  [ False False False]  " + '\n' +
