@@ -868,7 +868,7 @@ type
       end; default;
   end;
 
-  OperationList = public sealed class(TensorFlowObjectList<Operation>)
+  OperationList = public sealed class(TensorFlowObjectList<NotNull<Operation>>)
     // Just for a new type.
   end;
 
@@ -1330,7 +1330,7 @@ type
       end;
   end;
 
-  ShapeList = public sealed class(TensorFlowDisposableList<Shape>)
+  ShapeList = public sealed class(TensorFlowDisposableList<NotNull<Shape>>)
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
@@ -1378,7 +1378,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  InputList = public sealed class(TensorFlowDisposableList<Output>)
+  InputList = public sealed class(TensorFlowDisposableList<NotNull<Output>>)
   assembly
     method ToTFInputs: array of TF_Output;
     begin
@@ -1387,7 +1387,7 @@ type
   end;
 
   [TensorFlow.Island.Aspects.RaiseOnDisposed]
-  OutputList = public sealed class(TensorFlowDisposableList<Output>)
+  OutputList = public sealed class(TensorFlowDisposableList<NotNull<Output>>)
   assembly
     method ToTFOutputs: array of TF_Output;
     begin
@@ -1410,7 +1410,7 @@ type
     fDeviceName: NotNull<String> := '';
     fNamesCache: Dictionary<String, Integer> := new Dictionary<String, Integer>;
     fPendingInitVars: OperationList := new OperationList;
-    fTrainableVars: List<Variable> := new List<Variable>;
+    fTrainableVars: List<NotNull<Variable>> := new List<NotNull<Variable>>;
     fDisposed: Boolean := false;
 
     method MakeUniqueName(const aName: NotNull<String>): String;
@@ -1930,7 +1930,7 @@ type
         fPendingInitVars := new OperationList;
       end;
 
-    property TrainableVariables: array of Variable
+    property TrainableVariables: array of NotNull<Variable>
       read begin
         result := fTrainableVars.ToArray;
         // Shall we clear, and when? Here?
@@ -2239,7 +2239,7 @@ type
         if targetType.Is<String> then begin
           targetVal := T(aValue.ToString());
         end else begin
-          (^Boolean(@targetVal))^ := Convert.ToBoolean(aValue);
+          targetVal := T(Convert.ToBoolean(aValue));
         end;
       end;
 
@@ -2528,13 +2528,13 @@ type
       result := (assigned(str_arr), str_arr);
     end;
 
-    method Print(aMaxNumBytes: Cardinal = 1000) DecimalDigits(aDecimalDigits: Integer = 1) MaxWidth(aMaxWidth: Integer = 8): String;
+    method Print(aMaxBytesAllowed: Cardinal = 1000) DecimalDigits(aDecimalDigits: Integer = 1) MaxWidth(aMaxWidth: Integer = 8): String;
     begin
       const cAllowedTypes = NumericalTypes + [DataType.String, DataType.Bool];
 
       // Validate max bytes and allowed types. If aMaxNumBytes == 0, then no limit.
-      if (aMaxNumBytes > 0) and (fData.NumBytes > aMaxNumBytes) then begin
-        exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
+      if (aMaxBytesAllowed > 0) and (fData.NumBytes > aMaxBytesAllowed) then begin
+        exit $'Tensor has {fData.NumBytes} bytes. Too large (>{aMaxBytesAllowed}) to print.';
       end;
 
       if not (fData.Type in cAllowedTypes) then begin
@@ -2590,7 +2590,7 @@ type
       end;
   end;
 
-  TensorList = public sealed class(TensorFlowObjectList<Tensor>)
+  TensorList = public sealed class(TensorFlowObjectList<NotNull<Tensor>>)
     // Just for a new type.
   end;
 
@@ -2686,7 +2686,7 @@ type
 
         if success then begin
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Handle));
-          result := $'Tensor ("{name}: {aOutput.Index}", shape={shp.ToString}, dtype={aOutput.OutputType.ToString} )';
+          result := $'Tensor ("{name}: {aOutput.Index}", shape={shp.ToString}, dtype={aOutput.OutputType.ToString})';
         end else begin
           result := '';
         end;
@@ -2773,13 +2773,13 @@ type
       exit Graph.Restore(file_pattern, tensor_name, aDataType);
     end;
 
-    method SaveTensors(const aFileName: NotNull<String>; aTensors: NotNull<array of Tuple of (TensorName: NotNull<String>, TensorItem: NotNull<Output>)>): TensorList;
+    method SaveTensors(const aFileName: NotNull<String>; aTensors: NotNull<array of Tuple of (NotNull<String>, NotNull<Output>)>): TensorList;
     begin
       var filename := Graph.Const(aFileName);
       var concat_dim := Graph.Const(0);
-      var concat_values := aTensors.Select(T->Graph.Const(T.TensorName)).ToArray;
+      var concat_values := aTensors.Select(T->Graph.Const(T.Item1)).ToArray;
       var tensor_names := Graph.Concat(concat_dim, concat_values);
-      var data := aTensors.Select(T->T.TensorItem).ToArray;
+      var data := aTensors.Select(T->T.Item2).ToArray;
       var target := Graph.Save(filename, tensor_names, data);
       result := Runner.AddTarget(target).Run;
     end;
@@ -3199,7 +3199,7 @@ type
       end;
   end;
 
-  FunctionList = public sealed class(TensorFlowObjectList<TensorFlowFunction>)
+  FunctionList = public sealed class(TensorFlowObjectList<NotNull<TensorFlowFunction>>)
   public
     constructor withCapacity(aCapacity: Integer);
     begin
