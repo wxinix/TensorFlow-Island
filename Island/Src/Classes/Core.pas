@@ -223,6 +223,13 @@ type
       fList.Add(aItem);
     end;
 
+    method &Add(aItems: array of T);
+    begin
+      if assigned(aItems) then begin
+        for item in aItems do fList.Add(item);
+      end;
+    end;
+
     // Explicitly clearing the list, so we must dispose elements explicitly.
     method Clear; assembly;
     begin
@@ -1465,7 +1472,7 @@ type
     /// <remarks>
     /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradient(y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    method AddGradients(y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
         var s := $'AddGradient: y[size={y.Count} dx[size={dx.Count}] must be of same size.';
@@ -1500,6 +1507,19 @@ type
       end;
     end;
 
+    method AddGradients(y, x: NotNull<array of Output>; dx: array of Output := nil; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    begin
+      var y_ := new OutputList;
+      var x_ := new OutputList;
+      var dx_ := new OutputList;
+
+      y_.Add(y);
+      x_.Add(x);
+      dx_.Add(dx);
+
+      result := AddGradients(y_, x_, dx_, aStatus);
+    end;
+
     /// <summary>
     /// Adds a gradient: the operations needed to compute the partial derivatives of sum of
     /// <paramref name="y"/>` wrt to <paramref name="x"/>.
@@ -1516,7 +1536,7 @@ type
     /// <remarks>
     /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradientWithPrefix(aPrefix: NotNull<String>; y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    method AddGradientsWithPrefix(aPrefix: NotNull<String>; y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
         var msg := $'AddGradient: y[size={y.Count}] dx[size={dx.Count}] must be of same size.';
@@ -1576,7 +1596,7 @@ type
         var max_func := NumFunctions;
         var hnds := new ^TF_Function[max_func];
         TF_GraphGetFunctions(Handle, hnds, max_func, lStatus.Handle);
-    
+
         if lStatus.Ok then begin
           var result_list := new FunctionList withCapacity(max_func);
           for h in hnds do result_list.Add(new TensorFlowFunction withHandle(h));
@@ -2197,9 +2217,9 @@ type
     // Object is a scalar constant value.
     class method ObjectToTensor<T>(aValue: NotNull<Object>; aShape: NotNull<Shape>): Tensor;
     begin
-      var objType := aValue.GetType;  
-      var isObjTypeValid := objType.IsIntegerOrFloat or objType.Is<String> or objType.Is<Boolean>;  
-  
+      var objType := aValue.GetType;
+      var isObjTypeValid := objType.IsIntegerOrFloat or objType.Is<String> or objType.Is<Boolean>;
+
       if not isObjTypeValid then begin // Check if the object contains valid value
         raise new ArgumentException($'ObjectToTensor: invalid input type={objType.Name}.');
       end;
@@ -2212,7 +2232,7 @@ type
       end;
 
       var targetVal: T;
-  
+
       if targetType.IsIntegerOrFloat then begin
         targetVal := T(Convert.ToDouble(aValue));
       end else begin
@@ -2276,14 +2296,14 @@ type
         DataType.Double : ObjectToTensor<Double> (aValue, aShape);
         DataType.Float  : ObjectToTensor<Single> (aValue, aShape);
         DataType.Int16  : ObjectToTensor<Int16>  (aValue, aShape);
-        DataType.Int32  : ObjectToTensor<Int32>  (aValue, aShape);   
-        DataType.Int64  : ObjectToTensor<Int64>  (aValue, aShape);  
-        DataType.Int8   : ObjectToTensor<Int8>   (aValue, aShape);    
+        DataType.Int32  : ObjectToTensor<Int32>  (aValue, aShape);
+        DataType.Int64  : ObjectToTensor<Int64>  (aValue, aShape);
+        DataType.Int8   : ObjectToTensor<Int8>   (aValue, aShape);
         DataType.String : ObjectToTensor<String> (aValue, aShape);
-        DataType.UInt16 : ObjectToTensor<UInt16> (aValue, aShape);  
+        DataType.UInt16 : ObjectToTensor<UInt16> (aValue, aShape);
         DataType.UInt32 : ObjectToTensor<UInt32> (aValue, aShape);
         DataType.UInt64 : ObjectToTensor<UInt64> (aValue, aShape);
-        DataType.UInt8  : ObjectToTensor<UInt8>  (aValue, aShape);          
+        DataType.UInt8  : ObjectToTensor<UInt8>  (aValue, aShape);
       else
         result := nil;
       end;
@@ -2512,7 +2532,7 @@ type
     begin
       const cMaxBytes = 1000; // Tensor cannot exceed this limit in order to print.
       const cAllowedTypes = NumericalTypes + [DataType.String, DataType.Bool];
-  
+
       // Validate max bytes and allowed types.
       if fData.NumBytes > cMaxBytes then exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
       if not (fData.Type in cAllowedTypes) then exit $'Tensor (dtype={fData.Type.ToString}) cannot print.';
@@ -2526,7 +2546,7 @@ type
       var high_dim := fData.Shape.Dim[fData.Shape.NumDims - 1];
       var str_list := new List<String>(fData.Shape.Size/high_dim);
       var str: String := '';
-  
+
       for I: Integer := 0 to str_arr.Length - 1 do begin
         if str_arr[I].Length >= aMaxWidth then exit $'Data item {str_arr[I]} exceeds max width {aMaxWidth}';
         str := str + str_arr[I].PadStart(aMaxWidth, ' ');
