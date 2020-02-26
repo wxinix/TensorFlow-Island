@@ -125,10 +125,10 @@ type
   end;
 
   /// <summary>
-  /// Stochastic gradient descent optimizer, including support for momentum, learning 
+  /// Stochastic gradient descent optimizer, including support for momentum, learning
   /// rate decay, and Nesterov momentum.
   /// </summary>
-  StochasticGradientDescent = public sealed class(Optimizer)
+  SGD = public sealed class(Optimizer)
   private
     fMomentum: Output; readonly;
     fNesterov: Boolean; readonly;
