@@ -2528,14 +2528,18 @@ type
       result := (assigned(str_arr), str_arr);
     end;
 
-    method Print(const aDecimalDigits: Integer = 1; const aMaxWidth: Integer = 8): String;
+    method Print(aMaxNumBytes: Cardinal = 1000) DecimalDigits(aDecimalDigits: Integer = 1) MaxWidth(aMaxWidth: Integer = 8): String;
     begin
-      const cMaxBytes = 1000; // Tensor cannot exceed this limit in order to print.
       const cAllowedTypes = NumericalTypes + [DataType.String, DataType.Bool];
 
-      // Validate max bytes and allowed types.
-      if fData.NumBytes > cMaxBytes then exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
-      if not (fData.Type in cAllowedTypes) then exit $'Tensor (dtype={fData.Type.ToString}) cannot print.';
+      // Validate max bytes and allowed types. If aMaxNumBytes == 0, then no limit.
+      if (aMaxNumBytes > 0) and (fData.NumBytes > aMaxNumBytes) then begin
+        exit 'Tensor has {fData.NumBytes} bytes. Too large (>{cMaxBytes}) to print.';
+      end;
+
+      if not (fData.Type in cAllowedTypes) then begin
+        exit $'Tensor (dtype={fData.Type.ToString}) cannot print.';
+      end;
 
       // Convert the tensor data to str_arr. Numerical type will be cast based on aDecimalDigits.
       var (success, str_arr) := ConvertDataToStrings(aDecimalDigits);
@@ -2769,13 +2773,13 @@ type
       exit Graph.Restore(file_pattern, tensor_name, aDataType);
     end;
 
-    method SaveTensors(const aFileName: NotNull<String>; aTensors: array of Tuple of (NotNull<String>, NotNull<Output>)): TensorList;
+    method SaveTensors(const aFileName: NotNull<String>; aTensors: NotNull<array of Tuple of (TensorName: NotNull<String>, TensorItem: NotNull<Output>)>): TensorList;
     begin
       var filename := Graph.Const(aFileName);
       var concat_dim := Graph.Const(0);
-      var concat_values := aTensors.Select(T->Graph.Const(T[0])).ToArray;
+      var concat_values := aTensors.Select(T->Graph.Const(T.TensorName)).ToArray;
       var tensor_names := Graph.Concat(concat_dim, concat_values);
-      var data := aTensors.Select(d->d[1]).ToArray;
+      var data := aTensors.Select(T->T.TensorItem).ToArray;
       var target := Graph.Save(filename, tensor_names, data);
       result := Runner.AddTarget(target).Run;
     end;
