@@ -26,6 +26,8 @@ uses
   TensorFlow.Island.Api;
 
 type
+  GradientAndVariablePair = Tuple of (Gradient: NotNull<Output>, Variable: NotNull<Variable>);
+
   Optimizer = public abstract class
   private
     fGraph: Graph;
@@ -33,7 +35,7 @@ type
     fIterations: Variable;
     fLearningRate: Output;
     fOptimizerName: String;
-    fUpdateOps: OperationList := new OperationList; readonly;
+    fUpdateOps: OperationList := new OperationList; protected; readonly;
   protected
     method CreateDecayOps(aDecay: Single; aInitialLearningRate: NotNull<Output>): Output;
     begin
@@ -57,7 +59,7 @@ type
       end;
     end;
 
-    method InitMoments(aGradientsAndVariables: not nullable array of Tuple of (Gradient: Output, Variable: Variable)): OutputList;
+    method InitMoments(aGradientsAndVariables: NotNull<array of GradientAndVariablePair>): OutputList;
     begin
       result := new OutputList withCapacity(aGradientsAndVariables.Length);
       for gv in aGradientsAndVariables do begin
@@ -79,38 +81,38 @@ type
       fInitialAccumulatorValue := aInitialAccumulatorValue;
       fOptimizerName := aOpName;
 
-      using newScope := fGraph.WithScope(fOptimizerName) do begin
+      using fGraph.WithScope(fOptimizerName) do begin
         fIterations := fGraph.MakeVariable(fGraph.Const(Int64(0)), false, 'iterations');
-        var initialLearningRate := fGraph.Const(aLearningRate);
-        var incOp := fGraph.AssignAddVariableOp(NotNull<Variable>(fIterations), fGraph.Const(Int64(1)));
-        fUpdateOps.Add(incOp);
+        var initial_lr := fGraph.Const(aLearningRate);
+        var inc_iter_op := fGraph.AssignAddVariableOp(NotNull<Variable>(fIterations), fGraph.Const(Int64(1)));
+        fUpdateOps.Add(inc_iter_op);
 
-        using fGraph.WithDependencies([incOp]) do begin
-          fLearningRate := CreateDecayOps(aDecay, initialLearningRate);
+        using fGraph.WithDependencies([inc_iter_op]) do begin
+          fLearningRate := CreateDecayOps(aDecay, initial_lr);
         end;
       end;
     end;
 
-    method ApplyGradient(aGradientsAndVariables: not nullable array of Tuple of (Gradient: Output, Variable: Variable)): OperationList; abstract;
+    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; abstract;
 
-    method ComputeGradient(aLoss: NotNull<Output>; aVariables: array of Variable := nil; aColocateGradientsWithOps: Boolean := false): array of Tuple of (Gradient: Output, Variable: Variable); virtual;
+    method ComputeGradient(aLoss: NotNull<Output>; aVariables: array of NotNull<Variable> := nil; aColocateGradientsWithOps: Boolean := false): array of GradientAndVariablePair; virtual;
     begin
       aVariables := if assigned(aVariables) then aVariables else fGraph.TrainableVariables;
-      result := new (Tuple of (Gradient: Output, Variable: Variable))[aVariables.Length];
+      result := new GradientAndVariablePair[aVariables.Length];
 
       for I: Integer := 0 to aVariables.Length - 1 do begin
-        var grad := fGraph.AddGradients([aLoss], [aVariables[I].ReadHandle]).Item2.First;
-        var var_ := aVariables[I];
-        result[I] := (grad, var_);
+        var g: Output := fGraph.AddGradients([aLoss], [aVariables[I].ReadHandle]).Item2.First;
+        var v: Variable := aVariables[I];
+        result[I] := (g, v);
 
         if aColocateGradientsWithOps then begin
-          var desc_ := new OperationDescription withGraph(fGraph) OpType(grad.Oper.OpType) OpName(grad.Oper.Name);
-          desc_.ColocateWith(var_.Resource.Oper);
+          var desc_ := new OperationDescription withGraph(fGraph) OpType(g.Oper.OpType) OpName(g.Oper.Name);
+          desc_.ColocateWith(v.Resource.Oper);
         end;
       end;
     end;
 
-    method Minimize(aLoss: NotNull<Output>; aVariables: array of Variable := nil): OperationList; virtual;
+    method Minimize(aLoss: NotNull<Output>; aVariables: array of NotNull<Variable> := nil): OperationList; virtual;
     begin
       var gv := ComputeGradient(aLoss, aVariables);
       result := ApplyGradient(gv);
@@ -120,6 +122,52 @@ type
     property OptimizerName: String read fOptimizerName; protected;
     property Iterations: Variable read fIterations;
     property LearningRate: Output read fLearningRate;
+  end;
+
+  /// <summary>
+  /// Stochastic gradient descent optimizer, including support for momentum, learning 
+  /// rate decay, and Nesterov momentum.
+  /// </summary>
+  StochasticGradientDescent = public sealed class(Optimizer)
+  private
+    fMomentum: Output; readonly;
+    fNesterov: Boolean; readonly;
+  public
+    constructor withGraph(aGraph: NotNull<Graph>) LearningRate(aLearningRate: Single := 0) Momentum(aMomentum: Single := 0) Decay(aDecay: Single := 0) Nesterov(aNesterov: Boolean := false) OpName(aOpName: String := 'SGDOptimizer');
+    begin
+      inherited constructor(aGraph,  aOpName, aLearningRate, aDecay, 0);
+
+      using aGraph.WithScope(aOpName) do begin
+        fMomentum := aGraph.Const(aMomentum, 'Momentum');
+      end;
+
+      fNesterov := aNesterov;
+    end;
+
+    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    begin
+      result := new OperationList withCapacity(aGradientsAndVariables.Length);
+      var moments := InitMoments(aGradientsAndVariables);
+
+      for gv in aGradientsAndVariables index i do begin
+        var lr := Graph.Cast(LearningRate, gv.Gradient.OutputType);
+        var m := Graph.Cast(fMomentum, gv.Gradient.OutputType);
+        // v = m * moment - lr * g
+        var velocity := Graph.Sub(Graph.Mul(m, moments[i]), Graph.Mul(lr, gv.Gradient));
+        // moment = v
+        fUpdateOps.Add(Graph.Assign(moments[i], velocity).Oper);
+
+        if fNesterov then begin
+          // w = w + m * v - lr * g
+          var op := Graph.AssignAddVariableOp(gv.Variable, Graph.Mul(lr, Graph.Sub(Graph.Mul(m, velocity), gv.Gradient)));
+          fUpdateOps.Add(op);
+        end else begin
+          // w = w + lr * v
+          fUpdateOps.Add(Graph.AssignAddVariableOp(gv.Variable, Graph.Mul(lr, velocity)));
+        end;
+      end;
+    end;
+
   end;
 
 end.
