@@ -284,7 +284,10 @@ namespace TensorFlow.Island.OpGenerator
             }
 
             foreach (var attr in _requiredAttrs) {
-                sb.AppendFormat($"{comma}{CSharpType(attr.Type)} {ParamMap(attr.Name)}");
+                bool isRefType = IsReferenceType(attr.Type);
+                var cstype = CSharpType(attr.Type);
+                var cstypeSuffix = isRefType ? "!" : "";
+                sb.AppendFormat($"{comma}{cstype}{cstypeSuffix} {ParamMap(attr.Name)}");
                 comma = ", ";
             }
 
@@ -293,7 +296,7 @@ namespace TensorFlow.Island.OpGenerator
                 var cstype = CSharpType(attr.Type);
                 var cstypeSuffix = isRefType ? "" : "?";
 
-                sb.AppendFormat($"{comma}{cstype}{cstypeSuffix} {attr.Name} = null");
+                sb.AppendFormat($"{comma}{cstype}{cstypeSuffix} {ParamMap(attr.Name)} = null");
                 comma = ", ";
             }
 
