@@ -138,7 +138,7 @@ namespace TensorFlow.Island.Classes
         ///   
         ///   Returns a <c>Tensor</c> of same shape and type as the elements of <c>inputs</c>.
         /// </remarks>
-        public Output AccumulateNV2(Output![] inputs, Shape shape, string operName = null)
+        public Output AccumulateNV2(Output![] inputs, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AccumulateNV2") OpName(MakeName("AccumulateNV2", operName));
             desc.AddInputs(inputs);
@@ -1134,7 +1134,7 @@ namespace TensorFlow.Island.Classes
         ///   container.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output AnonymousIterator(DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output AnonymousIterator(DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AnonymousIterator") OpName(MakeName("AnonymousIterator", operName));
              
@@ -1175,7 +1175,7 @@ namespace TensorFlow.Island.Classes
         ///   deleter: A variant deleter that should be passed into the op that deletes the iterator.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output handle, Output deleter) AnonymousIteratorV2(DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public (Output handle, Output deleter) AnonymousIteratorV2(DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AnonymousIteratorV2") OpName(MakeName("AnonymousIteratorV2", operName));
              
@@ -1219,7 +1219,7 @@ namespace TensorFlow.Island.Classes
         ///   deleter: A variant deleter that should be passed into the op that deletes the iterator.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output handle, Output deleter) AnonymousMultiDeviceIterator(string[] devices, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public (Output handle, Output deleter) AnonymousMultiDeviceIterator(string[]! devices, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AnonymousMultiDeviceIterator") OpName(MakeName("AnonymousMultiDeviceIterator", operName));
              
@@ -2803,7 +2803,7 @@ namespace TensorFlow.Island.Classes
         ///   means that the check happens *after* any static optimizations are applied
         ///   to the dataset graph.
         /// </remarks>
-        public Output AssertNextDataset(Output! input_dataset, Output! transformations, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output AssertNextDataset(Output! input_dataset, Output! transformations, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AssertNextDataset") OpName(MakeName("AssertNextDataset", operName));
             desc.AddInput(input_dataset);
@@ -3555,7 +3555,7 @@ namespace TensorFlow.Island.Classes
         ///   This dataset will throw a NotFound error if we cannot shard the dataset
         ///   automatically.
         /// </remarks>
-        public Output AutoShardDataset(Output! input_dataset, Output! num_workers, Output! index, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output AutoShardDataset(Output! input_dataset, Output! num_workers, Output! index, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AutoShardDataset") OpName(MakeName("AutoShardDataset", operName));
             desc.AddInput(input_dataset);
@@ -3614,7 +3614,7 @@ namespace TensorFlow.Island.Classes
         ///   Each entry in <c>output</c> is the mean of the corresponding size <c>ksize</c>
         ///   window in <c>value</c>.
         /// </remarks>
-        public Output AvgPool(Output! value, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output AvgPool(Output! value, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AvgPool") OpName(MakeName("AvgPool", operName));
             desc.AddInput(value);
@@ -3674,7 +3674,7 @@ namespace TensorFlow.Island.Classes
         ///   The average pooled output tensor.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output AvgPool3D(Output! input, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output AvgPool3D(Output! input, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AvgPool3D") OpName(MakeName("AvgPool3D", operName));
             desc.AddInput(input);
@@ -3737,7 +3737,7 @@ namespace TensorFlow.Island.Classes
         ///   The backprop for input.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output AvgPool3DGrad(Output! orig_input_shape, Output! grad, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output AvgPool3DGrad(Output! orig_input_shape, Output! grad, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AvgPool3DGrad") OpName(MakeName("AvgPool3DGrad", operName));
             desc.AddInput(orig_input_shape);
@@ -3800,7 +3800,7 @@ namespace TensorFlow.Island.Classes
         ///   4-D.  Gradients w.r.t. the input of <c>avg_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output AvgPoolGrad(Output! orig_input_shape, Output! grad, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output AvgPoolGrad(Output! orig_input_shape, Output! grad, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("AvgPoolGrad") OpName(MakeName("AvgPoolGrad", operName));
             desc.AddInput(orig_input_shape);
@@ -3873,7 +3873,7 @@ namespace TensorFlow.Island.Classes
         ///   incomplete element has some undefined components in its value tuple,
         ///   and may be updated using BarrierInsertMany.
         /// </remarks>
-        public Output Barrier(DataType[] component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
+        public Output Barrier(DataType[]! component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Barrier") OpName(MakeName("Barrier", operName));
              
@@ -4125,7 +4125,7 @@ namespace TensorFlow.Island.Classes
         ///   information about the batch in which each element was originally inserted
         ///   into the barrier.
         /// </remarks>
-        public (Output indices, Output keys, Output[] values) BarrierTakeMany(Output! handle, Output! num_elements, DataType[] component_types, bool? allow_small_batch = null, bool? wait_for_incomplete = null, long? timeout_ms = null, string operName = null)
+        public (Output indices, Output keys, Output[] values) BarrierTakeMany(Output! handle, Output! num_elements, DataType[]! component_types, bool? allow_small_batch = null, bool? wait_for_incomplete = null, long? timeout_ms = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("BarrierTakeMany") OpName(MakeName("BarrierTakeMany", operName));
             desc.AddInput(handle);
@@ -4316,7 +4316,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output BatchDataset(Output! input_dataset, Output! batch_size, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output BatchDataset(Output! input_dataset, Output! batch_size, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("BatchDataset") OpName(MakeName("BatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -4365,7 +4365,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output BatchDatasetV2(Output! input_dataset, Output! batch_size, Output! drop_remainder, DataType[] output_types, Shape[] output_shapes, bool? parallel_copy = null, string operName = null)
+        public Output BatchDatasetV2(Output! input_dataset, Output! batch_size, Output! drop_remainder, DataType[]! output_types, Shape[]! output_shapes, bool? parallel_copy = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("BatchDatasetV2") OpName(MakeName("BatchDatasetV2", operName));
             desc.AddInput(input_dataset);
@@ -7682,7 +7682,7 @@ namespace TensorFlow.Island.Classes
         ///   [3, 2]
         ///   [1, 3]]
         /// </remarks>
-        public Output Bucketize(Output! input, float[] boundaries, string operName = null)
+        public Output Bucketize(Output! input, float[]! boundaries, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Bucketize") OpName(MakeName("Bucketize", operName));
             desc.AddInput(input);
@@ -7721,7 +7721,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output BytesProducedStatsDataset(Output! input_dataset, Output! tag, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output BytesProducedStatsDataset(Output! input_dataset, Output! tag, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("BytesProducedStatsDataset") OpName(MakeName("BytesProducedStatsDataset", operName));
             desc.AddInput(input_dataset);
@@ -7770,7 +7770,7 @@ namespace TensorFlow.Island.Classes
         ///   (e.g. cannot be opened, contains tensors of the wrong shape / size), an error
         ///   will the returned when used.
         /// </remarks>
-        public Output CacheDataset(Output! input_dataset, Output! filename, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output CacheDataset(Output! input_dataset, Output! filename, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("CacheDataset") OpName(MakeName("CacheDataset", operName));
             desc.AddInput(input_dataset);
@@ -7885,7 +7885,7 @@ namespace TensorFlow.Island.Classes
         ///   When run, reports an <c>InvalidArgument</c> error if <c>tensor</c> has any values
         ///   that are not a number (NaN) or infinity (Inf). Otherwise, passes <c>tensor</c> as-is.
         /// </remarks>
-        public Output CheckNumerics(Output! tensor, string message, string operName = null)
+        public Output CheckNumerics(Output! tensor, string! message, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("CheckNumerics") OpName(MakeName("CheckNumerics", operName));
             desc.AddInput(tensor);
@@ -8071,7 +8071,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output CollectiveBcastRecv(DataType T, long group_size, long group_key, long instance_key, Shape shape, string communication_hint = null, string operName = null)
+        public Output CollectiveBcastRecv(DataType T, long group_size, long group_key, long instance_key, Shape! shape, string communication_hint = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("CollectiveBcastRecv") OpName(MakeName("CollectiveBcastRecv", operName));
              
@@ -8122,7 +8122,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output CollectiveBcastSend(Output! input, long group_size, long group_key, long instance_key, Shape shape, string communication_hint = null, string operName = null)
+        public Output CollectiveBcastSend(Output! input, long group_size, long group_key, long instance_key, Shape! shape, string communication_hint = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("CollectiveBcastSend") OpName(MakeName("CollectiveBcastSend", operName));
             desc.AddInput(input);
@@ -8173,7 +8173,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output CollectiveGather(Output! input, long group_size, long group_key, long instance_key, Shape shape, string communication_hint = null, string operName = null)
+        public Output CollectiveGather(Output! input, long group_size, long group_key, long instance_key, Shape! shape, string communication_hint = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("CollectiveGather") OpName(MakeName("CollectiveGather", operName));
             desc.AddInput(input);
@@ -8276,7 +8276,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output CollectiveReduce(Output! input, long group_size, long group_key, long instance_key, string merge_op, string final_op, long[] subdiv_offsets, long[] wait_for = null, string communication_hint = null, string operName = null)
+        public Output CollectiveReduce(Output! input, long group_size, long group_key, long instance_key, string! merge_op, string! final_op, long[]! subdiv_offsets, long[] wait_for = null, string communication_hint = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("CollectiveReduce") OpName(MakeName("CollectiveReduce", operName));
             desc.AddInput(input);
@@ -8714,7 +8714,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ConcatenateDataset(Output! input_dataset, Output! another_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ConcatenateDataset(Output! input_dataset, Output! another_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ConcatenateDataset") OpName(MakeName("ConcatenateDataset", operName));
             desc.AddInput(input_dataset);
@@ -8872,7 +8872,7 @@ namespace TensorFlow.Island.Classes
         ///   resets the aggregate to 0, and increments the global_step recorded by
         ///   the accumulator.
         /// </remarks>
-        public Output ConditionalAccumulator(DataType dtype, Shape shape, string container = null, string shared_name = null, string reduction_type = null, string operName = null)
+        public Output ConditionalAccumulator(DataType dtype, Shape! shape, string container = null, string shared_name = null, string reduction_type = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ConditionalAccumulator") OpName(MakeName("ConditionalAccumulator", operName));
              
@@ -8974,7 +8974,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation ConfigureTPUEmbedding(string config, string operName = null)
+        public Operation ConfigureTPUEmbedding(string! config, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ConfigureTPUEmbedding") OpName(MakeName("ConfigureTPUEmbedding", operName));
              
@@ -9092,7 +9092,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Const(Tensor value, DataType dtype, string operName = null)
+        public Output Const(Tensor! value, DataType dtype, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Const") OpName(MakeName("Const", operName));
              
@@ -9258,7 +9258,7 @@ namespace TensorFlow.Island.Classes
         ///   Must have <c>strides[0] = strides[3] = 1</c>.  For the most common case of the same
         ///   horizontal and vertices strides, <c>strides = [1, stride, stride, 1]</c>.
         /// </remarks>
-        public Output Conv2D(Output! input, Output! filter, long[] strides, string padding, bool? use_cudnn_on_gpu = null, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, string operName = null)
+        public Output Conv2D(Output! input, Output! filter, long[]! strides, string! padding, bool? use_cudnn_on_gpu = null, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv2D") OpName(MakeName("Conv2D", operName));
             desc.AddInput(input);
@@ -9356,7 +9356,7 @@ namespace TensorFlow.Island.Classes
         ///   the <c>filter</c> input of the convolution.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Conv2DBackpropFilter(Output! input, Output! filter_sizes, Output! out_backprop, long[] strides, string padding, bool? use_cudnn_on_gpu = null, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, string operName = null)
+        public Output Conv2DBackpropFilter(Output! input, Output! filter_sizes, Output! out_backprop, long[]! strides, string! padding, bool? use_cudnn_on_gpu = null, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv2DBackpropFilter") OpName(MakeName("Conv2DBackpropFilter", operName));
             desc.AddInput(input);
@@ -9454,7 +9454,7 @@ namespace TensorFlow.Island.Classes
         ///   w.r.t. the input of the convolution.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Conv2DBackpropInput(Output! input_sizes, Output! filter, Output! out_backprop, long[] strides, string padding, bool? use_cudnn_on_gpu = null, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, string operName = null)
+        public Output Conv2DBackpropInput(Output! input_sizes, Output! filter, Output! out_backprop, long[]! strides, string! padding, bool? use_cudnn_on_gpu = null, long[] explicit_paddings = null, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv2DBackpropInput") OpName(MakeName("Conv2DBackpropInput", operName));
             desc.AddInput(input_sizes);
@@ -9541,7 +9541,7 @@ namespace TensorFlow.Island.Classes
         ///   
         ///   Our Conv3D implements a form of cross-correlation.
         /// </remarks>
-        public Output Conv3D(Output! input, Output! filter, long[] strides, string padding, string data_format = null, long[] dilations = null, string operName = null)
+        public Output Conv3D(Output! input, Output! filter, long[]! strides, string! padding, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv3D") OpName(MakeName("Conv3D", operName));
             desc.AddInput(input);
@@ -9603,7 +9603,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Conv3DBackpropFilter(Output! input, Output! filter, Output! out_backprop, long[] strides, string padding, long[] dilations = null, string operName = null)
+        public Output Conv3DBackpropFilter(Output! input, Output! filter, Output! out_backprop, long[]! strides, string! padding, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv3DBackpropFilter") OpName(MakeName("Conv3DBackpropFilter", operName));
             desc.AddInput(input);
@@ -9677,7 +9677,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Conv3DBackpropFilterV2(Output! input, Output! filter_sizes, Output! out_backprop, long[] strides, string padding, string data_format = null, long[] dilations = null, string operName = null)
+        public Output Conv3DBackpropFilterV2(Output! input, Output! filter_sizes, Output! out_backprop, long[]! strides, string! padding, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv3DBackpropFilterV2") OpName(MakeName("Conv3DBackpropFilterV2", operName));
             desc.AddInput(input);
@@ -9740,7 +9740,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Conv3DBackpropInput(Output! input, Output! filter, Output! out_backprop, long[] strides, string padding, long[] dilations = null, string operName = null)
+        public Output Conv3DBackpropInput(Output! input, Output! filter, Output! out_backprop, long[]! strides, string! padding, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv3DBackpropInput") OpName(MakeName("Conv3DBackpropInput", operName));
             desc.AddInput(input);
@@ -9814,7 +9814,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Conv3DBackpropInputV2(Output! input_sizes, Output! filter, Output! out_backprop, long[] strides, string padding, string data_format = null, long[] dilations = null, string operName = null)
+        public Output Conv3DBackpropInputV2(Output! input_sizes, Output! filter, Output! out_backprop, long[]! strides, string! padding, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Conv3DBackpropInputV2") OpName(MakeName("Conv3DBackpropInputV2", operName));
             desc.AddInput(input_sizes);
@@ -12674,7 +12674,7 @@ namespace TensorFlow.Island.Classes
         ///   The components of the single element of <c>input</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output[] DatasetToSingleElement(Output! dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output[] DatasetToSingleElement(Output! dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DatasetToSingleElement") OpName(MakeName("DatasetToSingleElement", operName));
             desc.AddInput(dataset);
@@ -13826,7 +13826,7 @@ namespace TensorFlow.Island.Classes
         ///   - A "bytes://&amp;lt;bytes&amp;gt;", in which protocol descriptors are created from <c>&amp;lt;bytes&amp;gt;</c>,
         ///   which is expected to be a <c>FileDescriptorSet</c> serialized as a string.
         /// </remarks>
-        public (Output sizes, Output[] values) DecodeProtoV2(Output! bytes, string message_type, string[] field_names, DataType[] output_types, string descriptor_source = null, string message_format = null, bool? sanitize = null, string operName = null)
+        public (Output sizes, Output[] values) DecodeProtoV2(Output! bytes, string! message_type, string[]! field_names, DataType[]! output_types, string descriptor_source = null, string message_format = null, bool? sanitize = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DecodeProtoV2") OpName(MakeName("DecodeProtoV2", operName));
             desc.AddInput(bytes);
@@ -14159,7 +14159,7 @@ namespace TensorFlow.Island.Classes
         ///   dimension contains the result of <c>set_operation</c> applied to the corresponding
         ///   <c>[0...n-1]</c> dimension of <c>set</c>.
         /// </remarks>
-        public (Output result_indices, Output result_values, Output result_shape) DenseToDenseSetOperation(Output! set1, Output! set2, string set_operation, bool? validate_indices = null, string operName = null)
+        public (Output result_indices, Output result_values, Output result_shape) DenseToDenseSetOperation(Output! set1, Output! set2, string! set_operation, bool? validate_indices = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DenseToDenseSetOperation") OpName(MakeName("DenseToDenseSetOperation", operName));
             desc.AddInput(set1);
@@ -14213,7 +14213,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output DenseToSparseBatchDataset(Output! input_dataset, Output! batch_size, Output! row_shape, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output DenseToSparseBatchDataset(Output! input_dataset, Output! batch_size, Output! row_shape, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DenseToSparseBatchDataset") OpName(MakeName("DenseToSparseBatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -14292,7 +14292,7 @@ namespace TensorFlow.Island.Classes
         ///   dimension contains the result of <c>set_operation</c> applied to the corresponding
         ///   <c>[0...n-1]</c> dimension of <c>set</c>.
         /// </remarks>
-        public (Output result_indices, Output result_values, Output result_shape) DenseToSparseSetOperation(Output! set1, Output! set2_indices, Output! set2_values, Output! set2_shape, string set_operation, bool? validate_indices = null, string operName = null)
+        public (Output result_indices, Output result_values, Output result_shape) DenseToSparseSetOperation(Output! set1, Output! set2_indices, Output! set2_values, Output! set2_shape, string! set_operation, bool? validate_indices = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DenseToSparseSetOperation") OpName(MakeName("DenseToSparseSetOperation", operName));
             desc.AddInput(set1);
@@ -14513,7 +14513,7 @@ namespace TensorFlow.Island.Classes
         ///   Must have <c>strides[0] = strides[3] = 1</c>.  For the most common case of the same
         ///   horizontal and vertices strides, <c>strides = [1, stride, stride, 1]</c>.
         /// </remarks>
-        public Output DepthwiseConv2dNative(Output! input, Output! filter, long[] strides, string padding, string data_format = null, long[] dilations = null, string operName = null)
+        public Output DepthwiseConv2dNative(Output! input, Output! filter, long[]! strides, string! padding, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DepthwiseConv2dNative") OpName(MakeName("DepthwiseConv2dNative", operName));
             desc.AddInput(input);
@@ -14596,7 +14596,7 @@ namespace TensorFlow.Island.Classes
         ///   the <c>filter</c> input of the convolution.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output DepthwiseConv2dNativeBackpropFilter(Output! input, Output! filter_sizes, Output! out_backprop, long[] strides, string padding, string data_format = null, long[] dilations = null, string operName = null)
+        public Output DepthwiseConv2dNativeBackpropFilter(Output! input, Output! filter_sizes, Output! out_backprop, long[]! strides, string! padding, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DepthwiseConv2dNativeBackpropFilter") OpName(MakeName("DepthwiseConv2dNativeBackpropFilter", operName));
             desc.AddInput(input);
@@ -14680,7 +14680,7 @@ namespace TensorFlow.Island.Classes
         ///   convolution.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output DepthwiseConv2dNativeBackpropInput(Output! input_sizes, Output! filter, Output! out_backprop, long[] strides, string padding, string data_format = null, long[] dilations = null, string operName = null)
+        public Output DepthwiseConv2dNativeBackpropInput(Output! input_sizes, Output! filter, Output! out_backprop, long[]! strides, string! padding, string data_format = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DepthwiseConv2dNativeBackpropInput") OpName(MakeName("DepthwiseConv2dNativeBackpropInput", operName));
             desc.AddInput(input_sizes);
@@ -15111,7 +15111,7 @@ namespace TensorFlow.Island.Classes
         ///   
         ///   Outputs the final value of the tensor pointed to by 'ref'.
         /// </remarks>
-        public Output DestroyTemporaryVariable(Output! reference, string var_name, string operName = null)
+        public Output DestroyTemporaryVariable(Output! reference, string! var_name, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DestroyTemporaryVariable") OpName(MakeName("DestroyTemporaryVariable", operName));
             desc.AddInput(reference);
@@ -15323,7 +15323,7 @@ namespace TensorFlow.Island.Classes
         ///   Note on duality: The dilation of <c>input</c> by the <c>filter</c> is equal to the
         ///   negation of the erosion of <c>-input</c> by the reflected <c>filter</c>.
         /// </remarks>
-        public Output Dilation2D(Output! input, Output! filter, long[] strides, long[] rates, string padding, string operName = null)
+        public Output Dilation2D(Output! input, Output! filter, long[]! strides, long[]! rates, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Dilation2D") OpName(MakeName("Dilation2D", operName));
             desc.AddInput(input);
@@ -15378,7 +15378,7 @@ namespace TensorFlow.Island.Classes
         ///   3-D with shape <c>[filter_height, filter_width, depth]</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Dilation2DBackpropFilter(Output! input, Output! filter, Output! out_backprop, long[] strides, long[] rates, string padding, string operName = null)
+        public Output Dilation2DBackpropFilter(Output! input, Output! filter, Output! out_backprop, long[]! strides, long[]! rates, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Dilation2DBackpropFilter") OpName(MakeName("Dilation2DBackpropFilter", operName));
             desc.AddInput(input);
@@ -15434,7 +15434,7 @@ namespace TensorFlow.Island.Classes
         ///   4-D with shape <c>[batch, in_height, in_width, depth]</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Dilation2DBackpropInput(Output! input, Output! filter, Output! out_backprop, long[] strides, long[] rates, string padding, string operName = null)
+        public Output Dilation2DBackpropInput(Output! input, Output! filter, Output! out_backprop, long[]! strides, long[]! rates, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Dilation2DBackpropInput") OpName(MakeName("Dilation2DBackpropInput", operName));
             desc.AddInput(input);
@@ -15481,7 +15481,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output DirectedInterleaveDataset(Output! selector_input_dataset, Output![] data_input_datasets, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output DirectedInterleaveDataset(Output! selector_input_dataset, Output![] data_input_datasets, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("DirectedInterleaveDataset") OpName(MakeName("DirectedInterleaveDataset", operName));
             desc.AddInput(selector_input_dataset);
@@ -15895,7 +15895,7 @@ namespace TensorFlow.Island.Classes
         ///   semantics of the input, output, and attributes are the same as those for
         ///   PyFunc.
         /// </remarks>
-        public Output[] EagerPyFunc(Output![] input, string token, DataType[] Tout, bool? is_async = null, string operName = null)
+        public Output[] EagerPyFunc(Output![] input, string! token, DataType[]! Tout, bool? is_async = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("EagerPyFunc") OpName(MakeName("EagerPyFunc", operName));
             desc.AddInputs(input);
@@ -16127,7 +16127,7 @@ namespace TensorFlow.Island.Classes
         ///   @end_compatibility
         ///   
         /// </remarks>
-        public Output Einsum(Output![] inputs, string equation, string operName = null)
+        public Output Einsum(Output![] inputs, string! equation, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Einsum") OpName(MakeName("Einsum", operName));
             desc.AddInputs(inputs);
@@ -16651,7 +16651,7 @@ namespace TensorFlow.Island.Classes
         ///   - A "bytes://&amp;lt;bytes&amp;gt;", in which protocol descriptors are created from <c>&amp;lt;bytes&amp;gt;</c>,
         ///   which is expected to be a <c>FileDescriptorSet</c> serialized as a string.
         /// </remarks>
-        public Output EncodeProto(Output! sizes, Output![] values, string[] field_names, string message_type, string descriptor_source = null, string operName = null)
+        public Output EncodeProto(Output! sizes, Output![] values, string[]! field_names, string! message_type, string descriptor_source = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("EncodeProto") OpName(MakeName("EncodeProto", operName));
             desc.AddInput(sizes);
@@ -16918,7 +16918,7 @@ namespace TensorFlow.Island.Classes
         ///   with dim_size() equal to the total number of lookups into the table described by
         ///   the corresponding feature.
         /// </remarks>
-        public Operation EnqueueTPUEmbeddingSparseTensorBatch(Output![] sample_indices, Output![] embedding_indices, Output![] aggregation_weights, Output! mode_override, long[] table_ids, long? device_ordinal = null, string[] combiners = null, long[] max_sequence_lengths = null, string operName = null)
+        public Operation EnqueueTPUEmbeddingSparseTensorBatch(Output![] sample_indices, Output![] embedding_indices, Output![] aggregation_weights, Output! mode_override, long[]! table_ids, long? device_ordinal = null, string[] combiners = null, long[] max_sequence_lengths = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("EnqueueTPUEmbeddingSparseTensorBatch") OpName(MakeName("EnqueueTPUEmbeddingSparseTensorBatch", operName));
             desc.AddInputs(sample_indices);
@@ -16973,7 +16973,7 @@ namespace TensorFlow.Island.Classes
         ///   Raises an error if the input tensor's shape does not match the specified shape.
         ///   Returns the input tensor otherwise.
         /// </remarks>
-        public Output EnsureShape(Output! input, Shape shape, string operName = null)
+        public Output EnsureShape(Output! input, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("EnsureShape") OpName(MakeName("EnsureShape", operName));
             desc.AddInput(input);
@@ -17026,7 +17026,7 @@ namespace TensorFlow.Island.Classes
         ///   it may be changed in the child frame. At most <c>parallel_iterations</c> iterations
         ///   are run in parallel in the child frame.
         /// </remarks>
-        public Output Enter(Output! data, string frame_name, bool? is_constant = null, long? parallel_iterations = null, string operName = null)
+        public Output Enter(Output! data, string! frame_name, bool? is_constant = null, long? parallel_iterations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Enter") OpName(MakeName("Enter", operName));
             desc.AddInput(data);
@@ -17422,7 +17422,7 @@ namespace TensorFlow.Island.Classes
         ///   This dataset will throw a NotFound error if we cannot shard the dataset
         ///   automatically.
         /// </remarks>
-        public Output ExperimentalAutoShardDataset(Output! input_dataset, Output! num_workers, Output! index, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalAutoShardDataset(Output! input_dataset, Output! num_workers, Output! index, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalAutoShardDataset") OpName(MakeName("ExperimentalAutoShardDataset", operName));
             desc.AddInput(input_dataset);
@@ -17464,7 +17464,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalBytesProducedStatsDataset(Output! input_dataset, Output! tag, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalBytesProducedStatsDataset(Output! input_dataset, Output! tag, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalBytesProducedStatsDataset") OpName(MakeName("ExperimentalBytesProducedStatsDataset", operName));
             desc.AddInput(input_dataset);
@@ -17589,7 +17589,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalDenseToSparseBatchDataset(Output! input_dataset, Output! batch_size, Output! row_shape, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalDenseToSparseBatchDataset(Output! input_dataset, Output! batch_size, Output! row_shape, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalDenseToSparseBatchDataset") OpName(MakeName("ExperimentalDenseToSparseBatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -17635,7 +17635,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalDirectedInterleaveDataset(Output! selector_input_dataset, Output![] data_input_datasets, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalDirectedInterleaveDataset(Output! selector_input_dataset, Output![] data_input_datasets, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalDirectedInterleaveDataset") OpName(MakeName("ExperimentalDirectedInterleaveDataset", operName));
             desc.AddInput(selector_input_dataset);
@@ -17674,7 +17674,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalIgnoreErrorsDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalIgnoreErrorsDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalIgnoreErrorsDataset") OpName(MakeName("ExperimentalIgnoreErrorsDataset", operName));
             desc.AddInput(input_dataset);
@@ -17745,7 +17745,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalLatencyStatsDataset(Output! input_dataset, Output! tag, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalLatencyStatsDataset(Output! input_dataset, Output! tag, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalLatencyStatsDataset") OpName(MakeName("ExperimentalLatencyStatsDataset", operName));
             desc.AddInput(input_dataset);
@@ -17787,7 +17787,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalMaxIntraOpParallelismDataset(Output! input_dataset, Output! max_intra_op_parallelism, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalMaxIntraOpParallelismDataset(Output! input_dataset, Output! max_intra_op_parallelism, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalMaxIntraOpParallelismDataset") OpName(MakeName("ExperimentalMaxIntraOpParallelismDataset", operName));
             desc.AddInput(input_dataset);
@@ -17861,7 +17861,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalParseExampleDataset(Output! input_dataset, Output! num_parallel_calls, Output![] dense_defaults, string[] sparse_keys, string[] dense_keys, DataType[] sparse_types, Shape[] dense_shapes, DataType[] output_types, Shape[] output_shapes, bool? sloppy = null, string operName = null)
+        public Output ExperimentalParseExampleDataset(Output! input_dataset, Output! num_parallel_calls, Output![] dense_defaults, string[]! sparse_keys, string[]! dense_keys, DataType[]! sparse_types, Shape[]! dense_shapes, DataType[]! output_types, Shape[]! output_shapes, bool? sloppy = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalParseExampleDataset") OpName(MakeName("ExperimentalParseExampleDataset", operName));
             desc.AddInput(input_dataset);
@@ -17912,7 +17912,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalPrivateThreadPoolDataset(Output! input_dataset, Output! num_threads, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalPrivateThreadPoolDataset(Output! input_dataset, Output! num_threads, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalPrivateThreadPoolDataset") OpName(MakeName("ExperimentalPrivateThreadPoolDataset", operName));
             desc.AddInput(input_dataset);
@@ -17957,7 +17957,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalRandomDataset(Output! seed, Output! seed2, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalRandomDataset(Output! seed, Output! seed2, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalRandomDataset") OpName(MakeName("ExperimentalRandomDataset", operName));
             desc.AddInput(seed);
@@ -18009,7 +18009,7 @@ namespace TensorFlow.Island.Classes
         ///   Creates a dataset that changes the batch size of the dataset to current batch
         ///   size // num_replicas.
         /// </remarks>
-        public Output ExperimentalRebatchDataset(Output! input_dataset, Output! num_replicas, DataType[] output_types, Shape[] output_shapes, bool? use_fallback = null, string operName = null)
+        public Output ExperimentalRebatchDataset(Output! input_dataset, Output! num_replicas, DataType[]! output_types, Shape[]! output_shapes, bool? use_fallback = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalRebatchDataset") OpName(MakeName("ExperimentalRebatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -18064,7 +18064,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalSlidingWindowDataset(Output! input_dataset, Output! window_size, Output! window_shift, Output! window_stride, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalSlidingWindowDataset(Output! input_dataset, Output! window_size, Output! window_shift, Output! window_stride, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalSlidingWindowDataset") OpName(MakeName("ExperimentalSlidingWindowDataset", operName));
             desc.AddInput(input_dataset);
@@ -18112,7 +18112,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalSqlDataset(Output! driver_name, Output! data_source_name, Output! query, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalSqlDataset(Output! driver_name, Output! data_source_name, Output! query, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalSqlDataset") OpName(MakeName("ExperimentalSqlDataset", operName));
             desc.AddInput(driver_name);
@@ -18228,7 +18228,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalThreadPoolDataset(Output! input_dataset, Output! thread_pool, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalThreadPoolDataset(Output! input_dataset, Output! thread_pool, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalThreadPoolDataset") OpName(MakeName("ExperimentalThreadPoolDataset", operName));
             desc.AddInput(input_dataset);
@@ -18282,7 +18282,7 @@ namespace TensorFlow.Island.Classes
         ///   ops.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalThreadPoolHandle(long num_threads, string display_name, long? max_intra_op_parallelism = null, string container = null, string shared_name = null, string operName = null)
+        public Output ExperimentalThreadPoolHandle(long num_threads, string! display_name, long? max_intra_op_parallelism = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalThreadPoolHandle") OpName(MakeName("ExperimentalThreadPoolHandle", operName));
              
@@ -18331,7 +18331,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalUnbatchDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalUnbatchDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalUnbatchDataset") OpName(MakeName("ExperimentalUnbatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -18369,7 +18369,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExperimentalUniqueDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ExperimentalUniqueDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExperimentalUniqueDataset") OpName(MakeName("ExperimentalUniqueDataset", operName));
             desc.AddInput(input_dataset);
@@ -18578,7 +18578,7 @@ namespace TensorFlow.Island.Classes
         ///   <c>out_rows</c> and <c>out_cols</c> are the dimensions of the output patches.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExtractImagePatches(Output! images, long[] ksizes, long[] strides, long[] rates, string padding, string operName = null)
+        public Output ExtractImagePatches(Output! images, long[]! ksizes, long[]! strides, long[]! rates, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExtractImagePatches") OpName(MakeName("ExtractImagePatches", operName));
             desc.AddInput(images);
@@ -18682,7 +18682,7 @@ namespace TensorFlow.Island.Classes
         ///   are the dimensions of the output patches.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ExtractVolumePatches(Output! input, long[] ksizes, long[] strides, string padding, string operName = null)
+        public Output ExtractVolumePatches(Output! input, long[]! ksizes, long[]! strides, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ExtractVolumePatches") OpName(MakeName("ExtractVolumePatches", operName));
             desc.AddInput(input);
@@ -18754,7 +18754,7 @@ namespace TensorFlow.Island.Classes
         ///   \"Fake\" output value. This should not be consumed by another op.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output FakeParam(DataType dtype, Shape shape, string operName = null)
+        public Output FakeParam(DataType dtype, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FakeParam") OpName(MakeName("FakeParam", operName));
              
@@ -19395,7 +19395,7 @@ namespace TensorFlow.Island.Classes
         ///   The handle to the queue.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output FIFOQueue(DataType[] component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
+        public Output FIFOQueue(DataType[]! component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FIFOQueue") OpName(MakeName("FIFOQueue", operName));
              
@@ -19467,7 +19467,7 @@ namespace TensorFlow.Island.Classes
         ///   The handle to the queue.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output FIFOQueueV2(DataType[] component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
+        public Output FIFOQueueV2(DataType[]! component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FIFOQueueV2") OpName(MakeName("FIFOQueueV2", operName));
              
@@ -19580,7 +19580,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output FilterByLastComponentDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output FilterByLastComponentDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FilterByLastComponentDataset") OpName(MakeName("FilterByLastComponentDataset", operName));
             desc.AddInput(input_dataset);
@@ -20227,7 +20227,7 @@ namespace TensorFlow.Island.Classes
         ///   generated, a mean operation is performed instead of a max operation in each
         ///   pooling region.
         /// </remarks>
-        public (Output output, Output row_pooling_sequence, Output col_pooling_sequence) FractionalAvgPool(Output! value, float[] pooling_ratio, bool? pseudo_random = null, bool? overlapping = null, bool? deterministic = null, long? seed = null, long? seed2 = null, string operName = null)
+        public (Output output, Output row_pooling_sequence, Output col_pooling_sequence) FractionalAvgPool(Output! value, float[]! pooling_ratio, bool? pseudo_random = null, bool? overlapping = null, bool? deterministic = null, long? seed = null, long? seed2 = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FractionalAvgPool") OpName(MakeName("FractionalAvgPool", operName));
             desc.AddInput(value);
@@ -20431,7 +20431,7 @@ namespace TensorFlow.Island.Classes
         ///   For more details on fractional max pooling, see this paper:
         ///   [Benjamin Graham, Fractional Max-Pooling](http://arxiv.org/abs/1412.6071)
         /// </remarks>
-        public (Output output, Output row_pooling_sequence, Output col_pooling_sequence) FractionalMaxPool(Output! value, float[] pooling_ratio, bool? pseudo_random = null, bool? overlapping = null, bool? deterministic = null, long? seed = null, long? seed2 = null, string operName = null)
+        public (Output output, Output row_pooling_sequence, Output col_pooling_sequence) FractionalMaxPool(Output! value, float[]! pooling_ratio, bool? pseudo_random = null, bool? overlapping = null, bool? deterministic = null, long? seed = null, long? seed2 = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FractionalMaxPool") OpName(MakeName("FractionalMaxPool", operName));
             desc.AddInput(value);
@@ -21161,7 +21161,7 @@ namespace TensorFlow.Island.Classes
         ///   will block if multiple versions are being run in parallel. This is because this
         ///   operator is primarily an optimization to minimize memory usage.
         /// </remarks>
-        public Output FusedPadConv2D(Output! input, Output! paddings, Output! filter, string mode, long[] strides, string padding, string operName = null)
+        public Output FusedPadConv2D(Output! input, Output! paddings, Output! filter, string! mode, long[]! strides, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FusedPadConv2D") OpName(MakeName("FusedPadConv2D", operName));
             desc.AddInput(input);
@@ -21237,7 +21237,7 @@ namespace TensorFlow.Island.Classes
         ///   will block if multiple versions are being run in parallel. This is because this
         ///   operator is primarily an optimization to minimize memory usage.
         /// </remarks>
-        public Output FusedResizeAndPadConv2D(Output! input, Output! size, Output! paddings, Output! filter, string mode, long[] strides, string padding, bool? resize_align_corners = null, string operName = null)
+        public Output FusedResizeAndPadConv2D(Output! input, Output! size, Output! paddings, Output! filter, string! mode, long[]! strides, string! padding, bool? resize_align_corners = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("FusedResizeAndPadConv2D") OpName(MakeName("FusedResizeAndPadConv2D", operName));
             desc.AddInput(input);
@@ -22384,7 +22384,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output HostConst(Tensor value, DataType dtype, string operName = null)
+        public Output HostConst(Tensor! value, DataType dtype, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("HostConst") OpName(MakeName("HostConst", operName));
              
@@ -22905,7 +22905,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output IgnoreErrorsDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output IgnoreErrorsDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("IgnoreErrorsDataset") OpName(MakeName("IgnoreErrorsDataset", operName));
             desc.AddInput(input_dataset);
@@ -23090,7 +23090,7 @@ namespace TensorFlow.Island.Classes
         /// <remarks>
         ///   The current implementation memmaps the tensor from a file.
         /// </remarks>
-        public Output ImmutableConst(DataType dtype, Shape shape, string memory_region_name, string operName = null)
+        public Output ImmutableConst(DataType dtype, Shape! shape, string! memory_region_name, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ImmutableConst") OpName(MakeName("ImmutableConst", operName));
              
@@ -23129,7 +23129,7 @@ namespace TensorFlow.Island.Classes
         ///   A tensor that will be provided using the infeed mechanism.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output InfeedDequeue(DataType dtype, Shape shape, string operName = null)
+        public Output InfeedDequeue(DataType dtype, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("InfeedDequeue") OpName(MakeName("InfeedDequeue", operName));
              
@@ -23167,7 +23167,7 @@ namespace TensorFlow.Island.Classes
         ///   A list of tensors that will be provided using the infeed mechanism.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output[] InfeedDequeueTuple(DataType[] dtypes, Shape[] shapes, string operName = null)
+        public Output[] InfeedDequeueTuple(DataType[]! dtypes, Shape[]! shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("InfeedDequeueTuple") OpName(MakeName("InfeedDequeueTuple", operName));
              
@@ -23320,7 +23320,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation InfeedEnqueueTuple(Output![] inputs, Shape[] shapes, long[] layouts = null, long? device_ordinal = null, string operName = null)
+        public Operation InfeedEnqueueTuple(Output![] inputs, Shape[]! shapes, long[] layouts = null, long? device_ordinal = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("InfeedEnqueueTuple") OpName(MakeName("InfeedEnqueueTuple", operName));
             desc.AddInputs(inputs);
@@ -24413,7 +24413,7 @@ namespace TensorFlow.Island.Classes
         ///   or "IteratorGetNext" op.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Iterator(string shared_name, string container, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output Iterator(string! shared_name, string! container, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Iterator") OpName(MakeName("Iterator", operName));
              
@@ -24534,7 +24534,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output[] IteratorGetNext(Output! iterator, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output[] IteratorGetNext(Output! iterator, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("IteratorGetNext") OpName(MakeName("IteratorGetNext", operName));
             desc.AddInput(iterator);
@@ -24578,7 +24578,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output IteratorGetNextAsOptional(Output! iterator, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output IteratorGetNextAsOptional(Output! iterator, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("IteratorGetNextAsOptional") OpName(MakeName("IteratorGetNextAsOptional", operName));
             desc.AddInput(iterator);
@@ -24622,7 +24622,7 @@ namespace TensorFlow.Island.Classes
         ///   the calling thread is not a member of the thread pool used to execute parallel
         ///   operations (e.g. in eager mode).
         /// </remarks>
-        public Output[] IteratorGetNextSync(Output! iterator, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output[] IteratorGetNextSync(Output! iterator, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("IteratorGetNextSync") OpName(MakeName("IteratorGetNextSync", operName));
             desc.AddInput(iterator);
@@ -24837,7 +24837,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output LatencyStatsDataset(Output! input_dataset, Output! tag, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output LatencyStatsDataset(Output! input_dataset, Output! tag, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("LatencyStatsDataset") OpName(MakeName("LatencyStatsDataset", operName));
             desc.AddInput(input_dataset);
@@ -28045,7 +28045,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation MapClear(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Operation MapClear(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MapClear") OpName(MakeName("MapClear", operName));
              
@@ -28103,7 +28103,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MapIncompleteSize(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output MapIncompleteSize(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MapIncompleteSize") OpName(MakeName("MapIncompleteSize", operName));
              
@@ -28171,7 +28171,7 @@ namespace TensorFlow.Island.Classes
         ///   underlying container does not contain this key
         ///   this op will block until it does.
         /// </remarks>
-        public Output[] MapPeek(Output! key, Output! indices, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output[] MapPeek(Output! key, Output! indices, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MapPeek") OpName(MakeName("MapPeek", operName));
             desc.AddInput(key);
@@ -28239,7 +28239,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MapSize(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output MapSize(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MapSize") OpName(MakeName("MapSize", operName));
              
@@ -28313,7 +28313,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation MapStage(Output! key, Output! indices, Output![] values, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Operation MapStage(Output! key, Output! indices, Output![] values, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MapStage") OpName(MakeName("MapStage", operName));
             desc.AddInput(key);
@@ -28382,7 +28382,7 @@ namespace TensorFlow.Island.Classes
         ///   from the underlying container.   If the underlying container
         ///   does not contain this key, the op will block until it does.
         /// </remarks>
-        public Output[] MapUnstage(Output! key, Output! indices, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output[] MapUnstage(Output! key, Output! indices, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MapUnstage") OpName(MakeName("MapUnstage", operName));
             desc.AddInput(key);
@@ -28459,7 +28459,7 @@ namespace TensorFlow.Island.Classes
         ///   from the underlying container.   If the underlying container
         ///   does not contain elements, the op will block until it does.
         /// </remarks>
-        public (Output key, Output[] values) MapUnstageNoKey(Output! indices, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public (Output key, Output[] values) MapUnstageNoKey(Output! indices, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MapUnstageNoKey") OpName(MakeName("MapUnstageNoKey", operName));
             desc.AddInput(indices);
@@ -29829,7 +29829,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxIntraOpParallelismDataset(Output! input_dataset, Output! max_intra_op_parallelism, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output MaxIntraOpParallelismDataset(Output! input_dataset, Output! max_intra_op_parallelism, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxIntraOpParallelismDataset") OpName(MakeName("MaxIntraOpParallelismDataset", operName));
             desc.AddInput(input_dataset);
@@ -29884,7 +29884,7 @@ namespace TensorFlow.Island.Classes
         ///   The max pooled output tensor.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPool(Output! input, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPool(Output! input, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPool") OpName(MakeName("MaxPool", operName));
             desc.AddInput(input);
@@ -29944,7 +29944,7 @@ namespace TensorFlow.Island.Classes
         ///   The max pooled output tensor.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPool3D(Output! input, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPool3D(Output! input, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPool3D") OpName(MakeName("MaxPool3D", operName));
             desc.AddInput(input);
@@ -30009,7 +30009,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPool3DGrad(Output! orig_input, Output! orig_output, Output! grad, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPool3DGrad(Output! orig_input, Output! orig_output, Output! grad, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPool3DGrad") OpName(MakeName("MaxPool3DGrad", operName));
             desc.AddInput(orig_input);
@@ -30077,7 +30077,7 @@ namespace TensorFlow.Island.Classes
         ///   Gradients of gradients w.r.t. the input to <c>max_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPool3DGradGrad(Output! orig_input, Output! orig_output, Output! grad, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPool3DGradGrad(Output! orig_input, Output! orig_output, Output! grad, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPool3DGradGrad") OpName(MakeName("MaxPool3DGradGrad", operName));
             desc.AddInput(orig_input);
@@ -30144,7 +30144,7 @@ namespace TensorFlow.Island.Classes
         ///   Gradients w.r.t. the input to <c>max_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPoolGrad(Output! orig_input, Output! orig_output, Output! grad, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPoolGrad(Output! orig_input, Output! orig_output, Output! grad, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolGrad") OpName(MakeName("MaxPoolGrad", operName));
             desc.AddInput(orig_input);
@@ -30211,7 +30211,7 @@ namespace TensorFlow.Island.Classes
         ///   Gradients of gradients w.r.t. the input to <c>max_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPoolGradGrad(Output! orig_input, Output! orig_output, Output! grad, long[] ksize, long[] strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPoolGradGrad(Output! orig_input, Output! orig_output, Output! grad, long[]! ksize, long[]! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolGradGrad") OpName(MakeName("MaxPoolGradGrad", operName));
             desc.AddInput(orig_input);
@@ -30278,7 +30278,7 @@ namespace TensorFlow.Island.Classes
         ///   Gradients of gradients w.r.t. the input to <c>max_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPoolGradGradV2(Output! orig_input, Output! orig_output, Output! grad, Output! ksize, Output! strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPoolGradGradV2(Output! orig_input, Output! orig_output, Output! grad, Output! ksize, Output! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolGradGradV2") OpName(MakeName("MaxPoolGradGradV2", operName));
             desc.AddInput(orig_input);
@@ -30342,7 +30342,7 @@ namespace TensorFlow.Island.Classes
         ///   Gradients of gradients w.r.t. the input of <c>max_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPoolGradGradWithArgmax(Output! input, Output! grad, Output! argmax, long[] ksize, long[] strides, string padding, bool? include_batch_in_index = null, string operName = null)
+        public Output MaxPoolGradGradWithArgmax(Output! input, Output! grad, Output! argmax, long[]! ksize, long[]! strides, string! padding, bool? include_batch_in_index = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolGradGradWithArgmax") OpName(MakeName("MaxPoolGradGradWithArgmax", operName));
             desc.AddInput(input);
@@ -30409,7 +30409,7 @@ namespace TensorFlow.Island.Classes
         ///   Gradients w.r.t. the input to <c>max_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPoolGradV2(Output! orig_input, Output! orig_output, Output! grad, Output! ksize, Output! strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPoolGradV2(Output! orig_input, Output! orig_output, Output! grad, Output! ksize, Output! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolGradV2") OpName(MakeName("MaxPoolGradV2", operName));
             desc.AddInput(orig_input);
@@ -30473,7 +30473,7 @@ namespace TensorFlow.Island.Classes
         ///   Gradients w.r.t. the input of <c>max_pool</c>.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPoolGradWithArgmax(Output! input, Output! grad, Output! argmax, long[] ksize, long[] strides, string padding, bool? include_batch_in_index = null, string operName = null)
+        public Output MaxPoolGradWithArgmax(Output! input, Output! grad, Output! argmax, long[]! ksize, long[]! strides, string! padding, bool? include_batch_in_index = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolGradWithArgmax") OpName(MakeName("MaxPoolGradWithArgmax", operName));
             desc.AddInput(input);
@@ -30534,7 +30534,7 @@ namespace TensorFlow.Island.Classes
         ///   The max pooled output tensor.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MaxPoolV2(Output! input, Output! ksize, Output! strides, string padding, string data_format = null, string operName = null)
+        public Output MaxPoolV2(Output! input, Output! ksize, Output! strides, string! padding, string data_format = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolV2") OpName(MakeName("MaxPoolV2", operName));
             desc.AddInput(input);
@@ -30605,7 +30605,7 @@ namespace TensorFlow.Island.Classes
         ///   (either negative or too large).  This is a bug, but fixing it is difficult to do
         ///   in a safe backwards compatible way, especially due to flattening.
         /// </remarks>
-        public (Output output, Output argmax) MaxPoolWithArgmax(Output! input, long[] ksize, long[] strides, string padding, DataType? Targmax = null, bool? include_batch_in_index = null, string operName = null)
+        public (Output output, Output argmax) MaxPoolWithArgmax(Output! input, long[]! ksize, long[]! strides, string! padding, DataType? Targmax = null, bool? include_batch_in_index = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MaxPoolWithArgmax") OpName(MakeName("MaxPoolWithArgmax", operName));
             desc.AddInput(input);
@@ -31049,7 +31049,7 @@ namespace TensorFlow.Island.Classes
         ///   [5, 4, 4, 5, 6, 6, 5]]
         ///    </code>
         /// </remarks>
-        public Output MirrorPad(Output! input, Output! paddings, string mode, string operName = null)
+        public Output MirrorPad(Output! input, Output! paddings, string! mode, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MirrorPad") OpName(MakeName("MirrorPad", operName));
             desc.AddInput(input);
@@ -31112,7 +31112,7 @@ namespace TensorFlow.Island.Classes
         ///   [11, 28]]
         ///    </code>
         /// </remarks>
-        public Output MirrorPadGrad(Output! input, Output! paddings, string mode, string operName = null)
+        public Output MirrorPadGrad(Output! input, Output! paddings, string! mode, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MirrorPadGrad") OpName(MakeName("MirrorPadGrad", operName));
             desc.AddInput(input);
@@ -31201,7 +31201,7 @@ namespace TensorFlow.Island.Classes
         /// <remarks>
         ///   Identity transformation that models performance.
         /// </remarks>
-        public Output ModelDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, long? algorithm = null, long? cpu_budget = null, string operName = null)
+        public Output ModelDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, long? algorithm = null, long? cpu_budget = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ModelDataset") OpName(MakeName("ModelDataset", operName));
             desc.AddInput(input_dataset);
@@ -31335,7 +31335,7 @@ namespace TensorFlow.Island.Classes
         ///   Handle to the resource created.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output MultiDeviceIterator(string[] devices, string shared_name, string container, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output MultiDeviceIterator(string[]! devices, string! shared_name, string! container, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MultiDeviceIterator") OpName(MakeName("MultiDeviceIterator", operName));
              
@@ -31434,7 +31434,7 @@ namespace TensorFlow.Island.Classes
         ///   Result of the get_next on the dataset.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output[] MultiDeviceIteratorGetNextFromShard(Output! multi_device_iterator, Output! shard_num, Output! incarnation_id, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output[] MultiDeviceIteratorGetNextFromShard(Output! multi_device_iterator, Output! shard_num, Output! incarnation_id, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("MultiDeviceIteratorGetNextFromShard") OpName(MakeName("MultiDeviceIteratorGetNextFromShard", operName));
             desc.AddInput(multi_device_iterator);
@@ -32245,7 +32245,7 @@ namespace TensorFlow.Island.Classes
         ///   num_devices: The number of devices participating in this reduction.
         ///   shared_name: Identifier that shared between ops of the same reduction.
         /// </remarks>
-        public Output NcclAllReduce(Output! input, string reduction, long num_devices, string shared_name, string operName = null)
+        public Output NcclAllReduce(Output! input, string! reduction, long num_devices, string! shared_name, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("NcclAllReduce") OpName(MakeName("NcclAllReduce", operName));
             desc.AddInput(input);
@@ -32293,7 +32293,7 @@ namespace TensorFlow.Island.Classes
         ///   shape: The shape of the input tensor.
         ///   
         /// </remarks>
-        public Output NcclBroadcast(Output! input, Shape shape, string operName = null)
+        public Output NcclBroadcast(Output! input, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("NcclBroadcast") OpName(MakeName("NcclBroadcast", operName));
             desc.AddInput(input);
@@ -32338,7 +32338,7 @@ namespace TensorFlow.Island.Classes
         ///   data: the value of the reduction across all <c>num_devices</c> devices.
         ///   reduction: the reduction operation to perform.
         /// </remarks>
-        public Output NcclReduce(Output![] input, string reduction, string operName = null)
+        public Output NcclReduce(Output![] input, string! reduction, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("NcclReduce") OpName(MakeName("NcclReduce", operName));
             desc.AddInputs(input);
@@ -32475,7 +32475,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation NegTrain(Output! w_in, Output! w_out, Output! examples, Output! labels, Output! lr, long[] vocab_count, long num_negative_samples, string operName = null)
+        public Operation NegTrain(Output! w_in, Output! w_out, Output! examples, Output! labels, Output! lr, long[]! vocab_count, long num_negative_samples, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("NegTrain") OpName(MakeName("NegTrain", operName));
             desc.AddInput(w_in);
@@ -33419,7 +33419,7 @@ namespace TensorFlow.Island.Classes
         /// <remarks>
         ///   Creates a dataset by applying optimizations to <c>input_dataset</c>.
         /// </remarks>
-        public Output OptimizeDataset(Output! input_dataset, Output! optimizations, DataType[] output_types, Shape[] output_shapes, string[] optimization_configs = null, string operName = null)
+        public Output OptimizeDataset(Output! input_dataset, Output! optimizations, DataType[]! output_types, Shape[]! output_shapes, string[] optimization_configs = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OptimizeDataset") OpName(MakeName("OptimizeDataset", operName));
             desc.AddInput(input_dataset);
@@ -33493,7 +33493,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output[] OptionalGetValue(Output! optional, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output[] OptionalGetValue(Output! optional, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OptionalGetValue") OpName(MakeName("OptionalGetValue", operName));
             desc.AddInput(optional);
@@ -33604,7 +33604,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation OrderedMapClear(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Operation OrderedMapClear(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OrderedMapClear") OpName(MakeName("OrderedMapClear", operName));
              
@@ -33662,7 +33662,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output OrderedMapIncompleteSize(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output OrderedMapIncompleteSize(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OrderedMapIncompleteSize") OpName(MakeName("OrderedMapIncompleteSize", operName));
              
@@ -33731,7 +33731,7 @@ namespace TensorFlow.Island.Classes
         ///   this op will block until it does.   This Op is optimized for
         ///   performance.
         /// </remarks>
-        public Output[] OrderedMapPeek(Output! key, Output! indices, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output[] OrderedMapPeek(Output! key, Output! indices, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OrderedMapPeek") OpName(MakeName("OrderedMapPeek", operName));
             desc.AddInput(key);
@@ -33799,7 +33799,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output OrderedMapSize(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output OrderedMapSize(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OrderedMapSize") OpName(MakeName("OrderedMapSize", operName));
              
@@ -33876,7 +33876,7 @@ namespace TensorFlow.Island.Classes
         /// <remarks>
         ///   associative container.   Elements are ordered by key.
         /// </remarks>
-        public Operation OrderedMapStage(Output! key, Output! indices, Output![] values, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Operation OrderedMapStage(Output! key, Output! indices, Output![] values, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OrderedMapStage") OpName(MakeName("OrderedMapStage", operName));
             desc.AddInput(key);
@@ -33945,7 +33945,7 @@ namespace TensorFlow.Island.Classes
         ///   from the underlying container.   If the underlying container
         ///   does not contain this key, the op will block until it does.
         /// </remarks>
-        public Output[] OrderedMapUnstage(Output! key, Output! indices, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output[] OrderedMapUnstage(Output! key, Output! indices, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OrderedMapUnstage") OpName(MakeName("OrderedMapUnstage", operName));
             desc.AddInput(key);
@@ -34022,7 +34022,7 @@ namespace TensorFlow.Island.Classes
         ///   key from the underlying container.   If the underlying container
         ///   does not contain elements, the op will block until it does.
         /// </remarks>
-        public (Output key, Output[] values) OrderedMapUnstageNoKey(Output! indices, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public (Output key, Output[] values) OrderedMapUnstageNoKey(Output! indices, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OrderedMapUnstageNoKey") OpName(MakeName("OrderedMapUnstageNoKey", operName));
             desc.AddInput(indices);
@@ -34092,7 +34092,7 @@ namespace TensorFlow.Island.Classes
         /// <remarks>
         ///   This operation will block indefinitely until data is available.
         /// </remarks>
-        public Output OutfeedDequeue(DataType dtype, Shape shape, long? device_ordinal = null, string operName = null)
+        public Output OutfeedDequeue(DataType dtype, Shape! shape, long? device_ordinal = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OutfeedDequeue") OpName(MakeName("OutfeedDequeue", operName));
              
@@ -34144,7 +34144,7 @@ namespace TensorFlow.Island.Classes
         ///   This operation will block indefinitely until data is available. Output <c>i</c>
         ///   corresponds to XLA tuple element <c>i</c>.
         /// </remarks>
-        public Output[] OutfeedDequeueTuple(DataType[] dtypes, Shape[] shapes, long? device_ordinal = null, string operName = null)
+        public Output[] OutfeedDequeueTuple(DataType[]! dtypes, Shape[]! shapes, long? device_ordinal = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("OutfeedDequeueTuple") OpName(MakeName("OutfeedDequeueTuple", operName));
              
@@ -34386,7 +34386,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output PaddedBatchDataset(Output! input_dataset, Output! batch_size, Output![] padded_shapes, Output![] padding_values, Shape[] output_shapes, string operName = null)
+        public Output PaddedBatchDataset(Output! input_dataset, Output! batch_size, Output![] padded_shapes, Output![] padding_values, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PaddedBatchDataset") OpName(MakeName("PaddedBatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -34445,7 +34445,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output PaddedBatchDatasetV2(Output! input_dataset, Output! batch_size, Output![] padded_shapes, Output![] padding_values, Output! drop_remainder, Shape[] output_shapes, bool? parallel_copy = null, string operName = null)
+        public Output PaddedBatchDatasetV2(Output! input_dataset, Output! batch_size, Output![] padded_shapes, Output![] padding_values, Output! drop_remainder, Shape[]! output_shapes, bool? parallel_copy = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PaddedBatchDatasetV2") OpName(MakeName("PaddedBatchDatasetV2", operName));
             desc.AddInput(input_dataset);
@@ -34519,7 +34519,7 @@ namespace TensorFlow.Island.Classes
         ///   to 0 in the shape attr.  In this case DequeueMany will pad up to the maximum
         ///   size of any given element in the minibatch.  See below for details.
         /// </remarks>
-        public Output PaddingFIFOQueue(DataType[] component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
+        public Output PaddingFIFOQueue(DataType[]! component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PaddingFIFOQueue") OpName(MakeName("PaddingFIFOQueue", operName));
              
@@ -34600,7 +34600,7 @@ namespace TensorFlow.Island.Classes
         ///   to 0 in the shape attr.  In this case DequeueMany will pad up to the maximum
         ///   size of any given element in the minibatch.  See below for details.
         /// </remarks>
-        public Output PaddingFIFOQueueV2(DataType[] component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
+        public Output PaddingFIFOQueueV2(DataType[]! component_types, Shape[] shapes = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PaddingFIFOQueueV2") OpName(MakeName("PaddingFIFOQueueV2", operName));
              
@@ -34736,7 +34736,7 @@ namespace TensorFlow.Island.Classes
         ///   will copy pieces of the input into the output as they become available, in
         ///   some situations this can provide a performance benefit.
         /// </remarks>
-        public Output ParallelConcat(Output![] values, Shape shape, string operName = null)
+        public Output ParallelConcat(Output![] values, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ParallelConcat") OpName(MakeName("ParallelConcat", operName));
             desc.AddInputs(values);
@@ -34995,7 +34995,7 @@ namespace TensorFlow.Island.Classes
         ///   dense_values:
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output[] sparse_indices, Output[] sparse_values, Output[] sparse_shapes, Output[] dense_values) ParseExample(Output! serialized, Output! names, Output![] sparse_keys, Output![] dense_keys, Output![] dense_defaults, DataType[] sparse_types, Shape[] dense_shapes, string operName = null)
+        public (Output[] sparse_indices, Output[] sparse_values, Output[] sparse_shapes, Output[] dense_values) ParseExample(Output! serialized, Output! names, Output![] sparse_keys, Output![] dense_keys, Output![] dense_defaults, DataType[]! sparse_types, Shape[]! dense_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ParseExample") OpName(MakeName("ParseExample", operName));
             desc.AddInput(serialized);
@@ -35096,7 +35096,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ParseExampleDataset(Output! input_dataset, Output! num_parallel_calls, Output![] dense_defaults, string[] sparse_keys, string[] dense_keys, DataType[] sparse_types, Shape[] dense_shapes, DataType[] output_types, Shape[] output_shapes, bool? sloppy = null, string operName = null)
+        public Output ParseExampleDataset(Output! input_dataset, Output! num_parallel_calls, Output![] dense_defaults, string[]! sparse_keys, string[]! dense_keys, DataType[]! sparse_types, Shape[]! dense_shapes, DataType[]! output_types, Shape[]! output_shapes, bool? sloppy = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ParseExampleDataset") OpName(MakeName("ParseExampleDataset", operName));
             desc.AddInput(input_dataset);
@@ -35239,7 +35239,7 @@ namespace TensorFlow.Island.Classes
         ///   feature_list_dense_lengths:
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output[] context_sparse_indices, Output[] context_sparse_values, Output[] context_sparse_shapes, Output[] context_dense_values, Output[] feature_list_sparse_indices, Output[] feature_list_sparse_values, Output[] feature_list_sparse_shapes, Output[] feature_list_dense_values, Output[] feature_list_dense_lengths) ParseSequenceExample(Output! serialized, Output! debug_name, Output![] context_dense_defaults, string[] feature_list_dense_missing_assumed_empty, string[] context_sparse_keys, string[] context_dense_keys, string[] feature_list_sparse_keys, string[] feature_list_dense_keys, long? Ncontext_sparse = null, long? Ncontext_dense = null, long? Nfeature_list_sparse = null, long? Nfeature_list_dense = null, DataType[] context_sparse_types = null, DataType[] feature_list_dense_types = null, Shape[] context_dense_shapes = null, DataType[] feature_list_sparse_types = null, Shape[] feature_list_dense_shapes = null, string operName = null)
+        public (Output[] context_sparse_indices, Output[] context_sparse_values, Output[] context_sparse_shapes, Output[] context_dense_values, Output[] feature_list_sparse_indices, Output[] feature_list_sparse_values, Output[] feature_list_sparse_shapes, Output[] feature_list_dense_values, Output[] feature_list_dense_lengths) ParseSequenceExample(Output! serialized, Output! debug_name, Output![] context_dense_defaults, string[]! feature_list_dense_missing_assumed_empty, string[]! context_sparse_keys, string[]! context_dense_keys, string[]! feature_list_sparse_keys, string[]! feature_list_dense_keys, long? Ncontext_sparse = null, long? Ncontext_dense = null, long? Nfeature_list_sparse = null, long? Nfeature_list_dense = null, DataType[] context_sparse_types = null, DataType[] feature_list_dense_types = null, Shape[] context_dense_shapes = null, DataType[] feature_list_sparse_types = null, Shape[] feature_list_dense_shapes = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ParseSequenceExample") OpName(MakeName("ParseSequenceExample", operName));
             desc.AddInput(serialized);
@@ -35415,7 +35415,7 @@ namespace TensorFlow.Island.Classes
         ///   dense_values:
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output[] sparse_indices, Output[] sparse_values, Output[] sparse_shapes, Output[] dense_values) ParseSingleExample(Output! serialized, Output![] dense_defaults, long num_sparse, string[] sparse_keys, string[] dense_keys, DataType[] sparse_types, Shape[] dense_shapes, string operName = null)
+        public (Output[] sparse_indices, Output[] sparse_values, Output[] sparse_shapes, Output[] dense_values) ParseSingleExample(Output! serialized, Output![] dense_defaults, long num_sparse, string[]! sparse_keys, string[]! dense_keys, DataType[]! sparse_types, Shape[]! dense_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ParseSingleExample") OpName(MakeName("ParseSingleExample", operName));
             desc.AddInput(serialized);
@@ -35767,7 +35767,7 @@ namespace TensorFlow.Island.Classes
         ///   intended as a way to represent a value that will always be fed, and to
         ///   provide attrs that enable the fed value to be checked at runtime.
         /// </remarks>
-        public Output PlaceholderV2(DataType dtype, Shape shape, string operName = null)
+        public Output PlaceholderV2(DataType dtype, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PlaceholderV2") OpName(MakeName("PlaceholderV2", operName));
              
@@ -35805,7 +35805,7 @@ namespace TensorFlow.Island.Classes
         ///   A placeholder tensor that defaults to <c>input</c> if it is not fed.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output PlaceholderWithDefault(Output! input, Shape shape, string operName = null)
+        public Output PlaceholderWithDefault(Output! input, Shape! shape, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PlaceholderWithDefault") OpName(MakeName("PlaceholderWithDefault", operName));
             desc.AddInput(input);
@@ -35978,7 +35978,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output PrefetchDataset(Output! input_dataset, Output! buffer_size, DataType[] output_types, Shape[] output_shapes, long? slack_period = null, bool? legacy_autotune = null, string operName = null)
+        public Output PrefetchDataset(Output! input_dataset, Output! buffer_size, DataType[]! output_types, Shape[]! output_shapes, long? slack_period = null, bool? legacy_autotune = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PrefetchDataset") OpName(MakeName("PrefetchDataset", operName));
             desc.AddInput(input_dataset);
@@ -36082,7 +36082,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output PrelinearizeTuple(Output![] inputs, Shape[] shapes, long[] layouts = null, string operName = null)
+        public Output PrelinearizeTuple(Output![] inputs, Shape[]! shapes, long[] layouts = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PrelinearizeTuple") OpName(MakeName("PrelinearizeTuple", operName));
             desc.AddInputs(inputs);
@@ -36313,7 +36313,7 @@ namespace TensorFlow.Island.Classes
         ///   and DequeueMany) on a PriorityQueue will all require (resp. output) one extra
         ///   entry in their input (resp. output) lists.
         /// </remarks>
-        public Output PriorityQueue(Shape[] shapes, DataType[] component_types = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
+        public Output PriorityQueue(Shape[]! shapes, DataType[] component_types = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PriorityQueue") OpName(MakeName("PriorityQueue", operName));
              
@@ -36392,7 +36392,7 @@ namespace TensorFlow.Island.Classes
         ///   and DequeueMany) on a PriorityQueue will all require (resp. output) one extra
         ///   entry in their input (resp. output) lists.
         /// </remarks>
-        public Output PriorityQueueV2(Shape[] shapes, DataType[] component_types = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
+        public Output PriorityQueueV2(Shape[]! shapes, DataType[] component_types = null, long? capacity = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PriorityQueueV2") OpName(MakeName("PriorityQueueV2", operName));
              
@@ -36447,7 +36447,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output PrivateThreadPoolDataset(Output! input_dataset, Output! num_threads, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output PrivateThreadPoolDataset(Output! input_dataset, Output! num_threads, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PrivateThreadPoolDataset") OpName(MakeName("PrivateThreadPoolDataset", operName));
             desc.AddInput(input_dataset);
@@ -36547,7 +36547,7 @@ namespace TensorFlow.Island.Classes
         ///   This operation is considered stateful. For a stateless version, see
         ///   PyFuncStateless.
         /// </remarks>
-        public Output[] PyFunc(Output![] input, string token, DataType[] Tout, string operName = null)
+        public Output[] PyFunc(Output![] input, string! token, DataType[]! Tout, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PyFunc") OpName(MakeName("PyFunc", operName));
             desc.AddInputs(input);
@@ -36591,7 +36591,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output[] PyFuncStateless(Output![] input, string token, DataType[] Tout, string operName = null)
+        public Output[] PyFuncStateless(Output![] input, string! token, DataType[]! Tout, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("PyFuncStateless") OpName(MakeName("PyFuncStateless", operName));
             desc.AddInputs(input);
@@ -37059,7 +37059,7 @@ namespace TensorFlow.Island.Classes
         ///   max_output: The float value that the highest quantized output value represents.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output output, Output min_output, Output max_output) QuantizedAvgPool(Output! input, Output! min_input, Output! max_input, long[] ksize, long[] strides, string padding, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedAvgPool(Output! input, Output! min_input, Output! max_input, long[]! ksize, long[]! strides, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedAvgPool") OpName(MakeName("QuantizedAvgPool", operName));
             desc.AddInput(input);
@@ -37377,7 +37377,7 @@ namespace TensorFlow.Island.Classes
         ///   This means that you can only interpret the quantized output in the same way, by
         ///   taking the returned minimum and maximum values into account.
         /// </remarks>
-        public (Output output, Output min_output, Output max_output) QuantizedConv2D(Output! input, Output! filter, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedConv2D(Output! input, Output! filter, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[]! strides, string! padding, DataType? out_type = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedConv2D") OpName(MakeName("QuantizedConv2D", operName));
             desc.AddInput(input);
@@ -37459,7 +37459,7 @@ namespace TensorFlow.Island.Classes
         ///   max_output: The maximum value of the final output tensor.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output output, Output min_output, Output max_output) QuantizedConv2DPerChannel(Output! input, Output! filter, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedConv2DPerChannel(Output! input, Output! filter, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[]! strides, string! padding, DataType? out_type = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedConv2DPerChannel") OpName(MakeName("QuantizedConv2DPerChannel", operName));
             desc.AddInput(input);
@@ -37541,7 +37541,7 @@ namespace TensorFlow.Island.Classes
         ///   max_output: The float value that the maximum quantized output value represents.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2D(Output! input, Output! filter, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2D(Output! input, Output! filter, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[]! strides, string! padding, DataType? out_type = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedDepthwiseConv2D") OpName(MakeName("QuantizedDepthwiseConv2D", operName));
             desc.AddInput(input);
@@ -37626,7 +37626,7 @@ namespace TensorFlow.Island.Classes
         ///   max_output: The float value that the maximum quantized output value represents.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2DWithBias(Output! input, Output! filter, Output! bias, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2DWithBias(Output! input, Output! filter, Output! bias, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[]! strides, string! padding, DataType? out_type = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedDepthwiseConv2DWithBias") OpName(MakeName("QuantizedDepthwiseConv2DWithBias", operName));
             desc.AddInput(input);
@@ -37712,7 +37712,7 @@ namespace TensorFlow.Island.Classes
         ///   max_output: The float value that the maximum quantized output value represents.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2DWithBiasAndRelu(Output! input, Output! filter, Output! bias, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2DWithBiasAndRelu(Output! input, Output! filter, Output! bias, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, long[]! strides, string! padding, DataType? out_type = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedDepthwiseConv2DWithBiasAndRelu") OpName(MakeName("QuantizedDepthwiseConv2DWithBiasAndRelu", operName));
             desc.AddInput(input);
@@ -37804,7 +37804,7 @@ namespace TensorFlow.Island.Classes
         ///   max_output: The float value that the maximum quantized output value represents.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize(Output! input, Output! filter, Output! bias, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, Output! min_freezed_output, Output! max_freezed_output, long[] strides, string padding, DataType? out_type = null, long[] dilations = null, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize(Output! input, Output! filter, Output! bias, Output! min_input, Output! max_input, Output! min_filter, Output! max_filter, Output! min_freezed_output, Output! max_freezed_output, long[]! strides, string! padding, DataType? out_type = null, long[] dilations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize") OpName(MakeName("QuantizedDepthwiseConv2DWithBiasAndReluAndRequantize", operName));
             desc.AddInput(input);
@@ -38378,7 +38378,7 @@ namespace TensorFlow.Island.Classes
         ///   max_output: The float value that the highest quantized output value represents.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output output, Output min_output, Output max_output) QuantizedMaxPool(Output! input, Output! min_input, Output! max_input, long[] ksize, long[] strides, string padding, string operName = null)
+        public (Output output, Output min_output, Output max_output) QuantizedMaxPool(Output! input, Output! min_input, Output! max_input, long[]! ksize, long[]! strides, string! padding, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QuantizedMaxPool") OpName(MakeName("QuantizedMaxPool", operName));
             desc.AddInput(input);
@@ -39111,7 +39111,7 @@ namespace TensorFlow.Island.Classes
         ///   N.B. If the queue is empty, this operation will block until an element
         ///   has been dequeued (or 'timeout_ms' elapses, if specified).
         /// </remarks>
-        public Output[] QueueDequeue(Output! handle, DataType[] component_types, long? timeout_ms = null, string operName = null)
+        public Output[] QueueDequeue(Output! handle, DataType[]! component_types, long? timeout_ms = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QueueDequeue") OpName(MakeName("QueueDequeue", operName));
             desc.AddInput(handle);
@@ -39183,7 +39183,7 @@ namespace TensorFlow.Island.Classes
         ///   N.B. If the queue is empty, this operation will block until <c>n</c> elements
         ///   have been dequeued (or 'timeout_ms' elapses, if specified).
         /// </remarks>
-        public Output[] QueueDequeueMany(Output! handle, Output! n, DataType[] component_types, long? timeout_ms = null, string operName = null)
+        public Output[] QueueDequeueMany(Output! handle, Output! n, DataType[]! component_types, long? timeout_ms = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QueueDequeueMany") OpName(MakeName("QueueDequeueMany", operName));
             desc.AddInput(handle);
@@ -39256,7 +39256,7 @@ namespace TensorFlow.Island.Classes
         ///   N.B. If the queue is empty, this operation will block until <c>n</c> elements
         ///   have been dequeued (or 'timeout_ms' elapses, if specified).
         /// </remarks>
-        public Output[] QueueDequeueManyV2(Output! handle, Output! n, DataType[] component_types, long? timeout_ms = null, string operName = null)
+        public Output[] QueueDequeueManyV2(Output! handle, Output! n, DataType[]! component_types, long? timeout_ms = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QueueDequeueManyV2") OpName(MakeName("QueueDequeueManyV2", operName));
             desc.AddInput(handle);
@@ -39333,7 +39333,7 @@ namespace TensorFlow.Island.Classes
         ///   the tuples stored in the given queue, and output <c>i</c> is the ith
         ///   component of the dequeued tuple.
         /// </remarks>
-        public Output[] QueueDequeueUpTo(Output! handle, Output! n, DataType[] component_types, long? timeout_ms = null, string operName = null)
+        public Output[] QueueDequeueUpTo(Output! handle, Output! n, DataType[]! component_types, long? timeout_ms = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QueueDequeueUpTo") OpName(MakeName("QueueDequeueUpTo", operName));
             desc.AddInput(handle);
@@ -39410,7 +39410,7 @@ namespace TensorFlow.Island.Classes
         ///   the tuples stored in the given queue, and output <c>i</c> is the ith
         ///   component of the dequeued tuple.
         /// </remarks>
-        public Output[] QueueDequeueUpToV2(Output! handle, Output! n, DataType[] component_types, long? timeout_ms = null, string operName = null)
+        public Output[] QueueDequeueUpToV2(Output! handle, Output! n, DataType[]! component_types, long? timeout_ms = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QueueDequeueUpToV2") OpName(MakeName("QueueDequeueUpToV2", operName));
             desc.AddInput(handle);
@@ -39473,7 +39473,7 @@ namespace TensorFlow.Island.Classes
         ///   N.B. If the queue is empty, this operation will block until an element
         ///   has been dequeued (or 'timeout_ms' elapses, if specified).
         /// </remarks>
-        public Output[] QueueDequeueV2(Output! handle, DataType[] component_types, long? timeout_ms = null, string operName = null)
+        public Output[] QueueDequeueV2(Output! handle, DataType[]! component_types, long? timeout_ms = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("QueueDequeueV2") OpName(MakeName("QueueDequeueV2", operName));
             desc.AddInput(handle);
@@ -40206,7 +40206,7 @@ namespace TensorFlow.Island.Classes
         ///   * "FIRST_DIM_SIZE": if value_rowids is used for the first dimension, then it
         ///   is preceded by "FIRST_DIM_SIZE".
         /// </remarks>
-        public Output RaggedTensorToTensor(Output! shape, Output! values, Output! default_value, Output![] row_partition_tensors, string[] row_partition_types, string operName = null)
+        public Output RaggedTensorToTensor(Output! shape, Output! values, Output! default_value, Output![] row_partition_tensors, string[]! row_partition_types, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RaggedTensorToTensor") OpName(MakeName("RaggedTensorToTensor", operName));
             desc.AddInput(shape);
@@ -40384,7 +40384,7 @@ namespace TensorFlow.Island.Classes
         ///   performed is determined by the <c>experimental_optimization.hoist_random_uniform</c>
         ///   option of <c>tf.data.Options</c>.
         /// </remarks>
-        public Output RandomDataset(Output! seed, Output! seed2, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output RandomDataset(Output! seed, Output! seed2, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RandomDataset") OpName(MakeName("RandomDataset", operName));
             desc.AddInput(seed);
@@ -40744,7 +40744,7 @@ namespace TensorFlow.Island.Classes
         ///   The handle to the queue.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output RandomShuffleQueue(DataType[] component_types, Shape[] shapes = null, long? capacity = null, long? min_after_dequeue = null, long? seed = null, long? seed2 = null, string container = null, string shared_name = null, string operName = null)
+        public Output RandomShuffleQueue(DataType[]! component_types, Shape[] shapes = null, long? capacity = null, long? min_after_dequeue = null, long? seed = null, long? seed2 = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RandomShuffleQueue") OpName(MakeName("RandomShuffleQueue", operName));
              
@@ -40843,7 +40843,7 @@ namespace TensorFlow.Island.Classes
         ///   The handle to the queue.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output RandomShuffleQueueV2(DataType[] component_types, Shape[] shapes = null, long? capacity = null, long? min_after_dequeue = null, long? seed = null, long? seed2 = null, string container = null, string shared_name = null, string operName = null)
+        public Output RandomShuffleQueueV2(DataType[]! component_types, Shape[] shapes = null, long? capacity = null, long? min_after_dequeue = null, long? seed = null, long? seed2 = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RandomShuffleQueueV2") OpName(MakeName("RandomShuffleQueueV2", operName));
              
@@ -41155,7 +41155,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output RangeDataset(Output! start, Output! stop, Output! step, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output RangeDataset(Output! start, Output! stop, Output! step, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RangeDataset") OpName(MakeName("RangeDataset", operName));
             desc.AddInput(start);
@@ -41957,7 +41957,7 @@ namespace TensorFlow.Island.Classes
         ///   Creates a dataset that changes the batch size of the dataset to current batch
         ///   size // num_workers.
         /// </remarks>
-        public Output RebatchDataset(Output! input_dataset, Output! num_replicas, DataType[] output_types, Shape[] output_shapes, bool? use_fallback = null, string operName = null)
+        public Output RebatchDataset(Output! input_dataset, Output! num_replicas, DataType[]! output_types, Shape[]! output_shapes, bool? use_fallback = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RebatchDataset") OpName(MakeName("RebatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -42096,7 +42096,7 @@ namespace TensorFlow.Island.Classes
         ///   A tensor of shape [batch_size].
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output RecordInput(string file_pattern, long? file_random_seed = null, float? file_shuffle_shift_ratio = null, long? file_buffer_size = null, long? file_parallelism = null, long? batch_size = null, string compression_type = null, string operName = null)
+        public Output RecordInput(string! file_pattern, long? file_random_seed = null, float? file_shuffle_shift_ratio = null, long? file_buffer_size = null, long? file_parallelism = null, long? batch_size = null, string compression_type = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RecordInput") OpName(MakeName("RecordInput", operName));
              
@@ -42167,7 +42167,7 @@ namespace TensorFlow.Island.Classes
         ///   one Tensor of activations per table specified in the model. There can be at
         ///   most one RecvTPUEmbeddingActivations op in the TPU graph.
         /// </remarks>
-        public Output[] RecvTPUEmbeddingActivations(long num_outputs, string config, string operName = null)
+        public Output[] RecvTPUEmbeddingActivations(long num_outputs, string! config, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RecvTPUEmbeddingActivations") OpName(MakeName("RecvTPUEmbeddingActivations", operName));
              
@@ -42306,7 +42306,7 @@ namespace TensorFlow.Island.Classes
         ///   it may be changed in the child frame. At most <c>parallel_iterations</c> iterations
         ///   are run in parallel in the child frame.
         /// </remarks>
-        public Output RefEnter(Output! data, string frame_name, bool? is_constant = null, long? parallel_iterations = null, string operName = null)
+        public Output RefEnter(Output! data, string! frame_name, bool? is_constant = null, long? parallel_iterations = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RefEnter") OpName(MakeName("RefEnter", operName));
             desc.AddInput(data);
@@ -42830,7 +42830,7 @@ namespace TensorFlow.Island.Classes
         ///   to a remote processor and execute that graph.  The execution results
         ///   will be passed to consumer nodes as outputs of this node.
         /// </remarks>
-        public Output[] RemoteFusedGraphExecute(Output![] inputs, DataType[] Toutputs, string serialized_remote_fused_graph_execute_info, string operName = null)
+        public Output[] RemoteFusedGraphExecute(Output![] inputs, DataType[]! Toutputs, string! serialized_remote_fused_graph_execute_info, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RemoteFusedGraphExecute") OpName(MakeName("RemoteFusedGraphExecute", operName));
             desc.AddInputs(inputs);
@@ -42878,7 +42878,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output RepeatDataset(Output! input_dataset, Output! count, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output RepeatDataset(Output! input_dataset, Output! count, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RepeatDataset") OpName(MakeName("RepeatDataset", operName));
             desc.AddInput(input_dataset);
@@ -45120,7 +45120,7 @@ namespace TensorFlow.Island.Classes
         ///   This is a resource version of ConditionalAccumulator that will work in TF2.0
         ///   with tf.cond version 2.
         /// </remarks>
-        public Output ResourceConditionalAccumulator(DataType dtype, Shape shape, string container = null, string shared_name = null, string reduction_type = null, string operName = null)
+        public Output ResourceConditionalAccumulator(DataType dtype, Shape! shape, string container = null, string shared_name = null, string reduction_type = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ResourceConditionalAccumulator") OpName(MakeName("ResourceConditionalAccumulator", operName));
              
@@ -47094,7 +47094,7 @@ namespace TensorFlow.Island.Classes
         ///   
         ///   Callers must ensure all the named tensors are indeed stored in the checkpoint.
         /// </remarks>
-        public Output[] RestoreV2(Output! prefix, Output! tensor_names, Output! shape_and_slices, DataType[] dtypes, string operName = null)
+        public Output[] RestoreV2(Output! prefix, Output! tensor_names, Output! shape_and_slices, DataType[]! dtypes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("RestoreV2") OpName(MakeName("RestoreV2", operName));
             desc.AddInput(prefix);
@@ -49441,7 +49441,7 @@ namespace TensorFlow.Island.Classes
         ///   <c>experimental_optimization.filter_with_random_uniform_fusion</c> option of
         ///   <c>tf.data.Options</c>.
         /// </remarks>
-        public Output SamplingDataset(Output! input_dataset, Output! rate, Output! seed, Output! seed2, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output SamplingDataset(Output! input_dataset, Output! rate, Output! seed, Output! seed2, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SamplingDataset") OpName(MakeName("SamplingDataset", operName));
             desc.AddInput(input_dataset);
@@ -50797,7 +50797,7 @@ namespace TensorFlow.Island.Classes
         ///   [Stochastic Dual Coordinate Ascent with Adaptive Probabilities](https://arxiv.org/abs/1502.08053).&amp;lt;br&amp;gt;
         ///   Dominik Csiba, Zheng Qu, Peter Richtarik. 2015
         /// </remarks>
-        public (Output out_example_state_data, Output[] out_delta_sparse_weights, Output[] out_delta_dense_weights) SdcaOptimizer(Output![] sparse_example_indices, Output![] sparse_feature_indices, Output![] sparse_feature_values, Output![] dense_features, Output! example_weights, Output! example_labels, Output![] sparse_indices, Output![] sparse_weights, Output![] dense_weights, Output! example_state_data, string loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool? adaptative = null, string operName = null)
+        public (Output out_example_state_data, Output[] out_delta_sparse_weights, Output[] out_delta_dense_weights) SdcaOptimizer(Output![] sparse_example_indices, Output![] sparse_feature_indices, Output![] sparse_feature_values, Output![] dense_features, Output! example_weights, Output! example_labels, Output![] sparse_indices, Output![] sparse_weights, Output![] dense_weights, Output! example_state_data, string! loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool? adaptative = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SdcaOptimizer") OpName(MakeName("SdcaOptimizer", operName));
             desc.AddInputs(sparse_example_indices);
@@ -50941,7 +50941,7 @@ namespace TensorFlow.Island.Classes
         ///   [Stochastic Dual Coordinate Ascent with Adaptive Probabilities](https://arxiv.org/abs/1502.08053).&amp;lt;br&amp;gt;
         ///   Dominik Csiba, Zheng Qu, Peter Richtarik. 2015
         /// </remarks>
-        public (Output out_example_state_data, Output[] out_delta_sparse_weights, Output[] out_delta_dense_weights) SdcaOptimizerV2(Output![] sparse_example_indices, Output![] sparse_feature_indices, Output![] sparse_feature_values, Output![] dense_features, Output! example_weights, Output! example_labels, Output![] sparse_indices, Output![] sparse_weights, Output![] dense_weights, Output! example_state_data, string loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool? adaptive = null, string operName = null)
+        public (Output out_example_state_data, Output[] out_delta_sparse_weights, Output[] out_delta_dense_weights) SdcaOptimizerV2(Output![] sparse_example_indices, Output![] sparse_feature_indices, Output![] sparse_feature_values, Output![] dense_features, Output! example_weights, Output! example_labels, Output![] sparse_indices, Output![] sparse_weights, Output![] dense_weights, Output! example_state_data, string! loss_type, float l1, float l2, long num_loss_partitions, long num_inner_iterations, bool? adaptive = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SdcaOptimizerV2") OpName(MakeName("SdcaOptimizerV2", operName));
             desc.AddInputs(sparse_example_indices);
@@ -51636,7 +51636,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation SendTPUEmbeddingGradients(Output![] inputs, Output![] learning_rates, string config, string operName = null)
+        public Operation SendTPUEmbeddingGradients(Output![] inputs, Output![] learning_rates, string! config, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SendTPUEmbeddingGradients") OpName(MakeName("SendTPUEmbeddingGradients", operName));
             desc.AddInputs(inputs);
@@ -52008,7 +52008,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ShardDataset(Output! input_dataset, Output! num_shards, Output! index, DataType[] output_types, Shape[] output_shapes, bool? require_non_empty = null, string operName = null)
+        public Output ShardDataset(Output! input_dataset, Output! num_shards, Output! index, DataType[]! output_types, Shape[]! output_shapes, bool? require_non_empty = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ShardDataset") OpName(MakeName("ShardDataset", operName));
             desc.AddInput(input_dataset);
@@ -52146,7 +52146,7 @@ namespace TensorFlow.Island.Classes
         /// <remarks>
         ///   pseudorandomly.
         /// </remarks>
-        public Output ShuffleAndRepeatDataset(Output! input_dataset, Output! buffer_size, Output! seed, Output! seed2, Output! count, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ShuffleAndRepeatDataset(Output! input_dataset, Output! buffer_size, Output! seed, Output! seed2, Output! count, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ShuffleAndRepeatDataset") OpName(MakeName("ShuffleAndRepeatDataset", operName));
             desc.AddInput(input_dataset);
@@ -52209,7 +52209,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ShuffleDataset(Output! input_dataset, Output! buffer_size, Output! seed, Output! seed2, DataType[] output_types, Shape[] output_shapes, bool? reshuffle_each_iteration = null, string operName = null)
+        public Output ShuffleDataset(Output! input_dataset, Output! buffer_size, Output! seed, Output! seed2, DataType[]! output_types, Shape[]! output_shapes, bool? reshuffle_each_iteration = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ShuffleDataset") OpName(MakeName("ShuffleDataset", operName));
             desc.AddInput(input_dataset);
@@ -52526,7 +52526,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output SkipDataset(Output! input_dataset, Output! count, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output SkipDataset(Output! input_dataset, Output! count, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SkipDataset") OpName(MakeName("SkipDataset", operName));
             desc.AddInput(input_dataset);
@@ -52587,7 +52587,7 @@ namespace TensorFlow.Island.Classes
         ///   labels: A vector of word ids.
         ///   The Operation can be fetched from any of the Outputs returned in the tuple values, by fetching the Operation property.
         /// </returns>
-        public (Output vocab_word, Output vocab_freq, Output words_per_epoch, Output current_epoch, Output total_words_processed, Output examples, Output labels) Skipgram(string filename, long batch_size, long? window_size = null, long? min_count = null, float? subsample = null, string operName = null)
+        public (Output vocab_word, Output vocab_freq, Output words_per_epoch, Output current_epoch, Output total_words_processed, Output examples, Output labels) Skipgram(string! filename, long batch_size, long? window_size = null, long? min_count = null, float? subsample = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Skipgram") OpName(MakeName("Skipgram", operName));
              
@@ -52705,7 +52705,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output SlidingWindowDataset(Output! input_dataset, Output! window_size, Output! window_shift, Output! window_stride, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output SlidingWindowDataset(Output! input_dataset, Output! window_size, Output! window_shift, Output! window_stride, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SlidingWindowDataset") OpName(MakeName("SlidingWindowDataset", operName));
             desc.AddInput(input_dataset);
@@ -52814,7 +52814,7 @@ namespace TensorFlow.Island.Classes
         ///   If not, it will run the preprocessing pipeline as usual, and write out a
         ///   snapshot of the data processed for future use.
         /// </remarks>
-        public Output SnapshotDataset(Output! input_dataset, Output! path, DataType[] output_types, Shape[] output_shapes, string compression = null, string reader_path_prefix = null, string writer_path_prefix = null, long? shard_size_bytes = null, long? pending_snapshot_expiry_seconds = null, long? num_reader_threads = null, long? reader_buffer_size = null, long? num_writer_threads = null, long? writer_buffer_size = null, string operName = null)
+        public Output SnapshotDataset(Output! input_dataset, Output! path, DataType[]! output_types, Shape[]! output_shapes, string compression = null, string reader_path_prefix = null, string writer_path_prefix = null, long? shard_size_bytes = null, long? pending_snapshot_expiry_seconds = null, long? num_reader_threads = null, long? reader_buffer_size = null, long? num_writer_threads = null, long? writer_buffer_size = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SnapshotDataset") OpName(MakeName("SnapshotDataset", operName));
             desc.AddInput(input_dataset);
@@ -54758,7 +54758,7 @@ namespace TensorFlow.Island.Classes
         ///   resets the aggregate to 0, and increments the global_step recorded by
         ///   the accumulator.
         /// </remarks>
-        public Output SparseConditionalAccumulator(DataType dtype, Shape shape, string container = null, string shared_name = null, string reduction_type = null, string operName = null)
+        public Output SparseConditionalAccumulator(DataType dtype, Shape! shape, string container = null, string shared_name = null, string reduction_type = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SparseConditionalAccumulator") OpName(MakeName("SparseConditionalAccumulator", operName));
              
@@ -56881,7 +56881,7 @@ namespace TensorFlow.Island.Classes
         ///   dimension contains the result of <c>set_operation</c> applied to the corresponding
         ///   <c>[0...n-1]</c> dimension of <c>set</c>.
         /// </remarks>
-        public (Output result_indices, Output result_values, Output result_shape) SparseToSparseSetOperation(Output! set1_indices, Output! set1_values, Output! set1_shape, Output! set2_indices, Output! set2_values, Output! set2_shape, string set_operation, bool? validate_indices = null, string operName = null)
+        public (Output result_indices, Output result_values, Output result_shape) SparseToSparseSetOperation(Output! set1_indices, Output! set1_values, Output! set1_shape, Output! set2_indices, Output! set2_values, Output! set2_shape, string! set_operation, bool? validate_indices = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SparseToSparseSetOperation") OpName(MakeName("SparseToSparseSetOperation", operName));
             desc.AddInput(set1_indices);
@@ -57044,7 +57044,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output SqlDataset(Output! driver_name, Output! data_source_name, Output! query, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output SqlDataset(Output! driver_name, Output! data_source_name, Output! query, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("SqlDataset") OpName(MakeName("SqlDataset", operName));
             desc.AddInput(driver_name);
@@ -57675,7 +57675,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   Returns the description of the operation
         /// </returns>
-        public Operation StageClear(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Operation StageClear(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("StageClear") OpName(MakeName("StageClear", operName));
              
@@ -57740,7 +57740,7 @@ namespace TensorFlow.Island.Classes
         ///   this op will block until it does.   This Op is optimized for
         ///   performance.
         /// </remarks>
-        public Output[] StagePeek(Output! index, DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output[] StagePeek(Output! index, DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("StagePeek") OpName(MakeName("StagePeek", operName));
             desc.AddInput(index);
@@ -57807,7 +57807,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output StageSize(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output StageSize(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("StageSize") OpName(MakeName("StageSize", operName));
              
@@ -58438,7 +58438,7 @@ namespace TensorFlow.Island.Classes
         ///   
         ///   The pattern follows the re2 syntax (https://github.com/google/re2/wiki/Syntax)
         /// </remarks>
-        public Output StaticRegexFullMatch(Output! input, string pattern, string operName = null)
+        public Output StaticRegexFullMatch(Output! input, string! pattern, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("StaticRegexFullMatch") OpName(MakeName("StaticRegexFullMatch", operName));
             desc.AddInput(input);
@@ -58487,7 +58487,7 @@ namespace TensorFlow.Island.Classes
         /// <remarks>
         ///   It follows the re2 syntax (https://github.com/google/re2/wiki/Syntax)
         /// </remarks>
-        public Output StaticRegexReplace(Output! input, string pattern, string rewrite, bool? replace_global = null, string operName = null)
+        public Output StaticRegexReplace(Output! input, string! pattern, string! rewrite, bool? replace_global = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("StaticRegexReplace") OpName(MakeName("StaticRegexReplace", operName));
             desc.AddInput(input);
@@ -59243,7 +59243,7 @@ namespace TensorFlow.Island.Classes
         ///   strings and outputs a ragged tensor with 1 ragged dimension containing ngrams
         ///   of that string, joined along the innermost axis.
         /// </remarks>
-        public (Output ngrams, Output ngrams_splits) StringNGrams(Output! data, Output! data_splits, string separator, long[] ngram_widths, string left_pad, string right_pad, long pad_width, bool preserve_short_sequences, string operName = null)
+        public (Output ngrams, Output ngrams_splits) StringNGrams(Output! data, Output! data_splits, string! separator, long[]! ngram_widths, string! left_pad, string! right_pad, long pad_width, bool preserve_short_sequences, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("StringNGrams") OpName(MakeName("StringNGrams", operName));
             desc.AddInput(data);
@@ -59581,7 +59581,7 @@ namespace TensorFlow.Island.Classes
         ///   The additional robustness comes at a cost of roughly 4x higher compute
         ///   time than <c>tf.string_to_hash_bucket_fast</c>.
         /// </remarks>
-        public Output StringToHashBucketStrong(Output! input, long num_buckets, long[] key, string operName = null)
+        public Output StringToHashBucketStrong(Output! input, long num_buckets, long[]! key, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("StringToHashBucketStrong") OpName(MakeName("StringToHashBucketStrong", operName));
             desc.AddInput(input);
@@ -60010,7 +60010,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output TakeDataset(Output! input_dataset, Output! count, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output TakeDataset(Output! input_dataset, Output! count, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("TakeDataset") OpName(MakeName("TakeDataset", operName));
             desc.AddInput(input_dataset);
@@ -60305,7 +60305,7 @@ namespace TensorFlow.Island.Classes
         ///   var = state_ops.assign_add(var, [[6.0, 7.0]])
         ///   final = state_ops._destroy_temporary_variable(var, var_name=var_name)
         /// </remarks>
-        public Output TemporaryVariable(Shape shape, DataType dtype, string var_name = null, string operName = null)
+        public Output TemporaryVariable(Shape! shape, DataType dtype, string var_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("TemporaryVariable") OpName(MakeName("TemporaryVariable", operName));
              
@@ -60640,7 +60640,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output TensorArrayGradV2(Output! handle, Output! flow_in, string source, string operName = null)
+        public Output TensorArrayGradV2(Output! handle, Output! flow_in, string! source, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("TensorArrayGradV2") OpName(MakeName("TensorArrayGradV2", operName));
             desc.AddInput(handle);
@@ -60723,7 +60723,7 @@ namespace TensorFlow.Island.Classes
         ///   name when performing the creation / lookup, so that each separate gradient
         ///   calculation gets its own TensorArray accumulator.
         /// </remarks>
-        public (Output grad_handle, Output flow_out) TensorArrayGradV3(Output! handle, Output! flow_in, string source, string operName = null)
+        public (Output grad_handle, Output flow_out) TensorArrayGradV3(Output! handle, Output! flow_in, string! source, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("TensorArrayGradV3") OpName(MakeName("TensorArrayGradV3", operName));
             desc.AddInput(handle);
@@ -60780,7 +60780,7 @@ namespace TensorFlow.Island.Classes
         ///   computed. This enables multiple gradients for the same TensorArray to be
         ///   calculated using the same accumulator.
         /// </remarks>
-        public (Output grad_handle, Output flow_out) TensorArrayGradWithShape(Output! handle, Output! flow_in, Output! shape_to_prepend, string source, string operName = null)
+        public (Output grad_handle, Output flow_out) TensorArrayGradWithShape(Output! handle, Output! flow_in, Output! shape_to_prepend, string! source, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("TensorArrayGradWithShape") OpName(MakeName("TensorArrayGradWithShape", operName));
             desc.AddInput(handle);
@@ -61419,7 +61419,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output TensorDataset(Output![] components, Shape[] output_shapes, string operName = null)
+        public Output TensorDataset(Output![] components, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("TensorDataset") OpName(MakeName("TensorDataset", operName));
             desc.AddInputs(components);
@@ -62826,7 +62826,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output TensorSliceDataset(Output![] components, Shape[] output_shapes, string operName = null)
+        public Output TensorSliceDataset(Output![] components, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("TensorSliceDataset") OpName(MakeName("TensorSliceDataset", operName));
             desc.AddInputs(components);
@@ -63357,7 +63357,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ThreadPoolDataset(Output! input_dataset, Output! thread_pool, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ThreadPoolDataset(Output! input_dataset, Output! thread_pool, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ThreadPoolDataset") OpName(MakeName("ThreadPoolDataset", operName));
             desc.AddInput(input_dataset);
@@ -63411,7 +63411,7 @@ namespace TensorFlow.Island.Classes
         ///   ops.
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ThreadPoolHandle(long num_threads, string display_name, long? max_intra_op_parallelism = null, string container = null, string shared_name = null, string operName = null)
+        public Output ThreadPoolHandle(long num_threads, string! display_name, long? max_intra_op_parallelism = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ThreadPoolHandle") OpName(MakeName("ThreadPoolHandle", operName));
              
@@ -64585,7 +64585,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output UnbatchDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output UnbatchDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("UnbatchDataset") OpName(MakeName("UnbatchDataset", operName));
             desc.AddInput(input_dataset);
@@ -64738,7 +64738,7 @@ namespace TensorFlow.Island.Classes
         ///   * <c>row_splits[i+1] - row_splits[i]</c> is the number of characters in the <c>i</c>th
         ///   string (in row-major order).
         /// </remarks>
-        public (Output row_splits, Output char_values) UnicodeDecode(Output! input, string input_encoding, string errors = null, long? replacement_char = null, bool? replace_control_characters = null, DataType? Tsplits = null, string operName = null)
+        public (Output row_splits, Output char_values) UnicodeDecode(Output! input, string! input_encoding, string errors = null, long? replacement_char = null, bool? replace_control_characters = null, DataType? Tsplits = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("UnicodeDecode") OpName(MakeName("UnicodeDecode", operName));
             desc.AddInput(input);
@@ -64843,7 +64843,7 @@ namespace TensorFlow.Island.Classes
         ///   * <c>row_splits[i+1] - row_splits[i]</c> is the number of characters in the <c>i</c>th
         ///   string (in row-major order).
         /// </remarks>
-        public (Output row_splits, Output char_values, Output char_to_byte_starts) UnicodeDecodeWithOffsets(Output! input, string input_encoding, string errors = null, long? replacement_char = null, bool? replace_control_characters = null, DataType? Tsplits = null, string operName = null)
+        public (Output row_splits, Output char_values, Output char_to_byte_starts) UnicodeDecodeWithOffsets(Output! input, string! input_encoding, string errors = null, long? replacement_char = null, bool? replace_control_characters = null, DataType? Tsplits = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("UnicodeDecodeWithOffsets") OpName(MakeName("UnicodeDecodeWithOffsets", operName));
             desc.AddInput(input);
@@ -64939,7 +64939,7 @@ namespace TensorFlow.Island.Classes
         ///   output = ['Hello', 'World']
         ///    </code>
         /// </remarks>
-        public Output UnicodeEncode(Output! input_values, Output! input_splits, string output_encoding, string errors = null, long? replacement_char = null, string operName = null)
+        public Output UnicodeEncode(Output! input_values, Output! input_splits, string! output_encoding, string errors = null, long? replacement_char = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("UnicodeEncode") OpName(MakeName("UnicodeEncode", operName));
             desc.AddInput(input_values);
@@ -65084,7 +65084,7 @@ namespace TensorFlow.Island.Classes
         ///   with an explicit endianness, the BOM is not considered part of the string itself
         ///   but as metadata, and so is not preserved in the output.
         /// </remarks>
-        public Output UnicodeTranscode(Output! input, string input_encoding, string output_encoding, string errors = null, long? replacement_char = null, bool? replace_control_characters = null, string operName = null)
+        public Output UnicodeTranscode(Output! input, string! input_encoding, string! output_encoding, string errors = null, long? replacement_char = null, bool? replace_control_characters = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("UnicodeTranscode") OpName(MakeName("UnicodeTranscode", operName));
             desc.AddInput(input);
@@ -65287,7 +65287,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output UniqueDataset(Output! input_dataset, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output UniqueDataset(Output! input_dataset, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("UniqueDataset") OpName(MakeName("UniqueDataset", operName));
             desc.AddInput(input_dataset);
@@ -66085,7 +66085,7 @@ namespace TensorFlow.Island.Classes
         ///   The basic functionality is similar to dequeue with many fewer
         ///   capabilities and options.  This Op is optimized for performance.
         /// </remarks>
-        public Output[] Unstage(DataType[] dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
+        public Output[] Unstage(DataType[]! dtypes, long? capacity = null, long? memory_limit = null, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Unstage") OpName(MakeName("Unstage", operName));
              
@@ -66218,7 +66218,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output VarHandleOp(DataType dtype, Shape shape, string container = null, string shared_name = null, string operName = null)
+        public Output VarHandleOp(DataType dtype, Shape! shape, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("VarHandleOp") OpName(MakeName("VarHandleOp", operName));
              
@@ -66267,7 +66267,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output Variable(Shape shape, DataType dtype, string container = null, string shared_name = null, string operName = null)
+        public Output Variable(Shape! shape, DataType dtype, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("Variable") OpName(MakeName("Variable", operName));
              
@@ -66376,7 +66376,7 @@ namespace TensorFlow.Island.Classes
         ///   TODO(zhifengc/mrry): Adds a pointer to a more detail document
         ///   about sharing states in tensorflow.
         /// </remarks>
-        public Output VariableV2(Shape shape, DataType dtype, string container = null, string shared_name = null, string operName = null)
+        public Output VariableV2(Shape! shape, DataType dtype, string container = null, string shared_name = null, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("VariableV2") OpName(MakeName("VariableV2", operName));
              
@@ -66664,7 +66664,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output WindowDataset(Output! input_dataset, Output! size, Output! shift, Output! stride, Output! drop_remainder, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output WindowDataset(Output! input_dataset, Output! size, Output! shift, Output! stride, Output! drop_remainder, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("WindowDataset") OpName(MakeName("WindowDataset", operName));
             desc.AddInput(input_dataset);
@@ -66921,7 +66921,7 @@ namespace TensorFlow.Island.Classes
         /// <returns>
         ///   The Operation can be fetched from the resulting Output, by fetching the Operation property from the result.
         /// </returns>
-        public Output ZipDataset(Output![] input_datasets, DataType[] output_types, Shape[] output_shapes, string operName = null)
+        public Output ZipDataset(Output![] input_datasets, DataType[]! output_types, Shape[]! output_shapes, string operName = null)
         {
             var desc = new OperationDescription withGraph(this) OpType("ZipDataset") OpName(MakeName("ZipDataset", operName));
             desc.AddInputs(input_datasets);
