@@ -128,12 +128,17 @@ type
   /// Stochastic gradient descent optimizer, including support for momentum, learning
   /// rate decay, and Nesterov momentum.
   /// </summary>
-  SGD = public sealed class(Optimizer)
+  SgdWithMomentumOptimizer = public sealed class(Optimizer)
   private
     fMomentum: Output; readonly;
     fNesterov: Boolean; readonly;
   public
-    constructor withGraph(aGraph: NotNull<Graph>) LearningRate(aLearningRate: Single := 0) Momentum(aMomentum: Single := 0) Decay(aDecay: Single := 0) Nesterov(aNesterov: Boolean := false) OpName(aOpName: String := 'SGDOptimizer');
+    constructor withGraph(aGraph: NotNull<Graph>) 
+                LearningRate(aLearningRate: Single := 0) 
+                Momentum(aMomentum: Single := 0)
+                Decay(aDecay: Single := 0) 
+                Nesterov(aNesterov: Boolean := false) 
+                OpName(aOpName: String := 'SgdWithMomentumOptimizer');
     begin
       inherited constructor(aGraph,  aOpName, aLearningRate, aDecay, 0);
 
@@ -167,7 +172,80 @@ type
         end;
       end;
     end;
+  end;
 
+  AdaptiveOptimizer = public abstract class(Optimizer)
+  private
+    fEpsilon: Output;
+  protected
+    constructor(aGraph: NotNull<Graph>; aLearningRate, aDecay, aInitialAccumulatorValue: Single; aOpName: NotNull<String>);
+    begin
+      inherited constructor(aGraph, aOpName, aLearningRate, aDecay, aInitialAccumulatorValue);
+      fEpsilon := Graph.Const(Single(1e-7));
+    end;
+
+    property Epsilon: Output read fEpsilon;
+  end;
+
+  AdaGradOptimizer = public sealed class(AdaptiveOptimizer)
+  public
+    constructor withGraph(aGraph: NotNull<Graph>) 
+                LearningRate(aLearningRate: Single) 
+                Decay(aDecay: Single := 0)
+                InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
+                OpName(aOpName: NotNull<String> := 'AdaGradOptimizer');
+    begin
+      inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aOpName);
+    end;
+
+    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    begin
+      result := new OperationList withCapacity(aGradientsAndVariables.Length);
+    end;
+  end;
+
+  RMSPropOptimizer = public sealed class(AdaptiveOptimizer)
+  private
+    fBeta: Output; readonly;
+  public
+    constructor withGraph(aGraph: NotNull<Graph>) 
+                LearningRate(aLearningRate: Single) 
+                Beta(aBeta: Single := 0.9)
+                Decay(aDecay: Single := 0)
+                InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
+                OpName(aOpName: NotNull<String> := 'RMSPropOptimizer');
+    begin
+      inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aOpName);
+      fBeta := Graph.Const(aBeta);
+    end;
+
+    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    begin
+      result := new OperationList withCapacity(aGradientsAndVariables.Length);
+    end;
+  end;
+
+  AdamOptimizer = public sealed class(AdaptiveOptimizer)
+  private
+    fBeta_1: Output; readonly;
+    fBeta_2: Output; readonly;
+  public
+    constructor withGraph(aGraph: NotNull<Graph>) 
+                LearningRate(aLearningRate: Single) 
+                Beta_1(aBeta_1: Single := 0.9)
+                Beta_2(aBeta_2: Single := 0.999)
+                Decay(aDecay: Single := 0)
+                OpName(aOpName: NotNull<String> := 'AdamOptimizer');
+    begin
+      inherited constructor(aGraph, aLearningRate, aDecay, 0, aOpName);
+      fBeta_1 := Graph.Const(aBeta_1);
+      fBeta_2 := Graph.Const(aBeta_2);
+    end;
+
+    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    begin
+      result := new OperationList withCapacity(aGradientsAndVariables.Length);
+    end;
   end;
 
 end.
