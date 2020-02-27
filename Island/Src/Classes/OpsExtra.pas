@@ -27,12 +27,12 @@ uses
 type
 
   /// <summary>
-  /// The Variable class holds Output nodes and Operation node that are used to initialize,
-  /// read and assign a value to a variable.
+  ///   The Variable class holds Output nodes and Operation node that are used to initialize,
+  ///   read and assign a value to a variable.
   /// </summary>
   /// <remarks>
-  /// A variable maintains state in the graph across calls to `run()`. Add a variable to
-  /// the graph by calling the MakeVariable method.
+  ///   A variable maintains state in the graph across calls to `run()`. Add a variable to
+  ///   the graph by calling the MakeVariable method.
   /// </remarks>
   Variable = public class
   private
@@ -40,15 +40,18 @@ type
     fReadHandle: Output;
     fAssignOp: Operation;
   assembly
-    constructor withResource(aResource: NotNull<Output>) ReadHandle(aReadHandle: NotNull<Output>) AssignOp(aAssignOp: NotNull<Operation>);
+    constructor
+      withResource(aRsc: NotNull<Output>)
+      ReadHandle(aReadHnd: NotNull<Output>)
+      AssignOp(aAssignOp: NotNull<Operation>);
     begin
       fAssignOp := aAssignOp;
-      fReadHandle:= aReadHandle;
-      fResource := aResource; // VariableHandle
+      fReadHandle:= aReadHnd;
+      fResource := aRsc; // VariableHandle
     end;
   public
     /// <summary>
-    /// Returns the ReadVariableOp that is used to fetch the value of the variable.
+    ///   Returns the ReadVariableOp that is used to fetch the value of the variable.
     /// </summary>
     method ReadAfter(aDependencies: NotNull<array of Operation>): Output;
     begin
@@ -74,9 +77,9 @@ type
 
   Graph = public partial class
   public
-    method Cond(aPred: NotNull<Output>; aTrueFunc: Func<Output>; aFalseFunc: Func<Output>; aOperName: String := nil): Output;
+    method Cond(aPred: NotNull<Output>; aTrueFunc: Func<Output>; aFalseFunc: Func<Output>; aOpName: String := nil): Output;
     begin
-      using WithScope(MakeName('cond', aOperName)) do begin
+      using WithScope(MakeName('cond', aOpName)) do begin
         var (p_2, p_1) := Switch(aPred, aPred);
         var pivot_t := Identity(p_1, 'switch_t');
         var pivot_f := Identity(p_2, 'switch_f');
@@ -95,9 +98,9 @@ type
       end;
     end;
 
-    method &Const(aValue: NotNull<Tensor>; aOperName: String := nil): Output;
+    method &Const(aValue: NotNull<Tensor>; aOpName: String := nil): Output;
     begin
-      result := &Const (aValue, aValue.Data.Type, aOperName);
+      result := &Const (aValue, aValue.Data.Type, aOpName);
     end;
 
     method ConvertShapeToOutput(aShape: NotNull<Shape>): Output;
@@ -109,43 +112,48 @@ type
       end;
     end;
 
-    method ClipByNorm(x, aClipNorm: NotNull<Output>; aAxes: Output := nil; aOperName: String := nil): Output;
+    method ClipByNorm(x, aClipNorm: NotNull<Output>; aAxes: Output := nil; aOpName: String := nil): Output;
     begin
-      using WithScope(MakeName('ClipByNorm', aOperName)) do begin
+      using WithScope(MakeName('ClipByNorm', aOpName)) do begin
         var l2norm_inv := Rsqrt(ReduceSum(Mul(x, x), aAxes, true)); // reciprocal sqrt
         var intermediate := Mul(x, aClipNorm);
-  
+
         result := Identity(
           Mul(
             intermediate,
             Minimum(
               l2norm_inv,
               &Div(&Const(1.0), aClipNorm))),
-          aOperName
+          aOpName
         );
       end;
     end;
 
-    method ClipByAverageNorm(x, aClipNorm: NotNull<Output>; aOperName: String := nil): Output;
+    method ClipByAverageNorm(x, aClipNorm: NotNull<Output>; aOpName: String := nil): Output;
     begin
-      using WithScope(MakeName('ClipByAverageNorm', aOperName)) do begin
+      using WithScope(MakeName('ClipByAverageNorm', aOpName)) do begin
         var n_element := Cast(Size(x), DataType.Float);
         var l2norm_inv := Rsqrt(ReduceSum(Mul(x, x), Range(Rank(x))));
-  
+
         result := Identity(
           Mul(
             Mul(x, aClipNorm),
             Minimum(
               Mul(l2norm_inv, n_element),
               &Div(&Const(1.0), aClipNorm))),
-          aOperName  
+          aOpName
         );
       end;
     end;
 
-    method Dropout(x, aKeepProb: NotNull<Output>; aNoiseShape: Shape := nil; aSeed: nullable Integer := nil; aOperName: String := nil): Tuple of (Boolean, Output);
+    method Dropout(
+      x, aKeepProb: NotNull<Output>;
+      aNoiseShape: Shape := nil;
+      aSeed: nullable Integer := nil;
+      aOpName: String := nil
+      ): Tuple of (Boolean, Output);
     begin
-      using WithScope(MakeName('dropout', aOperName)) do begin
+      using WithScope(MakeName('dropout', aOpName)) do begin
         var success: Boolean;
         if not assigned(aNoiseShape) then (success, aNoiseShape) := GetTensorShape(x);
         if not success then exit (false, nil);
@@ -159,7 +167,13 @@ type
       end;
     end;
 
-    method Dropout(x: NotNull<Output>; aKeepProb: Double; aNoiseShape: Shape := nil; aSeed: nullable Integer := nil; aOperName: String := nil): Tuple of (Boolean, Output);
+    method Dropout(
+      x: NotNull<Output>;
+      aKeepProb: Double;
+      aNoiseShape: Shape := nil;
+      aSeed: nullable Integer := nil;
+      aOpName: String := nil
+      ): Tuple of (Boolean, Output);
     begin
       if not (0 <= aKeepProb <= 1) then begin
         raise new ArgumentOutOfRangeException(
@@ -168,12 +182,12 @@ type
 
       if aKeepProb.Equals(1) then exit (true, x);
       var keep_prob: Output;
-      using WithScope(MakeName('dropout', aOperName)) do begin
-        keep_prob := &Const(aKeepProb); 
+      using WithScope(MakeName('dropout', aOpName)) do begin
+        keep_prob := &Const(aKeepProb);
       end;
 
       // result should be outside the above using statement.
-      result := Dropout(x, keep_prob, aNoiseShape, aSeed, aOperName);
+      result := Dropout(x, keep_prob, aNoiseShape, aSeed, aOpName);
     end;
 
     method GetRandomSeeds(aOpSeed: nullable Integer): Tuple of (GraphSeed: Integer, LocalSeed: Integer);
@@ -183,12 +197,12 @@ type
       result := (graphSeed, localSeed);
     end;
 
-    method GlobalNorm(aTensors: NotNull<array of Output>; aOperName: String := nil): Output;
+    method GlobalNorm(aTensors: NotNull<array of Output>; aOpName: String := nil): Output;
     begin
-      using WithScope(MakeName('GlobalNorm', aOperName)) do begin
+      using WithScope(MakeName('GlobalNorm', aOpName)) do begin
         var half_squared_norms := new Output[aTensors.Length];
         for t in aTensors index i do half_squared_norms[i] := L2Loss(t);
-        var half_squared_norm := ReduceSum(Stack(half_squared_norms));  
+        var half_squared_norm := ReduceSum(Stack(half_squared_norms));
         result := Sqrt(Mul(half_squared_norm, &Const(2.0)), 'global_norm');
       end;
     end;
@@ -217,7 +231,7 @@ type
             end;
           end;
 
-          AddInitVariable(assignOp);    
+          AddInitVariable(assignOp);
           result := new Variable withResource(resource) ReadHandle(readHandle)
             AssignOp(assignOp);
           if aTrainable then AddTrainableVariable(result);
@@ -245,26 +259,46 @@ type
       end;
     end;
 
-    method ReduceSum(aInput: NotNull<Output>; aAxis: Output := nil; aKeepDims: Boolean := false; aOperName: String := nil): Output;
+    method ReduceSum(
+      aInput: NotNull<Output>;
+      aAxis: Output := nil;
+      aKeepDims: Boolean := false;
+      aOpName: String := nil
+      ): Output;
     begin
-      result := Sum(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOperName);
+      result := Sum(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOpName);
     end;
 
-    method ReduceProd(aInput: NotNull<Output>; aAxis: Output := nil; aKeepDims: Boolean := false; aOperName: String := nil): Output;
+    method ReduceProd(
+      aInput: NotNull<Output>;
+      aAxis: Output := nil;
+      aKeepDims: Boolean := false;
+      aOpName: String := nil
+      ): Output;
     begin
-      result := Prod(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOperName);
+      result := Prod(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOpName);
     end;
 
-    method ReduceMean(aInput: NotNull<Output>; aAxis: Output := nil; aKeepDims: Boolean := false; aOperName: String := nil): Output;
+    method ReduceMean(
+      aInput: NotNull<Output>;
+      aAxis: Output := nil;
+      aKeepDims: Boolean := false;
+      aOpName: String := nil): Output;
     begin
       if (aInput.OutputType = DataType.Bool) then begin
         aInput := NotNull<Output> (Cast(aInput, DataType.Int8));
       end;
 
-      result := Mean(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOperName);
+      result := Mean(aInput, ReduceDims(aInput, aAxis), aKeepDims, aOpName);
     end;
 
-    method Range(aStart: NotNull<Output>; aLimit: Output := nil; aDelta: Output := nil; aDataType: nullable DataType := nil; aOperName: String := nil): Output;
+    method Range(
+      aStart: NotNull<Output>;
+      aLimit: Output := nil;
+      aDelta: Output := nil;
+      aDataType: nullable DataType := nil;
+      aOpName: String := nil
+      ): Output;
     begin
       if not assigned(aLimit) then begin
         aLimit := aStart;
@@ -275,11 +309,10 @@ type
         aDelta := Cast(&Const(1.0), aStart.OutputType);
       end;
 
-      using WithScope(MakeName('Range', aOperName)) do begin
+      using WithScope(MakeName('Range', aOpName)) do begin
         if not assigned(aDataType) then begin
-          var dtype_hierarchy: array of DataType :=
-            [DataType.Int32, DataType.Int64, DataType.Float, DataType.Double];
-    
+          var dtype_hierarchy: array of DataType := [DataType.Int32, DataType.Int64, DataType.Float, DataType.Double];
+
           if ((not dtype_hierarchy.Contains(aStart.OutputType)) or
               (not dtype_hierarchy.Contains(aLimit.OutputType)) or
               (not dtype_hierarchy.Contains(aDelta.OutputType)) )
@@ -287,22 +320,20 @@ type
             raise new ArgumentException('Range: invalid argument type.');
           end;
 
-          var dtypes: array of DataType :=
-            [aStart.OutputType, aLimit.OutputType, aDelta.OutputType];
-    
+          var dtypes: array of DataType := [aStart.OutputType, aLimit.OutputType, aDelta.OutputType];
           var i_max := dtypes.Select(dtype->dtype_hierarchy.ToList.IndexOf(dtype)).Max;
           var inferred_dtype := dtype_hierarchy[i_max];
-    
+
           aStart := NotNull<Output>(Cast(aStart, inferred_dtype));
           aLimit := Cast(aLimit, inferred_dtype);
           aDelta := Cast(aDelta, inferred_dtype);
         end;
 
-        result := Range(aStart, aLimit, aDelta, aOperName);
+        result := Range(aStart, aLimit, aDelta, aOpName);
       end;
     end;
 
-    method Stack(aValues: NotNull<array of Output>; aAxis: Integer := 0; aOperName: String := nil): Output;
+    method Stack(aValues: NotNull<array of Output>; aAxis: Integer := 0; aOpName: String := nil): Output;
     begin
       var num_dims := GetTensorNumDims(aValues[0]);
       var expanded_num_dims := num_dims + 1;
@@ -311,23 +342,23 @@ type
         raise new ArgumentOutOfRangeException(
           $'Stack: axis={aAxis} out of range [{-expanded_num_dims},{expanded_num_dims}).');
       end;
-      result := Pack(aValues, aAxis, aOperName);
+      result := Pack(aValues, aAxis, aOpName);
     end;
 
-    method Transpose(x: NotNull<Output>; aOperName: String := nil): Output;
+    method Transpose(x: NotNull<Output>; aOpName: String := nil): Output;
     begin
       var r := Rank(x);
       var perm := Sub(Sub(r, &Const(1)), Range(&Const(0), r, &Const(1)));
-      result := Transpose(x, perm, aOperName);
+      result := Transpose(x, perm, aOpName);
     end;
 
-    method &Where(aCondition: NotNull<Output>; x, y: Output; aOperName: String := nil): Output;
+    method &Where(aCondition: NotNull<Output>; x, y: Output; aOpName: String := nil): Output;
     begin
       if (not assigned(x)) and (not assigned(y)) then begin
-        result := &Where(aCondition, aOperName);
+        result := &Where(aCondition, aOpName);
       end else begin
         if (assigned(x) and assigned(y)) then begin
-          result := &Select(aCondition, x, y, aOperName);
+          result := &Select(aCondition, x, y, aOpName);
         end else begin
           raise new ArgumentException('Where: x and y must both be null or non-null.');
         end;
@@ -335,11 +366,11 @@ type
     end;
 
     /// <summary>
-    /// Gets or sets the graph random seed.
+    ///   Gets or sets the graph random seed.
     /// </summary>
     /// <remarks>
-    /// Operations that rely on a random seed actually derive it from two seeds:
-    /// the graph-level and operation-level seeds.This sets the graph-level seed.
+    ///   Operations that rely on a random seed actually derive it from two seeds:
+    ///   the graph-level and operation-level seeds.This sets the graph-level seed.
     /// </remarks>
     property Seed: nullable Integer read write;
   end;
