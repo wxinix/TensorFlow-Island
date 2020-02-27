@@ -372,7 +372,7 @@ namespace TensorFlow.Island.OpGenerator
                 P($"/// </param>");
             }
 
-            P("/// <param name=\"operName\">");
+            P("/// <param name=\"opName\">");
             P($"///   If specified, the created operation in the graph will be this one, otherwise it will be named '{oper.Name}'.");
             P("/// </param>");
 
@@ -469,10 +469,10 @@ namespace TensorFlow.Island.OpGenerator
                 retType = "Operation";
             }
 
-            P($"public {retType} {name}({FillArguments(oper)}string operName = null)");
+            P($"public {retType} {name}({FillArguments(oper)}string opName = null)");
             PI("{");
             bool needStatus = _requiredAttrs.Concat(_optionalAttrs).Any(attr => attr.Type.Contains("Tensor"));
-            P($"var desc = new OperationDescription withGraph(this) OpType(\"{oper.Name}\") OpName(MakeName(\"{oper.Name}\", operName));");
+            P($"var desc = new OperationDescription withGraph(this) OpType(\"{oper.Name}\") OpName(MakeName(\"{oper.Name}\", opName));");
 
             foreach (var arg in oper.InputArgs) {
                 if (IsListArg(arg)) {
