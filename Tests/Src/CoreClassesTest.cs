@@ -102,17 +102,17 @@ namespace TensorFlow.Island.Tests
 
         public void When_GettingTensorInfo_Expect_Success()
         {
-            var lSession = new Session(); 
-            var lOutput = lSession.Graph.Const(1L);
-            var str = lSession.GetTensorInfo(lOutput);
+            var session = new Session(); 
+            var output = session.Graph.Const(1L);
+            var str = session.GetTensorInfo(output);
             Assert.AreEqual(str, "Tensor (\"Const_0: 0\", shape=TensorShape([]), dtype=Int64)");
 
-            lOutput = lSession.Graph.Const({1, 2});
-            str = lSession.GetTensorInfo(lOutput);
+            output = session.Graph.Const({1, 2});
+            str = session.GetTensorInfo(output);
             Assert.AreEqual(str, "Tensor (\"Const_1: 0\", shape=TensorShape([Dimension(2)]), dtype=Int32)");   
 
-            lOutput = lSession.Graph.Const({{1, 2}});
-            str = lSession.GetTensorInfo(lOutput);
+            output = session.Graph.Const({{1, 2}});
+            str = session.GetTensorInfo(output);
             Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32)"); 
        }
 
