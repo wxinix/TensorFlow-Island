@@ -31,11 +31,11 @@ type
   Optimizer = public abstract class
   private
     fGraph: Graph;
+    fIncrementIterationsOp: Operation;
     fInitialAccumulatorValue: Single;
     fIterations: Variable;
     fLearningRate: Output;
-    fOptimizerName: String;
-    fUpdateOps: OperationList := new OperationList; protected; readonly;
+    fName: String;
   protected
     method CreateDecayOps(aDecay: Single; aInitialLearningRate: NotNull<Output>): Output;
     begin
@@ -71,7 +71,12 @@ type
       end;
     end;
   public
-    constructor(aGraph: NotNull<Graph>; const aOpName: NotNull<String>; aLearningRate, aDecay, aInitialAccumulatorValue: Single);
+    constructor(
+      aGraph: NotNull<Graph>;
+      const aName: NotNull<String>;
+      aLearningRate,
+      aDecay,
+      aInitialAccumulatorValue: Single);
     begin
       if (aInitialAccumulatorValue < 0) then begin
         raise new ArgumentException($'InitialAccumulatorValue = {aInitialAccumulatorValue}. It must be non-negative.');
@@ -79,15 +84,14 @@ type
 
       fGraph := aGraph;
       fInitialAccumulatorValue := aInitialAccumulatorValue;
-      fOptimizerName := aOpName;
+      fName := aName;
 
-      using fGraph.WithScope(fOptimizerName) do begin
+      using fGraph.WithScope(fName) do begin
         fIterations := fGraph.MakeVariable(fGraph.Const(Int64(0)), false, 'iterations');
         var initial_lr := fGraph.Const(aLearningRate);
-        var inc_iter_op := fGraph.AssignAddVariableOp(NotNull<Variable>(fIterations), fGraph.Const(Int64(1)));
-        fUpdateOps.Add(inc_iter_op);
+        fIncrementIterationsOp := fGraph.AssignAddVariableOp(NotNull<Variable>(fIterations), fGraph.Const(Int64(1)));
 
-        using fGraph.WithDependencies([inc_iter_op]) do begin
+        using fGraph.WithDependencies([fIncrementIterationsOp]) do begin
           fLearningRate := CreateDecayOps(aDecay, initial_lr);
         end;
       end;
@@ -95,7 +99,11 @@ type
 
     method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; abstract;
 
-    method ComputeGradient(aLoss: NotNull<Output>; aVariables: array of NotNull<Variable> := nil; aColocateGradientsWithOps: Boolean := false): array of GradientAndVariablePair; virtual;
+    method ComputeGradient(
+      aLoss: NotNull<Output>;
+      aVariables: array of NotNull<Variable> := nil;
+      aColocateGradientsWithOps: Boolean := false
+      ): array of GradientAndVariablePair; virtual;
     begin
       aVariables := if assigned(aVariables) then aVariables else fGraph.TrainableVariables;
       result := new GradientAndVariablePair[aVariables.Length];
@@ -119,30 +127,32 @@ type
     end;
 
     property &Graph: Graph read fGraph; protected;
-    property OptimizerName: String read fOptimizerName; protected;
-    property Iterations: Variable read fIterations;
-    property LearningRate: Output read fLearningRate;
+    property IncrementIterationsOp: Operation read fIncrementIterationsOp; protected;
+    property Iterations: Variable read fIterations; protected;
+    property LearningRate: Output read fLearningRate; protected;
+    property Name: String read fName;
   end;
 
   /// <summary>
   /// Stochastic gradient descent optimizer, including support for momentum, learning
   /// rate decay, and Nesterov momentum.
   /// </summary>
-  SgdWithMomentumOptimizer = public sealed class(Optimizer)
+  SGDMomentumOptimizer = public sealed class(Optimizer)
   private
     fMomentum: Output; readonly;
     fNesterov: Boolean; readonly;
   public
-    constructor withGraph(aGraph: NotNull<Graph>) 
-                LearningRate(aLearningRate: Single := 0) 
-                Momentum(aMomentum: Single := 0)
-                Decay(aDecay: Single := 0) 
-                Nesterov(aNesterov: Boolean := false) 
-                OpName(aOpName: String := 'SgdWithMomentumOptimizer');
+    constructor
+      withGraph(aGraph: NotNull<Graph>)
+      LearningRate(aLearningRate: Single := 0)
+      Momentum(aMomentum: Single := 0)
+      Decay(aDecay: Single := 0)
+      Nesterov(aNesterov: Boolean := false)
+      Name(aName: String := 'SGDMomentumOptimizer');
     begin
-      inherited constructor(aGraph,  aOpName, aLearningRate, aDecay, 0);
+      inherited constructor(aGraph,  aName, aLearningRate, aDecay, 0);
 
-      using aGraph.WithScope(aOpName) do begin
+      using aGraph.WithScope(aName) do begin
         fMomentum := aGraph.Const(aMomentum, 'Momentum');
       end;
 
@@ -152,6 +162,7 @@ type
     method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
+      result.Add(IncrementIterationsOp);
       var moments := InitMoments(aGradientsAndVariables);
 
       for gv in aGradientsAndVariables index i do begin
@@ -160,15 +171,15 @@ type
         // v = m * moment - lr * g
         var velocity := Graph.Sub(Graph.Mul(m, moments[i]), Graph.Mul(lr, gv.Gradient));
         // moment = v
-        fUpdateOps.Add(Graph.Assign(moments[i], velocity).Oper);
+        result.Add(Graph.Assign(moments[i], velocity).Oper);
 
         if fNesterov then begin
           // w = w + m * v - lr * g
           var op := Graph.AssignAddVariableOp(gv.Variable, Graph.Mul(lr, Graph.Sub(Graph.Mul(m, velocity), gv.Gradient)));
-          fUpdateOps.Add(op);
+          result.Add(op);
         end else begin
           // w = w + lr * v
-          fUpdateOps.Add(Graph.AssignAddVariableOp(gv.Variable, Graph.Mul(lr, velocity)));
+          result.Add(Graph.AssignAddVariableOp(gv.Variable, Graph.Mul(lr, velocity)));
         end;
       end;
     end;
@@ -178,9 +189,9 @@ type
   private
     fEpsilon: Output;
   protected
-    constructor(aGraph: NotNull<Graph>; aLearningRate, aDecay, aInitialAccumulatorValue: Single; aOpName: NotNull<String>);
+    constructor(aGraph: NotNull<Graph>; aLearningRate, aDecay, aInitialAccumulatorValue: Single; aName: NotNull<String>);
     begin
-      inherited constructor(aGraph, aOpName, aLearningRate, aDecay, aInitialAccumulatorValue);
+      inherited constructor(aGraph, aName, aLearningRate, aDecay, aInitialAccumulatorValue);
       fEpsilon := Graph.Const(Single(1e-7));
     end;
 
@@ -189,18 +200,33 @@ type
 
   AdaGradOptimizer = public sealed class(AdaptiveOptimizer)
   public
-    constructor withGraph(aGraph: NotNull<Graph>) 
-                LearningRate(aLearningRate: Single) 
-                Decay(aDecay: Single := 0)
-                InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
-                OpName(aOpName: NotNull<String> := 'AdaGradOptimizer');
+    constructor
+      withGraph(aGraph: NotNull<Graph>)
+      LearningRate(aLearningRate: Single)
+      Decay(aDecay: Single := 0)
+      InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
+      Name(aName: NotNull<String> := 'AdaGradOptimizer');
     begin
-      inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aOpName);
+      inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aName);
     end;
 
     method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
+      result.Add(IncrementIterationsOp);
+      var accumulators := InitMoments(aGradientsAndVariables);
+
+      for gv in aGradientsAndVariables index i do begin
+        var lr := Graph.Cast(LearningRate, gv.Gradient.OutputType);
+
+        // accum = accumulator + g^2;
+        var accum := Graph.Add(accumulators[i], Graph.Square(gv.Gradient));
+        // accumulators[i] = accum
+        result.Add(Graph.Assign(accumulators[i], accum).Oper);
+        // w = w - lr * g / (sqrt(accum) + eps)
+        var denom := Graph.Div(Graph.Mul(lr, gv.Gradient), Graph.Add(Graph.Sqrt(accum), Epsilon));
+        result.Add(Graph.AssignSubVariableOp(gv.Variable, denom));
+      end;
     end;
   end;
 
@@ -208,20 +234,36 @@ type
   private
     fBeta: Output; readonly;
   public
-    constructor withGraph(aGraph: NotNull<Graph>) 
-                LearningRate(aLearningRate: Single) 
-                Beta(aBeta: Single := 0.9)
-                Decay(aDecay: Single := 0)
-                InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
-                OpName(aOpName: NotNull<String> := 'RMSPropOptimizer');
+    constructor
+      withGraph(aGraph: NotNull<Graph>)
+      LearningRate(aLearningRate: Single)
+      Beta(aBeta: Single := 0.9)
+      Decay(aDecay: Single := 0)
+      InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
+      Name(aName: NotNull<String> := 'RMSPropOptimizer');
     begin
-      inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aOpName);
+      inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aName);
       fBeta := Graph.Const(aBeta);
     end;
 
     method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
+      result.Add(IncrementIterationsOp);
+      var accumulators := InitMoments(aGradientsAndVariables);
+
+      for gv in aGradientsAndVariables index i do begin
+        var lr := Graph.Cast(LearningRate, gv.Gradient.OutputType);
+        // accum = beta * accum + (1 - beta) * g ** 2;
+        var first := Graph.Mul(fBeta, accumulators[i]);
+        var second := Graph.Mul(Graph.Sub(Graph.Const(Single(1.0)), fBeta), Graph.Square(gv.Gradient));
+        var accum := Graph.Add(first, second);
+        // accumulators[i] = accum
+        result.Add(Graph.Assign(accumulators[i], accum).Oper);
+        // w = w - lr * g / (sqrt(accum) + eps)
+        var denom := Graph.Div(Graph.Mul(lr, gv.Gradient), Graph.Add(Graph.Sqrt(accum), Epsilon));
+        result.Add(Graph.AssignSubVariableOp(gv.Variable, denom));
+      end;
     end;
   end;
 
@@ -230,14 +272,15 @@ type
     fBeta_1: Output; readonly;
     fBeta_2: Output; readonly;
   public
-    constructor withGraph(aGraph: NotNull<Graph>) 
-                LearningRate(aLearningRate: Single) 
-                Beta_1(aBeta_1: Single := 0.9)
-                Beta_2(aBeta_2: Single := 0.999)
-                Decay(aDecay: Single := 0)
-                OpName(aOpName: NotNull<String> := 'AdamOptimizer');
+    constructor
+      withGraph(aGraph: NotNull<Graph>)
+      LearningRate(aLearningRate: Single)
+      Beta_1(aBeta_1: Single := 0.9)
+      Beta_2(aBeta_2: Single := 0.999)
+      Decay(aDecay: Single := 0)
+      Name(aName: NotNull<String> := 'AdamOptimizer');
     begin
-      inherited constructor(aGraph, aLearningRate, aDecay, 0, aOpName);
+      inherited constructor(aGraph, aLearningRate, aDecay, 0, aName);
       fBeta_1 := Graph.Const(aBeta_1);
       fBeta_2 := Graph.Const(aBeta_2);
     end;
@@ -245,6 +288,39 @@ type
     method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
+      var accumulators_1 := InitMoments(aGradientsAndVariables);
+      var accumulators_2 := InitMoments(aGradientsAndVariables);
+
+      for gv in aGradientsAndVariables index i do begin
+        var lr := Graph.Cast(LearningRate, gv.Gradient.OutputType);
+        var one := Graph.Const(Single(1.0));
+        var t := Graph.Cast(Iterations.ReadHandle, fBeta_1.OutputType);
+
+        var lr_t := Graph.Mul(lr,
+                              Graph.Div(Graph.Sqrt(Graph.Sub(one,
+                                                             Graph.Pow(fBeta_2, t))),
+                                        Graph.Sub(one,
+                                                  Graph.Pow(fBeta_1, t))
+                                       ));
+
+        // accum_1 = beta_1 * accum_1 + (1 - beta_1) * g;
+        var first := Graph.Mul(fBeta_1, accumulators_1[i]);
+        var second := Graph.Mul(Graph.Sub(one, fBeta_1), gv.Gradient);
+        var accum_1 := Graph.Add(first, second);
+        // accumulators_1[i] = accum_1
+        result.Add(Graph.Assign(accumulators_1[i], accum_1).Oper);
+
+        // accum_2 = beta_2 * accum_2 + (1 - beta_2) * g;
+        first := Graph.Mul(fBeta_2, accumulators_2[i]);
+        second := Graph.Mul(Graph.Sub(one, fBeta_2), gv.Gradient);
+        var accum_2 := Graph.Add(first, second);
+        // accumulators_2[i] = accum_2
+        result.Add(Graph.Assign(accumulators_2[i], accum_2).Oper);
+
+        // w = w - lr * accum_1 / (sqrt(accum_2) + eps)
+        var update := Graph.Div(Graph.Mul(lr_t, accum_1), Graph.Add(Graph.Sqrt(accum_2), Epsilon));
+        result.Add(Graph.AssignSubVariableOp(gv.Variable, update));
+      end;
     end;
   end;
 
