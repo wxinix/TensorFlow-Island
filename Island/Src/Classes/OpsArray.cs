@@ -29,22 +29,22 @@ namespace TensorFlow.Island.Classes
 {
     public partial class Graph
     {
-        public Output Zeros(Shape! shape, DataType dtype = DataType.Double, string operName = null)
+        public Output Zeros(Shape! shape, DataType dtype = DataType.Double, string opName = null)
         {
-            return Constant(0, shape, dtype, operName);
+            return Constant(0, shape, dtype, opName);
         }
 
-        public Output Ones(Shape! shape, DataType dtype = DataType.Double, string operName = null)
+        public Output Ones(Shape! shape, DataType dtype = DataType.Double, string opName = null)
         {
-            return Constant(1, shape, dtype, operName);
+            return Constant(1, shape, dtype, opName);
         }
 
         // Creates a constant tensor from a tensor-like object. value is a scalar constant.
-        // If value's type is different from dtype, it will be cast to dtype.        
-        public Output Constant(Object value, Shape! shape, DataType dtype = DataType.Double, string operName = null)
+        // If value's type is different from dtype, it will be cast to dtype.
+        public Output Constant(Object value, Shape! shape, DataType dtype = DataType.Double, string opName = null)
         {
             var tensor = Tensor.ObjectToTensor(value, shape, dtype);
-            return Const(tensor, operName);         
+            return Const(tensor, opName);
         }
 
     }
