@@ -516,14 +516,19 @@ type
             result := (s, T(v));
           end;
         else
-          raise new ArgumentException($'GetAttrValue<T> has invalid T[type_name={typeOf(T).Name}] for attr[attr_name={aAttrName}].');
+          raise new ArgumentException(
+            $'GetAttrValue<T> has invalid T[type_name={typeOf(T).Name}] for attr[attr_name={aAttrName}].');
         end;
 
         if assigned(aStatus) then aStatus.Assign(lStatus);
       end;
     end;
 
-    method GetAttrString(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, String);
+    method GetAttrString(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, String);
     begin
       var max_length := aAttrMeta.TotalSize;
       var value := new AnsiChar[max_length];
@@ -537,7 +542,11 @@ type
       end;
     end;
 
-    method GetAttrStringList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, StringList);
+    method GetAttrStringList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, StringList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^AnsiChar[max_values];
@@ -564,7 +573,11 @@ type
       end;
     end;
 
-    method GetAttrBool(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, nullable Boolean);
+    method GetAttrBool(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, nullable Boolean);
     begin
       var value: Byte;
       TF_OperationGetAttrBool(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
@@ -576,7 +589,11 @@ type
       end;
     end;
 
-    method GetAttrBoolList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, array of Boolean);
+    method GetAttrBoolList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, array of Boolean);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new Byte[max_values];
@@ -591,7 +608,11 @@ type
       end;
     end;
 
-    method GetAttrInt(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, nullable Int64);
+    method GetAttrInt(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, nullable Int64);
     begin
       var value: Int64;
       TF_OperationGetAttrInt(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
@@ -603,7 +624,11 @@ type
       end;
     end;
 
-    method GetAttrIntList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, array of Int64);
+    method GetAttrIntList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, array of Int64);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new Int64[max_values];
@@ -616,7 +641,11 @@ type
       end;
     end;
 
-    method GetAttrFloat(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, nullable Single);
+    method GetAttrFloat(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, nullable Single);
     begin
       var value: Single;
       TF_OperationGetAttrFloat(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
@@ -628,7 +657,11 @@ type
       end;
     end;
 
-    method GetAttrFloatList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, array of Single);
+    method GetAttrFloatList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, array of Single);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new Single[max_values];
@@ -641,7 +674,11 @@ type
       end;
     end;
 
-    method GetAttrType(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, nullable DataType);
+    method GetAttrType(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, nullable DataType);
     begin
       var value: TF_DataType;
       TF_OperationGetAttrType(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
@@ -653,7 +690,11 @@ type
       end;
     end;
 
-    method GetAttrTypeList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, array of DataType);
+    method GetAttrTypeList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, array of DataType);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new TF_DataType[max_values];
@@ -668,7 +709,11 @@ type
       end;
     end;
 
-    method GetAttrShape(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, nullable Shape);
+    method GetAttrShape(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, nullable Shape);
     begin
       var num_dim := aAttrMeta.TotalSize;
       var value := new Int64[num_dim];
@@ -681,7 +726,11 @@ type
       end;
     end;
 
-    method GetAttrShapeList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, ShapeList);
+    method GetAttrShapeList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, ShapeList);
     begin
       var num_shapes := aAttrMeta.ListSize;
       var dims := new ^Int64[num_shapes];
@@ -713,7 +762,11 @@ type
       end;
     end;
 
-    method GetAttrTensor(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, Tensor);
+    method GetAttrTensor(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, Tensor);
     begin
       var value: ^TF_Tensor;
       TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
@@ -725,7 +778,11 @@ type
       end;
     end;
 
-    method GetAttrTensorList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean,  TensorList);
+    method GetAttrTensorList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean,  TensorList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^TF_Tensor[max_values];
@@ -740,7 +797,11 @@ type
       end;
     end;
 
-    method GetAttrTensorShapeProto(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, TensorShapeProto);
+    method GetAttrTensorShapeProto(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, TensorShapeProto);
     begin
       var value: ^TF_Buffer;
       TF_OperationGetAttrTensorShapeProto(Handle, aAttrName.ToAnsiChars(true), value, aStatus.Handle);
@@ -752,7 +813,11 @@ type
       end;
     end;
 
-    method GetAttrTensorShapeProtoList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, TensorShapeProtoList);
+    method GetAttrTensorShapeProtoList(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, TensorShapeProtoList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^TF_Buffer[max_values];
@@ -772,7 +837,11 @@ type
       end;
     end;
 
-    method GetAttrValueProto(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: Status): Tuple of (Boolean, Buffer);
+    method GetAttrValueProto(
+      const aAttrName: NotNull<String>;
+      aAttrMeta: AttrMetaData;
+      aStatus: Status
+      ): Tuple of (Boolean, Buffer);
     begin
       var output_attr_value: ^TF_Buffer;
       TF_OperationGetAttrValueProto(Handle, aAttrName.ToAnsiChars(true), output_attr_value, aStatus.Handle);
@@ -1088,7 +1157,10 @@ type
       end;
     end;
 
-    method SetAttrTensorShapeProtoList(const aName: NotNull<String>; aProtos: NotNull<array of array of Byte>; aProtoLens: NotNull<array of UInt64>; aStatus: Status := nil);
+    method SetAttrTensorShapeProtoList(
+      const aName: NotNull<String>;
+      aProtos: NotNull<array of array of Byte>;
+      aProtoLens: NotNull<array of UInt64>; aStatus: Status := nil);
     begin
       using lStatus := new Status do begin
         TF_SetAttrTensorShapeProtoList(
@@ -1310,7 +1382,8 @@ type
         if (fNumDims > 0) and (0 <= aIndex < fNumDims) then begin
           result := fDims[aIndex]
         end else begin
-          raise new ArgumentOutOfRangeException($'Accessing a Shape[num_dims={fNumDims}] dimension with invalid index {aIndex}.');
+          raise new ArgumentOutOfRangeException(
+            $'Accessing a Shape[num_dims={fNumDims}] dimension with invalid index {aIndex}.');
         end;
       end;
 
@@ -1455,24 +1528,28 @@ type
     end;
 
     /// <summary>
-    /// Adds a gradient: the operations needed to compute the partial derivatives of sum
-    /// of <paramref name="y"/>` wrt to <paramref name="x"/>.
+    ///   Adds a gradient: the operations needed to compute the partial derivatives of sum
+    ///   of <paramref name="y"/>` wrt to <paramref name="x"/>.
     /// </summary>
     /// <returns>
-    /// The partial derivatives, the size of the array is the same as the length
-    /// of the <paramref name="y"/> array.
+    ///   The partial derivatives, the size of the array is the same as the length
+    ///   of the <paramref name="y"/> array.
     /// </returns>
     /// <param name="y">The y elements.</param>
     /// <param name="x">The x elements.</param>
-    /// <param name="dx">Initial gradients, which represent the symbolic partial derivatives
-    /// of some loss function `L` w.r.t. <paramref name="y"/> ).
-    /// If the parameter is null, the implementation will use dx for 'OnesLike' for all
-    /// shapes in <paramref name="y"/>
+    /// <param name="dx">
+    ///   Initial gradients, which represent the symbolic partial derivatives of some loss
+    ///   function `L` w.r.t. <paramref name="y"/> ). If the parameter is null, the implementation
+    ///   will use dx for 'OnesLike' for all shapes in <paramref name="y"/>
     /// </param>
     /// <remarks>
-    /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
+    ///   d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradients(y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    method AddGradients(
+      y, x: NotNull<OutputList>;
+      dx: NotNull<OutputList>;
+      aStatus: Status := nil
+      ): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
         var s := $'AddGradient: y[size={y.Count} dx[size={dx.Count}] must be of same size.';
@@ -1507,7 +1584,11 @@ type
       end;
     end;
 
-    method AddGradients(y, x: NotNull<array of Output>; dx: array of Output := nil; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    method AddGradients(
+      y, x: NotNull<array of Output>;
+      dx: array of Output := nil;
+      aStatus: Status := nil
+      ): Tuple of (Boolean, OutputList);
     begin
       var y_ := new OutputList;
       var x_ := new OutputList;
@@ -1521,22 +1602,26 @@ type
     end;
 
     /// <summary>
-    /// Adds a gradient: the operations needed to compute the partial derivatives of sum of
-    /// <paramref name="y"/>` wrt to <paramref name="x"/>.
+    ///   Adds a gradient: the operations needed to compute the partial derivatives of sum of
+    ///   <paramref name="y"/>` wrt to <paramref name="x"/>.
     /// </summary>
     /// <returns>
-    /// The partial derivatives, the size of the array is the same as the length
-    /// of the <paramref name="y"/> array.
+    ///   The partial derivatives, the size of the array is the same as the length of the <paramref name="y"/> array.
     /// </returns>
-    /// <param name="prefix">Names the scope into which all gradients operations are being
-    /// added. This must be unique within the provided graph otherwise this operation will
-    /// fail. If the value is null, the default prefixing behaviour takes place, see
-    /// AddGradients for more details.
+    /// <param name="prefix">
+    ///   Names the scope into which all gradients operations are being added. This must be unique
+    ///   within the provided graph otherwise this operation will fail. If the value is null, the
+    ///   default prefixing behaviour takes place, see AddGradients for more details.
     /// </param>
     /// <remarks>
-    /// d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
+    ///   d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradientsWithPrefix(aPrefix: NotNull<String>; y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    method AddGradientsWithPrefix(
+      aPrefix: NotNull<String>;
+      y, x: NotNull<OutputList>;
+      dx: NotNull<OutputList>;
+      aStatus: Status := nil
+      ): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
         var msg := $'AddGradient: y[size={y.Count}] dx[size={dx.Count}] must be of same size.';
@@ -1670,7 +1755,11 @@ type
       end;
     end;
 
-    method ImportGraphDef(aBytes: NotNull<array of Byte>; aOpts: NotNull<ImportGraphDefOptions>; aStatus: Status := nil); overload;
+    method ImportGraphDef(
+      aBytes: NotNull<array of Byte>;
+      aOpts: NotNull<ImportGraphDefOptions>;
+      aStatus: Status := nil
+      ); overload;
     begin
       using graph_def := new Buffer withData(aBytes) NumBytes(aBytes.Length) do begin
         ImportGraphDef(graph_def, aOpts, aStatus);
@@ -1695,7 +1784,11 @@ type
       end;
     end;
 
-    method ImportGraphDefWithReturnOutputs(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    method ImportGraphDefWithReturnOutputs(
+      aGraphDef: NotNull<Buffer>;
+      aOpts: NotNull<ImportGraphDefOptions>;
+      aStatus: Status := nil
+      ): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
         var num_return_outputs := TF_ImportGraphDefOptionsNumReturnOutputs(aOpts.Handle);
@@ -1758,7 +1851,15 @@ type
       fCurrentDependencies := fCurrentDependencies.Concat(newDependencies).Distinct.ToList;
     end;
 
-    method ToFunction(aName, aDesc: NotNull<String>; aOps: NotNull<OperationList>; aInputs: NotNull<InputList>; aOutputs: NotNull<OutputList>; aOutputNames: NotNull<StringList>; aAppendHashToName: Boolean := false; aStatus: Status := nil): Tuple of (Boolean, TensorFlowFunction);
+    method ToFunction(
+      aName, aDesc: NotNull<String>;
+      aOps: NotNull<OperationList>;
+      aInputs: NotNull<InputList>;
+      aOutputs: NotNull<OutputList>;
+      aOutputNames: NotNull<StringList>;
+      aAppendHashToName: Boolean := false;
+      aStatus: Status := nil
+      ): Tuple of (Boolean, TensorFlowFunction);
     begin
       using lStatus := new Status do begin
         var append_hash_to_fn_name := if aAppendHashToName then 1 else 0;
@@ -1845,7 +1946,11 @@ type
       end;
     end;
 
-    method &While(aInputs: NotNull<InputList>; aWhileCtor: NotNull<WhileConstructor>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
+    method &While(
+      aInputs: NotNull<InputList>;
+      aWhileCtor: NotNull<WhileConstructor>;
+      aStatus: Status := nil
+      ): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
         var while_params: TF_WhileParams;
@@ -2065,7 +2170,7 @@ type
       fShape := new Shape withDims(dims);
     end;
 
-    constructor (aBytes: ^Void; aDataType: DataType; aNumBytes: Int64; aShp: NotNull<Shape>; aManaged: Boolean); private;
+    constructor(aBytes: ^Void; aDataType: DataType; aNumBytes: Int64; aShp: NotNull<Shape>; aManaged: Boolean); private;
     begin
       fBytes := aBytes;
       fType := aDataType;
@@ -2075,10 +2180,9 @@ type
     end;
 
     /// <summary>
-    /// Move the internal data to a new object, while flagging the old object
-    /// as disposed. This emulates C++/14 move constructor.
+    ///   Move the internal data to a new object, while flagging the old object as disposed.
+    ///   This emulates C++/14 move constructor.
     /// </summary>
-    /// <returns></returns>
     method Move: TensorData;
     begin
       fDisposed := true;
@@ -2225,7 +2329,9 @@ type
       end;
 
       var targetType := typeOf(T);
-      var isTargetTypeValid := (targetType.IsIntegerOrFloat and objType.IsIntegerOrFloat) or (targetType.Is<String> and objType.Is<String>) or (targetType.Is<Boolean> and objType.Is<Boolean>);
+      var isTargetTypeValid := (targetType.IsIntegerOrFloat and objType.IsIntegerOrFloat) or
+                               (targetType.Is<String> and objType.Is<String>) or
+                               (targetType.Is<Boolean> and objType.Is<Boolean>);
 
       if not isTargetTypeValid then begin // Check if the object contains valid value
         raise new ArgumentException($'ObjectToTensor: input dtype={targetType.Name} does not match valuetype={objType.Name}.');
@@ -2425,8 +2531,8 @@ type
     end;
 
     /// <summary>
-    /// Convert tensor data to typed scalar value. If the underlying TensorFlow data
-    /// type does not match the type parameter, no cast will be performed and nil returned.
+    ///   Convert tensor data to typed scalar value. If the underlying TensorFlow data
+    ///   type does not match the type parameter, no cast will be performed and nil returned.
     /// </summary>
     method AsScalar<T>: Tuple of (Boolean, nullable T);
     begin
@@ -2436,7 +2542,10 @@ type
         result := (false, nil);
       end else begin
         if (fData.Type = DataType.String) then begin
-          var str: String := Helper.DecodeString(String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + sizeOf(UInt64)), fData.NumBytes - sizeOf(UInt64)));
+          var str: String := Helper.DecodeString(
+            String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + sizeOf(UInt64)),
+            fData.NumBytes - sizeOf(UInt64))
+            );
           result := (true, T(str));
         end else begin
           var value: T := (^T(fData.Bytes))^;
@@ -2446,8 +2555,8 @@ type
     end;
 
     /// <summary>
-    /// Convert tensor data to typed array. If the underlying TensorFlow data type
-    /// does not match the type parameter, no cast will be performed and nil array returned.
+    ///   Convert tensor data to typed array. If the underlying TensorFlow data type
+    ///   does not match the type parameter, no cast will be performed and nil array returned.
     /// </summary>
     method AsArray<T>: Tuple of (Boolean, array of T);
     begin
@@ -2486,10 +2595,9 @@ type
     end;
 
     /// <summary>
-    /// Convert the tensor data to string array. If the underlying TensorFlow
-    /// data type is TF_STRING, no cast will be performed. Otherwise, numerical
-    /// type will be converted to String according to the specified aDecimalDigits
-    /// parameter.
+    ///   Convert the tensor data to string array. If the underlying TensorFlow data type
+    ///   is TF_STRING, no cast will be performed. Otherwise, numerical type will be converted
+    ///   to String according to the specified aDecimalDigits parameter.
     /// </summary>
     method ConvertDataToStrings(aDecimalDigits: Integer := 1): Tuple of (Boolean, array of String); private;
     begin
@@ -2528,7 +2636,9 @@ type
       result := (assigned(str_arr), str_arr);
     end;
 
-    method Print(aMaxBytesAllowed: Cardinal = 1000) DecimalDigits(aDecimalDigits: Integer = 1) MaxWidth(aMaxWidth: Integer = 8): String;
+    method Print(aMaxBytesAllowed: Cardinal = 1000)
+      DecimalDigits(aDecimalDigits: Integer = 1)
+      MaxWidth(aMaxWidth: Integer = 8): String;
     begin
       const cAllowedTypes = NumericalTypes + [DataType.String, DataType.Bool];
 
@@ -2666,8 +2776,8 @@ type
     end;
 
     /// <summary>
-    /// Close a session. Contacts any other processes associates with session, if
-    /// applicable. May not be called after Dispose.
+    ///   Close a session. Contacts any other processes associates with session, if applicable.
+    ///   May not be called after Dispose.
     /// </summary>
     /// <param name="aStatus">Optional status.</param>
     method CloseSession(aStatus: Status := nil);
@@ -2726,11 +2836,11 @@ type
     end;
 
     /// <summary>
-    /// Creates a session and graph from a model stored in the SavedModel file format.
+    ///   Creates a session and graph from a model stored in the SavedModel file format.
     /// </summary>		
     /// <remarks>
-    /// SavedModel file format, as described here:
-    /// https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/saved_model/README.md
+    ///   SavedModel file format, as described here:
+    ///   https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/saved_model/README.md
     /// </remarks>
     class method LoadFromSavedModel(
       aSessOpts: NotNull<SessionOptions>;
@@ -2739,7 +2849,8 @@ type
       aTags: NotNull<array of String>;
       aGraph: NotNull<Graph>;
       aMetaGraphDef: Buffer;
-      aStatus: Status := nil): Tuple of (Boolean, Session);
+      aStatus: Status := nil
+      ): Tuple of (Boolean, Session);
     begin
       var tags_len := aTags.Length;
       var tags := new ^AnsiChar[tags_len];
@@ -2773,7 +2884,10 @@ type
       exit Graph.Restore(file_pattern, tensor_name, aDataType);
     end;
 
-    method SaveTensors(const aFileName: NotNull<String>; aTensors: NotNull<array of Tuple of (NotNull<String>, NotNull<Output>)>): TensorList;
+    method SaveTensors(
+      const aFileName: NotNull<String>;
+      aTensors: NotNull<array of Tuple of (NotNull<String>, NotNull<Output>)>
+      ): TensorList;
     begin
       var filename := Graph.Const(aFileName);
       var concat_dim := Graph.Const(0);
@@ -3178,7 +3292,10 @@ type
       end;
     end;
 
-    class method ImportFunctionDef(aProto: NotNull<array of Byte>; aStatus: Status := nil): Tuple of (Boolean, TensorFlowFunction);
+    class method ImportFunctionDef(
+      aProto: NotNull<array of Byte>;
+      aStatus: Status := nil
+      ): Tuple of (Boolean, TensorFlowFunction);
     begin
       using lStatus := new Status do begin
         var hnd := TF_FunctionImportFunctionDef(aProto, aProto.Length, lStatus.Handle);
