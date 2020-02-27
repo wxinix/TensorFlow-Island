@@ -485,7 +485,7 @@ namespace TensorFlow.Island.OpGenerator
             P(" ");
             PI("foreach (Operation control in CurrentDependencies) {");
             P("desc.AddControlInput(control);");
-            PD("}\n");       
+            PD("}\n");
 
             // If we have attributes
             if (_requiredAttrs.Count > 0 || _optionalAttrs.Count > 0) {
@@ -499,9 +499,9 @@ namespace TensorFlow.Island.OpGenerator
 
                 foreach (var attr in _optionalAttrs) {
                     var reftype = IsReferenceType(attr.Type);
-                    var csattr = ParamMap(attr.Name);               
+                    var csattr = ParamMap(attr.Name);     
 
-                    if (reftype) {                   
+                    if (reftype) {         
                         PI($"if ({csattr} != null) {{");
                     } else {
                         PI($"if ({csattr}.HasValue) {{");
@@ -517,7 +517,7 @@ namespace TensorFlow.Island.OpGenerator
             P("var (success, op) = desc.FinishOperation(status);");
             PI("if(!success) {");
             P($"throw new OpCreateException withOpType(\"{oper.Name}\") Error(status.Message);");
-            PD("}");       
+            PD("}");
 
             if (oper.OutputArgs.Count() > 0) {
                 P("int _idx = 0;");
