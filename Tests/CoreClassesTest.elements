@@ -44,10 +44,6 @@
     </Reference>
     <Reference Include="gc" />
     <Reference Include="Island" />
-    <Reference Include="RemObjects.Elements.Cirrus">
-      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Echoes\NET\RemObjects.Elements.Cirrus.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
       <HintPath>..\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
