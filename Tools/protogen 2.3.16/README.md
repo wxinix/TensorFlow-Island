@@ -1,4 +1,4 @@
-#ProtoGen
+# ProtoGen
 CLI tool to parse protobuf.proto file to C# based on protobuf-net, also works on Windows/Max/Linux.
 
 - Source : https://github.com/protobuf-net/protobuf-net/tree/master/src/protogen
