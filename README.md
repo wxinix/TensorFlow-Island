@@ -1,8 +1,8 @@
 # TensorFlow-Island
-RemObjects Island platform bindings for TensorFlow C API v1.15.0. Designed for Artifical Intelligence(AI) and Machine Learning(ML) Applications of Intelligent Transport Systems (ITS);
+RemObjects Island platform bindings for TensorFlow C API v1.15.0. Designed for high-performance AI/ML-Integerated Intelligent Transport Systems (ITS) application.;
 
 # CPU-Native Multi-language Multi-Platform Support
-TensorFlow-Island is a high-level abstraction of TensorFlow C-APIs, in several modern languages: Swift, Oxygene, Java, Go and C#.  Tensor-Island is dependent on [RemObjects Elements](https://www.remobjects.com) compilers, which are LLVM-based compilers genenating CPU-native machine code for AI and ML applications on Windows, Linux, and MacOS.
+TensorFlow-Island is a high-level abstraction of TensorFlow C-API, in several modern languages: Swift, Oxygene, Java, Go and C#.  Tensor-Island is dependent on [RemObjects Elements](https://www.remobjects.com) compilers, which are LLVM-based compilers genenating CPU-native machine code for AI and ML applications on Windows, Linux, and MacOS.
 
 The languages (Swift, Oxygene, Java, Go and C#) supported by TensorFlow-Island can be mixed interchangably at source code level. They are all compiled into CPU-native machine code, without dependencies on .NET CLR, JVM, or any virtual machine environment. This perfectly fits the design objectives (see below) of TenorFlow-Island, hence the choice of RemObject compilers.
 
