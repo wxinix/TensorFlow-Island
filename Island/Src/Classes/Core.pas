@@ -2886,14 +2886,12 @@ type
 
     method SaveTensors(
       const aFileName: NotNull<String>;
-      aTensors: NotNull<array of Tuple of (NotNull<String>, NotNull<Output>)>
+      aTensors: NotNull<array of Tuple of (TensorName: NotNull<String>, TensorItem: NotNull<Output>)>
       ): TensorList;
     begin
       var filename := Graph.Const(aFileName);
-      var concat_dim := Graph.Const(0);
-      var concat_values := aTensors.Select(T->Graph.Const(T.Item1)).ToArray;
-      var tensor_names := Graph.Concat(concat_dim, concat_values);
-      var data := aTensors.Select(T->T.Item2).ToArray;
+      var tensor_names := Graph.Concat(Graph.Const(0), aTensors.Select(T->Graph.Const(T.TensorName)).ToArray);
+      var data := aTensors.Select(T->T.TensorItem).ToArray;
       var target := Graph.Save(filename, tensor_names, data);
       result := Runner.AddTarget(target).Run;
     end;
