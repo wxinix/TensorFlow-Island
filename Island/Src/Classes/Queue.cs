@@ -62,49 +62,28 @@ namespace TensorFlow.Island.Classes
             ) : base (session)
         {
             _componentTypes = componentTypes;
-            _handle = Session.Graph.PaddingFIFOQueueV2(
-               componentTypes,
-               shapes,
-               capacity,
-               container,
-               opName);
+            _handle = Session.Graph.PaddingFIFOQueueV2(componentTypes, shapes, capacity, container, opName);
         }
 
         public override Operation Enqueue(Output[] components, long? timeout_ms = null, string opName = null)
         {
-            return Session.Graph.QueueEnqueueV2(
-              _handle,
-              components,
-              timeout_ms,
-              opName);
+            return Session.Graph.QueueEnqueueV2(_handle, components, timeout_ms, opName);
         }
 
         public Tensor[] EnqueueExecute(Output[] components, Tensor[] inputValues, long? timeout_ms = null, string opName = null)
         {
             Operation enqueueOp = Enqueue(components, timeout_ms, opName);
-            return Session
-               .Runner
-               .AddInputs(components, inputValues)
-               .AddTarget(enqueueOp).Run()?.ToArray();
+            return Session.Runner.AddInputs(components, inputValues).AddTarget(enqueueOp).Run()?.ToArray();
         }
 
         public override Output[] Dequeue(long? timeout_ms = null, string opName = null)
         {
-            return Session.Graph.QueueDequeueV2(
-              _handle,
-              _componentTypes,
-              timeout_ms,
-              opName);
+            return Session.Graph.QueueDequeueV2(_handle, _componentTypes, timeout_ms, opName);
         }
 
         public Tensor[] DequeueExecute(long? timeout_ms = null, string opName = null)
         {
-            Output[] values = Session.Graph.QueueDequeueV2 (
-              _handle,
-              _componentTypes,
-              timeout_ms,
-              opName);
-
+            Output[] values = Session.Graph.QueueDequeueV2 (_handle, _componentTypes, timeout_ms, opName);
             return Session.Runner.Run(values)?.ToArray();
         }
 
@@ -112,9 +91,11 @@ namespace TensorFlow.Island.Classes
         {
             var vals = DequeueExecute(timeout_ms, opName).Select(x => x.AsScalar<T>().Item2).ToArray();
             T[] result = new T[vals.Length];
+            
             for (int i = 0; i < vals.Length - 1; i++) {
                 result[i] = vals[i];
             }
+            
             return result;
         }
 

@@ -33,10 +33,10 @@ namespace TensorFlow.Island.Classes
         {
             using (WithScope (MakeName("RandomNormal", opName)) ){
                 var shapeTensor = ConvertShapeToOutput(shape);
-                var tmean = Const(mean, "mean");
-                var tstddev = Const(stddev, "stddev");
                 var (graph, local) = GetRandomSeeds(seed);
                 var rnd = RandomStandardNormal(shapeTensor, DataType.Double, graph, local);
+                var tmean = Const(mean, "mean");
+                var tstddev = Const(stddev, "stddev");
                 var mul = Mul(rnd, tstddev);
                 return Add(mul, tmean);
             }
@@ -46,10 +46,10 @@ namespace TensorFlow.Island.Classes
         {
             using (WithScope(MakeName ("random_uniform", opName))) {
                 var shapeTensor = ConvertShapeToOutput(shape);
-                var minvalTensor = Const(minval, "minval");
-                var maxvalTensor = Const(maxval, "maxval");
                 var (graph, local) = GetRandomSeeds(seed);
                 var rnd = RandomUniform(shapeTensor, DataType.Double, graph, local);
+                var minvalTensor = Const(minval, "minval");
+                var maxvalTensor = Const(maxval, "maxval");
                 var mul = Mul(rnd, Sub(maxvalTensor, minvalTensor));
                 return Add(mul, minvalTensor);
             }
@@ -59,10 +59,10 @@ namespace TensorFlow.Island.Classes
         {
             using (WithScope(MakeName("random_uniform", opName))) {
                 var shapeTensor = ConvertShapeToOutput(shape);
-                var minvalTensor = Const(minval, "minval");
-                var maxvalTensor = Const(maxval, "maxval");
                 var (graph, local) = GetRandomSeeds(seed);
                 var rnd = RandomUniform(shapeTensor, DataType.Float, graph, local);
+                var minvalTensor = Const(minval, "minval");
+                var maxvalTensor = Const(maxval, "maxval");
                 var mul = Mul(rnd, Sub(maxvalTensor, minvalTensor));
                 return Add(mul, minvalTensor);
             }

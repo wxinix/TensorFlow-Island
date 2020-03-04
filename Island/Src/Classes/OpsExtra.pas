@@ -40,13 +40,10 @@ type
     fReadHandle: Output;
     fAssignOp: Operation;
   assembly
-    constructor
-      withResource(aRsc: NotNull<Output>)
-      ReadHandle(aReadHnd: NotNull<Output>)
-      AssignOp(aAssignOp: NotNull<Operation>);
+    constructor withResource(aRsc: NotNull<Output>) ReadHandle(aHnd: NotNull<Output>) AssignOp(aAssignOp: NotNull<Operation>);
     begin
       fAssignOp := aAssignOp;
-      fReadHandle:= aReadHnd;
+      fReadHandle:= aHnd;
       fResource := aRsc; // VariableHandle
     end;
   public
@@ -339,9 +336,9 @@ type
       var expanded_num_dims := num_dims + 1;
 
       if not (-expanded_num_dims <= aAxis < expanded_num_dims) then begin
-        raise new ArgumentOutOfRangeException(
-          $'Stack: axis={aAxis} out of range [{-expanded_num_dims},{expanded_num_dims}).');
+        raise new ArgumentOutOfRangeException($'Stack: axis={aAxis} out of range [{-expanded_num_dims},{expanded_num_dims}).');
       end;
+
       result := Pack(aValues, aAxis, aOpName);
     end;
 
