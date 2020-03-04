@@ -97,7 +97,7 @@ type
       end;
     end;
 
-    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; abstract;
+    method ApplyGradient(aGradientsAndVariables: NotNull<array of GradientAndVariablePair>): OperationList; abstract;
 
     method ComputeGradient(
       aLoss: NotNull<Output>;
@@ -159,7 +159,7 @@ type
       fNesterov := aNesterov;
     end;
 
-    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    method ApplyGradient(aGradientsAndVariables: NotNull<array of GradientAndVariablePair>): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
       result.Add(IncrementIterationsOp);
@@ -210,7 +210,7 @@ type
       inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aName);
     end;
 
-    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    method ApplyGradient(aGradientsAndVariables: NotNull<array of GradientAndVariablePair>): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
       result.Add(IncrementIterationsOp);
@@ -246,7 +246,7 @@ type
       fBeta := Graph.Const(aBeta);
     end;
 
-    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    method ApplyGradient(aGradientsAndVariables: NotNull<array of GradientAndVariablePair>): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
       result.Add(IncrementIterationsOp);
@@ -285,7 +285,7 @@ type
       fBeta_2 := Graph.Const(aBeta_2);
     end;
 
-    method ApplyGradient(aGradientsAndVariables: not nullable array of GradientAndVariablePair): OperationList; override;
+    method ApplyGradient(aGradientsAndVariables: NotNull<array of GradientAndVariablePair>): OperationList; override;
     begin
       result := new OperationList withCapacity(aGradientsAndVariables.Length);
       var accumulators_1 := InitMoments(aGradientsAndVariables);
