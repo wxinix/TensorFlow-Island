@@ -1989,11 +1989,11 @@ type
       result := new Device withDeviceName(fDeviceName) OnRestore(aDeviceName->begin fDeviceName := (aDeviceName as String) end);
 
       if not String.IsNullOrEmpty(fDeviceName) then begin
-        raise new DeviceNameAlreadySetException withExistingName(fDeviceName);
+        raise new DeviceNameException withDuplicateName(fDeviceName);
       end;
 
       if not String.IsNullOrEmpty(aNewDeviceName) then begin
-        raise new DeviceNameEmptyException;
+        raise new DeviceNameException withEmptyName;
       end;
 
       fDeviceName := aNewDeviceName;
@@ -2942,7 +2942,7 @@ type
     fOutputs: OutputList := new OutputList;
     fTargets: OperationList := new OperationList;
     fDisposed: Boolean := false;
-    fPRunToken: PartialRunToken := nil;
+    fPartialRunToken: PartialRunToken := nil;
   protected
     method Dispose(aDisposing: Boolean); override;
     begin
@@ -2957,7 +2957,7 @@ type
         fInputValues.Dispose;
         fOutputs.Dispose;
         fTargets.Dispose;
-        if assigned(fPRunToken) then fPRunToken.Dispose;
+        if assigned(fPartialRunToken) then fPartialRunToken.Dispose;
       end;
 
       inherited Dispose(aDisposing);
@@ -2978,13 +2978,13 @@ type
         result := fInputValues;
       end;
 
-    property PRunToken: PartialRunToken
+    property &PartialRunToken: PartialRunToken
       read begin
-        result := fPRunToken;
+        result := fPartialRunToken;
       end
       write begin
-        if assigned(fPRunToken) then fPRunToken.Dispose;
-        fPRunToken := value;
+        if assigned(fPartialRunToken) then fPartialRunToken.Dispose;
+        fPartialRunToken := value;
       end;
 
     property Targets: OperationList
@@ -3092,7 +3092,7 @@ type
           lStatus.Handle);
 
         if lStatus.Ok then begin
-          fContext.PRunToken := new PartialRunToken withHandle(token_hnd);
+          fContext.PartialRunToken := new PartialRunToken withHandle(token_hnd);
         end else begin
           raise new PartialRunSetupException withError(lStatus.Message);
         end;
@@ -3157,8 +3157,8 @@ type
 
     method PartialRun(aStatus: Status := nil): TensorList;
     begin
-      if not assigned(fContext.PRunToken) then begin
-        raise new PartialRunTokenNotSetupException;
+      if not assigned(fContext.PartialRunToken) then begin
+        raise new PartialRunTokenException;
       end;
 
       using lStatus := new Status do begin
@@ -3170,7 +3170,7 @@ type
         var output_values := new ^TF_Tensor[noutputs];
         var target_opers  := fContext.Targets.Handles;
         var ntargets      := fContext.Targets.Count;
-        var token_hnd     := fContext.PRunToken.Handle;
+        var token_hnd     := fContext.PartialRunToken.Handle;
 
         TF_SessionPRun(
           fSession.Handle,

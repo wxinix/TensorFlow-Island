@@ -26,19 +26,16 @@ uses
   TensorFlow.Island.Api;
 
 type
-  DeviceNameAlreadySetException = public class(Exception)
+  DeviceNameException = public class(Exception)
   public
-    constructor withExistingName(aName: String);
+    constructor withDuplicateName(aName: String);
     begin
-      inherited constructor($'Device name already set with name {aName}.');
+      inherited constructor($'Trying to set device name with duplicate name {aName}.');
     end;
-  end;
 
-  DeviceNameEmptyException = public class(Exception)
-  public
-    constructor;
+    constructor withEmptyName;
     begin
-      inherited constructor('Trying to set device with an empty name.');
+      inherited constructor('Trying to set device name with empty name.');
     end;
   end;
 
@@ -93,11 +90,11 @@ type
     end;
   end;
 
-  PartialRunTokenNotSetupException = public class(Exception)
+  PartialRunTokenException = public class(Exception)
   public
     constructor;
     begin
-      inherited constructor('Error invoking partial run: uninitialized token.');
+      inherited constructor('Partial run has uninitialized token.');
     end;
   end;
 
