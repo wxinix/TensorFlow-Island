@@ -110,18 +110,14 @@ type
     begin
       if aList.Length = 0 then exit nil;
       result := new TF_Output[aList.Length];
-      for I: Integer := 0 to aList.Length - 1 do begin
-        result[I] := aList[I].AsTFOutput;
-      end;
+      for I: Integer := 0 to aList.Length - 1 do result[I] := aList[I].AsTFOutput;
     end;
 
     method ToAnsiCharPtrs(aList: NotNull<array of NotNull<String>>): array of ^AnsiChar;
     begin
       if aList.Length = 0 then exit nil;
       result := new ^AnsiChar[aList.Length];
-      for I: Integer := 0 to aList.Length - 1 do begin
-        result[I] := aList[I].ToAnsiChars(true);
-      end;
+      for I: Integer := 0 to aList.Length - 1 do result[I] := aList[I].ToAnsiChars(true);
     end;
 
     method ToDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): DataType;
@@ -141,8 +137,7 @@ type
         TypeCodes.String : result := DataType.String;
       else
         if aFlag then begin
-          raise new ArgumentException(
-            $'ToDataType cannot convert {aType.Name} to TensorFlow datatype.');
+          raise new ArgumentException($'ToDataType cannot convert {aType.Name} to TensorFlow datatype.');
         end else begin
           result := -1;
         end;
