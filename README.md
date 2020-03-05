@@ -7,7 +7,7 @@ TensorFlow-Island is a high-level abstraction of TensorFlow C-API, in several mo
 The languages (Swift, Oxygene, Java, Go and C#) as supported by TensorFlow-Island can be mixed interchangably at source code level. They are all compiled into CPU-native machine code by the RemObject Elements compiler, without dependencies on .NET CLR, JVM, or any virtual machine environment. This fits the design objectives (see below) of TenorFlow-Island, hence the reason (for the selection of RemObject Elements compiler).
 
 # Inspiration
-TensorFlow-Island is initially inspired by [TensorFlow4Delphi](https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is also infuenced by [TensorFlowSharp](https://github.com/migueldeicaza/TensorFlowSharp),  with our own insights, adjustments, and enhancements.
+TensorFlow-Island is initially inspired by [TensorFlow4Delphi](https://github.com/hartmutdavid/TensorFlow4Delphi). The framework design is also infuenced by [TensorFlowSharp](https://github.com/migueldeicaza/TensorFlowSharp), with new insights, adjustments, and enhancements.
 
 The following diagram illustrates the TensorFlow-Island architecture.
 
