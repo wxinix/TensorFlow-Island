@@ -10,6 +10,8 @@ Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Classes", "Projects\Classes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpGenerator", "Projects\OpGenerator\OpGenerator.csproj", "{700E5928-3D5D-4B54-AD4D-BC48E79E389E}"
 EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Vissim", "Projects\Vissim\Vissim.elements", "{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
@@ -38,6 +40,10 @@ Global
 		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Release|AnyCPU.ActiveCfg = Release|Any CPU
 		{700E5928-3D5D-4B54-AD4D-BC48E79E389E}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Debug|AnyCPU.ActiveCfg = Debug
+		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Debug|AnyCPU.Build.0 = Debug
+		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Release|AnyCPU.ActiveCfg = Release
+		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Release|AnyCPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
