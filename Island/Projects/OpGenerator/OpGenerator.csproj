@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{700E5928-3D5D-4B54-AD4D-BC48E79E389E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>OpGenerator</RootNamespace>
+    <RootNamespace>TensorFlow.Island.OpGenerator</RootNamespace>
     <AssemblyName>OpGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <ReleaseVersion>0.2</ReleaseVersion>
