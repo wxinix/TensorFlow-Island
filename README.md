@@ -31,4 +31,4 @@ The difference between TensorFlow-Island and other wellknown TensorFlow bindings
 TensorFlow Island requires the RemObjects Elements compiler. For commmercial, open-source, or academic applications, please contact [RemObjects](https://www.elementscompiler.com/elements/) for different licensing options.
 
 # License
-MIT License (c) 2019-2020. Copywright [Wuping Xin](wupingxin.net) and [KLD Engineering, P. C.](www.kldcompanies.com) 
+MIT License (c) 2019-2020. Copyright [Wuping Xin](wupingxin.net) and [KLD Engineering, P. C.](www.kldcompanies.com) 
