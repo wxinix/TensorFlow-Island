@@ -81,7 +81,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(data[0,2], 3);
         }
 
-        public void Can_Tensor_With_String()
+        public void Can_Create_Tensor_With_String()
         {
             Tensor tensor = "MySuperCoolTensorFlowApp";
             var (success, str) = tensor.AsScalar<String>();
