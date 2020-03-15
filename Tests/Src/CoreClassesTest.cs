@@ -52,14 +52,14 @@ namespace TensorFlow.Island.Tests
 
         }
 
-        public void When_ReferencingDisposedObject_Expect_ObjectDisposedException()
+        public void Will_Raise_ObjectDisposedException_On_Referencing_Disposed_Object()
         {
             Shape shp = {1, 5, 10};
             shp.Dispose();
        	    Assert.Throws(()=>shp.NumDims, typeof(ObjectDisposedException));
         }
 
-        public void When_UsingInvalidShapeDimIndex_Expect_InvalidShapeDimIndexExpection()
+        public void Will_Raise_ArgumentOutOfRangeException_On_Using_Invalid_Shape_Dim_Index()
         {
             Shape shp = {1, 5, 10};
             Assert.AreEqual(shp.NumDims, 3);
@@ -69,7 +69,7 @@ namespace TensorFlow.Island.Tests
             Assert.Throws(()=>shp.Dim[5], typeof(ArgumentOutOfRangeException));
         }
 
-        public void When_CreatingTensorWith2DArray_Expect_Created()
+        public void Can_Create_Tensor_With_2DArray()
         {
             Tensor tensor = {{1,2,3},{4,5,6}};
             Assert.AreEqual(tensor.Data.Type, DataType.Int32);
@@ -81,7 +81,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(data[0,2], 3);
         }
 
-        public void When_CreatingTensorWithString_Expect_Created()
+        public void Can_Tensor_With_String()
         {
             Tensor tensor = "MySuperCoolTensorFlowApp";
             var (success, str) = tensor.AsScalar<String>();
@@ -89,7 +89,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(str, "MySuperCoolTensorFlowApp");
         }
 
-        public void When_CreatingTensorWithStrings_Expect_Created()
+        public void Can_Create_Tensor_With_Strings()
         {
             Tensor tensor = {"Hello", "World", "TensorFlow"};
             var (success, strs) = tensor.AsArray<String>();
@@ -100,7 +100,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(strs[2], "TensorFlow");
         }
 
-        public void When_GettingTensorInfo_Expect_Success()
+        public void Can_Get_Tensor_Info()
         {
             var session = new Session(); 
             var output = session.Graph.Const(1L);
@@ -116,7 +116,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(str, "Tensor (\"Const_2: 0\", shape=TensorShape([Dimension(1), Dimension(2)]), dtype=Int32)"); 
        }
 
-        public void When_PrintingTensorWithInt32Values_Expect_Success()
+        public void Can_Print_Tensor_With_Int32_Values()
         {
             Tensor tensor = {{1,2,3},{4,5,6},{7,8,9}};
             var print_str = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
@@ -127,7 +127,7 @@ namespace TensorFlow.Island.Tests
             Assert.AreEqual(print_str, validation_str);
         }
 
-        public void When_PrintingTensorWithBoolValues_Expect_Success()
+        public void Can_Print_Tensor_With_Bool_Values()
         {
             Tensor tensor = {{true,false,true},{false,false,false},{true,true,true}};
             var print_str = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
