@@ -52,14 +52,14 @@ namespace TensorFlow.Island.Tests
 
         }
 
-        public void Will_Raise_ObjectDisposedException_On_Referencing_Disposed_Object()
+        public void Will_Raise_ObjectDisposedException_On_Disposed_Object()
         {
             Shape shp = {1, 5, 10};
             shp.Dispose();
        	    Assert.Throws(()=>shp.NumDims, typeof(ObjectDisposedException));
         }
 
-        public void Will_Raise_ArgumentOutOfRangeException_On_Using_Invalid_Shape_Dim_Index()
+        public void Will_Raise_ArgumentOutOfRangeException_On_Invalid_ShapeDim()
         {
             Shape shp = {1, 5, 10};
             Assert.AreEqual(shp.NumDims, 3);
@@ -119,23 +119,23 @@ namespace TensorFlow.Island.Tests
         public void Can_Print_Tensor_With_Int32_Values()
         {
             Tensor tensor = {{1,2,3},{4,5,6},{7,8,9}};
-            var print_str = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
-            const string validation_str =
+            var printStr = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
+            const string validationStr =
                 "[ [     1     2     3]  " + '\n' +
                 "  [     4     5     6]  " + '\n' +
                 "  [     7     8     9] ]";
-            Assert.AreEqual(print_str, validation_str);
+            Assert.AreEqual(printStr, validationStr);
         }
 
         public void Can_Print_Tensor_With_Bool_Values()
         {
             Tensor tensor = {{true,false,true},{false,false,false},{true,true,true}};
-            var print_str = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
-            const string validation_str =
+            var printStr = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
+            const string validationStr =
                 "[ [  True False  True]  " + '\n' +
                 "  [ False False False]  " + '\n' +
                 "  [  True  True  True] ]";
-            Assert.AreEqual(print_str, validation_str);
+            Assert.AreEqual(printStr, validationStr);
         }
     }
 }

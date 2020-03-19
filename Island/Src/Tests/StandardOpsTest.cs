@@ -52,58 +52,63 @@ namespace TensorFlow.Island.Tests
 
         }
 
-        public void Add_X_As_12_And_Y_As_19_Calculated()
+        public void Add_Scalars()
         {
-            var lGraph = m_session.Graph;
-            var input_x = lGraph.Const(12);
-            var input_y = lGraph.Const(19);
-            var output_sum = lGraph.Add(input_x, input_y);
-            Tensor tensor_sum = m_session.Runner.Run(output_sum);
-            var (success, sum_value) = tensor_sum.AsScalar<Integer>();
+            var g = m_session.Graph;
+            var x = g.Const(12);
+            var y = g.Const(19);
+            var addOutput = g.Add(x, y);
+            Tensor addResult = m_session.Runner.Run(addOutput);
+            var (success, sum) = addResult.AsScalar<Integer>();
             Assert.IsTrue(success);
-            Assert.AreEqual(sum_value, 12 + 19);
+            Assert.AreEqual(sum, 12 + 19);
         }
 
-        public void Fill_2X3_Vector_With_Value_9_Calculated()
+        public void Fill_1X2_Vector_With_Value_9()
         {
-            var lGraph = m_session.Graph;
-            var output_fill = lGraph.Fill(lGraph.Const({2,3}), lGraph.Const(9));
-            Tensor tensor_fill = m_session.Runner.Run(output_fill);
-            Assert.AreEqual(tensor_fill.Data.Shape.NumDims, 2);
-            Assert.AreEqual(tensor_fill.Data.Shape.Dim[0], 2);
-            Assert.AreEqual(tensor_fill.Data.Shape.Dim[1], 3);
-            Assert.AreEqual(tensor_fill.Data.NumBytes, 2 * 3 * sizeOf(Integer));
+            var g = m_session.Graph;
+            var dims = g.Const({2,3});
+            var value = g.Const(9);
+            var fillOutput = g.Fill(dims, value);
+            Tensor fillResult = m_session.Runner.Run(fillOutput);
+            Assert.AreEqual(fillResult.Data.Shape.NumDims, 2);
+            Assert.AreEqual(fillResult.Data.Shape.Dim[0], 2);
+            Assert.AreEqual(fillResult.Data.Shape.Dim[1], 3);
+            Assert.AreEqual(fillResult.Data.NumBytes, 2 * 3 * sizeOf(Integer));
             // With explicit initial values, data is int[2,3] static array;
             // Without explicit initial values, data is dynamic array int[2][3]
             var data = new int[2,3] {{0,0,0},{0,0,0}};  
             // If data is static array, we can do a continuous mem copy below.
             // If dynamic array, we can NOT do continuous mem copy.
-            memcpy(&data[0,0], tensor_fill.Data.Bytes, tensor_fill.Data.NumBytes);
+            memcpy(&data[0,0], fillResult.Data.Bytes, fillResult.Data.NumBytes);
             Assert.AreEqual(data[1, 2], 9);
         }
 
-        public void Negate_X_As_1X3_Vector_Caculated()
+        public void Negate_1X3_Vector()
         {
-            var lGraph = m_session.Graph;
-            var input_x = lGraph.Const({1, 2, 3});
-            var output_neg = lGraph.Neg(input_x);
-            Tensor tensor_neg = m_session.Runner.Run(output_neg);
-            var (success, values) = tensor_neg.AsArray<int>();
+            var g = m_session.Graph;
+            var x = g.Const({1, 2, 3});
+            var negOutput = g.Neg(x);
+            Tensor negResult = m_session.Runner.Run(negOutput);
+            var (success, values) = negResult.AsArray<int>();
             Assert.IsTrue(success);
             Assert.AreEqual(values[0], -1);
             Assert.AreEqual(values[1], -2);
             Assert.AreEqual(values[2], -3);
         }
 
-        public void Inv_X_As_1X3_Vector_Caculated()
+        public void Inv_1X3_Vector()
         {
-            var lGraph = m_session.Graph;
-            var input_x = lGraph.Const({1.0, 2.0, 3.0}); // will default to double type.
-            var output_inv = lGraph.Inv(input_x);
-            Tensor tensor_inv = m_session.Runner.Run(output_inv);
+            var g = m_session.Graph;
+            var x = g.Const({1.0, 2.0, 3.0}); // will default to double type.
+            var invOutput = g.Inv(x);
+            Tensor tensor_inv = m_session.Runner.Run(invOutput);
             var (success, values) = tensor_inv.AsArray<double>();
             Assert.IsTrue(success);
             Assert.AreEqual(values.Length, 3);
+            Assert.AreEqual(values[0], 1.0);
+            Assert.AreEqual(values[1], 1.0/2.0);
+            Assert.AreEqual(values[2], 1.0/3.0);
         }
     }
 }
