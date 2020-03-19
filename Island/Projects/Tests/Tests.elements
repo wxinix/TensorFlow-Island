@@ -1,37 +1,37 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <RootNamespace>TensorFlow.Island.Tests</RootNamespace>
     <ProjectGuid>{49dbead5-5983-42d8-b7e2-2fe215653756}</ProjectGuid>
     <OutputType>Executable</OutputType>
-    <AssemblyName>CoreClassesTest</AssemblyName>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>CoreClassesTest</Name>
+    <Name>Tests</Name>
     <Architecture>x86_64</Architecture>
-    <OutputPath>..\Bin\$(Configuration)</OutputPath>
+    <OutputPath>..\..\Bin\Tests\$(Configuration)</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>.\Bin\</OutputPath>
+    <OutputPath>..\..\Bin\Tests\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <GenerateDebugInfo>True</GenerateDebugInfo>
     <CpuType>x86</CpuType>
     <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <AssemblyName>CoreClassesTest</AssemblyName>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <RootNamespace>TensorFlow.Island.Tests</RootNamespace>
     <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
     <EnableInlining>False</EnableInlining>
     <ExportAllTypes>True</ExportAllTypes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>.\Bin\</OutputPath>
+    <OutputPath>..\..\Bin\Tests</OutputPath>
     <CpuType>x86</CpuType>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <Architecture>x86_64</Architecture>
-    <AssemblyName>CoreClassesTest</AssemblyName>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <RootNamespace>TensorFlow.Island.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Elements">
@@ -46,24 +46,34 @@
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>..\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TensorFlow.Island.Classes">
-      <HintPath>C:\DEVLIBS\TensorFlow-Island\Island\Libs\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Src\Program.cs">
+    <Folder Include="..\..\Src\Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Src\Tests\CoreClassesTest.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Src\CoreClassesTest.cs">
-      <SubType>Code</SubType>
+      <Link>..\..\Src\Utils\CoreClassesTest.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Src\" />
+    <Compile Include="..\..\Src\Tests\Program.cs">
+      <SubType>Code</SubType>
+      <Link>..\..\Src\Utils\Program.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Src\Tests\StandardOpsTest.cs">
+      <SubType>Code</SubType>
+      <Link>..\..\Src\Utils\StandardOpsTest.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>
