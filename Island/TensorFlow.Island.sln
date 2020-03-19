@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpGenerator", "Projects\OpG
 EndProject
 Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Vissim", "Projects\Vissim\Vissim.elements", "{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}"
 EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Tests", "Projects\Tests\Tests.elements", "{49DBEAD5-5983-42D8-B7E2-2FE215653756}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
@@ -45,6 +47,13 @@ Global
 		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Debug|AnyCPU.Deploy.0 = Debug
 		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Release|AnyCPU.ActiveCfg = Release
 		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Release|AnyCPU.Build.0 = Release
+		{88BBA985-56D9-4FE8-B4DB-4ACEA3B5AE2C}.Release|AnyCPU.Deploy.0 = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.ActiveCfg = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.Build.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Debug|AnyCPU.Deploy.0 = Debug
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.ActiveCfg = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.Build.0 = Release
+		{49DBEAD5-5983-42D8-B7E2-2FE215653756}.Release|AnyCPU.Deploy.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
