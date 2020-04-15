@@ -2322,23 +2322,28 @@ type
     class method ObjectToTensor<T>(aValue: NotNull<Object>; aShape: NotNull<Shape>): Tensor;
     begin
       var objType := aValue.GetType;
-      var isObjTypeValid := objType.IsIntegerOrFloat or objType.Is<String> or objType.Is<Boolean>;
-
-      if not isObjTypeValid then begin // Check if the object contains valid value
-        raise new ArgumentException($'ObjectToTensor: invalid input type={objType.Name}.');
-      end;
+      ()->begin
+        var isObjTypeValid :=
+          objType.IsIntegerOrFloat or
+          objType.Is<String> or
+          objType.Is<Boolean>;
+        if not isObjTypeValid then begin // Check if the object contains valid value
+          raise new ArgumentException($'ObjectToTensor: invalid input type={objType.Name}.');
+        end;
+      end();
 
       var targetType := typeOf(T);
-      var isTargetTypeValid := (targetType.IsIntegerOrFloat and objType.IsIntegerOrFloat) or
-                               (targetType.Is<String> and objType.Is<String>) or
-                               (targetType.Is<Boolean> and objType.Is<Boolean>);
-
-      if not isTargetTypeValid then begin // Check if the object contains valid value
-        raise new ArgumentException($'ObjectToTensor: input dtype={targetType.Name} does not match valuetype={objType.Name}.');
-      end;
+      ()->begin
+        var isTargetTypeValid :=
+          (targetType.IsIntegerOrFloat and objType.IsIntegerOrFloat) or
+          (targetType.Is<String> and objType.Is<String>) or
+          (targetType.Is<Boolean> and objType.Is<Boolean>);
+        if not isTargetTypeValid then begin // Check if the object contains valid value
+          raise new ArgumentException($'ObjectToTensor: input dtype={targetType.Name} does not match valuetype={objType.Name}.');
+        end;
+      end();
 
       var targetVal: T;
-
       if targetType.IsIntegerOrFloat then begin
         targetVal := T(Convert.ToDouble(aValue));
       end else begin
