@@ -1382,8 +1382,7 @@ type
         if (fNumDims > 0) and (0 <= aIndex < fNumDims) then begin
           result := fDims[aIndex]
         end else begin
-          raise new ArgumentOutOfRangeException(
-            $'Accessing a Shape[num_dims={fNumDims}] dimension with invalid index {aIndex}.');
+          raise new ArgumentOutOfRangeException($'Accessing shape[num_dims={fNumDims}] dimension with invalid index {aIndex}.');
         end;
       end;
 
@@ -2581,7 +2580,6 @@ type
                 (offsets[I + 1] - offsets[I])
               else
                 (fData.NumBytes - offsets[I]);
-
             var str := String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + offsets[I]), nbytes);
             str := Helper.DecodeString(str);
             str_list.Add(str);
