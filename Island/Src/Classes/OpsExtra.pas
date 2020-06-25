@@ -280,7 +280,8 @@ type
       aInput: NotNull<Output>;
       aAxis: Output := nil;
       aKeepDims: Boolean := false;
-      aOpName: String := nil): Output;
+      aOpName: String := nil
+	  ): Output;
     begin
       if (aInput.OutputType = DataType.Bool) then begin
         aInput := NotNull<Output> (Cast(aInput, DataType.Int8));
