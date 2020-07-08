@@ -52,7 +52,7 @@ type
   public
     constructor withDetectedOsBitSize(aSize: Integer);
     begin
-      inherited constructor($'The system support 64bit only. {aSize}bit detected.');
+      inherited constructor($'Supports 64bit system only. {aSize}bit system detected.');
     end;
   end;
 
