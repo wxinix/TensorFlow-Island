@@ -35,7 +35,6 @@ uses
       if fs.Length < 1 then exit nil;
       var data := malloc(fs.Length);
       fs.Read(data, fs.Length);
-      
       result := TF_NewBuffer();
       result^.data := data;
       result^.length := fs.Length;
@@ -67,14 +66,14 @@ uses
 
     var session: ^TF_Session := nil;
     var checkpointTensor: ^TF_Tensor := nil;
-    
+
     try
       result := TF_NewGraph();
       var opts := TF_NewImportGraphDefOptions();
       TF_GraphImportGraphDef(result, buffer, opts, aStatus);
       TF_DeleteImportGraphDefOptions(opts);
-      TF_DeleteBuffer(buffer);      
-      
+      TF_DeleteBuffer(buffer);
+
       var code := TF_GetCode(aStatus);
       if code <> TF_Code.TF_OK then begin
         TF_DeleteGraph(result);
@@ -91,7 +90,7 @@ uses
       end;
 
       var input: TF_Output := new TF_Output(
-        oper := TF_GraphOperationByName(result, String('save/Const').ToAnsiChars(true)), 
+        oper := TF_GraphOperationByName(result, String('save/Const').ToAnsiChars(true)),
         index := 0);
 
       var restoreOp := TF_GraphOperationByName(result, String('save/restore_all').ToAnsiChars(true));
@@ -155,7 +154,7 @@ uses
       end;
 
       result := TF_NewSession(aGraph, aOptions, aStatus);
-      if TF_GetCode(aStatus) <> TF_Code.TF_OK then begin   
+      if TF_GetCode(aStatus) <> TF_Code.TF_OK then begin
         DeleteSession(result);
         exit nil;
       end;
@@ -201,21 +200,21 @@ uses
   end;
 
   method RunSession(
-    aSession: ^TF_Session; 
-    const aInputs: ^TF_Output; 
-    const aInputTensors: array of ^TF_Tensor; 
-    aInputSize: Int32; 
-    const aOutputs: ^TF_Output; 
-    aOutputTensors: array of ^TF_Tensor; 
-    aOutputSize: Int32; 
+    aSession: ^TF_Session;
+    const aInputs: ^TF_Output;
+    const aInputTensors: array of ^TF_Tensor;
+    aInputSize: Int32;
+    const aOutputs: ^TF_Output;
+    aOutputTensors: array of ^TF_Tensor;
+    aOutputSize: Int32;
     aStatus: ^TF_Status = nil
     ): TF_Code;
   begin
-    if not assigned(aSession)      or 
-       not assigned(aInputs)       or 
-       not assigned(aInputTensors) or 
-       not assigned(aOutputs)      or 
-       not assigned(aOutputTensors) 
+    if not assigned(aSession)      or
+       not assigned(aInputs)       or
+       not assigned(aInputTensors) or
+       not assigned(aOutputs)      or
+       not assigned(aOutputTensors)
     then begin
       exit TF_Code.TF_INVALID_ARGUMENT;
     end;
@@ -247,16 +246,16 @@ uses
   end;
 
   method RunSession(
-    aSession: ^TF_Session; 
-    const aInputs: List<TF_Output>; 
-    const aInputTensors: List<^TF_Tensor>; 
-    const aOutputs: List<TF_Output>; 
-    aOutputTensors: List<^TF_Tensor>; 
+    aSession: ^TF_Session;
+    const aInputs: List<TF_Output>;
+    const aInputTensors: List<^TF_Tensor>;
+    const aOutputs: List<TF_Output>;
+    aOutputTensors: List<^TF_Tensor>;
     aStatus: ^TF_Status := nil
     ): TF_Code;
   begin
     var outputTensors := aOutputTensors.ToArray;
-    
+
     result := RunSession(
       aSession,
       aInputs.ToArray,
@@ -266,16 +265,16 @@ uses
       outputTensors,
       aOutputTensors.Count,
       aStatus);
-  
+
     aOutputTensors.Clear;
     aOutputTensors.AddRange(outputTensors);
   end;
 
   method CreateTensor(
-    aDataType: TF_DataType; 
-    const aDims: array of int64_t; 
-    aDimsSize: Int32; 
-    const aData: ^Void; 
+    aDataType: TF_DataType;
+    const aDims: array of int64_t;
+    aDimsSize: Int32;
+    const aData: ^Void;
     aDataByteSize: UInt64
     ): ^TF_Tensor;
   begin
@@ -298,7 +297,7 @@ uses
   method CreateTensor<T>(aDataType: TF_DataType; const aDims: List<int64_t>; const aData: List<T>): ^TF_Tensor;
   begin
     result := CreateTensor(
-      aDataType, 
+      aDataType,
       aDims.ToArray,
       aDims.Count,
       aData.ToArray,
@@ -306,16 +305,13 @@ uses
   end;
 
   method CreateEmptyTensor(
-    aDataType: TF_DataType; 
-    aDims: array of int64_t; 
-    aDimSize: Int32; 
+    aDataType: TF_DataType;
+    aDims: array of int64_t;
+    aDimSize: Int32;
     aDataByteSize: UInt64 := 0
     ): ^TF_Tensor;
   begin
-    if not assigned(aDims) then begin
-      exit nil;
-    end;
-    
+    if not assigned(aDims) then exit nil;
     result := TF_AllocateTensor(aDataType, aDims, aDimSize, aDataByteSize);
   end;
 
@@ -326,9 +322,7 @@ uses
 
   method DeleteTensor(aTensor: ^TF_Tensor);
   begin
-    if assigned(aTensor) then begin
-      TF_DeleteTensor(aTensor);
-    end;
+    if assigned(aTensor) then TF_DeleteTensor(aTensor);
   end;
 
   method DeleteTensors(const aTensors: List<^TF_Tensor>);
@@ -340,11 +334,8 @@ uses
   begin
     var tensorData := TF_TensorData(aTensor);
     aDataByteSize := Math.Min(aDataByteSize, TF_TensorByteSize(aTensor));
-    
-	  if assigned(tensorData) and
-        assigned(aData)      and 
-       (aDataByteSize > 0) 
-    then begin
+
+	  if assigned(tensorData) and assigned(aData) and (aDataByteSize > 0) then begin
       memcpy(tensorData, aData, aDataByteSize);
       exit true;
     end else begin
@@ -360,13 +351,11 @@ uses
   method GetTensorData<T>(const aTensor: ^TF_Tensor): List<T>;
   begin
     var tensorDataTypeSize := TF_DataTypeSize(TF_TensorType(aTensor));
-    
-    if (sizeOf(T) <> tensorDataTypeSize) or 
-       not assigned(TF_TensorData(aTensor)) 
-    then begin
+
+    if (sizeOf(T) <> tensorDataTypeSize) or not assigned(TF_TensorData(aTensor)) then begin
       exit nil;
     end;
-    
+
     var size := TF_TensorByteSize(aTensor) / tensorDataTypeSize;
     var data: array of T := new T[size];
     memcpy(data, TF_TensorData(aTensor), TF_TensorByteSize(aTensor));
@@ -376,28 +365,21 @@ uses
   method GetTensorData<T>(const aTensors: List<^TF_Tensor>): List<List<T>>;
   begin
     result := new List<List<T>>(aTensors.Count);
-    for tensor in aTensors do begin
-      result.Add(GetTensorData<T>(tensor));
-    end
+    for tensor in aTensors do result.Add(GetTensorData<T>(tensor));
   end;
 
   method GetTensorShape(aGraph: ^TF_Graph; const var aOutput: TF_Output): List<int64_t>;
   begin
     result := new List<int64_t>;
     var status := TF_NewStatus();
-    
+
     try
       var numdims := TF_GraphGetTensorNumDims(aGraph, aOutput, status);
-      if (TF_GetCode(status) <> TF_Code.TF_OK) then begin
-        exit;
-      end;
-      
+      if (TF_GetCode(status) <> TF_Code.TF_OK) then exit;
+
       var data: array of int64_t := new int64_t[numdims];
       TF_GraphGetTensorShape(aGraph, aOutput, data, numdims, status);
-      if (TF_GetCode(status) <> TF_Code.TF_OK) then begin 
-        exit;
-      end;
-      
+      if (TF_GetCode(status) <> TF_Code.TF_OK) then exit;
       result.AddRange(data);
     finally
       TF_DeleteStatus(status);
@@ -407,9 +389,7 @@ uses
   method GetTensorShape(aGraph: ^TF_Graph; const aOutputs: List<TF_Output>): List<List<int64_t>>;
   begin
     result := new List<List<int64_t>>(aOutputs.Count);
-    for output in aOutputs do begin
-      result.Add(GetTensorShape(aGraph, output));
-    end;
+    for output in aOutputs do result.Add(GetTensorShape(aGraph, output));
   end;
 
   method CreateSessionOptions(aGpuMemoryFraction: Double; aStatus: ^TF_Status := nil): ^TF_SessionOptions;
@@ -426,7 +406,7 @@ uses
       // config = tf.ConfigProto( allow_soft_placement = True )
       // config.gpu_options.allow_growth = True
       // config.gpu_options.per_process_gpu_memory_fraction = percentage
-      // Create a byte-array for the serialized ProtoConfig, set the mandatory 
+      // Create a byte-array for the serialized ProtoConfig, set the mandatory
       // bytes (first three and last four)
       var config: array[0..14] of uint8_t := [$32, $b, $9, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $20, $1, $38, $1];
       var bytes := (^uint8_t)(@aGpuMemoryFraction);
@@ -445,8 +425,8 @@ uses
   end;
 
   method CreateSessionOptions(
-    aIntraOpParallelismThreads: uint8_t; 
-    aInterOpParallelismThreads: uint8_t; 
+    aIntraOpParallelismThreads: uint8_t;
+    aInterOpParallelismThreads: uint8_t;
     aStatus: ^TF_Status := nil
     ): ^TF_SessionOptions;
   begin
@@ -457,9 +437,9 @@ uses
     end;
 
     try
-      result := TF_NewSessionOptions();      
+      result := TF_NewSessionOptions();
       var config: array[0..3] of uint8_t := [$10, aIntraOpParallelismThreads, $28, aInterOpParallelismThreads];
-      
+
       TF_SetConfig(result, config, length(config), aStatus);
       if (TF_GetCode(aStatus) <> TF_Code.TF_OK) then begin
         TF_DeleteSessionOptions(result);
@@ -527,7 +507,7 @@ uses
   method CodeToString(aCode: TF_Code): String;
   begin
     case aCode of
-      TF_Code.TF_OK: 
+      TF_Code.TF_OK:
         exit 'TF_OK';
       TF_Code.TF_CANCELLED:
         exit 'TF_CANCELLED';
@@ -595,14 +575,14 @@ uses
         writeLn(' []');
         continue;
       end;
-      
+
       var dataType := TF_OperationOutputType(output);
       var dims: array of int64_t := new int64_t[numDims];
       write($' Output:{i} type:{DataTypeToString(dataType)}');
       TF_GraphGetTensorShape(aGraph, output, dims, numDims, aStatus);
-      
+
       if TF_GetCode(aStatus) <> TF_Code.TF_OK then begin
-        writeLn('Cannot get tensor shape.');        
+        writeLn('Cannot get tensor shape.');
       end else begin
         write(' [');
         for d: Integer := 0 to numDims - 1 do begin
@@ -626,11 +606,11 @@ uses
     var numInputs := TF_OperationNumInputs(op);
     var numOutputs := TF_OperationNumOutputs(op);
     writeLn($' inputs:{numInputs} outputs:{numOutputs}');
-    
+
     try
       PrintInputs(aGraph, op);
       PrintOutputs(aGraph, op, aStatus);
-    except 
+    except
       on E: Exception do
         writeLn(E.Message);
     end;
@@ -654,7 +634,7 @@ uses
         $"device:{String.FromPAnsiChars(device)} " +
         $"numberInputs:{numInputs} "               +
         $"numberOutputs:{numOutputs} ");
-      
+
       PrintInputs(aGraph, op);
       PrintOutputs(aGraph, op, aStatus);
       writeLn('');
