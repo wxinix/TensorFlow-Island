@@ -32,10 +32,7 @@ uses
   method ReadBufferFromFile(const aFile: not nullable String): ^TF_Buffer;
   begin
     using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
-      if fs.Length < 1 then begin
-        exit nil;
-      end;
-      
+      if fs.Length < 1 then exit nil;
       var data := malloc(fs.Length);
       fs.Read(data, fs.Length);
       
@@ -58,14 +55,9 @@ uses
 
   method LoadGraph(const aGraphPath: String; const aCheckPointPrefix: String; aStatus: ^TF_Status := nil): ^TF_Graph;
   begin
-    if not File.Exists(aGraphPath) then begin
-      exit nil;
-    end;
-    
+    if not File.Exists(aGraphPath) then exit nil;
     var buffer := ReadBufferFromFile(aGraphPath);
-    if not assigned(buffer) then begin
-      exit nil;
-    end;
+    if not assigned(buffer) then exit nil;
 
     var deleteStatus := false;
     if not assigned(aStatus) then begin
@@ -89,13 +81,11 @@ uses
         exit nil;
       end;
 
-      if String.IsNullOrEmpty(aCheckPointPrefix) then begin 
-        exit;
-      end;
+      if String.IsNullOrEmpty(aCheckPointPrefix) then exit;
 
       checkpointTensor := ScalarStringTensor(aCheckPointPrefix.ToAnsiChars(true), aStatus);
       code := TF_GetCode(aStatus);
-      if  code <> TF_Code.TF_OK then begin
+      if code <> TF_Code.TF_OK then begin
         TF_DeleteGraph(result);
         exit nil;
       end;
@@ -145,9 +135,7 @@ uses
 
   method DeleteGraph(aGraph: ^TF_Graph);
   begin
-    if assigned(aGraph) then begin
-      TF_DeleteGraph(aGraph);
-    end;
+    if assigned(aGraph) then TF_DeleteGraph(aGraph);
   end;
 
   method CreateSession(aGraph: ^TF_Graph; aOptions: ^TF_SessionOptions; aStatus: ^TF_Status = nil): ^TF_Session;
@@ -184,9 +172,7 @@ uses
 
   method DeleteSession(aSession: ^TF_Session; aStatus: ^TF_Status := nil): TF_Code;
   begin
-    if not assigned(aSession) then begin
-      exit(TF_Code.TF_INVALID_ARGUMENT);
-    end;
+    if not assigned(aSession) then exit(TF_Code.TF_INVALID_ARGUMENT);
 
     var deleteStatus := false;
     if not assigned(aStatus) then begin
@@ -225,10 +211,10 @@ uses
     aStatus: ^TF_Status = nil
     ): TF_Code;
   begin
-    if not assigned(aSession) or 
-       not assigned(aInputs) or 
+    if not assigned(aSession)      or 
+       not assigned(aInputs)       or 
        not assigned(aInputTensors) or 
-       not assigned(aOutputs) or 
+       not assigned(aOutputs)      or 
        not assigned(aOutputTensors) 
     then begin
       exit TF_Code.TF_INVALID_ARGUMENT;
@@ -294,9 +280,7 @@ uses
     ): ^TF_Tensor;
   begin
     result := CreateEmptyTensor(aDataType, aDims, aDimsSize, aDataByteSize);
-    if not assigned(result) then begin
-      exit;
-    end;
+    if not assigned(result) then exit;
 
     var tensorData := TF_TensorData(result);
     if not assigned(tensorData) then begin
@@ -357,8 +341,8 @@ uses
     var tensorData := TF_TensorData(aTensor);
     aDataByteSize := Math.Min(aDataByteSize, TF_TensorByteSize(aTensor));
     
-	  if assigned(tensorData) and 
-       assigned(aData) and 
+	  if assigned(tensorData) and
+        assigned(aData)      and 
        (aDataByteSize > 0) 
     then begin
       memcpy(tensorData, aData, aDataByteSize);
