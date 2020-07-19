@@ -26,14 +26,14 @@ uses
 
   method DeallocateBuffer(aData: ^Void; aSize: UInt64);
   begin
-    free(aData);
+    ExternalCalls.free(aData);
   end;
 
   method ReadBufferFromFile(const aFile: not nullable String): ^TF_Buffer;
   begin
     using fs := new FileStream(aFile, FileMode.Open, FileAccess.Read) do begin
       if fs.Length < 1 then exit nil;
-      var data := malloc(fs.Length);
+      var data := ExternalCalls.malloc(fs.Length);
       fs.Read(data, fs.Length);
       result := TF_NewBuffer();
       result^.data := data;

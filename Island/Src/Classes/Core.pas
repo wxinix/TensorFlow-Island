@@ -328,7 +328,7 @@ type
   public
     class method DeallocateBuffer(aData: ^Void; aSize: UInt64);
     begin
-      free(aData);
+      ExternalCalls.free(aData);
     end;
 
     constructor withProtoFile(aFile: NotNull<String>);
@@ -356,7 +356,7 @@ type
     constructor withData(aData: ^Void) NumBytes(aNumBytes: UInt64);
     begin
       fNumBytes := aNumBytes;
-      fData := malloc(fNumBytes);
+      fData := ExternalCalls.malloc(fNumBytes);
       memcpy(fData, aData, fNumBytes);
 
       var hnd := TF_NewBuffer();
@@ -2130,7 +2130,7 @@ type
       end;
 
       if fManaged then begin
-        free(fBytes);
+        ExternalCalls.free(fBytes);
       end;
 
       inherited Dispose(aDisposing);
@@ -2240,7 +2240,7 @@ type
 
       if fType <> DataType.String then begin
         fNumBytes := TF_DataTypeSize(TF_DataType(ord(fType))) * aVals.Length;
-        fBytes := malloc(fNumBytes);
+        fBytes := ExternalCalls.malloc(fNumBytes);
         if aVals.Length = 1 then begin
           (^T(fBytes))^ := aVals[0];
         end else begin
@@ -2254,7 +2254,7 @@ type
           fNumBytes := fNumBytes + str.Length + sizeOf(UInt64); // Offset is UInt64
         end;
 
-        fBytes := malloc(fNumBytes);
+        fBytes := ExternalCalls.malloc(fNumBytes);
         var num_offsets := aVals.Length; // num_offsets equal to aVals.Length
         var offsets := new UInt64[num_offsets];
         var offsets_region_size := num_offsets * sizeOf(UInt64);
