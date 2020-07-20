@@ -168,6 +168,22 @@ type
       end
     end;
 
+    method RunFunc<T>(aFuncWithStatus: block(aStatus: NotNull<Status>): T) withForwarded(aForwardedStatus: Status): T;
+    begin
+      using fnStatus := new Status do begin
+        result := aFuncWithStatus(fnStatus);
+        if assigned(aForwardedStatus) then aForwardedStatus.Assign(fnStatus);
+      end;
+    end;
+
+    method RunProc(aProcWithStatus: block(aStatus: NotNull<Status>)) withForwarded(aForwardedStatus: Status);
+    begin
+      using procStatus := new Status do begin
+        aProcWithStatus(procStatus);
+        if assigned(aForwardedStatus) then aForwardedStatus.Assign(procStatus);
+      end;
+    end;
+
     method get_ID: NativeUInt; virtual;
     begin
       result := NativeUInt(@self);
@@ -527,7 +543,7 @@ type
     method GetAttrString(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, String);
     begin
       var max_length := aAttrMeta.TotalSize;
@@ -545,7 +561,7 @@ type
     method GetAttrStringList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, StringList);
     begin
       var max_values := aAttrMeta.ListSize;
@@ -576,7 +592,7 @@ type
     method GetAttrBool(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, nullable Boolean);
     begin
       var value: Byte;
@@ -592,7 +608,7 @@ type
     method GetAttrBoolList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, array of Boolean);
     begin
       var max_values := aAttrMeta.ListSize;
@@ -611,7 +627,7 @@ type
     method GetAttrInt(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, nullable Int64);
     begin
       var value: Int64;
@@ -627,7 +643,7 @@ type
     method GetAttrIntList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, array of Int64);
     begin
       var max_values := aAttrMeta.ListSize;
@@ -644,7 +660,7 @@ type
     method GetAttrFloat(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, nullable Single);
     begin
       var value: Single;
@@ -660,7 +676,7 @@ type
     method GetAttrFloatList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, array of Single);
     begin
       var max_values := aAttrMeta.ListSize;
@@ -677,7 +693,7 @@ type
     method GetAttrType(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, nullable DataType);
     begin
       var value: TF_DataType;
@@ -693,7 +709,7 @@ type
     method GetAttrTypeList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, array of DataType);
     begin
       var max_values := aAttrMeta.ListSize;
@@ -712,7 +728,7 @@ type
     method GetAttrShape(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, nullable Shape);
     begin
       var num_dim := aAttrMeta.TotalSize;
@@ -729,7 +745,7 @@ type
     method GetAttrShapeList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, ShapeList);
     begin
       var num_shapes := aAttrMeta.ListSize;
@@ -765,7 +781,7 @@ type
     method GetAttrTensor(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, Tensor);
     begin
       var value: ^TF_Tensor;
@@ -781,7 +797,7 @@ type
     method GetAttrTensorList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean,  TensorList);
     begin
       var max_values := aAttrMeta.ListSize;
@@ -800,7 +816,7 @@ type
     method GetAttrTensorShapeProto(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, TensorShapeProto);
     begin
       var value: ^TF_Buffer;
@@ -816,7 +832,7 @@ type
     method GetAttrTensorShapeProtoList(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, TensorShapeProtoList);
     begin
       var max_values := aAttrMeta.ListSize;
@@ -840,7 +856,7 @@ type
     method GetAttrValueProto(
       const aAttrName: NotNull<String>;
       aAttrMeta: AttrMetaData;
-      aStatus: Status
+      aStatus: NotNull<Status>
       ): Tuple of (Boolean, Buffer);
     begin
       var output_attr_value: ^TF_Buffer;
@@ -863,10 +879,9 @@ type
 
     method GetInputListLength(const aArgName: NotNull<String>; aStatus: Status := nil): Integer;
     begin
-      using lStatus := new Status do begin
-        result := TF_OperationInputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
-        if assigned(aStatus) then aStatus.Assign(lStatus);
-      end;
+      exit RunFunc(_status -> begin
+        result := TF_OperationInputListLength(Handle, aArgName.ToAnsiChars(true), _status.Handle)
+      end) withForwarded(aStatus);
     end;
 
     method ToNodeDef: Tuple of (Boolean, Buffer);
@@ -1555,7 +1570,7 @@ type
         raise new ArgumentException(s);
       end;
 
-      using lStatus := new Status do begin
+      exit RunFunc<Tuple of (Boolean, OutputList)>(_status -> begin
         var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
 
         TF_AddGradients(
@@ -1565,10 +1580,10 @@ type
           x.ToTFOutputs,
           x.Count,
           dx.ToTFOutputs,
-          lStatus.Handle,
+          _status.Handle,
           dy);
 
-        if not lStatus.Ok then begin
+        if not _status.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
           for el in dy do begin
             var op := new Operation withHandle(el.oper) Graph(self);
@@ -1578,9 +1593,7 @@ type
         end else begin
           result := (false, nil);
         end;
-
-        if assigned(aStatus) then aStatus.Assign(lStatus);
-      end;
+      end) withForwarded(aStatus);
     end;
 
     method AddGradients(
@@ -1627,7 +1640,7 @@ type
         raise new ArgumentException(msg);
       end;
 
-      using lStatus := new Status do begin
+      exit RunFunc<Tuple of (Boolean, OutputList)>(_status -> begin
         var dy := new TF_Output[x.Count]; // the partial sum derivative returned.
 
         TF_AddGradientsWithPrefix(
@@ -1638,10 +1651,10 @@ type
           x.ToTFOutputs,
           x.Count,
           dx.ToTFOutputs,
-          lStatus.Handle,
+          _status.Handle,
           dy);
 
-        if not lStatus.Ok then begin
+        if not _status.Ok then begin
           var result_list := new OutputList withCapacity(dy.Length);
           for el in dy do begin
             var op := new Operation withHandle(el.oper) Graph(self);
@@ -1651,9 +1664,7 @@ type
         end else begin
           result := (false, nil);
         end;
-
-        if assigned(aStatus) then aStatus.Assign(lStatus);
-      end;
+      end) withForwarded(aStatus);
     end;
 
     method AddInitVariable(aOp: NotNull<Operation>);
@@ -1747,11 +1758,10 @@ type
 
     method ImportGraphDef(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>; aStatus: Status := nil); overload;
     begin
-      using lStatus := new Status do begin
+      RunProc(_status->begin
         var graph_def := ^TF_Buffer(aGraphDef.Handle);
-        TF_GraphImportGraphDef(Handle, graph_def, aOpts.Handle, lStatus.Handle);
-        if assigned(aStatus) then aStatus.Assign(lStatus);
-      end;
+        TF_GraphImportGraphDef(Handle, graph_def, aOpts.Handle, _status.Handle);
+      end) withForwarded(aStatus);
     end;
 
     method ImportGraphDef(
