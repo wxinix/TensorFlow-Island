@@ -31,10 +31,9 @@ type
     class method Main(args: array of String): Int32;
     begin
       const dims: array of int64_t = [1, 5, 12];
-      var dataSize := sizeOf(Single);      
-      
-      for each i in dims do 
-        dataSize := dataSize * i;
+      var dataSize := sizeOf(Single);
+
+      for each i in dims do dataSize := dataSize * i;
 
       const data: array of Single = 
         [ 
