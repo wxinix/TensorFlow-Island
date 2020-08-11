@@ -7,9 +7,5 @@ obj/
 exe/
 Packages/
 Libs/
-!TensorFlow/
 TensorFlow/*
-!/TensorFlow/tensorflow-r1.15/
-/TensorFlow/tensorflow-r1.15/*
-!/TensorFlow/tensorflow-r1.15/libtensorflow/
 
