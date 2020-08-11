@@ -1,8 +1,8 @@
-﻿#import "tensorflow/c/c_api.h"
-#import "tensorflow/c/tf_attrtype.h"
-#import "tensorflow/c/tf_datatype.h"
-#import "tensorflow/c/tf_status.h"
-#import "tensorflow/c/tf_tensor.h"
+﻿#import "include/tensorflow/c/c_api.h"
+#import "include/tensorflow/c/tf_attrtype.h"
+#import "include/tensorflow/c/tf_datatype.h"
+#import "include/tensorflow/c/tf_status.h"
+#import "include/tensorflow/c/tf_tensor.h"
 
 //
 // Tasks
