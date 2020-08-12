@@ -38,21 +38,21 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ImportHeader Include="Import.h"/>
-		<ImportLinkLibrary Include=".\lib\libtensorflow.dylib">
+		<ImportCopyLocal Include=".\lib\libtensorflow.dylib">
 			<Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-darwin-x86_64-2.3.0.tar.gz</Remote>
 			<Private>True</Private>
 			<Target>Island.macOS</Target>
-		</ImportLinkLibrary>
-		<ImportLinkLibrary Include=".\lib\tensorflow.dll">
+		</ImportCopyLocal>
+		<ImportCopyLocal Include=".\lib\tensorflow.dll">
 			<Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-windows-x86_64-2.3.0.zip</Remote>
 			<Private>True</Private>
 			<Target>Island.Windows</Target>
-		</ImportLinkLibrary>
-		<ImportLinkLibrary Include=".\lib\libtensorflow.so">
+		</ImportCopyLocal>
+		<ImportCopyLocal Include=".\lib\libtensorflow.so">
 			<Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz</Remote>
 			<Private>True</Private>
 			<Target>Island.Linux</Target>
-		</ImportLinkLibrary>
+		</ImportCopyLocal>
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.targets"/>
 	<ItemGroup>
