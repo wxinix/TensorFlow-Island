@@ -7,5 +7,4 @@ obj/
 exe/
 Packages/
 Libs/
-Import/libtensorflow/*
 
