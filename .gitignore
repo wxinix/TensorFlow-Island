@@ -7,4 +7,6 @@ obj/
 exe/
 Packages/
 Libs/
+*.pdb
+*.mdb
 
