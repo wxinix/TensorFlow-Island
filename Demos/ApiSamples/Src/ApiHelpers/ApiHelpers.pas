@@ -225,9 +225,11 @@ uses
     aInputSize: Int32; const aOutputs: ^TF_Output; aOutputTensors: array of ^TF_Tensor; aOutputSize: Int32;
     aStatus: ^TF_Status = nil): TF_Code;
   begin
-    if not assigned(aSession) or not assigned(aInputs) or not assigned(aInputTensors) or not assigned(aOutputs) or not assigned(aOutputTensors) then begin
+    var exitCond := not assigned(aSession) or not assigned(aInputs) or not assigned(aInputTensors) 
+      or not assigned(aOutputs) or not assigned(aOutputTensors);
+    
+    if exitCond then
       exit TF_Code.TF_INVALID_ARGUMENT;
-    end;
 
     var deleteStatus := false;
     if not assigned(aStatus) then begin
@@ -450,97 +452,97 @@ uses
 
   method DataTypeToString(aDataType: TF_DataType): String;
   begin
-    case aDataType of
+    result := case aDataType of
       TF_DataType.TF_FLOAT:
-        exit 'TF_FLOAT';
+        'TF_FLOAT';
       TF_DataType.TF_DOUBLE:
-        exit 'TF_DOUBLE';
+        'TF_DOUBLE';
       TF_DataType.TF_INT32:
-        exit 'TF_INT32';
+        'TF_INT32';
       TF_DataType.TF_UINT8:
-        exit 'TF_UINT8';
+        'TF_UINT8';
       TF_DataType.TF_INT16:
-        exit 'TF_INT16';
+        'TF_INT16';
       TF_DataType.TF_INT8:
-        exit 'TF_INT8';
+        'TF_INT8';
       TF_DataType.TF_STRING:
-        exit 'TF_STRING';
+        'TF_STRING';
       TF_DataType.TF_COMPLEX64:
-        exit 'TF_COMPLEX64';
+        'TF_COMPLEX64';
       TF_DataType.TF_INT64:
-        exit 'TF_INT64';
+        'TF_INT64';
       TF_DataType.TF_BOOL:
-        exit 'TF_BOOL';
+        'TF_BOOL';
       TF_DataType.TF_QINT8:
-        exit 'TF_QINT8';
+        'TF_QINT8';
       TF_DataType.TF_QUINT8:
-        exit 'TF_QUINT8';
+        'TF_QUINT8';
       TF_DataType.TF_QINT32:
-        exit 'TF_QINT32';
+        'TF_QINT32';
       TF_DataType.TF_BFLOAT16:
-        exit 'TF_BFLOAT16';
+        'TF_BFLOAT16';
       TF_DataType.TF_QINT16:
-        exit 'TF_QINT16';
+        'TF_QINT16';
       TF_DataType.TF_QUINT16:
-        exit 'TF_QUINT16';
+        'TF_QUINT16';
       TF_DataType.TF_UINT16:
-        exit 'TF_UINT16';
+        'TF_UINT16';
       TF_DataType.TF_COMPLEX128:
-        exit 'TF_COMPLEX128';
+        'TF_COMPLEX128';
       TF_DataType.TF_HALF:
-        exit 'TF_HALF';
+        'TF_HALF';
       TF_DataType.TF_RESOURCE:
-        exit 'TF_RESOURCE';
+        'TF_RESOURCE';
       TF_DataType.TF_VARIANT:
-        exit 'TF_VARIANT';
+        'TF_VARIANT';
       TF_DataType.TF_UINT32:
-        exit 'TF_UINT32';
+        'TF_UINT32';
       TF_DataType.TF_UINT64:
-        exit 'TF_UINT64';
-      else
-        exit 'Unknown';
+        'TF_UINT64';
+      else 
+        'Unknown';
     end;
   end;
 
   method CodeToString(aCode: TF_Code): String;
   begin
-    case aCode of
+    result := case aCode of
       TF_Code.TF_OK:
-        exit 'TF_OK';
+        'TF_OK';
       TF_Code.TF_CANCELLED:
-        exit 'TF_CANCELLED';
+        'TF_CANCELLED';
       TF_Code.TF_UNKNOWN:
-        exit 'TF_UNKNOWN';
+        'TF_UNKNOWN';
       TF_Code.TF_INVALID_ARGUMENT:
-        exit 'TF_INVALID_ARGUMENT';
+        'TF_INVALID_ARGUMENT';
       TF_Code.TF_DEADLINE_EXCEEDED:
-        exit 'TF_DEADLINE_EXCEEDED';
+        'TF_DEADLINE_EXCEEDED';
       TF_Code.TF_NOT_FOUND:
-        exit 'TF_NOT_FOUND';
+        'TF_NOT_FOUND';
       TF_Code.TF_ALREADY_EXISTS:
-        exit 'TF_ALREADY_EXISTS';
+        'TF_ALREADY_EXISTS';
       TF_Code.TF_PERMISSION_DENIED:
-        exit 'TF_PERMISSION_DENIED';
+        'TF_PERMISSION_DENIED';
       TF_Code.TF_UNAUTHENTICATED:
-        exit 'TF_UNAUTHENTICATED';
+        'TF_UNAUTHENTICATED';
       TF_Code.TF_RESOURCE_EXHAUSTED:
-        exit 'TF_RESOURCE_EXHAUSTED';
+        'TF_RESOURCE_EXHAUSTED';
       TF_Code.TF_FAILED_PRECONDITION:
-        exit 'TF_FAILED_PRECONDITION';
+        'TF_FAILED_PRECONDITION';
       TF_Code.TF_ABORTED:
-        exit 'TF_ABORTED';
+        'TF_ABORTED';
       TF_Code.TF_OUT_OF_RANGE:
-        exit 'TF_OUT_OF_RANGE';
+        'TF_OUT_OF_RANGE';
       TF_Code.TF_UNIMPLEMENTED:
-        exit 'TF_UNIMPLEMENTED';
+        'TF_UNIMPLEMENTED';
       TF_Code.TF_INTERNAL:
-        exit 'TF_INTERNAL';
+        'TF_INTERNAL';
       TF_Code.TF_UNAVAILABLE:
-        exit 'TF_UNAVAILABLE';
+        'TF_UNAVAILABLE';
       TF_Code.TF_DATA_LOSS:
-        exit 'TF_DATA_LOSS';
+        'TF_DATA_LOSS';
       else
-        exit 'Unknown';
+        'Unknown';
     end;
   end;
 
