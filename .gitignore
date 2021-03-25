@@ -6,7 +6,8 @@ Bin/
 obj/
 exe/
 Packages/
-Libs/
 *.pdb
 *.mdb
+*.lib
+*.dll
 
