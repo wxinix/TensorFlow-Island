@@ -1,5 +1,5 @@
 ﻿// MIT License
-// Copyright (c) 2019-2020 Wuping Xin.
+// Copyright (c) 2019-2021 Wuping Xin.
 //
 // Permission is hereby  granted, free of charge, to any  person obtaining a copy
 // of this software and associated  documentation files (the "Software"), to deal
@@ -20,18 +20,18 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Island.ApiSamples.TensorInfo;
+namespace TensorFlow.Island.Samples.GraphInfo;
 
 uses
   TensorFlow.Island.Api,
-  TensorFlow.Island.ApiUtils;
+  TensorFlow.Island.Api.Helpers;
 
 type
   Program = class
   public
     class method Main(args: array of String): Int32;
-    begin
-      var graph := LoadGraph(Environment.CurrentDirectory + '\graph.pb');
+    begin     
+      var graph := LoadGraph(Environment.CurrentDirectory+ '\graph.pb');
       if not assigned(graph) then begin
         writeLn('Cannot load graph');
         exit 1;
@@ -40,15 +40,12 @@ type
       var status := TF_NewStatus();
 
       try
-        PrintTensorInfo(graph, 'input_4', status);
-        writeLn('');
-        PrintTensorInfo(graph, 'output_node0', status);
+        PrintOps(graph, status);
         readLn;
       finally
-        TF_DeleteStatus(status);
         DeleteGraph(graph);
+        TF_DeleteStatus(status);
       end;
     end;
   end;
-
 end.

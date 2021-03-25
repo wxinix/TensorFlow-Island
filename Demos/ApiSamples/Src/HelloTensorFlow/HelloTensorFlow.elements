@@ -1,50 +1,37 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
-    <ProjectGuid>{1d29fc68-e99e-4e20-b927-b0be84731fb2}</ProjectGuid>
+    <RootNamespace>HelloTensorFlow</RootNamespace>
+    <ProjectGuid>{1CA22AB7-6B08-4C90-8A06-B20EADD87B89}</ProjectGuid>
     <OutputType>Executable</OutputType>
     <AssemblyName>HelloTensorFlow</AssemblyName>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Name>HelloTensorFlow</Name>
-    <Architecture>x86_64</Architecture>
-    <OutputPath>..\Bin\$(Configuration)</OutputPath>
+    <OutputPath>..\..\Bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <OutputPath>..\..\Bin\</OutputPath>
+    <ConditionalDefines>DEBUG;TRACE;</ConditionalDefines>
     <GenerateDebugInfo>True</GenerateDebugInfo>
-    <CpuType>x86</CpuType>
-    <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
-    <OutputPath>..\Bin\</OutputPath>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <CpuType>x86</CpuType>
+    <OutputPath>..\..\Bin\</OutputPath>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
-    <Architecture>x86_64</Architecture>
-    <OutputPath>..\Bin\</OutputPath>
-    <RootNamespace>TensorFlow.Island</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="gc" />
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>..\..\..\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="..\Src" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\Src\HelloTensorFlow.pas">
-      <SubType>Code</SubType>
-      <Link>..\Src\HelloTensorFlow.pas</Link>
-    </Compile>
+    <Compile Include="HelloTensorFlow.pas" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>

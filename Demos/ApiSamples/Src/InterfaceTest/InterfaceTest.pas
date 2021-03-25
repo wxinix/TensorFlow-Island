@@ -1,5 +1,5 @@
 ﻿// MIT License
-// Copyright (c) 2019-2020 Wuping Xin.
+// Copyright (c) 2019-2021 Wuping Xin.
 //
 // Permission is hereby  granted, free of charge, to any  person obtaining a copy
 // of this software and associated  documentation files (the "Software"), to deal
@@ -23,14 +23,14 @@ namespace TensorFlow.Island.ApiSamples.InterfaceTest;
 
 uses
   TensorFlow.Island.Api,
-  TensorFlow.Island.ApiUtils;
+  TensorFlow.Island.Api.Helpers;
 
 type
   Program = class
   public
     class method Main(args: array of String): Int32;
     begin
-      var graph := LoadGraph(Environment.CurrentDirectory + '\graph.pb');
+      var graph := TensorFlow.Island.Api.Helpers.LoadGraph(Environment.CurrentDirectory + '\graph.pb');
       if not assigned(graph) then begin
         writeLn('Cannot load graph');
         exit 1;
@@ -70,7 +70,8 @@ type
         if result = TF_Code.TF_OK then begin
           var tensorData := GetTensorData<Single>(outTensors[0]);
           writeLn($'Output vals: {tensorData[0]}, {tensorData[1]}, {tensorData[2]}');
-        end else begin
+        end 
+        else begin
           writeLn($'Error run session TF_CODE: {result}');
         end;
 

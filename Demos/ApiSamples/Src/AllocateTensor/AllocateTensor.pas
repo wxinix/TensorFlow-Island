@@ -1,5 +1,5 @@
 ﻿// MIT License
-// Copyright (c) 2019-2020 Wuping Xin.
+// Copyright (c) 2019-2021 Wuping Xin.
 //
 // Permission is hereby  granted, free of charge, to any  person obtaining a copy
 // of this software and associated  documentation files (the "Software"), to deal
@@ -20,31 +20,34 @@
 // SOFTWARE.
 
 
-namespace TensorFlow.Island.ApiSamples.CreateTensor;
+/*!
+  \brief This sample illustrates the following TensorFlow C API functions:
+     - TF_AllocateTensor
+     - TF_TensorType
+     - TF_TensorData
+     - TF_TensorByteSize
+     - TF_Dim
+     - TF_NumDims
+     - TF_TensorDataSize
+     - TF_DeleteTensor
+*/
+namespace TensorFlow.Island.ApiSamples.AllocateTensor;
 
 uses
   TensorFlow.Island.Api;
 
-type 
+type
   Program = class
   public
-    class method DeallocateTensor(aData: ^Void; aLen: UInt64; aArgs: ^Void);
-    begin
-      free(aData);
-      writeLn('Deallocate tensor');
-    end;
-
     class method Main(args: array of String): Int32;
     begin
-      const dims: array of int64_t = [1, 5, 12];
-      var dataSize := sizeOf(Single);      
-      
+      const dims: array of Int64 = [1, 5, 12];
+      var dataSize := sizeOf(Single);
+
       for each i in dims do 
         dataSize := dataSize * i;
 
-      var data: ^Single := ^Single(malloc(dataSize));
-
-      var values: array of Single :=
+      const data: array of Single = 
         [ 
           -0.4809832, -0.3770838, 0.1743573, 0.7720509, -0.4064746, 0.0116595, 0.0051413, 0.9135732, 0.7197526, -0.0400658, 0.1180671, -0.6829428,
           -0.4810135, -0.3772099, 0.1745346, 0.7719303, -0.4066443, 0.0114614, 0.0051195, 0.9135003, 0.7196983, -0.0400035, 0.1178188, -0.6830465,
@@ -53,60 +56,63 @@ type
           -0.4807833, -0.3775733, 0.1748378, 0.7718275, -0.4073670, 0.0107582, 0.0062978, 0.9131795, 0.7187147, -0.0394935, 0.1184392, -0.6840039 
         ];
 
-      memcpy(data, values, dataSize);
-
-      var tensor := TF_NewTensor(
+      var tensor := TF_AllocateTensor(
                       TF_DataType.TF_FLOAT, 
                       dims, 
-                      dims.Length, 
-                      data, 
-                      dataSize,
-                      @DeallocateTensor,
-                      nil);      
-
-      if not assigned(tensor) then begin
-        writeLn('Wrong create tensor!');
-        exit 1;
-      end;
-
-      if TF_TensorType(tensor) <> TF_DataType.TF_FLOAT then begin
-        writeLn('Wrong tensor type');
-        exit 2;
-      end;
-
-      if TF_NumDims(tensor) <> dims.Length then begin
-        writeLn('Wrong number of dimensions');
-        exit 3;
-      end;
-
-      for i: Integer := 0 to dims.Length - 1 do begin
-        if TF_Dim(tensor, i) <> dims[i] then begin
-          writeLn('Wrong dimension size for dim');
-          exit 4;
+                      dims.Length,
+                      dataSize);
+      
+      try
+        if assigned(tensor) and assigned(TF_TensorData(tensor)) then begin
+          memcpy(TF_TensorData(tensor), data, Math.Min(dataSize, TF_TensorByteSize(tensor)))
+        end
+        else begin
+          writeLn('Wrong create tensor!');
+          exit 1;
         end;
-      end;
 
-      if TF_TensorByteSize(tensor) <> dataSize then begin
-        writeLn('Wrong tensor byte size');
-        exit 5;
-      end;
-
-      var tensor_data := ^Single(TF_TensorData(tensor));
-      if not assigned(tensor_data) then begin
-        writeLn('Wrong data tensor');
-        exit 6;
-      end;
-
-      for i: Integer := 0 to values.Length - 1 do begin
-        if tensor_data[i] <> values[i] then begin
-          writeLn('Element: ' + i.ToString + 'does not match');
-          exit 7;
+        if TF_TensorType(tensor) <> TF_DataType.TF_FLOAT then begin
+          writeLn('Wrong tensor type');
+          exit 2;
         end;
-      end;
 
-      writeLn('Congradulations. Success creating tensor!');
-      TF_DeleteTensor(tensor);
-      readLn;
+        if TF_NumDims(tensor) <> dims.Length then begin
+          writeLn('Wrong number of dimensions');
+          exit 3;
+        end;
+
+        for i: Integer := 0 to dims.Length - 1 do begin
+          if TF_Dim(tensor, i) <> dims[i] then begin
+            writeLn('Wrong dimension size for dim');
+            exit 4;
+          end;
+        end;
+
+        if TF_TensorByteSize(tensor) <> dataSize then begin
+          writeLn('Wrong tensor byte size');
+          exit 5;
+        end;
+
+        var tensor_data := ^Single(TF_TensorData(tensor));
+        if not assigned(tensor_data) then begin
+          writeLn('Wrong data tensor');
+          exit 6;
+        end;
+
+        for i: Integer := 0 to data.Length - 1 do begin
+          if tensor_data[i] <> data[i] then begin
+            writeLn('Element: ' + i.ToString + 'does not match');
+            exit 7;
+          end;
+        end;
+
+        writeLn('Congradulations. Success allocating tensor!');
+        writeLn($'TF_BOOL size is {TF_DataTypeSize(TF_DataType.TF_BOOL)}');
+        writeLn($'TF_STRING size is {TF_DataTypeSize(TF_DataType.TF_STRING)}');
+        readLn;
+      finally
+        TF_DeleteTensor(tensor);
+      end;
     end;
   end;
 

@@ -1,23 +1,24 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29609.76
+VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "AllocateTensor", "Projects\AllocateTensor.elements", "{5B7D78D3-94F9-44E2-9BF0-074EC850F258}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "AllocateTensor", "Src\AllocateTensor\AllocateTensor.elements", "{98386E26-06E1-46A4-8F52-EE4F28D0047F}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "CreateTensor", "Projects\CreateTensor.elements", "{DAD6093C-A565-4B36-8E41-8905C862C787}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "ApiHelpers", "Src\ApiHelpers\ApiHelpers.elements", "{815962A4-7803-4989-8990-A296FC7CBAD1}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "GraphInfo", "Projects\GraphInfo.elements", "{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "CreateTensor", "Src\CreateTensor\CreateTensor.elements", "{B34587A9-F238-4F26-88D2-4435D962C1F9}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "HelloTensorFlow", "Projects\HelloTensorFlow.elements", "{1D29FC68-E99E-4E20-B927-B0BE84731FB2}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "HelloTensorFlow", "Src\HelloTensorFlow\HelloTensorFlow.elements", "{1CA22AB7-6B08-4C90-8A06-B20EADD87B89}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "InterfaceTest", "Projects\InterfaceTest.elements", "{367F3264-1650-46C5-A0DB-E13F39DDCDFC}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "GraphInfo", "Src\GraphInfo\GraphInfo.elements", "{A32DBDE9-D6C2-46CA-9577-BD148C32563C}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "SessionRun", "Projects\SessionRun.elements", "{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "InterfaceTest", "Src\InterfaceTest\InterfaceTest.elements", "{58D3D641-7D86-4B84-AE39-53C9104ABA75}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorInfo", "Projects\TensorInfo.elements", "{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "SessionRun", "Src\SessionRun\SessionRun.elements", "{FA85C2D4-DA57-4185-9440-CD36781E5105}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "StringEncode", "Projects\StringEncode.elements", "{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}"
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "StringEncode", "Src\StringEncode\StringEncode.elements", "{2ECD77D3-3DBB-45E7-954C-4E0780E6308A}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "TensorInfo", "Src\TensorInfo\TensorInfo.elements", "{8AB79AB3-C021-47BA-9A3F-CF4CB4A66B8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,51 +26,50 @@ Global
 		Release|Default = Release|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Debug|Default.ActiveCfg = Debug
-		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Debug|Default.Build.0 = Debug
-		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Debug|Default.Deploy.0 = Debug
-		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Release|Default.ActiveCfg = Release
-		{5B7D78D3-94F9-44E2-9BF0-074EC850F258}.Release|Default.Build.0 = Release
-		{DAD6093C-A565-4B36-8E41-8905C862C787}.Debug|Default.ActiveCfg = Debug
-		{DAD6093C-A565-4B36-8E41-8905C862C787}.Debug|Default.Build.0 = Debug
-		{DAD6093C-A565-4B36-8E41-8905C862C787}.Debug|Default.Deploy.0 = Debug
-		{DAD6093C-A565-4B36-8E41-8905C862C787}.Release|Default.ActiveCfg = Release
-		{DAD6093C-A565-4B36-8E41-8905C862C787}.Release|Default.Build.0 = Release
-		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Debug|Default.ActiveCfg = Debug
-		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Debug|Default.Build.0 = Debug
-		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Debug|Default.Deploy.0 = Debug
-		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Release|Default.ActiveCfg = Release
-		{01B95D4D-16B1-4B0F-8505-5B8DC4EDA978}.Release|Default.Build.0 = Release
-		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Debug|Default.ActiveCfg = Debug
-		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Debug|Default.Build.0 = Debug
-		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Debug|Default.Deploy.0 = Debug
-		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Release|Default.ActiveCfg = Release
-		{1D29FC68-E99E-4E20-B927-B0BE84731FB2}.Release|Default.Build.0 = Release
-		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Debug|Default.ActiveCfg = Debug
-		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Debug|Default.Build.0 = Debug
-		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Debug|Default.Deploy.0 = Debug
-		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Release|Default.ActiveCfg = Release
-		{367F3264-1650-46C5-A0DB-E13F39DDCDFC}.Release|Default.Build.0 = Release
-		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Debug|Default.ActiveCfg = Debug
-		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Debug|Default.Build.0 = Debug
-		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Debug|Default.Deploy.0 = Debug
-		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Release|Default.ActiveCfg = Release
-		{6C7599D2-F0E5-41E2-A684-D6732FC0E7AC}.Release|Default.Build.0 = Release
-		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Debug|Default.ActiveCfg = Debug
-		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Debug|Default.Build.0 = Debug
-		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Debug|Default.Deploy.0 = Debug
-		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Release|Default.ActiveCfg = Release
-		{B9BF9360-D4F1-49D6-9304-FC7C83DBA37A}.Release|Default.Build.0 = Release
-		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Debug|Default.ActiveCfg = Debug
-		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Debug|Default.Build.0 = Debug
-		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Debug|Default.Deploy.0 = Debug
-		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Release|Default.ActiveCfg = Release
-		{FBEFD37B-71E6-4AE7-8A1C-D850A6776119}.Release|Default.Build.0 = Release
+		{98386E26-06E1-46A4-8F52-EE4F28D0047F}.Debug|Default.ActiveCfg = Debug
+		{98386E26-06E1-46A4-8F52-EE4F28D0047F}.Debug|Default.Build.0 = Debug
+		{98386E26-06E1-46A4-8F52-EE4F28D0047F}.Debug|Default.Deploy.0 = Debug
+		{98386E26-06E1-46A4-8F52-EE4F28D0047F}.Release|Default.ActiveCfg = Release
+		{98386E26-06E1-46A4-8F52-EE4F28D0047F}.Release|Default.Build.0 = Release
+		{815962A4-7803-4989-8990-A296FC7CBAD1}.Debug|Default.ActiveCfg = Debug
+		{815962A4-7803-4989-8990-A296FC7CBAD1}.Debug|Default.Build.0 = Debug
+		{815962A4-7803-4989-8990-A296FC7CBAD1}.Debug|Default.Deploy.0 = Debug
+		{815962A4-7803-4989-8990-A296FC7CBAD1}.Release|Default.ActiveCfg = Release
+		{815962A4-7803-4989-8990-A296FC7CBAD1}.Release|Default.Build.0 = Release
+		{B34587A9-F238-4F26-88D2-4435D962C1F9}.Debug|Default.ActiveCfg = Debug
+		{B34587A9-F238-4F26-88D2-4435D962C1F9}.Debug|Default.Build.0 = Debug
+		{B34587A9-F238-4F26-88D2-4435D962C1F9}.Debug|Default.Deploy.0 = Debug
+		{B34587A9-F238-4F26-88D2-4435D962C1F9}.Release|Default.ActiveCfg = Release
+		{B34587A9-F238-4F26-88D2-4435D962C1F9}.Release|Default.Build.0 = Release
+		{1CA22AB7-6B08-4C90-8A06-B20EADD87B89}.Debug|Default.ActiveCfg = Debug
+		{1CA22AB7-6B08-4C90-8A06-B20EADD87B89}.Debug|Default.Build.0 = Debug
+		{1CA22AB7-6B08-4C90-8A06-B20EADD87B89}.Release|Default.ActiveCfg = Release
+		{1CA22AB7-6B08-4C90-8A06-B20EADD87B89}.Release|Default.Build.0 = Release
+		{A32DBDE9-D6C2-46CA-9577-BD148C32563C}.Debug|Default.ActiveCfg = Debug
+		{A32DBDE9-D6C2-46CA-9577-BD148C32563C}.Debug|Default.Build.0 = Debug
+		{A32DBDE9-D6C2-46CA-9577-BD148C32563C}.Release|Default.ActiveCfg = Release
+		{A32DBDE9-D6C2-46CA-9577-BD148C32563C}.Release|Default.Build.0 = Release
+		{58D3D641-7D86-4B84-AE39-53C9104ABA75}.Debug|Default.ActiveCfg = Debug
+		{58D3D641-7D86-4B84-AE39-53C9104ABA75}.Debug|Default.Build.0 = Debug
+		{58D3D641-7D86-4B84-AE39-53C9104ABA75}.Release|Default.ActiveCfg = Release
+		{58D3D641-7D86-4B84-AE39-53C9104ABA75}.Release|Default.Build.0 = Release
+		{FA85C2D4-DA57-4185-9440-CD36781E5105}.Debug|Default.ActiveCfg = Debug
+		{FA85C2D4-DA57-4185-9440-CD36781E5105}.Debug|Default.Build.0 = Debug
+		{FA85C2D4-DA57-4185-9440-CD36781E5105}.Release|Default.ActiveCfg = Release
+		{FA85C2D4-DA57-4185-9440-CD36781E5105}.Release|Default.Build.0 = Release
+		{2ECD77D3-3DBB-45E7-954C-4E0780E6308A}.Debug|Default.ActiveCfg = Debug
+		{2ECD77D3-3DBB-45E7-954C-4E0780E6308A}.Debug|Default.Build.0 = Debug
+		{2ECD77D3-3DBB-45E7-954C-4E0780E6308A}.Release|Default.ActiveCfg = Release
+		{2ECD77D3-3DBB-45E7-954C-4E0780E6308A}.Release|Default.Build.0 = Release
+		{8AB79AB3-C021-47BA-9A3F-CF4CB4A66B8C}.Debug|Default.ActiveCfg = Debug
+		{8AB79AB3-C021-47BA-9A3F-CF4CB4A66B8C}.Debug|Default.Build.0 = Debug
+		{8AB79AB3-C021-47BA-9A3F-CF4CB4A66B8C}.Release|Default.ActiveCfg = Release
+		{8AB79AB3-C021-47BA-9A3F-CF4CB4A66B8C}.Release|Default.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5E990A9E-3555-41B2-B1F2-62726D8AD626}
+		SolutionGuid = {597E1B57-CBD1-461F-801F-8F5565FE97C9}
 	EndGlobalSection
 EndGlobal

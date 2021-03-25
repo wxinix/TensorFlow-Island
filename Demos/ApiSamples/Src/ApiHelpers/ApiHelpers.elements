@@ -1,50 +1,44 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
     <RootNamespace>TensorFlow.Island</RootNamespace>
-    <ProjectGuid>{5b7d78d3-94f9-44e2-9bf0-074ec850f258}</ProjectGuid>
-    <OutputType>Executable</OutputType>
-    <AssemblyName>AllocateTensor</AssemblyName>
+    <ProjectGuid>{51441E5D-9F91-4EC7-835A-5EC048209FF6}</ProjectGuid>
+    <OutputType>StaticLibrary</OutputType>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <Name>AllocateTensor</Name>
-    <Architecture>x86_64</Architecture>
-    <OutputPath>..\Bin\$(Configuration)</OutputPath>
+    <OutputPath>..\..\Libs\</OutputPath>
+    <BinaryName>TensorFlow.Island.Api.Helpers</BinaryName>
+    <DefaultGlobalsToPublic>True</DefaultGlobalsToPublic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>..\Bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <OutputPath>..\..\Libs\</OutputPath>
+    <ConditionalDefines>DEBUG;TRACE;</ConditionalDefines>
     <GenerateDebugInfo>True</GenerateDebugInfo>
-    <CpuType>x86</CpuType>
-    <Architecture>x86_64</Architecture>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
     <EnableAsserts>True</EnableAsserts>
+    <BinaryName>TensorFlow.Island.Api.Helpers</BinaryName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
+    <DefaultGlobalsToPublic>True</DefaultGlobalsToPublic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\Bin\</OutputPath>
-    <CpuType>x86</CpuType>
+    <OutputPath>..\..\Libs\</OutputPath>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
-    <Architecture>x86_64</Architecture>
+    <BinaryName>TensorFlow.Island.Api.Helpers</BinaryName>
     <RootNamespace>TensorFlow.Island</RootNamespace>
+    <DefaultGlobalsToPublic>True</DefaultGlobalsToPublic>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="gc" />
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="TensorFlow.Island.Api">
-      <HintPath>..\..\..\Island\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <HintPath>..\..\..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="..\Src\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\Src\AllocateTensor.pas">
-      <SubType>Code</SubType>
-      <Link>..\Src\AllocateTensor.pas</Link>
-    </Compile>
+    <Compile Include="ApiHelpers.pas" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>

@@ -1,5 +1,5 @@
 ﻿// MIT License
-// Copyright (c) 2019-2020 Wuping Xin.
+// Copyright (c) 2019-2021 Wuping Xin.
 //
 // Permission is hereby  granted, free of charge, to any  person obtaining a copy
 // of this software and associated  documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@ namespace TensorFlow.Island.ApiSamples.SessionRun;
 
 uses
   TensorFlow.Island.Api,
-  TensorFlow.Island.ApiUtils;
+  TensorFlow.Island.Api.Helpers;
 
 type
   Program = class

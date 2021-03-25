@@ -56,7 +56,7 @@
     </ImportLinkLibrary>
   </ItemGroup>
   <ItemGroup Condition="'$(Target)' == 'Island.Linux'">
-    <ImportLinkLibrary Include=".\lib\Linux\libtensorflow_framework.so">
+    <ImportLinkLibrary Include=".\lib\Linux\libtensorflow_framework.so.2.4.0">
       <Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.4.0.tar.gz</Remote>
       <Private>True</Private>
     </ImportLinkLibrary>

@@ -1,5 +1,5 @@
 ﻿// MIT License
-// Copyright (c) 2019-2020 Wuping Xin.
+// Copyright (c) 2019-2021 Wuping Xin.
 //
 // Permission is hereby  granted, free of charge, to any  person obtaining a copy
 // of this software and associated  documentation files (the "Software"), to deal
@@ -24,13 +24,14 @@ namespace TensorFlow.Island.ApiSamples.StringEncode;
 
 uses
   TensorFlow.Island.Api,
-  TensorFlow.Island.ApiUtils;
+  TensorFlow.Island.Api.Helpers;
 
 type 
   Program = class
   public
     class method Main(args: array of String): Int32;
     begin
+      { https://github.com/tensorflow/tfjs/issues/4193
       const str = '123456789012';
       var status := TF_NewStatus;
       var tensor := ScalarStringTensor(str.ToAnsiChars(true), status);
@@ -41,6 +42,7 @@ type
       TF_DeleteStatus(status);
       TF_DeleteTensor(tensor);
       readLn();
+      }
     end;
   end;
 

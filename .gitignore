@@ -10,4 +10,6 @@ Packages/
 *.mdb
 *.lib
 *.dll
+*.dylib
+*.so.*
 
