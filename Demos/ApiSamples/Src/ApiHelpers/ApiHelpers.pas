@@ -55,9 +55,9 @@ uses
     const TF_TSTRING_SIZE: Integer = 24;
     var strlen := lstrlenA(aStr);
     result := TF_AllocateTensor(TF_DataType.TF_STRING, nil, 0, TF_TSTRING_SIZE);
-    var data := ^AnsiChar(TF_TensorData(result));
-    TF_TString_Init(^TF_TString(data));
-    TF_TString_Copy(^TF_TString(data), aStr, strlen);
+    var data := ^TF_TString(TF_TensorData(result));
+    TF_TString_Init(data);
+    TF_TString_Copy(data, aStr, strlen);
   end;  
 
   method LoadGraph(const aGraphPath: String; const aCheckPointPrefix: String; aStatus: ^TF_Status := nil): ^TF_Graph;
