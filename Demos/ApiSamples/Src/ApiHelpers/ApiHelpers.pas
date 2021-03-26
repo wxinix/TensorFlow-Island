@@ -48,21 +48,17 @@ uses
 
   { 
     C-API functions TF_StringDecode, TF_StringEncode, and TF_StringEncodedSize are no longer
-    relevant and have been removed; see core/platform/ctstring.h for string access/modification in C."
-    https://github.com/tensorflow/tfjs/issues/4193
+    relevant and have been removed in TensorFlow 2.4.0
   }
   method ScalarStringTensor(const aStr: ^AnsiChar; aStatus: ^TF_Status): ^TF_Tensor;
   begin
-      {
-      var strlen := lstrlenA(aStr);
-      var nbytes := 8 + TF_StringEncodedSize(strlen); // 8 bytes: start_offset.
-      result := TF_AllocateTensor(TF_DataType.TF_STRING, nil, 0, nbytes);
-      var data := ^AnsiChar(TF_TensorData(result));
-      memset(data, 0, 8);
-      TF_StringEncode(aStr, strlen, data + 8, nbytes - 8, aStatus);
-      }
-  end;
-  
+    const TF_TSTRING_SIZE: Integer = 24;
+    var strlen := lstrlenA(aStr);
+    result := TF_AllocateTensor(TF_DataType.TF_STRING, nil, 0, TF_TSTRING_SIZE);
+    var data := ^AnsiChar(TF_TensorData(result));
+    TF_TString_Init(^TF_TString(data));
+    TF_TString_Copy(^TF_TString(data), aStr, strlen);
+  end;  
 
   method LoadGraph(const aGraphPath: String; const aCheckPointPrefix: String; aStatus: ^TF_Status := nil): ^TF_Graph;
   begin
