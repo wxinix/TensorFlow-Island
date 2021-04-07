@@ -62,7 +62,9 @@ uses
 
   method LoadGraph(const aGraphPath: String; const aCheckPointPrefix: String; aStatus: ^TF_Status := nil): ^TF_Graph;
   begin
-    if not File.Exists(aGraphPath) then exit nil;
+    if not File.Exists(aGraphPath) then
+      exit nil;
+    
     var buffer := ReadBufferFromFile(aGraphPath);
     if not assigned(buffer) then
       exit nil;
@@ -249,7 +251,8 @@ uses
         aStatus);
       result := TF_GetCode(aStatus);
     finally
-      if deleteStatus then TF_DeleteStatus(aStatus);
+      if deleteStatus then
+        TF_DeleteStatus(aStatus);
     end;
   end;
 
@@ -276,7 +279,8 @@ uses
     aDataByteSize: UInt64): ^TF_Tensor;
   begin
     result := CreateEmptyTensor(aDataType, aDims, aDimsSize, aDataByteSize);
-    if not assigned(result) then exit;
+    if not assigned(result) then
+      exit;
 
     var tensorData := TF_TensorData(result);
     if not assigned(tensorData) then begin
@@ -286,9 +290,8 @@ uses
     end;
 
     aDataByteSize := Math.Min(aDataByteSize, TF_TensorByteSize(result));
-    if assigned(aData) and (aDataByteSize > 0) then begin
+    if assigned(aData) and (aDataByteSize > 0) then
       memcpy(tensorData, aData, aDataByteSize);
-    end;
   end;
 
   method CreateTensor<T>(aDataType: TF_DataType; const aDims: List<int64_t>; const aData: List<T>): ^TF_Tensor;
@@ -348,9 +351,8 @@ uses
   begin
     var tensorDataTypeSize := TF_DataTypeSize(TF_TensorType(aTensor));
 
-    if (sizeOf(T) <> tensorDataTypeSize) or not assigned(TF_TensorData(aTensor)) then begin
+    if (sizeOf(T) <> tensorDataTypeSize) or not assigned(TF_TensorData(aTensor)) then
       exit nil;
-    end;
 
     var size := TF_TensorByteSize(aTensor) / tensorDataTypeSize;
     var data: array of T := new T[size];
@@ -374,10 +376,12 @@ uses
       var numdims := TF_GraphGetTensorNumDims(aGraph, aOutput, status);
       if (TF_GetCode(status) <> TF_Code.TF_OK) then
         exit;
+      
       var data: array of int64_t := new int64_t[numdims];
       TF_GraphGetTensorShape(aGraph, aOutput, data, numdims, status);
       if (TF_GetCode(status) <> TF_Code.TF_OK) then
         exit;
+
       result.AddRange(data);
     finally
       TF_DeleteStatus(status);
@@ -419,7 +423,8 @@ uses
         exit nil;
       end;
     finally
-      if deleteStatus then TF_DeleteStatus(aStatus);
+      if deleteStatus then
+        TF_DeleteStatus(aStatus);
     end;
   end;
 

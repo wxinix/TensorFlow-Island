@@ -31,7 +31,6 @@ type
   public
     class method Main(args: array of String): Int32;
     begin
-      { https://github.com/tensorflow/tfjs/issues/4193
       const str = '123456789012';
       var status := TF_NewStatus;
       var tensor := ScalarStringTensor(str.ToAnsiChars(true), status);
@@ -42,7 +41,6 @@ type
       TF_DeleteStatus(status);
       TF_DeleteTensor(tensor);
       readLn();
-      }
     end;
   end;
 
