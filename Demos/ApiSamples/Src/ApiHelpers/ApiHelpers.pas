@@ -428,7 +428,8 @@ uses
     end;
   end;
 
-  method CreateSessionOptions(aIntraOpParallelismThreads: uint8_t; aInterOpParallelismThreads: uint8_t; aStatus: ^TF_Status := nil): ^TF_SessionOptions;
+  method CreateSessionOptions(aIntraOpParallelismThreads: uint8_t; aInterOpParallelismThreads: uint8_t;
+    aStatus: ^TF_Status := nil): ^TF_SessionOptions;
   begin
     var deleteStatus := false;
     if not assigned(aStatus) then begin

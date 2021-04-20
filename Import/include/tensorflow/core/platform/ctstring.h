@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_PLATFORM_CTSTRING_H_
 #define TENSORFLOW_CORE_PLATFORM_CTSTRING_H_
 
-//#include <stdint.h>
-//#include <stdlib.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 #include "tensorflow/core/platform/ctstring_internal.h"
 

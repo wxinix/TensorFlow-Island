@@ -40,28 +40,25 @@
     <ImportHeader Include="Import.h" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.targets" />
-  <ItemGroup>
-    <Reference Include="libElements" />
-  </ItemGroup>
   <ItemGroup Condition="'$(Target)' == 'Island.macOS'">
-    <ImportLinkLibrary Include=".\lib\macOS\libtensorflow_framework.2.4.0.dylib">
-      <Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-darwin-x86_64-2.4.0.tar.gz</Remote>
+    <ImportLinkLibrary Include=".\lib\macOS\libtensorflow_framework.2.4.1.dylib">
+      <Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-darwin-x86_64-2.4.1.tar.gz</Remote>
       <Private>True</Private>
     </ImportLinkLibrary>
   </ItemGroup>
   <ItemGroup Condition="'$(Target)' == 'Island.Windows'">
     <ImportLinkLibrary Include=".\lib\Windows\tensorflow.lib">
-      <Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-windows-x86_64-2.4.0.zip</Remote>
+      <Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-windows-x86_64-2.4.1.zip</Remote>
       <Private>True</Private>
     </ImportLinkLibrary>
   </ItemGroup>
   <ItemGroup Condition="'$(Target)' == 'Island.Linux'">
-    <ImportLinkLibrary Include=".\lib\Linux\libtensorflow_framework.so.2.4.0">
-      <Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.4.0.tar.gz</Remote>
+    <ImportLinkLibrary Include=".\lib\Linux\libtensorflow_framework.so.2.4.1">
+      <Remote>https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.4.1.tar.gz</Remote>
       <Private>True</Private>
     </ImportLinkLibrary>
     <Reference Include="Elements">
-      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Ubuntu\x86_64\Elements.fx</HintPath>
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Windows\x86_64\Elements.fx</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

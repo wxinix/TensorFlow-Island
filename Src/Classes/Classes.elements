@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>3.5</ProductVersion>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+    <ProjectGuid>{93B81566-E004-4BD8-9525-336A904B0F64}</ProjectGuid>
+    <OutputType>StaticLibrary</OutputType>
+    <AssemblyName>TensorFlow.Island.Classes</AssemblyName>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Name>Classes</Name>
+    <Architecture>x86_64</Architecture>
+    <CreateFXFile>True</CreateFXFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <OutputPath>..\..\Libs\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <GenerateDebugInfo>True</GenerateDebugInfo>
+    <CpuType>x86</CpuType>
+    <Architecture>x86_64</Architecture>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <EnableAsserts>True</EnableAsserts>
+    <OutputType>StaticLibrary</OutputType>
+    <AssemblyName>TensorFlow.Island.Classes</AssemblyName>
+    <CreateFXFile>True</CreateFXFile>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\..\Libs\</OutputPath>
+    <CpuType>x86</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <Architecture>x86_64</Architecture>
+    <OutputType>StaticLibrary</OutputType>
+    <AssemblyName>TensorFlow.Island.Classes</AssemblyName>
+    <CreateFXFile>True</CreateFXFile>
+    <RootNamespace>TensorFlow.Island</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elements">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Windows\x86_64\Elements.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="gc" />
+    <Reference Include="Island" />
+    <Reference Include="rtl" />
+    <Reference Include="TensorFlow.Island.Api">
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TensorFlow.Island.Aspects">
+      <IsCirrusRef>True</IsCirrusRef>
+      <HintPath>..\Aspects\cirrus\TensorFlow.Island.Aspects.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="..\..\Src\Classes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core.pas" />
+    <Compile Include="Exceptions.pas" />
+    <Compile Include="Helpers.pas" />
+    <Compile Include="OpsArray.cs" />
+    <Compile Include="OpsExtra.pas" />
+    <Compile Include="OpsGenerated.cs" />
+    <Compile Include="OpsRandom.cs" />
+    <Compile Include="Optimizer.pas" />
+    <Compile Include="Queue.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
+</Project>

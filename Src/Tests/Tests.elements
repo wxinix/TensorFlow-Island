@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>3.5</ProductVersion>
+    <RootNamespace>TensorFlow.Island.Tests</RootNamespace>
+    <ProjectGuid>{49DBEAD5-5983-42D8-B7E2-2FE215653756}</ProjectGuid>
+    <OutputType>Executable</OutputType>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Name>Tests</Name>
+    <Architecture>x86_64</Architecture>
+    <OutputPath>.\Bin\Tests\$(Configuration)</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <OutputPath>.\Bin\Tests\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <GenerateDebugInfo>True</GenerateDebugInfo>
+    <CpuType>x86</CpuType>
+    <Architecture>x86_64</Architecture>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <EnableAsserts>True</EnableAsserts>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <RootNamespace>TensorFlow.Island.Tests</RootNamespace>
+    <GenerateLLDBDebuggerSupport>True</GenerateLLDBDebuggerSupport>
+    <EnableInlining>False</EnableInlining>
+    <ExportAllTypes>True</ExportAllTypes>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>.\Bin\Tests</OutputPath>
+    <CpuType>x86</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <Architecture>x86_64</Architecture>
+    <AssemblyName>TensorFlow.Island.Tests</AssemblyName>
+    <RootNamespace>TensorFlow.Island.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elements">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Windows\x86_64\Elements.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EUnit">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\References\Island\Windows\x86_64\EUnit.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="gc" />
+    <Reference Include="Island" />
+    <Reference Include="rtl" />
+    <Reference Include="TensorFlow.Island.Api">
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Api.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TensorFlow.Island.Classes">
+      <HintPath>..\..\Libs\Windows\x86_64\TensorFlow.Island.Classes.fx</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="..\..\Src\Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CoreClassesTest.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="StandardOpsTest.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
+</Project>

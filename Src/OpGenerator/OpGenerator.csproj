@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{700E5928-3D5D-4B54-AD4D-BC48E79E389E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TensorFlow.Island.OpGenerator</RootNamespace>
+    <AssemblyName>OpGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <ReleaseVersion>0.2</ReleaseVersion>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="OpGenerator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\allocation_description.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\api_def.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\attr_value.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\cost_graph.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\dataset_options.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\device_attributes.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\full_type.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\function.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\graph.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\graph_transfer_info.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\kernel_def.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\log_memory.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\model.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\node_def.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\op_def.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\reader_base.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\resource_handle.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\step_stats.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\summary.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\tensor.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\tensor_description.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\tensor_shape.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\tensor_slice.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\types.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\variable.cs" />
+    <Compile Include="ProtoGenFiles\r2.4.1\versions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="protobuf-net">
+      <Version>3.0.101</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
