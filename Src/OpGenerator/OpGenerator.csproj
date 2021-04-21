@@ -99,4 +99,7 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>RD /S /Q "$(ProjectDir)obj"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -91,13 +91,13 @@ namespace TensorFlow.Island.OpGenerator
 
         [DllImport("tensorflow")]
         private static extern unsafe IntPtr TF_NewApiDefMap(IntPtr buffer, IntPtr status);
-       
+
         [DllImport("tensorflow")]
         private static extern unsafe void TF_DeleteApiDefMap(IntPtr apiDefMap);
-        
+
         [DllImport("tensorflow")]
         private static extern unsafe void TF_ApiDefMapPut(IntPtr apiDefMap, string text, UInt64 textLen, IntPtr status);
-        
+
         [DllImport("tensorflow")]
         private static extern unsafe Buffer* TF_ApiDefMapGet(IntPtr apiDefMap, string name, UInt64 nameLen, IntPtr status);
 
@@ -107,9 +107,7 @@ namespace TensorFlow.Island.OpGenerator
             {
                 _handle = TF_NewApiDefMap((IntPtr)buffer, status);
                 if (status.Error)
-                {
                     throw new ArgumentException("Failure to call TF_NewApiDefMap");
-                }
             }
         }
 
@@ -133,9 +131,7 @@ namespace TensorFlow.Island.OpGenerator
                 var buffer = TF_ApiDefMapGet(_handle, name, (UInt64)name.Length, status);
 
                 if (status.Error)
-                {
                     return null;
-                }
 
                 var bytes = new byte[buffer->length];
                 Marshal.Copy(buffer->data, bytes, 0, (int)buffer->length);
@@ -164,7 +160,7 @@ namespace TensorFlow.Island.OpGenerator
 
         [DllImport("tensorflow")]
         private static extern unsafe IntPtr TF_Version();
-        
+
         [DllImport("tensorflow")]
         private unsafe extern static Buffer* TF_GetAllOpList();
 
@@ -252,19 +248,13 @@ namespace TensorFlow.Island.OpGenerator
             foreach (var argdef in opDef.InputArgs)
             {
                 if (argdef.TypeAttr != "")
-                {
                     inferredInputArgs.Add(argdef.TypeAttr);
-                }
 
                 if (argdef.TypeListAttr != "")
-                {
                     inferredInputArgs.Add(argdef.TypeListAttr);
-                }
 
                 if (argdef.NumberAttr != "")
-                {
                     inferredInputArgs.Add(argdef.NumberAttr);
-                }
             }
 
             foreach (var attr in opDef.Attrs)
@@ -313,9 +303,7 @@ namespace TensorFlow.Island.OpGenerator
             }
 
             if (sb.Length != 0)
-            {
                 sb.Append(", ");
-            }
 
             return sb.ToString();
         }
@@ -323,9 +311,7 @@ namespace TensorFlow.Island.OpGenerator
         private void Comment(string text)
         {
             if (text == null || text == "")
-            {
                 return;
-            }
 
             var lines = text.Split('\n');
             var open = true;
@@ -333,9 +319,7 @@ namespace TensorFlow.Island.OpGenerator
             string Quote(string input)
             {
                 if (input.IndexOf('`') == -1)
-                {
                     return input;
-                }
 
                 var sb = new StringBuilder();
 
@@ -494,7 +478,7 @@ namespace TensorFlow.Island.OpGenerator
 
                     foreach (var arg in opDef.OutputArgs)
                         sb.AppendFormat("Output{0} {1}, ", IsListArg(arg) ? "[]" : "", ParamMap(arg.Name));
-                    
+
                     sb.Remove(sb.Length - 2, 2);
                     sb.Append(")");
                     retType = sb.ToString();
@@ -518,7 +502,7 @@ namespace TensorFlow.Island.OpGenerator
             {
                 if (IsListArg(arg))
                     P($"desc.AddInputs({ParamMap(arg.Name)});");
-                else     
+                else
                     P($"desc.AddInput({ParamMap(arg.Name)});");
             }
 
@@ -531,10 +515,10 @@ namespace TensorFlow.Island.OpGenerator
             if (_requiredAttrs.Count > 0 || _optionalAttrs.Count > 0)
             {
                 foreach (var attr in _requiredAttrs)
-                    SetAttribute(attr.Type, attr.Name, ParamMap(attr.Name));                
+                    SetAttribute(attr.Type, attr.Name, ParamMap(attr.Name));
 
                 if (_requiredAttrs.Count > 0)
-                    P("");                
+                    P("");
 
                 foreach (var attr in _optionalAttrs)
                 {
@@ -542,9 +526,9 @@ namespace TensorFlow.Island.OpGenerator
                     var csattr = ParamMap(attr.Name);
 
                     if (reftype)
-                        PI($"if ({csattr} != null)");                    
-                    else                    
-                        PI($"if ({csattr}.HasValue)");                    
+                        PI($"if ({csattr} != null)");
+                    else
+                        PI($"if ({csattr}.HasValue)");
 
                     // SetAttribute(attr.Type, attr.Name, csattr + (reftype ? "" : ".Value"));
                     SetAttribute(attr.Type, attr.Name, csattr);
@@ -561,7 +545,7 @@ namespace TensorFlow.Island.OpGenerator
 
             if (opDef.OutputArgs.Count() > 0)
                 P("int _idx = 0;");
-            
+
             if (opDef.OutputArgs.Any(x => IsListArg(x)))
                 P("int _n = 0;");
 
@@ -587,7 +571,7 @@ namespace TensorFlow.Island.OpGenerator
                 if (opDef.OutputArgs.Count == 1)
                     P($"return {ParamMap(opDef.OutputArgs.First().Name)};");
                 else
-                    P("return (" + opDef.OutputArgs.Select(x => ParamMap(x.Name)).Aggregate((i, j) => (i + ", " + j)) + ");");                
+                    P("return (" + opDef.OutputArgs.Select(x => ParamMap(x.Name)).Aggregate((i, j) => (i + ", " + j)) + ");");
             }
             else
             {
@@ -649,9 +633,7 @@ namespace TensorFlow.Island.OpGenerator
             {
                 // Skip internal operations
                 if (opDef.Name.StartsWith("_"))
-                {
                     continue;
-                }
 
                 // Ignore functions where we lack a C# type mapping
                 if (opDef.Attrs.Any(a => CSharpType(a.Type) == null))
@@ -663,9 +645,7 @@ namespace TensorFlow.Island.OpGenerator
 
                 // Undocumented operation, perhaps we should not surface
                 if (_apimap.Get(opDef.Name).Summary.Equals(""))
-                {
                     continue;
-                }
 
                 Generate(opDef);
             }
@@ -690,18 +670,12 @@ namespace TensorFlow.Island.OpGenerator
         private void P(string fmt, params object[] args)
         {
             for (int i = 0; i < _indent; i++)
-            {
                 _output.Write("    ");
-            }
 
             if (args.Length == 0)
-            {
                 _output.WriteLine(fmt);
-            }
             else
-            {
                 _output.WriteLine(fmt, args);
-            }
         }
 
         public static void Main(string[] args)
@@ -710,9 +684,7 @@ namespace TensorFlow.Island.OpGenerator
             Console.WriteLine($"Getting Api definition for TensorFlow {ver}");
 
             if (Marshal.SizeOf(typeof(IntPtr)) != 8)
-            {
                 throw new Exception("This program only supports 64bit mode.");
-            };
 
             if (args.Length == 0)
             {
