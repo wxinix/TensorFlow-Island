@@ -199,9 +199,9 @@ namespace TensorFlow.Island.OpGenerator
                     cstype = "string";
                     break;
                 default:
-#if DEBUG
+                    #if DEBUG
                     Console.WriteLine("Unknown TensorFlow type: {0}", tfType);
-#endif
+                    #endif
                     return null;
             }
 

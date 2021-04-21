@@ -18,19 +18,19 @@ implementation
 
 method RaiseOnDIsposedAttribute.HandleImplementation(Services: IServices; aMethod: IMethodDefinition);
 begin
-  if String.Equals(aMethod.Name, '.', StringComparison.OrdinalIgnoreCase) or
+  var lExitCondition := 
+     String.Equals(aMethod.Name, '.', StringComparison.OrdinalIgnoreCase) or
      String.Equals(aMethod.Name, '~', StringComparison.OrdinalIgnoreCase) or
-     (aMethod.Visibility <> Visibility.Public) or aMethod.Static
-  then begin
+     (aMethod.Visibility <> Visibility.Public) or 
+     aMethod.Static;
+  
+  if lExitCondition then
     exit;
-  end;
 
-  aMethod.ReplaceMethodBody(
-    new BeginStatement(
-      new StandaloneStatement(new ProcValue(new SelfValue, 'CheckAndRaiseOnDisposed')),
-      new PlaceHolderStatement
-    )
-  );
+  var lStandaloneStatement := new StandaloneStatement(new ProcValue(new SelfValue, 'CheckAndRaiseOnDisposed'));
+  var lPlaceHolderStatement := new PlaceHolderStatement;
+  var lBeginStatement := new BeginStatement(lStandaloneStatement, lPlaceHolderStatement);
+  aMethod.ReplaceMethodBody(lBeginStatement);
 end;
 
 end.
