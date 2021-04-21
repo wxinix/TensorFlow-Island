@@ -27,6 +27,9 @@ uses
   TensorFlow.Island.Api,
   TensorFlow.Island.Aspects;
 
+const 
+  TF_TSTRING_SIZE = 24; // TensorFlow v 2.4.0 and above have breaking changes in string handling.
+
 type
   NotNull<T> = public not nullable T;
 
@@ -725,11 +728,7 @@ type
       end;
     end;
 
-    method GetAttrShape(
-      const aAttrName: NotNull<String>;
-      aAttrMeta: AttrMetaData;
-      aStatus: NotNull<Status>
-      ): Tuple of (Boolean, nullable Shape);
+    method GetAttrShape(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: NotNull<Status>): Tuple of (Boolean, nullable Shape);
     begin
       var num_dim := aAttrMeta.TotalSize;
       var value := new Int64[num_dim];
@@ -737,7 +736,8 @@ type
 
       if aStatus.Ok then begin
         result := (true, new Shape withDims(value));
-      end else begin
+      end
+      else begin
         result := (false, nil);
       end;
     end;
@@ -773,32 +773,26 @@ type
             shape_list.Add(nil); // num_dims[I] = -1, meaning shape is unknown.
         end;
         result := (true, shape_list);
-      end else begin
+      end
+      else begin
         result := (false, nil);
       end;
     end;
 
-    method GetAttrTensor(
-      const aAttrName: NotNull<String>;
-      aAttrMeta: AttrMetaData;
-      aStatus: NotNull<Status>
-      ): Tuple of (Boolean, Tensor);
+    method GetAttrTensor(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: NotNull<Status>): Tuple of (Boolean, Tensor);
     begin
       var value: ^TF_Tensor;
       TF_OperationGetAttrTensor(Handle, aAttrName.ToAnsiChars(true), @value, aStatus.Handle);
 
       if aStatus.Ok then begin
         result := (true, new Tensor withHandle(value));
-      end else begin
+      end 
+      else begin
         result := (false, nil);
       end;
     end;
 
-    method GetAttrTensorList(
-      const aAttrName: NotNull<String>;
-      aAttrMeta: AttrMetaData;
-      aStatus: NotNull<Status>
-      ): Tuple of (Boolean,  TensorList);
+    method GetAttrTensorList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: NotNull<Status>): Tuple of (Boolean,  TensorList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^TF_Tensor[max_values];
@@ -808,32 +802,24 @@ type
         var tensor_list := new TensorList withCapacity(max_values);
         for v in values do tensor_list.Add(new Tensor withHandle(v));
         result := (true, tensor_list);
-      end else begin
+      end 
+      else begin
         result := (false, nil);
       end;
     end;
 
-    method GetAttrTensorShapeProto(
-      const aAttrName: NotNull<String>;
-      aAttrMeta: AttrMetaData;
-      aStatus: NotNull<Status>
-      ): Tuple of (Boolean, TensorShapeProto);
+    method GetAttrTensorShapeProto(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: NotNull<Status>): Tuple of (Boolean, TensorShapeProto);
     begin
       var value: ^TF_Buffer;
       TF_OperationGetAttrTensorShapeProto(Handle, aAttrName.ToAnsiChars(true), value, aStatus.Handle);
 
-      if aStatus.Ok then begin
-        result := (true, new TensorShapeProto withHandle(value));
-      end else begin
+      if aStatus.Ok then
+        result := (true, new TensorShapeProto withHandle(value))
+      else 
         result := (false, nil);
-      end;
     end;
 
-    method GetAttrTensorShapeProtoList(
-      const aAttrName: NotNull<String>;
-      aAttrMeta: AttrMetaData;
-      aStatus: NotNull<Status>
-      ): Tuple of (Boolean, TensorShapeProtoList);
+    method GetAttrTensorShapeProtoList(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: NotNull<Status>): Tuple of (Boolean, TensorShapeProtoList);
     begin
       var max_values := aAttrMeta.ListSize;
       var values := new ^TF_Buffer[max_values];
@@ -844,36 +830,36 @@ type
         max_values,
         aStatus.Handle);
 
-      if aStatus.Ok then begin
+      if aStatus.Ok then
+      begin
         var proto_list := new TensorShapeProtoList withCapacity(max_values);
-        for v in values do proto_list.Add(new TensorShapeProto withHandle(v));
+        for v in values do 
+          proto_list.Add(new TensorShapeProto withHandle(v));
         result := (true, proto_list);
-       end else begin
+      end else
+      begin
         result := (false, nil);
       end;
     end;
 
-    method GetAttrValueProto(
-      const aAttrName: NotNull<String>;
-      aAttrMeta: AttrMetaData;
-      aStatus: NotNull<Status>
-      ): Tuple of (Boolean, Buffer);
+    method GetAttrValueProto(const aAttrName: NotNull<String>; aAttrMeta: AttrMetaData; aStatus: NotNull<Status>): Tuple of (Boolean, Buffer);
     begin
       var output_attr_value: ^TF_Buffer;
       TF_OperationGetAttrValueProto(Handle, aAttrName.ToAnsiChars(true), output_attr_value, aStatus.Handle);
 
-      if aStatus.Ok then begin
-        result := (true, new Buffer withHandle(output_attr_value));
-      end else begin
+      if aStatus.Ok then
+        result := (true, new Buffer withHandle(output_attr_value))
+      else
         result := (false, nil);
-      end;
     end;
 
     method GetOutputListLength(const aArgName: NotNull<String>; aStatus: Status := nil): Integer;
     begin
-      using lStatus := new Status do begin
+      using lStatus := new Status do
+      begin
         result := TF_OperationOutputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
-        if assigned(aStatus) then aStatus.Assign(lStatus);
+        if assigned(aStatus) then
+          aStatus.Assign(lStatus);
       end;
     end;
 
@@ -1559,11 +1545,7 @@ type
     /// <remarks>
     ///   d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradients(
-      y, x: NotNull<OutputList>;
-      dx: NotNull<OutputList>;
-      aStatus: Status := nil
-      ): Tuple of (Boolean, OutputList);
+    method AddGradients(y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
         var s := $'AddGradient: y[size={y.Count} dx[size={dx.Count}] must be of same size.';
@@ -1596,11 +1578,7 @@ type
       end) withForwarded(aStatus);
     end;
 
-    method AddGradients(
-      y, x: NotNull<array of Output>;
-      dx: array of Output := nil;
-      aStatus: Status := nil
-      ): Tuple of (Boolean, OutputList);
+    method AddGradients(y, x: NotNull<array of Output>; dx: array of Output := nil; aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       var y_ := new OutputList;
       var x_ := new OutputList;
@@ -1628,12 +1606,7 @@ type
     /// <remarks>
     ///   d(y[0] + y[1]+ ...)/dx[0], d(y[0] + y[1] + ...)/dx[1]z...
     /// </remarks>
-    method AddGradientsWithPrefix(
-      aPrefix: NotNull<String>;
-      y, x: NotNull<OutputList>;
-      dx: NotNull<OutputList>;
-      aStatus: Status := nil
-      ): Tuple of (Boolean, OutputList);
+    method AddGradientsWithPrefix(aPrefix: NotNull<String>; y, x: NotNull<OutputList>; dx: NotNull<OutputList>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       if y.Count <> dx.Count then begin
         var msg := $'AddGradient: y[size={y.Count}] dx[size={dx.Count}] must be of same size.';
@@ -1764,11 +1737,7 @@ type
       end) withForwarded(aStatus);
     end;
 
-    method ImportGraphDef(
-      aBytes: NotNull<array of Byte>;
-      aOpts: NotNull<ImportGraphDefOptions>;
-      aStatus: Status := nil
-      ); overload;
+    method ImportGraphDef(aBytes: NotNull<array of Byte>; aOpts: NotNull<ImportGraphDefOptions>; aStatus: Status := nil); overload;
     begin
       using graph_def := new Buffer withData(aBytes) NumBytes(aBytes.Length) do begin
         ImportGraphDef(graph_def, aOpts, aStatus);
@@ -1793,11 +1762,7 @@ type
       end;
     end;
 
-    method ImportGraphDefWithReturnOutputs(
-      aGraphDef: NotNull<Buffer>;
-      aOpts: NotNull<ImportGraphDefOptions>;
-      aStatus: Status := nil
-      ): Tuple of (Boolean, OutputList);
+    method ImportGraphDefWithReturnOutputs(aGraphDef: NotNull<Buffer>; aOpts: NotNull<ImportGraphDefOptions>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
         var num_return_outputs := TF_ImportGraphDefOptionsNumReturnOutputs(aOpts.Handle);
@@ -1860,15 +1825,7 @@ type
       fCurrentDependencies := fCurrentDependencies.Concat(newDependencies).Distinct.ToList;
     end;
 
-    method ToFunction(
-      aName, aDesc: NotNull<String>;
-      aOps: NotNull<OperationList>;
-      aInputs: NotNull<InputList>;
-      aOutputs: NotNull<OutputList>;
-      aOutputNames: NotNull<StringList>;
-      aAppendHashToName: Boolean := false;
-      aStatus: Status := nil
-      ): Tuple of (Boolean, TensorFlowFunction);
+    method ToFunction(aName, aDesc: NotNull<String>; aOps: NotNull<OperationList>; aInputs: NotNull<InputList>; aOutputs: NotNull<OutputList>; aOutputNames: NotNull<StringList>; aAppendHashToName: Boolean := false; aStatus: Status := nil): Tuple of (Boolean, TensorFlowFunction);
     begin
       using lStatus := new Status do begin
         var append_hash_to_fn_name := if aAppendHashToName then 1 else 0;
@@ -1955,11 +1912,7 @@ type
       end;
     end;
 
-    method &While(
-      aInputs: NotNull<InputList>;
-      aWhileCtor: NotNull<WhileConstructor>;
-      aStatus: Status := nil
-      ): Tuple of (Boolean, OutputList);
+    method &While(aInputs: NotNull<InputList>; aWhileCtor: NotNull<WhileConstructor>; aStatus: Status := nil): Tuple of (Boolean, OutputList);
     begin
       using lStatus := new Status do begin
         var while_params: TF_WhileParams;
@@ -2245,42 +2198,24 @@ type
       fShape := new Shape withDims(aDims);
       fManaged := true;
 
-      if aVals.Length <> fShape.Size then begin
+      if aVals.Length <> fShape.Size then
         raise new TensorDataSizeException withTensorDataSize(aVals.Length) ShapeSize(fShape.Size);
-      end;
 
       if fType <> DataType.String then begin
         fNumBytes := TF_DataTypeSize(TF_DataType(ord(fType))) * aVals.Length;
         fBytes := malloc(fNumBytes);
-        if aVals.Length = 1 then begin
-          (^T(fBytes))^ := aVals[0];
-        end else begin
+        if aVals.Length = 1 then
+          (^T(fBytes))^ := aVals[0]
+        else
           memcpy(fBytes, aVals, fNumBytes);
-        end;
-      end else begin // Special handling for TF_STRING
-        fNumBytes := 0;
-        for I: Integer := 0 to aVals.Length - 1 do begin
-          var str := Helper.EncodeString(String(aVals[I]));
-          aVals[I] := T(str); // Replace with encoded string.
-          fNumBytes := fNumBytes + str.Length + sizeOf(UInt64); // Offset is UInt64
-        end;
-
+      end else
+      begin // Special handling for TF_STRING
+        fNumBytes := aVals.Length * TF_TSTRING_SIZE;
         fBytes := malloc(fNumBytes);
-        var num_offsets := aVals.Length; // num_offsets equal to aVals.Length
-        var offsets := new UInt64[num_offsets];
-        var offsets_region_size := num_offsets * sizeOf(UInt64);
-        var nbytes := 0;
-
-        for I: Integer := 0 to aVals.Length - 1 do begin
-          offsets[I] := offsets_region_size + nbytes;
-          memcpy(^Void(^Byte(fBytes) + offsets[I]), String(aVals[I]).ToAnsiChars, String(aVals[I]).Length);
-          nbytes := nbytes + String(aVals[I]).Length;
-        end;
-
-        if fShape.NumDims = 0 then begin
-          memset(fBytes, 0, sizeOf(UInt64));
-        end else begin
-          memcpy(fBytes, offsets, offsets_region_size);
+        for i: Integer := 0 to aVals.Length - 1 do begin
+          var pos: ^TF_TString := fBytes + i * TF_TSTRING_SIZE;
+          TF_StringInit(pos);
+          TF_StringCopy(pos, String(aVals[i]).ToAnsiChars(false), String(aVals[i]).Length);
         end;
       end;
     end;
@@ -2557,12 +2492,10 @@ type
         result := (false, nil);
       end else begin
         if (fData.Type = DataType.String) then begin
-          var str: String := Helper.DecodeString(
-            String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + sizeOf(UInt64)),
-            fData.NumBytes - sizeOf(UInt64))
-            );
+          var str: String := String.FromPAnsiChars(TF_StringGetDataPointer(^TF_TString(fData.Bytes)), fData.NumBytes);
           result := (true, T(str));
-        end else begin
+        end 
+        else begin
           var value: T := (^T(fData.Bytes))^;
           result := (true, value);
         end;
@@ -2579,32 +2512,22 @@ type
 
       if not (not IsScalar and is_valid_type) then begin
         result := (false, nil);
-      end else begin
+      end 
+      else begin
+        var values: array of T := new T[fData.Shape.Size];
+        
         if (fData.Type = DataType.String) then begin
-          var offsets := new UInt64[fData.Shape.Size];
-          memcpy(offsets, fData.Bytes, sizeOf(UInt64) * fData.Shape.Size);
-
-          var str_list: List<String> := new List<String>;
-          for I: Integer := 0 to offsets.Length - 1 do begin
-            var nbytes :=
-              if (I <> offsets.Length - 1) then
-                (offsets[I + 1] - offsets[I])
-              else
-                (fData.NumBytes - offsets[I]);
-            var str := String.FromPAnsiChars(^AnsiChar(^Byte(fData.Bytes) + offsets[I]), nbytes);
-            str := Helper.DecodeString(str);
-            str_list.Add(str);
+          for I: Integer := 0 to values.Length - 1 do begin
+            var pos := fData.Bytes + I * TF_TSTRING_SIZE;
+            var str := String.FromPAnsiChars(TF_StringGetDataPointer(^TF_TString(pos)), TF_StringGetSize(^TF_TString(pos)));
+            values[I] := T(str);
           end;
-
-          // From String List to array of String. This is to hush compiler.
-          var str_arr: array of T := new T[str_list.Count];
-          for I: Integer := 0 to str_list.Count - 1 do str_arr[I] := T(str_list[I]);
-          result := (true, str_arr);
-        end else begin
-          var values: array of T := new T[fData.Shape.Size];
-          memcpy(values, fData.Bytes, fData.NumBytes);
-          result := (true, values);
+        end 
+        else begin          
+          memcpy(values, fData.Bytes, fData.NumBytes);          
         end;
+
+        result := (true, values);
       end;
     end;
 
