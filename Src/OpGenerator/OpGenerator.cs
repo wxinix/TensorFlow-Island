@@ -91,10 +91,13 @@ namespace TensorFlow.Island.OpGenerator
 
         [DllImport("tensorflow")]
         private static extern unsafe IntPtr TF_NewApiDefMap(IntPtr buffer, IntPtr status);
+       
         [DllImport("tensorflow")]
         private static extern unsafe void TF_DeleteApiDefMap(IntPtr apiDefMap);
+        
         [DllImport("tensorflow")]
         private static extern unsafe void TF_ApiDefMapPut(IntPtr apiDefMap, string text, UInt64 textLen, IntPtr status);
+        
         [DllImport("tensorflow")]
         private static extern unsafe Buffer* TF_ApiDefMapGet(IntPtr apiDefMap, string name, UInt64 nameLen, IntPtr status);
 
@@ -161,6 +164,7 @@ namespace TensorFlow.Island.OpGenerator
 
         [DllImport("tensorflow")]
         private static extern unsafe IntPtr TF_Version();
+        
         [DllImport("tensorflow")]
         private unsafe extern static Buffer* TF_GetAllOpList();
 
@@ -489,10 +493,8 @@ namespace TensorFlow.Island.OpGenerator
                     var sb = new StringBuilder("(");
 
                     foreach (var arg in opDef.OutputArgs)
-                    {
                         sb.AppendFormat("Output{0} {1}, ", IsListArg(arg) ? "[]" : "", ParamMap(arg.Name));
-                    }
-
+                    
                     sb.Remove(sb.Length - 2, 2);
                     sb.Append(")");
                     retType = sb.ToString();
@@ -515,32 +517,24 @@ namespace TensorFlow.Island.OpGenerator
             foreach (var arg in opDef.InputArgs)
             {
                 if (IsListArg(arg))
-                {
                     P($"desc.AddInputs({ParamMap(arg.Name)});");
-                }
-                else
-                {
+                else     
                     P($"desc.AddInput({ParamMap(arg.Name)});");
-                }
             }
 
-            P(" ");
-            PI("foreach (Operation control in CurrentDependencies) {");
+            P("");
+            PI("foreach (Operation control in CurrentDependencies)");
             P("desc.AddControlInput(control);");
-            PD("}\n");
+            PD("");
 
             // If we have attributes
             if (_requiredAttrs.Count > 0 || _optionalAttrs.Count > 0)
             {
                 foreach (var attr in _requiredAttrs)
-                {
-                    SetAttribute(attr.Type, attr.Name, ParamMap(attr.Name));
-                }
+                    SetAttribute(attr.Type, attr.Name, ParamMap(attr.Name));                
 
                 if (_requiredAttrs.Count > 0)
-                {
-                    P("");
-                }
+                    P("");                
 
                 foreach (var attr in _optionalAttrs)
                 {
@@ -548,35 +542,28 @@ namespace TensorFlow.Island.OpGenerator
                     var csattr = ParamMap(attr.Name);
 
                     if (reftype)
-                    {
-                        PI($"if ({csattr} != null) {{");
-                    }
-                    else
-                    {
-                        PI($"if ({csattr}.HasValue) {{");
-                    }
+                        PI($"if ({csattr} != null)");                    
+                    else                    
+                        PI($"if ({csattr}.HasValue)");                    
 
-                    //SetAttribute(attr.Type, attr.Name, csattr + (reftype ? "" : ".Value"));
+                    // SetAttribute(attr.Type, attr.Name, csattr + (reftype ? "" : ".Value"));
                     SetAttribute(attr.Type, attr.Name, csattr);
-                    PD("}\n");
+                    PD("");
                 }
             }
 
-            PI("using (var status = new Status()) {");
+            P("using (var status = new Status())");
+            PI("{");
             P("var (success, op) = desc.FinishOperation(status);");
-            PI("if(!success) {");
+            PI("if(!success)");
             P($"throw new OpCreateException withOpType(\"{opDef.Name}\") Error(status.Message);");
-            PD("}");
+            PD("");
 
             if (opDef.OutputArgs.Count() > 0)
-            {
                 P("int _idx = 0;");
-            }
-
+            
             if (opDef.OutputArgs.Any(x => IsListArg(x)))
-            {
                 P("int _n = 0;");
-            }
 
             foreach (var arg in opDef.OutputArgs)
             {
@@ -585,9 +572,9 @@ namespace TensorFlow.Island.OpGenerator
                     var outputs = new StringBuilder();
                     P($"_n = op.GetOutputListLength(\"{ParamMap(arg.Name)}\");");
                     P($"var {ParamMap(arg.Name)} = new Output[_n];");
-                    PI("for (int i = 0; i < _n; i++) {");
+                    PI("for (int i = 0; i < _n; i++)");
                     P($"{ParamMap(arg.Name)} [i] = new Output withOp(op) Index(_idx++);");
-                    PD("}\n");
+                    PD("\n");
                 }
                 else
                 {
@@ -598,14 +585,9 @@ namespace TensorFlow.Island.OpGenerator
             if (_haveReturnValue)
             {
                 if (opDef.OutputArgs.Count == 1)
-                {
                     P($"return {ParamMap(opDef.OutputArgs.First().Name)};");
-                }
                 else
-                {
-                    ;
-                    P("return (" + opDef.OutputArgs.Select(x => ParamMap(x.Name)).Aggregate((i, j) => (i + ", " + j)) + ");");
-                }
+                    P("return (" + opDef.OutputArgs.Select(x => ParamMap(x.Name)).Aggregate((i, j) => (i + ", " + j)) + ");");                
             }
             else
             {
