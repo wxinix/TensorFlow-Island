@@ -56,8 +56,8 @@ uses
     var strlen := lstrlenA(aStr);
     result := TF_AllocateTensor(TF_DataType.TF_STRING, nil, 0, TF_TSTRING_SIZE);
     var data := ^TF_TString(TF_TensorData(result));
-    TF_TString_Init(data);
-    TF_TString_Copy(data, aStr, strlen);
+    TF_StringInit(data);
+    TF_StringCopy(data, aStr, strlen);
   end;  
 
   method LoadGraph(const aGraphPath: String; const aCheckPointPrefix: String; aStatus: ^TF_Status := nil): ^TF_Graph;

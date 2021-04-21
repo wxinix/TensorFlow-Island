@@ -36,8 +36,19 @@ type
       var tensor := ScalarStringTensor(str.ToAnsiChars(true), status);
       var byte_size := TF_TensorByteSize(tensor);
       writeLn('Tensor byte size:' + byte_size);
+      
       var tensor_type := TF_TensorType(tensor);
       writeLn('Tensor type:' + DataTypeToString(tensor_type));
+      
+      var data := TF_StringGetDataPointer(^TF_TString(TF_TensorData(tensor)));
+      var data_len := TF_StringGetSize(^TF_TString(TF_TensorData(tensor)));
+      var str_type := TF_StringGetType(^TF_TString(TF_TensorData(tensor)));
+      writeLn($'String type: {ord(str_type)}');
+      
+      var data_str := String.FromPAnsiChars(data, data_len);
+      writeLn('Data is retrieved as:' + data_str);   
+      
+      TF_StringDealloc(^TF_TString(TF_TensorData(tensor)));
       TF_DeleteStatus(status);
       TF_DeleteTensor(tensor);
       readLn();
