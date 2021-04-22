@@ -26,6 +26,14 @@ uses
   TensorFlow.Island.Api;
 
 type
+  BufferDataAllocatorUnspecifiedException = public class(Exception)
+  public
+    constructor;
+    begin
+      inherited constructor('');
+    end;
+  end;
+
   DeviceNameException = public class(Exception)
   public
     constructor withDuplicateName(aName: String);
@@ -43,8 +51,7 @@ type
   public
     constructor withTensorDataSize(aDataSize: Integer) ShapeSize(aShapeSize: Integer);
     begin
-      inherited constructor(
-        $'Tensor data[size={aDataSize}] inconsistent with shape[size={aShapeSize}].');
+      inherited constructor($'Tensor data[size={aDataSize}] inconsistent with shape[size={aShapeSize}].');
     end;
   end;
 
