@@ -31,7 +31,8 @@ namespace TensorFlow.Island.Classes
     {
         public Output RandomNormal(Shape! shape, double mean = 0, double stddev = 1, int? seed = null, string opName = null)
         {
-            using (WithScope (MakeName("RandomNormal", opName)) ){
+            using (WithScope (MakeName("RandomNormal", opName)) )
+			{
                 var shapeTensor = ConvertShapeToOutput(shape);
                 var (graph, local) = GetRandomSeeds(seed);
                 var rnd = RandomStandardNormal(shapeTensor, DataType.Double, graph, local);
@@ -44,7 +45,8 @@ namespace TensorFlow.Island.Classes
 
         public Output RandomUniform(Shape! shape, double minval = 0, double maxval = 1, int? seed = null, string opName = null)
         {
-            using (WithScope(MakeName ("random_uniform", opName))) {
+            using (WithScope(MakeName ("random_uniform", opName))) 
+			{
                 var shapeTensor = ConvertShapeToOutput(shape);
                 var (graph, local) = GetRandomSeeds(seed);
                 var rnd = RandomUniform(shapeTensor, DataType.Double, graph, local);
@@ -57,7 +59,8 @@ namespace TensorFlow.Island.Classes
 
         public Output RandomUniform(Shape! shape, float minval = 0, float maxval = 1, int? seed = null, string opName = null)
         {
-            using (WithScope(MakeName("random_uniform", opName))) {
+            using (WithScope(MakeName("random_uniform", opName)))
+			{
                 var shapeTensor = ConvertShapeToOutput(shape);
                 var (graph, local) = GetRandomSeeds(seed);
                 var rnd = RandomUniform(shapeTensor, DataType.Float, graph, local);

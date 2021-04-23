@@ -129,13 +129,13 @@ namespace TensorFlow.Island.Tests
 
         public void Can_Print_Tensor_With_Bool_Values()
         { 
-			//Tensor tensor = {{true,false,true},{false,false,false},{true,true,true}};
-			//var printStr = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
+			Tensor tensor = {{true,false,true},{false,false,false},{true,true,true}};
+			var printStr = tensor.Print(aMaxBytesAllowed: 1000) DecimalDigits(1) MaxWidth(6);
 			const string validationStr =
 				"[ [  True False  True]  " + '\n' +
 				"  [ False False False]  " + '\n' +
 				"  [  True  True  True] ]";
-			//Assert.AreEqual(printStr, validationStr);            
+			Assert.AreEqual(printStr, validationStr);            
         }
     } 
 }

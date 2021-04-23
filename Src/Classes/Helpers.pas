@@ -50,23 +50,25 @@ type
     method AsEnum<T>(const aStr: NotNull<String>): Tuple of (Boolean, nullable T); 
     begin
       result := (false, nil);
-      if not typeOf(T).IsEnum then exit;
+      if not typeOf(T).IsEnum then
+        exit;
       for each el in typeOf(T).Constants do begin
-        if el.Name.Equals(aStr) then exit (true, T(el.Value));
+        if el.Name.Equals(aStr) then 
+          exit (true, T(el.Value));
       end;
     end;
 
     method ReadBytesFromFile(aFileName: NotNull<String>): array of Byte;
     begin
-      if not File.Exists(aFileName) then begin
+      if not File.Exists(aFileName) then
         raise new FileNotFoundException(aFileName);
-      end;
 
       using fs := new FileStream(aFileName, FileMode.Open, FileAccess.Read) do begin
         if fs.Length > 0 then begin
           result := new Byte[fs.Length];
           fs.Read(result, fs.Length);
-        end else begin
+        end
+        else begin
           result := nil;
         end;
       end;
@@ -74,16 +76,20 @@ type
 
     method ToTFOutputs(aList: NotNull<array of NotNull<Output>>): array of TF_Output;
     begin
-      if aList.Length = 0 then exit nil;
+      if aList.Length = 0 then
+        exit nil;
       result := new TF_Output[aList.Length];
-      for I: Integer := 0 to aList.Length - 1 do result[I] := aList[I].AsTFOutput;
+      for I: Integer := 0 to aList.Length - 1 do
+        result[I] := aList[I].AsTFOutput;
     end;
 
     method ToAnsiCharPtrs(aList: NotNull<array of NotNull<String>>): array of ^AnsiChar;
     begin
-      if aList.Length = 0 then exit nil;
+      if aList.Length = 0 then
+        exit nil;
       result := new ^AnsiChar[aList.Length];
-      for I: Integer := 0 to aList.Length - 1 do result[I] := aList[I].ToAnsiChars(true);
+      for I: Integer := 0 to aList.Length - 1 do
+        result[I] := aList[I].ToAnsiChars(true);
     end;
 
     method ToDataType(aType: &Type) RaiseOnInvalid(aFlag: Boolean := True): DataType;
@@ -102,11 +108,10 @@ type
         TypeCodes.Double : result := DataType.Double;
         TypeCodes.String : result := DataType.String;
       else
-        if aFlag then begin
-          raise new ArgumentException($'ToDataType cannot convert {aType.Name} to TensorFlow datatype.');
-        end else begin
-          result := -1;
-        end;
+        if aFlag then
+          raise new ArgumentException($'ToDataType cannot convert {aType.Name} to TensorFlow datatype.')
+        else
+          result := -1; 
       end;
     end;
   

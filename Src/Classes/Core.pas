@@ -149,6 +149,7 @@ type
   TensorFlowDisposable = public abstract class(IDisposable)
   private
     fDisposed: Boolean := false;
+    fID: NativeInt;
 
     finalizer;
     begin
@@ -156,9 +157,15 @@ type
         Dispose(false);
     end;
   protected
+    constructor;
+    begin
+      fID := NativeInt(@self);
+    end;
+
     method Dispose(aDisposing: Boolean); virtual;
     begin
       fDisposed := true;
+      {$IF DEBUG} writeLn($'{self.GetType.Name}:{ID} is disposed.');{$ENDIF}
     end;
 
     method CheckAndRaiseOnDisposed;
@@ -175,10 +182,7 @@ type
       end;
     end;
 
-    property ID: NativeUInt
-      read begin
-        result := NativeUInt(@self);
-      end;
+    property ID: Int64 read fID;
   end;
 
   /// <summary>
@@ -308,14 +312,8 @@ type
       if fDisposed then
         exit;
 
-      if assigned(fOnDispose) then begin
-        try
-          fOnDispose(^T(Handle));
-        except
-          on E: Exception do
-            writeLn(E.Message);
-        end;
-      end;
+      if assigned(fOnDispose) then
+        fOnDispose(^T(Handle));
 
       fDisposed := true;
       inherited Dispose(aDisposing);
@@ -328,7 +326,7 @@ type
     /// <param name="aFunc">The function call back.</param>
     /// <param name="aStatus">The status of the function call. Set only when aStatus is not nil. </param>
     /// <returns></returns>
-    method RunFunc<RT>(aFunc: block(_status: NotNull<Status>): RT) withForwarded(aStatus: Status): RT;
+    method RunFunc<RT>(aFunc: block(_status: NotNull<Status>): RT) withStatus(aStatus: Status): RT;
     begin
       using lStatus := new Status do begin
         result := aFunc(lStatus);
@@ -341,7 +339,7 @@ type
     /// </summary>
     /// <param name="aProc">The procedure call back</param>
     /// <param name="aStatus">The status of the procdure call. Set only when aStatus is not nil.</param>
-    method RunProc(aProc: block(_status: NotNull<Status>)) withForwarded(aStatus: Status);
+    method RunProc(aProc: block(_status: NotNull<Status>)) withStatus(aStatus: Status);
     begin
       using lStatus := new Status do begin
         aProc(lStatus);
@@ -890,8 +888,7 @@ type
     begin
       using lStatus := new Status do begin
         result := TF_OperationOutputListLength(Handle, aArgName.ToAnsiChars(true), lStatus.Handle);
-        if assigned(aStatus) then
-          aStatus.Assign(lStatus);
+        aStatus:Assign(lStatus);
       end;
     end;
 
@@ -899,7 +896,7 @@ type
     begin
       exit RunFunc(_status -> begin
         result := TF_OperationInputListLength(Handle, aArgName.ToAnsiChars(true), _status.Handle)
-      end) withForwarded(aStatus);
+      end) withStatus(aStatus);
     end;
 
     method ToNodeDef: Tuple of (Boolean, Buffer);
@@ -1605,7 +1602,7 @@ type
         else begin
           result := (false, nil);
         end;
-      end) withForwarded(aStatus);
+      end) withStatus(aStatus);
     end;
 
     method AddGradients(y, x: NotNull<array of Output>; dx: array of Output := nil; aStatus: Status := nil): Tuple of (Boolean, OutputList);
@@ -1669,7 +1666,7 @@ type
         else begin
           result := (false, nil);
         end;
-      end) withForwarded(aStatus);
+      end) withStatus(aStatus);
     end;
 
     method AddInitVariable(aOp: NotNull<Operation>);
@@ -1770,7 +1767,7 @@ type
       RunProc(_status->begin
         var graph_def := ^TF_Buffer(aGraphDef.Handle);
         TF_GraphImportGraphDef(Handle, graph_def, aOpts.Handle, _status.Handle);
-      end) withForwarded(aStatus);
+      end) withStatus(aStatus);
     end;
 
     method ImportGraphDef(aBytes: NotNull<array of Byte>; aOpts: NotNull<ImportGraphDefOptions>; aStatus: Status := nil); overload;
@@ -2730,8 +2727,7 @@ type
     begin
       using lStatus := new Status do begin
         TF_CloseSession(Handle, lStatus.Handle);
-        if assigned(aStatus) then
-          aStatus.Assign(lStatus);
+        aStatus:Assign(lStatus);
       end;
     end;
 
@@ -2739,8 +2735,7 @@ type
     begin
       using lStatus := new Status do begin
         var (success, shp) := fGraph.GetTensorShape(aOutput, lStatus);
-        if assigned(aStatus) then
-          aStatus.Assign(lStatus);
+        aStatus:Assign(lStatus);
 
         if success then begin
           var name := String.FromPAnsiChars(TF_OperationName(aOutput.Oper.Handle));
@@ -2783,8 +2778,7 @@ type
 
           result := (true, devlist);
         finally
-          if assigned(aStatus) then
-            aStatus.Assign(lStatus);
+          aStatus:Assign(lStatus);
         end;
       end;
     end;

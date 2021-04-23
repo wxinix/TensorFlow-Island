@@ -59,9 +59,9 @@
     <Folder Include="..\..\Src\Tests" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreClassesTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="StandardOpsTest.cs" />
+    <Compile Include="CoreClassesTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
 </Project>

@@ -52,14 +52,7 @@ namespace TensorFlow.Island.Classes
         private Output _handle;
         private DataType [] _componentTypes;
 
-        public PaddingFIFOQueue(
-            Session! session,
-            DataType[]! componentTypes,
-            Shape[]! shapes,
-            int? capacity = null,
-            string container = null,
-            string opName = null
-            ) : base (session)
+        public PaddingFIFOQueue(Session! session, DataType[]! componentTypes, Shape[]! shapes, int? capacity = null, string container = null, string opName = null) : base (session)
         {
             _componentTypes = componentTypes;
             _handle = Session.Graph.PaddingFIFOQueueV2(componentTypes, shapes, capacity, container, opName);
@@ -92,9 +85,8 @@ namespace TensorFlow.Island.Classes
             var vals = DequeueExecute(timeout_ms, opName).Select(x => x.AsScalar<T>().Item2).ToArray();
             T[] result = new T[vals.Length];
             
-            for (int i = 0; i < vals.Length - 1; i++) {
-                result[i] = vals[i];
-            }
+            for (int i = 0; i < vals.Length - 1; i++)
+                result[i] = vals[i];    
             
             return result;
         }

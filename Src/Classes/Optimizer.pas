@@ -41,7 +41,8 @@ type
     begin
       if (aDecay <= 0) then begin
         result := aInitialLearningRate;
-      end else begin
+      end
+      else begin
         var decay := fGraph.Const(aDecay, 'Decay');
         var one := fGraph.Const(Single(1));
         result := fGraph.Mul(
@@ -51,11 +52,8 @@ type
                                 fGraph.Mul(decay,
                                            fGraph.Cast(fGraph.Sub(fIterations.ReadAfter(fGraph.CurrentDependencies.ToArray),
                                                                   fGraph.Const(Int64(1))),
-                                                       decay.OutputType)
-                                          )
-                              )
-                    ),
-          'learningrate');
+                                                       decay.OutputType)))),
+                    'learningrate');
       end;
     end;
 
@@ -71,16 +69,10 @@ type
       end;
     end;
   public
-    constructor(
-      aGraph: NotNull<Graph>;
-      const aName: NotNull<String>;
-      aLearningRate,
-      aDecay,
-      aInitialAccumulatorValue: Single);
+    constructor(aGraph: NotNull<Graph>; const aName: NotNull<String>; aLearningRate, aDecay, aInitialAccumulatorValue: Single);
     begin
-      if (aInitialAccumulatorValue < 0) then begin
+      if (aInitialAccumulatorValue < 0) then
         raise new ArgumentException($'InitialAccumulatorValue = {aInitialAccumulatorValue}. It must be non-negative.');
-      end;
 
       fGraph := aGraph;
       fInitialAccumulatorValue := aInitialAccumulatorValue;
@@ -99,11 +91,8 @@ type
 
     method ApplyGradient(aGradientsAndVariables: NotNull<array of GradientAndVariablePair>): OperationList; abstract;
 
-    method ComputeGradient(
-      aLoss: NotNull<Output>;
-      aVariables: array of NotNull<Variable> := nil;
-      aColocateGradientsWithOps: Boolean := false
-      ): array of GradientAndVariablePair; virtual;
+    method ComputeGradient(aLoss: NotNull<Output>; aVariables: array of NotNull<Variable> := nil; 
+      aColocateGradientsWithOps: Boolean := false): array of GradientAndVariablePair; virtual;
     begin
       aVariables := if assigned(aVariables) then aVariables else fGraph.TrainableVariables;
       result := new GradientAndVariablePair[aVariables.Length];
@@ -142,13 +131,8 @@ type
     fMomentum: Output; readonly;
     fNesterov: Boolean; readonly;
   public
-    constructor
-      withGraph(aGraph: NotNull<Graph>)
-      LearningRate(aLearningRate: Single := 0)
-      Momentum(aMomentum: Single := 0)
-      Decay(aDecay: Single := 0)
-      Nesterov(aNesterov: Boolean := false)
-      Name(aName: String := 'SGDMomentumOptimizer');
+    constructor withGraph(aGraph: NotNull<Graph>) LearningRate(aLearningRate: Single := 0) Momentum(aMomentum: Single := 0) 
+      Decay(aDecay: Single := 0) Nesterov(aNesterov: Boolean := false) Name(aName: String := 'SGDMomentumOptimizer');
     begin
       inherited constructor(aGraph,  aName, aLearningRate, aDecay, 0);
 
@@ -177,7 +161,8 @@ type
           // w = w + m * v - lr * g
           var op := Graph.AssignAddVariableOp(gv.Variable, Graph.Mul(lr, Graph.Sub(Graph.Mul(m, velocity), gv.Gradient)));
           result.Add(op);
-        end else begin
+        end
+        else begin
           // w = w + lr * v
           result.Add(Graph.AssignAddVariableOp(gv.Variable, Graph.Mul(lr, velocity)));
         end;
@@ -200,12 +185,8 @@ type
 
   AdaGradOptimizer = public sealed class(AdaptiveOptimizer)
   public
-    constructor
-      withGraph(aGraph: NotNull<Graph>)
-      LearningRate(aLearningRate: Single)
-      Decay(aDecay: Single := 0)
-      InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
-      Name(aName: NotNull<String> := 'AdaGradOptimizer');
+    constructor withGraph(aGraph: NotNull<Graph>) LearningRate(aLearningRate: Single) Decay(aDecay: Single := 0)
+      InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1) Name(aName: NotNull<String> := 'AdaGradOptimizer');
     begin
       inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aName);
     end;
@@ -234,12 +215,8 @@ type
   private
     fBeta: Output; readonly;
   public
-    constructor
-      withGraph(aGraph: NotNull<Graph>)
-      LearningRate(aLearningRate: Single)
-      Beta(aBeta: Single := 0.9)
-      Decay(aDecay: Single := 0)
-      InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
+    constructor withGraph(aGraph: NotNull<Graph>) LearningRate(aLearningRate: Single) Beta(aBeta: Single := 0.9)
+      Decay(aDecay: Single := 0) InitialAccumulatorValue(aInitialAccumulatorValue: Single := 0.1)
       Name(aName: NotNull<String> := 'RMSPropOptimizer');
     begin
       inherited constructor(aGraph, aLearningRate, aDecay, aInitialAccumulatorValue, aName);
@@ -272,13 +249,8 @@ type
     fBeta_1: Output; readonly;
     fBeta_2: Output; readonly;
   public
-    constructor
-      withGraph(aGraph: NotNull<Graph>)
-      LearningRate(aLearningRate: Single)
-      Beta_1(aBeta_1: Single := 0.9)
-      Beta_2(aBeta_2: Single := 0.999)
-      Decay(aDecay: Single := 0)
-      Name(aName: NotNull<String> := 'AdamOptimizer');
+    constructor withGraph(aGraph: NotNull<Graph>) LearningRate(aLearningRate: Single) Beta_1(aBeta_1: Single := 0.9)
+      Beta_2(aBeta_2: Single := 0.999) Decay(aDecay: Single := 0) Name(aName: NotNull<String> := 'AdamOptimizer');
     begin
       inherited constructor(aGraph, aLearningRate, aDecay, 0, aName);
       fBeta_1 := Graph.Const(aBeta_1);
@@ -300,8 +272,7 @@ type
                               Graph.Div(Graph.Sqrt(Graph.Sub(one,
                                                              Graph.Pow(fBeta_2, t))),
                                         Graph.Sub(one,
-                                                  Graph.Pow(fBeta_1, t))
-                                       ));
+                                                  Graph.Pow(fBeta_1, t))));
 
         // accum_1 = beta_1 * accum_1 + (1 - beta_1) * g;
         var first := Graph.Mul(fBeta_1, accumulators_1[i]);
